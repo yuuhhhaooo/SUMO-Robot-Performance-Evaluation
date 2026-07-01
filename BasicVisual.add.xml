@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+
+    <!-- Visual overlay so the segmented pedestrian logic still looks like one continuous sidewalk -->
+    <poly id="north_sidewalk_visual"
+          color="128,128,128"
+          fill="true"
+          layer="20.00"
+          shape="0.00,5.00 300.00,5.00 300.00,3.00 0.00,3.00"/>
+
+    <poly id="south_sidewalk_visual"
+          color="128,128,128"
+          fill="true"
+          layer="20.00"
+          shape="0.00,-3.00 300.00,-3.00 300.00,-5.00 0.00,-5.00"/>
+
+</additional>
