@@ -1,0 +1,94 @@
+{
+  "seed": 273,
+  "base_route_file": "D:\\COMP0247\\sumo_robot_baselines_all_algorithms\\BasicDemand.rou.xml",
+  "generated_route_file": "batch_dwa_gui_500_5\\seed_273\\BasicDemand_random_seed_273.rou.xml",
+  "flow_mode": "personsPerHour",
+  "moving_flows": [
+    {
+      "id": "walk_east_up",
+      "edge": "walk_AU",
+      "density_persons_per_hour": 131.856,
+      "speed_mps": 1.307
+    },
+    {
+      "id": "walk_east_mid",
+      "edge": "walk_AM",
+      "density_persons_per_hour": 144.622,
+      "speed_mps": 1.385
+    },
+    {
+      "id": "walk_east_dn",
+      "edge": "walk_AL",
+      "density_persons_per_hour": 236.985,
+      "speed_mps": 0.9
+    },
+    {
+      "id": "walk_west_up",
+      "edge": "walk_CU",
+      "density_persons_per_hour": 307.977,
+      "speed_mps": 1.212
+    },
+    {
+      "id": "walk_west_mid",
+      "edge": "walk_CM",
+      "density_persons_per_hour": 219.726,
+      "speed_mps": 1.183
+    },
+    {
+      "id": "walk_west_dn",
+      "edge": "walk_CL",
+      "density_persons_per_hour": 256.894,
+      "speed_mps": 1.463
+    }
+  ],
+  "static_pedestrians": [
+    {
+      "id": "stand_0",
+      "edge": "walk_BU",
+      "departPos": 69.04,
+      "arrivalPos": 70.04
+    },
+    {
+      "id": "stand_1",
+      "edge": "walk_BU",
+      "departPos": 58.92,
+      "arrivalPos": 57.92
+    },
+    {
+      "id": "stand_2",
+      "edge": "walk_BU",
+      "departPos": 50.06,
+      "arrivalPos": 51.06
+    },
+    {
+      "id": "stand_3",
+      "edge": "walk_BU",
+      "departPos": 32.47,
+      "arrivalPos": 31.47
+    },
+    {
+      "id": "stand_4",
+      "edge": "walk_BM",
+      "departPos": 20.37,
+      "arrivalPos": 21.37
+    },
+    {
+      "id": "stand_5",
+      "edge": "walk_BU",
+      "departPos": 88.61,
+      "arrivalPos": 89.61
+    },
+    {
+      "id": "stand_6",
+      "edge": "walk_BM",
+      "departPos": 91.51,
+      "arrivalPos": 92.51
+    },
+    {
+      "id": "stand_7",
+      "edge": "walk_BU",
+      "departPos": 23.19,
+      "arrivalPos": 22.19
+    }
+  ]
+}

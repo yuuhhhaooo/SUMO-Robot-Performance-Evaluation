@@ -1,0 +1,22 @@
+{
+  "success": false,
+  "termination_reason": "collision",
+  "steps": 59,
+  "total_time_s": 29.0,
+  "path_length_m": 24.79,
+  "straight_line_distance_m": 295.8,
+  "extra_distance_ratio": 0.0838,
+  "normalized_time_ratio": 0.0931,
+  "final_goal_distance_m": 272.268,
+  "min_person_distance_m": 0.146,
+  "collision_steps": 1,
+  "hazard_steps_lt_social_distance": 5,
+  "hazard_time_ratio": 0.0847,
+  "hazard_ratio_given_social_presence": 0.0847,
+  "sidewalk_violation_steps": 0,
+  "sidewalk_violation_ratio": 0.0,
+  "mean_speed_mps": 0.847,
+  "mean_abs_yaw_rate_radps": 0.174,
+  "mean_abs_accel_mps2": 0.094,
+  "mean_abs_jerk_mps3": 0.255
+}

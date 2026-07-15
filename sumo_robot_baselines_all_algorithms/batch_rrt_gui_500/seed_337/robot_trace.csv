@@ -1,0 +1,16 @@
+time,x,y,yaw,v,w,goal_distance,min_person_dist,closest_person,planner_status,planner_cost,action_linear_x,action_angular_z,observation_state_linear_x,observation_state_angular_z,observation_state_road_type
+0.5,2.15,4.0,0.0,0.3,0.0,295.85,2.85,walk_east_mid.0,no_path,0.0,0.3,0.0,0.3,0.0,Sidewalk
+1.0,2.45,4.0,0.0,0.6,0.0,295.55,2.9432,walk_east_mid.0,no_path,0.0,0.6,0.0,0.6,0.0,Sidewalk
+1.5,2.9,4.0,0.0,0.9,0.0,295.1,2.8626,walk_east_mid.0,no_path,0.0,0.9,0.0,0.9,0.0,Sidewalk
+2.0,3.5,4.0,0.0,1.2,0.0,294.5,2.6474,walk_east_mid.0,no_path,0.0,1.2,0.0,1.2,0.0,Sidewalk
+2.5,4.1,4.0,0.0,1.2,0.0,293.9,2.4427,walk_east_mid.0,no_path,0.0,1.2,0.0,1.2,0.0,Sidewalk
+3.0,4.7,4.0,0.0,1.2,0.0,293.3,2.1947,walk_east_mid.0,no_path,0.0,1.2,0.0,1.2,0.0,Sidewalk
+3.5,5.2984,3.9559,-0.07358,1.2,-0.14716,292.7016,1.9932,walk_east_mid.0,path_found,21.0,1.2,-0.14716,1.2,-0.14716,Sidewalk
+4.0,5.8968,3.9118,-0.07358,1.2,0.0,292.1033,1.799,walk_east_mid.0,path_found,21.0,1.2,0.0,1.2,0.0,Sidewalk
+4.5,6.4966,3.9248,0.02168,1.2,0.19052,291.5034,1.5647,walk_east_mid.0,path_found,21.0,1.2,0.19052,1.2,0.19052,Sidewalk
+5.0,7.0965,3.9378,0.02168,1.2,0.0,290.9035,1.2966,walk_east_mid.0,path_found,21.0,1.2,0.0,1.2,0.0,Sidewalk
+5.5,7.6964,3.9496,0.01967,1.2,-0.00402,290.3036,1.0976,walk_east_mid.0,path_found,21.0,1.2,-0.00402,1.2,-0.00402,Sidewalk
+6.0,8.2962,3.9614,0.01967,1.2,0.0,289.7038,0.9004,walk_east_mid.0,path_found,21.0,1.2,0.0,1.2,0.0,Sidewalk
+6.5,8.8961,3.973,0.0193,1.2,-0.00073,289.1039,0.6773,walk_east_mid.0,no_path,0.0,1.2,-0.00073,1.2,-0.00073,Sidewalk
+7.0,9.4961,3.9811,0.01351,1.2,-0.01158,288.5039,0.4472,walk_east_mid.0,no_path,0.0,1.2,-0.01158,1.2,-0.01158,Sidewalk
+7.5,10.096,3.9912,0.01687,1.2,0.00671,287.904,0.1891,walk_east_mid.0,path_found,21.0,1.2,0.00671,1.2,0.00671,Sidewalk

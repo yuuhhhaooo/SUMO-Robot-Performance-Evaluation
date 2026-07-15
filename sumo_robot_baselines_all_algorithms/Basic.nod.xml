@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<nodes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/nodes_file.xsd">
+
+    <!-- road endpoints -->
+    <node id="W" x="0.00"   y="0.00" type="dead_end"/>
+    <node id="E" x="300.00" y="0.00" type="dead_end"/>
+
+    <!-- north sidewalk upper strip -->
+    <node id="N0U" x="0.00"   y="5.00" type="priority"/>
+    <node id="NAU" x="100.00" y="5.00" type="priority"/>
+    <node id="NBU" x="200.00" y="5.00" type="priority"/>
+    <node id="N1U" x="300.00" y="5.00" type="priority"/>
+
+    <!-- north sidewalk middle strip -->
+    <node id="N0M" x="0.00"   y="4.33" type="priority"/>
+    <node id="NAM" x="100.00" y="4.33" type="priority"/>
+    <node id="NBM" x="200.00" y="4.33" type="priority"/>
+    <node id="N1M" x="300.00" y="4.33" type="priority"/>
+
+    <!-- north sidewalk lower strip -->
+    <node id="N0L" x="0.00"   y="3.66" type="priority"/>
+    <node id="NAL" x="100.00" y="3.66" type="priority"/>
+    <node id="NBL" x="200.00" y="3.66" type="priority"/>
+    <node id="N1L" x="300.00" y="3.66" type="priority"/>
+
+    <!-- south sidewalk -->
+    <node id="S0" x="0.00"   y="-3.00" type="dead_end"/>
+    <node id="S1" x="300.00" y="-3.00" type="dead_end"/>
+
+</nodes>

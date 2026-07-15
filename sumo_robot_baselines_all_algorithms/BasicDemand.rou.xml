@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+
+    <!-- vehicle flows -->
+    <flow id="veh_WE" begin="0.00" end="36000.00" vehsPerHour="600.00" from="road_WE" to="road_WE" departLane="free" departSpeed="max"/>
+    <flow id="veh_EW" begin="0.00" end="36000.00" vehsPerHour="600.00" from="road_EW" to="road_EW" departLane="free" departSpeed="max"/>
+
+    <!-- west zone: eastbound flows -->
+    <personFlow id="walk_east_up" begin="0.00" end="36000.00" personsPerHour="166.67" departPos="5.00">
+        <walk edges="walk_AU" arrivalPos="95.00"/>
+    </personFlow>
+    <personFlow id="walk_east_mid" begin="0.00" end="36000.00" personsPerHour="166.67" departPos="5.00">
+        <walk edges="walk_AM" arrivalPos="95.00"/>
+    </personFlow>
+    <personFlow id="walk_east_dn" begin="0.00" end="36000.00" personsPerHour="166.67" departPos="5.00">
+        <walk edges="walk_AL" arrivalPos="95.00"/>
+    </personFlow>
+
+    <!-- east zone: westbound flows -->
+    <personFlow id="walk_west_up" begin="0.00" end="36000.00" personsPerHour="166.67" departPos="95.00">
+        <walk edges="walk_CU" arrivalPos="5.00"/>
+    </personFlow>
+    <personFlow id="walk_west_mid" begin="0.00" end="36000.00" personsPerHour="166.67" departPos="95.00">
+        <walk edges="walk_CM" arrivalPos="5.00"/>
+    </personFlow>
+    <personFlow id="walk_west_dn" begin="0.00" end="36000.00" personsPerHour="166.67" departPos="95.00">
+        <walk edges="walk_CL" arrivalPos="5.00"/>
+    </personFlow>
+
+    <!-- center zone: nearly stationary pedestrians -->
+    <person id="stand_0" depart="0.00" departPos="12.00">
+        <walk edges="walk_BU" arrivalPos="13.00" speed="0.00002"/>
+    </person>
+    <person id="stand_1" depart="0.00" departPos="47.00">
+        <walk edges="walk_BU" arrivalPos="48.00" speed="0.00002"/>
+    </person>
+    <person id="stand_2" depart="0.00" departPos="82.00">
+        <walk edges="walk_BU" arrivalPos="83.00" speed="0.00002"/>
+    </person>
+    <person id="stand_3" depart="0.00" departPos="20.00">
+        <walk edges="walk_BM" arrivalPos="19.00" speed="0.00002"/>
+    </person>
+    <person id="stand_4" depart="0.00" departPos="50.00">
+        <walk edges="walk_BM" arrivalPos="49.00" speed="0.00002"/>
+    </person>
+    <person id="stand_5" depart="0.00" departPos="80.00">
+        <walk edges="walk_BM" arrivalPos="79.00" speed="0.00002"/>
+    </person>
+    <person id="stand_6" depart="0.00" departPos="18.00">
+        <walk edges="walk_BL" arrivalPos="19.00" speed="0.00002"/>
+    </person>
+    <person id="stand_7" depart="0.00" departPos="38.00">
+        <walk edges="walk_BL" arrivalPos="39.00" speed="0.00002"/>
+    </person>
+    <person id="stand_8" depart="0.00" departPos="76.00">
+        <walk edges="walk_BL" arrivalPos="77.00" speed="0.00002"/>
+    </person>
+    <person id="stand_9" depart="0.00" departPos="88.00">
+        <walk edges="walk_BL" arrivalPos="87.00" speed="0.00002"/>
+    </person>
+
+    <!-- south sidewalk reference flow -->
+    <personFlow id="walk_south" begin="0.00" end="36000.00" personsPerHour="200.00" departPos="0.00">
+        <walk edges="walk_S" arrivalPos="300.00"/>
+    </personFlow>
+
+</routes>

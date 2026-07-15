@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<edges xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/edges_file.xsd">
+
+    <!-- vehicle lanes -->
+    <edge id="road_WE" from="W" to="E" priority="1" numLanes="1" speed="13.89" disallow="pedestrian"/>
+    <edge id="road_EW" from="E" to="W" priority="1" numLanes="1" speed="13.89" disallow="pedestrian"/>
+
+    <!-- north sidewalk upper strip -->
+    <edge id="walk_AU" from="N0U" to="NAU" priority="-1" numLanes="1" speed="13.89" allow="pedestrian" width="0.67"/>
+    <edge id="walk_BU" from="NAU" to="NBU" priority="-1" numLanes="1" speed="13.89" allow="pedestrian" width="0.67"/>
+    <edge id="walk_CU" from="NBU" to="N1U" priority="-1" numLanes="1" speed="13.89" allow="pedestrian" width="0.67"/>
+
+    <!-- north sidewalk middle strip -->
+    <edge id="walk_AM" from="N0M" to="NAM" priority="-1" numLanes="1" speed="13.89" allow="pedestrian" width="0.67"/>
+    <edge id="walk_BM" from="NAM" to="NBM" priority="-1" numLanes="1" speed="13.89" allow="pedestrian" width="0.67"/>
+    <edge id="walk_CM" from="NBM" to="N1M" priority="-1" numLanes="1" speed="13.89" allow="pedestrian" width="0.67"/>
+
+    <!-- north sidewalk lower strip -->
+    <edge id="walk_AL" from="N0L" to="NAL" priority="-1" numLanes="1" speed="13.89" allow="pedestrian" width="0.67"/>
+    <edge id="walk_BL" from="NAL" to="NBL" priority="-1" numLanes="1" speed="13.89" allow="pedestrian" width="0.67"/>
+    <edge id="walk_CL" from="NBL" to="N1L" priority="-1" numLanes="1" speed="13.89" allow="pedestrian" width="0.67"/>
+
+    <!-- south sidewalk -->
+    <edge id="walk_S" from="S0" to="S1" priority="-1" numLanes="1" speed="13.89" allow="pedestrian" width="2.00"/>
+
+</edges>

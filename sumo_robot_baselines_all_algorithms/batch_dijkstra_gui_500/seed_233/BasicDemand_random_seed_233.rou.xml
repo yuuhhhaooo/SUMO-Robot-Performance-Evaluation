@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <flow id="veh_WE" begin="0.00" end="36000.00" vehsPerHour="600.00" from="road_WE" to="road_WE" departLane="free" departSpeed="max" />
+    <flow id="veh_EW" begin="0.00" end="36000.00" vehsPerHour="600.00" from="road_EW" to="road_EW" departLane="free" departSpeed="max" />
+    <personFlow id="walk_south" begin="0.00" end="36000.00" personsPerHour="200.00" departPos="0.00">
+        <walk edges="walk_S" arrivalPos="300.00" />
+    </personFlow>
+    <!-- random scenario generated for baseline planner, seed=233 -->
+    <personFlow id="walk_east_up" begin="0.00" end="36000.00" departPos="5.00" personsPerHour="264.27">
+        <walk edges="walk_AU" arrivalPos="95.00" speed="1.303" />
+    </personFlow>
+    <personFlow id="walk_east_mid" begin="0.00" end="36000.00" departPos="5.00" personsPerHour="221.80">
+        <walk edges="walk_AM" arrivalPos="95.00" speed="1.440" />
+    </personFlow>
+    <personFlow id="walk_east_dn" begin="0.00" end="36000.00" departPos="5.00" personsPerHour="210.71">
+        <walk edges="walk_AL" arrivalPos="95.00" speed="0.963" />
+    </personFlow>
+    <personFlow id="walk_west_up" begin="0.00" end="36000.00" departPos="95.00" personsPerHour="304.92">
+        <walk edges="walk_CU" arrivalPos="5.00" speed="1.015" />
+    </personFlow>
+    <personFlow id="walk_west_mid" begin="0.00" end="36000.00" departPos="95.00" personsPerHour="267.21">
+        <walk edges="walk_CM" arrivalPos="5.00" speed="1.373" />
+    </personFlow>
+    <personFlow id="walk_west_dn" begin="0.00" end="36000.00" departPos="95.00" personsPerHour="100.77">
+        <walk edges="walk_CL" arrivalPos="5.00" speed="1.341" />
+    </personFlow>
+    <person id="stand_0" depart="0.00" departPos="67.52">
+        <walk edges="walk_BL" arrivalPos="68.52" speed="0.00002" />
+    </person>
+    <person id="stand_1" depart="0.00" departPos="48.45">
+        <walk edges="walk_BU" arrivalPos="47.45" speed="0.00002" />
+    </person>
+    <person id="stand_2" depart="0.00" departPos="76.92">
+        <walk edges="walk_BU" arrivalPos="77.92" speed="0.00002" />
+    </person>
+    <person id="stand_3" depart="0.00" departPos="52.20">
+        <walk edges="walk_BM" arrivalPos="51.20" speed="0.00002" />
+    </person>
+    <person id="stand_4" depart="0.00" departPos="34.23">
+        <walk edges="walk_BL" arrivalPos="33.23" speed="0.00002" />
+    </person>
+    <person id="stand_5" depart="0.00" departPos="45.92">
+        <walk edges="walk_BL" arrivalPos="46.92" speed="0.00002" />
+    </person>
+    <person id="stand_6" depart="0.00" departPos="85.53">
+        <walk edges="walk_BM" arrivalPos="86.53" speed="0.00002" />
+    </person>
+    <person id="stand_7" depart="0.00" departPos="23.21">
+        <walk edges="walk_BL" arrivalPos="22.21" speed="0.00002" />
+    </person>
+    <person id="stand_8" depart="0.00" departPos="25.89">
+        <walk edges="walk_BU" arrivalPos="26.89" speed="0.00002" />
+    </person>
+    <person id="stand_9" depart="0.00" departPos="70.95">
+        <walk edges="walk_BM" arrivalPos="71.95" speed="0.00002" />
+    </person>
+    <person id="stand_10" depart="0.00" departPos="87.05">
+        <walk edges="walk_BU" arrivalPos="88.05" speed="0.00002" />
+    </person>
+    <person id="stand_11" depart="0.00" departPos="66.95">
+        <walk edges="walk_BU" arrivalPos="65.95" speed="0.00002" />
+    </person>
+    <person id="stand_12" depart="0.00" departPos="14.81">
+        <walk edges="walk_BL" arrivalPos="15.81" speed="0.00002" />
+    </person>
+</routes>

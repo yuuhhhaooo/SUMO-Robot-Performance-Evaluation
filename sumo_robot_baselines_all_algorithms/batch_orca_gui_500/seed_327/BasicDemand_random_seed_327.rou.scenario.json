@@ -1,0 +1,70 @@
+{
+  "seed": 327,
+  "base_route_file": "D:\\COMP0247\\sumo_robot_baselines_all_algorithms\\BasicDemand.rou.xml",
+  "generated_route_file": "batch_orca_gui_500\\seed_327\\BasicDemand_random_seed_327.rou.xml",
+  "flow_mode": "personsPerHour",
+  "moving_flows": [
+    {
+      "id": "walk_east_up",
+      "edge": "walk_AU",
+      "density_persons_per_hour": 313.012,
+      "speed_mps": 1.471
+    },
+    {
+      "id": "walk_east_mid",
+      "edge": "walk_AM",
+      "density_persons_per_hour": 200.136,
+      "speed_mps": 1.386
+    },
+    {
+      "id": "walk_east_dn",
+      "edge": "walk_AL",
+      "density_persons_per_hour": 279.34,
+      "speed_mps": 0.918
+    },
+    {
+      "id": "walk_west_up",
+      "edge": "walk_CU",
+      "density_persons_per_hour": 293.724,
+      "speed_mps": 1.384
+    },
+    {
+      "id": "walk_west_mid",
+      "edge": "walk_CM",
+      "density_persons_per_hour": 111.258,
+      "speed_mps": 0.942
+    },
+    {
+      "id": "walk_west_dn",
+      "edge": "walk_CL",
+      "density_persons_per_hour": 141.125,
+      "speed_mps": 0.844
+    }
+  ],
+  "static_pedestrians": [
+    {
+      "id": "stand_0",
+      "edge": "walk_BL",
+      "departPos": 21.18,
+      "arrivalPos": 20.18
+    },
+    {
+      "id": "stand_1",
+      "edge": "walk_BM",
+      "departPos": 31.49,
+      "arrivalPos": 30.49
+    },
+    {
+      "id": "stand_2",
+      "edge": "walk_BM",
+      "departPos": 84.25,
+      "arrivalPos": 85.25
+    },
+    {
+      "id": "stand_3",
+      "edge": "walk_BU",
+      "departPos": 57.87,
+      "arrivalPos": 58.87
+    }
+  ]
+}
