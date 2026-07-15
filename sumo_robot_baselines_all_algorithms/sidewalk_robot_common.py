@@ -417,7 +417,8 @@ def add_common_arguments(p: argparse.ArgumentParser) -> None:
 def run_traci_with_planner(args: argparse.Namespace, planner_factory: Any, algorithm_name: str, cfg: Optional[PlannerConfig] = None) -> None:
     if cfg is None:
         cfg = PlannerConfig()
-    cfg.max_time = float(getattr(args, "max_time", cfg.max_time))
+    if hasattr(args, "max_time") and args.max_time is not None:
+        cfg.max_time = float(args.max_time)
     try:
         import traci  # type: ignore
         try:

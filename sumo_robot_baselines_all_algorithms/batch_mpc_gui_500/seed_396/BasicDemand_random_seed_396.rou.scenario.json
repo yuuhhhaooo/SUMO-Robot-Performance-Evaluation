@@ -1,0 +1,112 @@
+{
+  "seed": 396,
+  "base_route_file": "D:\\COMP0247\\sumo_robot_baselines_all_algorithms\\BasicDemand.rou.xml",
+  "generated_route_file": "batch_mpc_gui_500\\seed_396\\BasicDemand_random_seed_396.rou.xml",
+  "flow_mode": "personsPerHour",
+  "moving_flows": [
+    {
+      "id": "walk_east_up",
+      "edge": "walk_AU",
+      "density_persons_per_hour": 93.628,
+      "speed_mps": 1.324
+    },
+    {
+      "id": "walk_east_mid",
+      "edge": "walk_AM",
+      "density_persons_per_hour": 230.178,
+      "speed_mps": 0.915
+    },
+    {
+      "id": "walk_east_dn",
+      "edge": "walk_AL",
+      "density_persons_per_hour": 193.428,
+      "speed_mps": 1.095
+    },
+    {
+      "id": "walk_west_up",
+      "edge": "walk_CU",
+      "density_persons_per_hour": 311.515,
+      "speed_mps": 1.023
+    },
+    {
+      "id": "walk_west_mid",
+      "edge": "walk_CM",
+      "density_persons_per_hour": 185.65,
+      "speed_mps": 0.871
+    },
+    {
+      "id": "walk_west_dn",
+      "edge": "walk_CL",
+      "density_persons_per_hour": 299.711,
+      "speed_mps": 1.097
+    }
+  ],
+  "static_pedestrians": [
+    {
+      "id": "stand_0",
+      "edge": "walk_BU",
+      "departPos": 49.14,
+      "arrivalPos": 50.14
+    },
+    {
+      "id": "stand_1",
+      "edge": "walk_BM",
+      "departPos": 13.16,
+      "arrivalPos": 12.16
+    },
+    {
+      "id": "stand_2",
+      "edge": "walk_BL",
+      "departPos": 53.73,
+      "arrivalPos": 54.73
+    },
+    {
+      "id": "stand_3",
+      "edge": "walk_BL",
+      "departPos": 29.34,
+      "arrivalPos": 30.34
+    },
+    {
+      "id": "stand_4",
+      "edge": "walk_BU",
+      "departPos": 30.96,
+      "arrivalPos": 31.96
+    },
+    {
+      "id": "stand_5",
+      "edge": "walk_BL",
+      "departPos": 12.73,
+      "arrivalPos": 13.73
+    },
+    {
+      "id": "stand_6",
+      "edge": "walk_BM",
+      "departPos": 65.8,
+      "arrivalPos": 64.8
+    },
+    {
+      "id": "stand_7",
+      "edge": "walk_BM",
+      "departPos": 48.44,
+      "arrivalPos": 47.44
+    },
+    {
+      "id": "stand_8",
+      "edge": "walk_BU",
+      "departPos": 39.56,
+      "arrivalPos": 38.56
+    },
+    {
+      "id": "stand_9",
+      "edge": "walk_BM",
+      "departPos": 34.12,
+      "arrivalPos": 35.12
+    },
+    {
+      "id": "stand_10",
+      "edge": "walk_BU",
+      "departPos": 87.04,
+      "arrivalPos": 88.04
+    }
+  ]
+}

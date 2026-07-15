@@ -29,6 +29,8 @@ SCRIPT_BY_ALGORITHM = {
     "dijkstra": "dijkstra_sidewalk_robot_random_stop_collision.py",
     "rrt": "rrt_sidewalk_robot_random_stop_collision.py",
     "orca": "orca_sidewalk_robot_random_stop_collision.py",
+    "mpc": "mpc_sidewalk_robot_random_stop_collision.py",
+    "teb": "teb_sidewalk_robot_random_stop_collision.py",
 }
 
 METRICS_BY_ALGORITHM = {
@@ -37,6 +39,8 @@ METRICS_BY_ALGORITHM = {
     "dijkstra": "robot_metrics.json",
     "rrt": "robot_metrics.json",
     "orca": "robot_metrics.json",
+    "mpc": "robot_metrics.json",
+    "teb": "robot_metrics.json",
 }
 
 TRACE_BY_ALGORITHM = {
@@ -45,6 +49,8 @@ TRACE_BY_ALGORITHM = {
     "dijkstra": "robot_trace.csv",
     "rrt": "robot_trace.csv",
     "orca": "robot_trace.csv",
+    "mpc": "robot_trace.csv",
+    "teb": "robot_trace.csv",
 }
 
 
