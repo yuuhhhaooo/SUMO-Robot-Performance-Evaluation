@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <input>
+        <net-file value="map5_ucl.net.xml"/>
+        <route-files value="map5_ucl_base.rou.xml"/>
+        <gui-settings-file value="view.xml"/>
+    </input>
+    <time><begin value="0"/><end value="36000"/><step-length value="0.5"/></time>
+    <processing><pedestrian.model value="striping"/><pedestrian.striping.stripe-width value="1.00"/></processing>
+</configuration>

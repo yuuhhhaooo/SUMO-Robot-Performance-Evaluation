@@ -1,0 +1,74 @@
+{
+  "map": "map2_crossing",
+  "mode": "same",
+  "seed": 5,
+  "flows": [
+    {
+      "id": "pf0",
+      "edges": [
+        "main_f0",
+        "..."
+      ],
+      "side": "f",
+      "speed": 1.393,
+      "per_hour": 250.0,
+      "backward": false
+    },
+    {
+      "id": "pf1",
+      "edges": [
+        "main_r0",
+        "..."
+      ],
+      "side": "r",
+      "speed": 1.436,
+      "per_hour": 250.0,
+      "backward": true
+    },
+    {
+      "id": "pf2",
+      "edges": [
+        "cross_f0",
+        "..."
+      ],
+      "side": "f",
+      "speed": 1.554,
+      "per_hour": 200.0,
+      "backward": false
+    },
+    {
+      "id": "pf3",
+      "edges": [
+        "cross_r0",
+        "..."
+      ],
+      "side": "r",
+      "speed": 1.392,
+      "per_hour": 200.0,
+      "backward": true
+    }
+  ],
+  "static": [],
+  "vehicles": [
+    {
+      "road": "main",
+      "dir": "f",
+      "vehs_per_hour": 600.0
+    },
+    {
+      "road": "main",
+      "dir": "r",
+      "vehs_per_hour": 600.0
+    },
+    {
+      "road": "cross",
+      "dir": "f",
+      "vehs_per_hour": 120.0
+    },
+    {
+      "road": "cross",
+      "dir": "r",
+      "vehs_per_hour": 120.0
+    }
+  ]
+}

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-08-05T15:36:07.337665+00:00 by Eclipse SUMO netconvert 1.27.1
+<netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <node-files value="/home/claude/optB/_ncbuild/n.nod.xml"/>
+        <edge-files value="/home/claude/optB/_ncbuild/n.edg.xml"/>
+    </input>
+
+    <output>
+        <output-file value="/home/claude/optB/maps/map2_crossing/map2_crossing.net.xml"/>
+    </output>
+
+    <processing>
+        <offset.disable-normalization value="true"/>
+    </processing>
+
+    <tls_building>
+        <tls.green.time value="22"/>
+        <tls.yellow.time value="3"/>
+        <tls.crossing-min.time value="8"/>
+        <tls.crossing-clearance.time value="5"/>
+    </tls_building>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+    </junctions>
+
+    <pedestrian>
+        <crossings.guess value="true"/>
+    </pedestrian>
+
+</netconvertConfiguration>
+-->
+
+<net version="1.20" junctionCornerDetail="5" walkingareas="true" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+
+    <location netOffset="0.00,0.00" convBoundary="0.00,-80.00,300.00,80.00" origBoundary="0.00,-80.00,300.00,80.00" projParameter="!"/>
+
+    <edge id=":E_cross_0_w0" function="walkingarea">
+        <lane id=":E_cross_0_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="153.20,-80.00 155.20,-80.00 144.80,-80.00 146.80,-80.00"/>
+    </edge>
+    <edge id=":E_cross_1_w0" function="walkingarea">
+        <lane id=":E_cross_1_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="146.80,80.00 144.80,80.00 155.20,80.00 153.20,80.00"/>
+    </edge>
+    <edge id=":E_main_0_w0" function="walkingarea">
+        <lane id=":E_main_0_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="0.00,-3.20 0.00,-5.20 0.00,5.20 0.00,3.20"/>
+    </edge>
+    <edge id=":E_main_1_w0" function="walkingarea">
+        <lane id=":E_main_1_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="300.00,3.20 300.00,5.20 300.00,-5.20 300.00,-3.20"/>
+    </edge>
+    <edge id=":J_main_cross_0" function="internal">
+        <lane id=":J_main_cross_0_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="148.40,7.20 148.05,4.75 147.00,3.00 146.80,2.88"/>
+    </edge>
+    <edge id=":J_main_cross_1" function="internal">
+        <lane id=":J_main_cross_1_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="148.40,7.20 148.40,-7.20"/>
+    </edge>
+    <edge id=":J_main_cross_2" function="internal">
+        <lane id=":J_main_cross_2_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="148.40,7.20 148.95,3.35 149.04,3.20"/>
+    </edge>
+    <edge id=":J_main_cross_12" function="internal">
+        <lane id=":J_main_cross_12_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="146.80,2.88 145.25,1.95 142.80,1.60"/>
+    </edge>
+    <edge id=":J_main_cross_13" function="internal">
+        <lane id=":J_main_cross_13_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="149.04,3.20 150.60,0.60 153.35,-1.05 157.20,-1.60"/>
+    </edge>
+    <edge id=":J_main_cross_3" function="internal">
+        <lane id=":J_main_cross_3_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="157.20,1.60 154.75,1.95 153.00,3.00 152.88,3.20"/>
+    </edge>
+    <edge id=":J_main_cross_4" function="internal">
+        <lane id=":J_main_cross_4_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="157.20,1.60 142.80,1.60"/>
+    </edge>
+    <edge id=":J_main_cross_5" function="internal">
+        <lane id=":J_main_cross_5_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="157.20,1.60 153.35,1.05 153.20,0.96"/>
+    </edge>
+    <edge id=":J_main_cross_14" function="internal">
+        <lane id=":J_main_cross_14_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="152.88,3.20 151.95,4.75 151.60,7.20"/>
+    </edge>
+    <edge id=":J_main_cross_15" function="internal">
+        <lane id=":J_main_cross_15_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="153.20,0.96 150.60,-0.60 148.95,-3.35 148.40,-7.20"/>
+    </edge>
+    <edge id=":J_main_cross_6" function="internal">
+        <lane id=":J_main_cross_6_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="151.60,-7.20 151.95,-4.75 153.00,-3.00 153.20,-2.88"/>
+    </edge>
+    <edge id=":J_main_cross_7" function="internal">
+        <lane id=":J_main_cross_7_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="151.60,-7.20 151.60,7.20"/>
+    </edge>
+    <edge id=":J_main_cross_8" function="internal">
+        <lane id=":J_main_cross_8_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="151.60,-7.20 151.05,-3.35 150.96,-3.20"/>
+    </edge>
+    <edge id=":J_main_cross_16" function="internal">
+        <lane id=":J_main_cross_16_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="153.20,-2.88 154.75,-1.95 157.20,-1.60"/>
+    </edge>
+    <edge id=":J_main_cross_17" function="internal">
+        <lane id=":J_main_cross_17_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="150.96,-3.20 149.40,-0.60 146.65,1.05 142.80,1.60"/>
+    </edge>
+    <edge id=":J_main_cross_9" function="internal">
+        <lane id=":J_main_cross_9_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="142.80,-1.60 145.25,-1.95 147.00,-3.00 147.12,-3.20"/>
+    </edge>
+    <edge id=":J_main_cross_10" function="internal">
+        <lane id=":J_main_cross_10_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="142.80,-1.60 157.20,-1.60"/>
+    </edge>
+    <edge id=":J_main_cross_11" function="internal">
+        <lane id=":J_main_cross_11_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="142.80,-1.60 146.65,-1.05 146.80,-0.96"/>
+    </edge>
+    <edge id=":J_main_cross_18" function="internal">
+        <lane id=":J_main_cross_18_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="147.12,-3.20 148.05,-4.75 148.40,-7.20"/>
+    </edge>
+    <edge id=":J_main_cross_19" function="internal">
+        <lane id=":J_main_cross_19_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="146.80,-0.96 149.40,0.60 151.05,3.35 151.60,7.20"/>
+    </edge>
+    <edge id=":J_main_cross_c0" function="crossing" crossingEdges="cross_f1 cross_r1">
+        <lane id=":J_main_cross_c0_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="153.20,5.20 146.80,5.20" outlineShape="153.30,7.20 146.70,7.20 142.80,3.20 142.80,5.20 144.80,7.20 146.80,7.20 142.80,3.20 157.20,3.20 155.98,3.31 154.98,3.64 154.20,4.20 153.64,4.98 153.31,5.98"/>
+    </edge>
+    <edge id=":J_main_cross_c1" function="crossing" crossingEdges="main_f1 main_r1">
+        <lane id=":J_main_cross_c1_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="155.20,-3.20 155.20,3.20" outlineShape="157.20,-3.20 157.20,3.30 157.20,3.20 155.98,3.31 154.98,3.64 154.20,4.20 153.64,4.98 153.53,5.31 153.20,3.20 153.20,-3.20 153.53,-5.31 153.64,-4.98 154.20,-4.20 154.98,-3.64 155.98,-3.31"/>
+    </edge>
+    <edge id=":J_main_cross_c2" function="crossing" crossingEdges="cross_r0 cross_f0">
+        <lane id=":J_main_cross_c2_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="146.80,-5.20 153.20,-5.20" outlineShape="146.70,-7.20 153.30,-7.20 157.20,-3.20 157.20,-5.20 155.20,-7.20 153.20,-7.20 157.20,-3.20 142.80,-3.20 144.02,-3.31 145.02,-3.64 145.80,-4.20 146.36,-4.98 146.69,-5.98"/>
+    </edge>
+    <edge id=":J_main_cross_c3" function="crossing" crossingEdges="main_r0 main_f0">
+        <lane id=":J_main_cross_c3_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="144.80,3.20 144.80,-3.20" outlineShape="142.80,3.20 142.80,-3.20 144.02,-3.31 145.02,-3.64 145.80,-4.20 146.36,-4.98 146.47,-5.31 146.80,-3.20 146.80,3.20 146.47,5.31 146.36,4.98 145.80,4.20 145.02,3.64 144.02,3.31"/>
+    </edge>
+    <edge id=":J_main_cross_w0" function="walkingarea">
+        <lane id=":J_main_cross_w0_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="142.80,3.20 142.80,5.20 144.80,7.20 146.80,7.20 146.69,5.98 146.36,4.98 145.80,4.20 145.02,3.64 144.02,3.31"/>
+    </edge>
+    <edge id=":J_main_cross_w1" function="walkingarea">
+        <lane id=":J_main_cross_w1_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="153.20,7.20 155.20,7.20 157.20,5.20 157.20,3.20 155.98,3.31 154.98,3.64 154.20,4.20 153.64,4.98 153.31,5.98"/>
+    </edge>
+    <edge id=":J_main_cross_w2" function="walkingarea">
+        <lane id=":J_main_cross_w2_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="157.20,-3.20 157.20,-5.20 155.20,-7.20 153.20,-7.20 153.31,-5.98 153.64,-4.98 154.20,-4.20 154.98,-3.64 155.98,-3.31"/>
+    </edge>
+    <edge id=":J_main_cross_w3" function="walkingarea">
+        <lane id=":J_main_cross_w3_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="146.80,-7.20 144.80,-7.20 142.80,-5.20 142.80,-3.20 144.02,-3.31 145.02,-3.64 145.80,-4.20 146.36,-4.98 146.69,-5.98"/>
+    </edge>
+
+    <edge id="cross_f0" from="E_cross_0" to="J_main_cross" priority="-1">
+        <lane id="cross_f0_0" index="0" allow="pedestrian" speed="13.89" length="72.80" width="2.00" shape="154.20,-80.00 154.20,-7.20"/>
+        <lane id="cross_f0_1" index="1" disallow="pedestrian" speed="13.89" length="72.80" shape="151.60,-80.00 151.60,-7.20"/>
+    </edge>
+    <edge id="cross_f1" from="J_main_cross" to="E_cross_1" priority="-1">
+        <lane id="cross_f1_0" index="0" allow="pedestrian" speed="13.89" length="72.80" width="2.00" shape="154.20,7.20 154.20,80.00"/>
+        <lane id="cross_f1_1" index="1" disallow="pedestrian" speed="13.89" length="72.80" shape="151.60,7.20 151.60,80.00"/>
+    </edge>
+    <edge id="cross_r0" from="J_main_cross" to="E_cross_0" priority="-1">
+        <lane id="cross_r0_0" index="0" allow="pedestrian" speed="13.89" length="72.80" width="2.00" shape="145.80,-7.20 145.80,-80.00"/>
+        <lane id="cross_r0_1" index="1" disallow="pedestrian" speed="13.89" length="72.80" shape="148.40,-7.20 148.40,-80.00"/>
+    </edge>
+    <edge id="cross_r1" from="E_cross_1" to="J_main_cross" priority="-1">
+        <lane id="cross_r1_0" index="0" allow="pedestrian" speed="13.89" length="72.80" width="2.00" shape="145.80,80.00 145.80,7.20"/>
+        <lane id="cross_r1_1" index="1" disallow="pedestrian" speed="13.89" length="72.80" shape="148.40,80.00 148.40,7.20"/>
+    </edge>
+    <edge id="main_f0" from="E_main_0" to="J_main_cross" priority="-1">
+        <lane id="main_f0_0" index="0" allow="pedestrian" speed="13.89" length="142.80" width="2.00" shape="0.00,-4.20 142.80,-4.20"/>
+        <lane id="main_f0_1" index="1" disallow="pedestrian" speed="13.89" length="142.80" shape="0.00,-1.60 142.80,-1.60"/>
+    </edge>
+    <edge id="main_f1" from="J_main_cross" to="E_main_1" priority="-1">
+        <lane id="main_f1_0" index="0" allow="pedestrian" speed="13.89" length="142.80" width="2.00" shape="157.20,-4.20 300.00,-4.20"/>
+        <lane id="main_f1_1" index="1" disallow="pedestrian" speed="13.89" length="142.80" shape="157.20,-1.60 300.00,-1.60"/>
+    </edge>
+    <edge id="main_r0" from="J_main_cross" to="E_main_0" priority="-1">
+        <lane id="main_r0_0" index="0" allow="pedestrian" speed="13.89" length="142.80" width="2.00" shape="142.80,4.20 0.00,4.20"/>
+        <lane id="main_r0_1" index="1" disallow="pedestrian" speed="13.89" length="142.80" shape="142.80,1.60 0.00,1.60"/>
+    </edge>
+    <edge id="main_r1" from="E_main_1" to="J_main_cross" priority="-1">
+        <lane id="main_r1_0" index="0" allow="pedestrian" speed="13.89" length="142.80" width="2.00" shape="300.00,4.20 157.20,4.20"/>
+        <lane id="main_r1_1" index="1" disallow="pedestrian" speed="13.89" length="142.80" shape="300.00,1.60 157.20,1.60"/>
+    </edge>
+
+    <tlLogic id="J_main_cross" type="static" programID="0" offset="0">
+        <phase duration="17" state="gGgrrrgGgrrrrGrG"/>
+        <phase duration="5"  state="gGgrrrgGgrrrrrrr"/>
+        <phase duration="3"  state="yyyrrryyyrrrrrrr"/>
+        <phase duration="17" state="rrrgGgrrrgGgGrGr"/>
+        <phase duration="5"  state="rrrgGgrrrgGgrrrr"/>
+        <phase duration="3"  state="rrryyyrrryyyrrrr"/>
+    </tlLogic>
+
+    <junction id="E_cross_0" type="dead_end" x="150.00" y="-80.00" incLanes="cross_r0_0 cross_r0_1" intLanes="" shape="150.00,-80.00 144.80,-80.00 150.00,-80.00"/>
+    <junction id="E_cross_1" type="dead_end" x="150.00" y="80.00" incLanes="cross_f1_0 cross_f1_1" intLanes="" shape="150.00,80.00 155.20,80.00 150.00,80.00"/>
+    <junction id="E_main_0" type="dead_end" x="0.00" y="0.00" incLanes="main_r0_0 main_r0_1" intLanes="" shape="0.00,0.00 0.00,5.20 0.00,0.00"/>
+    <junction id="E_main_1" type="dead_end" x="300.00" y="0.00" incLanes="main_f1_0 main_f1_1" intLanes="" shape="300.00,0.00 300.00,-5.20 300.00,0.00"/>
+    <junction id="J_main_cross" type="traffic_light" x="150.00" y="0.00" incLanes="cross_r1_0 cross_r1_1 main_r1_0 main_r1_1 cross_f0_0 cross_f0_1 main_f0_0 main_f0_1 :J_main_cross_w1_0 :J_main_cross_w2_0 :J_main_cross_w3_0 :J_main_cross_w0_0" intLanes=":J_main_cross_12_0 :J_main_cross_1_0 :J_main_cross_13_0 :J_main_cross_14_0 :J_main_cross_4_0 :J_main_cross_15_0 :J_main_cross_16_0 :J_main_cross_7_0 :J_main_cross_17_0 :J_main_cross_18_0 :J_main_cross_10_0 :J_main_cross_19_0 :J_main_cross_c0_0 :J_main_cross_c1_0 :J_main_cross_c2_0 :J_main_cross_c3_0" shape="144.80,7.20 155.20,7.20 155.42,6.09 155.70,5.70 156.09,5.42 156.59,5.26 157.20,5.20 157.20,-5.20 156.09,-5.42 155.70,-5.70 155.42,-6.09 155.26,-6.59 155.20,-7.20 144.80,-7.20 144.58,-6.09 144.30,-5.70 143.91,-5.42 143.41,-5.26 142.80,-5.20 142.80,5.20 143.91,5.42 144.30,5.70 144.58,6.09 144.74,6.59">
+        <request index="0"  response="1001000000000000" foes="1001000100010000" cont="1"/>
+        <request index="1"  response="0101101000100000" foes="0101111100110000" cont="0"/>
+        <request index="2"  response="0011100011100000" foes="0011110111110000" cont="1"/>
+        <request index="3"  response="0011000010000000" foes="0011100010000000" cont="1"/>
+        <request index="4"  response="1010000110000111" foes="1010100110000111" cont="0"/>
+        <request index="5"  response="0110011110000110" foes="0110111110000110" cont="1"/>
+        <request index="6"  response="0110000000000000" foes="0110010000000100" cont="1"/>
+        <request index="7"  response="0101100000101000" foes="0101110000111100" cont="0"/>
+        <request index="8"  response="1100100000100111" foes="1100110000110111" cont="1"/>
+        <request index="9"  response="1100000000000010" foes="1100000000100010" cont="1"/>
+        <request index="10" response="1010000111000110" foes="1010000111100110" cont="0"/>
+        <request index="11" response="1001000110111110" foes="1001000110111110" cont="1"/>
+        <request index="12" response="0000000000000000" foes="0000100010001111" cont="0"/>
+        <request index="13" response="0000000000000000" foes="0000010001111100" cont="0"/>
+        <request index="14" response="0000000000000000" foes="0000001111100010" cont="0"/>
+        <request index="15" response="0000000000000000" foes="0000111100010001" cont="0"/>
+    </junction>
+
+    <junction id=":J_main_cross_12_0" type="internal" x="146.80" y="2.88" incLanes=":J_main_cross_0_0" intLanes=":J_main_cross_4_0 :J_main_cross_8_0 :J_main_cross_c0_0 :J_main_cross_c3_0"/>
+    <junction id=":J_main_cross_13_0" type="internal" x="149.04" y="3.20" incLanes=":J_main_cross_2_0 cross_f0_1" intLanes=":J_main_cross_4_0 :J_main_cross_5_0 :J_main_cross_6_0 :J_main_cross_7_0 :J_main_cross_10_0 :J_main_cross_11_0 :J_main_cross_c0_0 :J_main_cross_c1_0"/>
+    <junction id=":J_main_cross_14_0" type="internal" x="152.88" y="3.20" incLanes=":J_main_cross_3_0" intLanes=":J_main_cross_7_0 :J_main_cross_11_0 :J_main_cross_c0_0 :J_main_cross_c1_0"/>
+    <junction id=":J_main_cross_15_0" type="internal" x="153.20" y="0.96" incLanes=":J_main_cross_5_0 main_f0_1" intLanes=":J_main_cross_1_0 :J_main_cross_2_0 :J_main_cross_7_0 :J_main_cross_8_0 :J_main_cross_9_0 :J_main_cross_10_0 :J_main_cross_c1_0 :J_main_cross_c2_0"/>
+    <junction id=":J_main_cross_16_0" type="internal" x="153.20" y="-2.88" incLanes=":J_main_cross_6_0" intLanes=":J_main_cross_2_0 :J_main_cross_10_0 :J_main_cross_c1_0 :J_main_cross_c2_0"/>
+    <junction id=":J_main_cross_17_0" type="internal" x="150.96" y="-3.20" incLanes=":J_main_cross_8_0 cross_r1_1" intLanes=":J_main_cross_0_0 :J_main_cross_1_0 :J_main_cross_4_0 :J_main_cross_5_0 :J_main_cross_10_0 :J_main_cross_11_0 :J_main_cross_c2_0 :J_main_cross_c3_0"/>
+    <junction id=":J_main_cross_18_0" type="internal" x="147.12" y="-3.20" incLanes=":J_main_cross_9_0" intLanes=":J_main_cross_1_0 :J_main_cross_5_0 :J_main_cross_c2_0 :J_main_cross_c3_0"/>
+    <junction id=":J_main_cross_19_0" type="internal" x="146.80" y="-0.96" incLanes=":J_main_cross_11_0 main_r1_1" intLanes=":J_main_cross_1_0 :J_main_cross_2_0 :J_main_cross_3_0 :J_main_cross_4_0 :J_main_cross_7_0 :J_main_cross_8_0 :J_main_cross_c0_0 :J_main_cross_c3_0"/>
+
+    <connection from="cross_f0" to="main_f1" fromLane="1" toLane="1" via=":J_main_cross_6_0" tl="J_main_cross" linkIndex="6" dir="r" state="o"/>
+    <connection from="cross_f0" to="cross_f1" fromLane="1" toLane="1" via=":J_main_cross_7_0" tl="J_main_cross" linkIndex="7" dir="s" state="o"/>
+    <connection from="cross_f0" to="main_r0" fromLane="1" toLane="1" via=":J_main_cross_8_0" tl="J_main_cross" linkIndex="8" dir="l" state="o"/>
+    <connection from="cross_r1" to="main_r0" fromLane="1" toLane="1" via=":J_main_cross_0_0" tl="J_main_cross" linkIndex="0" dir="r" state="o"/>
+    <connection from="cross_r1" to="cross_r0" fromLane="1" toLane="1" via=":J_main_cross_1_0" tl="J_main_cross" linkIndex="1" dir="s" state="o"/>
+    <connection from="cross_r1" to="main_f1" fromLane="1" toLane="1" via=":J_main_cross_2_0" tl="J_main_cross" linkIndex="2" dir="l" state="o"/>
+    <connection from="main_f0" to="cross_r0" fromLane="1" toLane="1" via=":J_main_cross_9_0" tl="J_main_cross" linkIndex="9" dir="r" state="o"/>
+    <connection from="main_f0" to="main_f1" fromLane="1" toLane="1" via=":J_main_cross_10_0" tl="J_main_cross" linkIndex="10" dir="s" state="o"/>
+    <connection from="main_f0" to="cross_f1" fromLane="1" toLane="1" via=":J_main_cross_11_0" tl="J_main_cross" linkIndex="11" dir="l" state="o"/>
+    <connection from="main_r1" to="cross_f1" fromLane="1" toLane="1" via=":J_main_cross_3_0" tl="J_main_cross" linkIndex="3" dir="r" state="o"/>
+    <connection from="main_r1" to="main_r0" fromLane="1" toLane="1" via=":J_main_cross_4_0" tl="J_main_cross" linkIndex="4" dir="s" state="o"/>
+    <connection from="main_r1" to="cross_r0" fromLane="1" toLane="1" via=":J_main_cross_5_0" tl="J_main_cross" linkIndex="5" dir="l" state="o"/>
+
+    <connection from=":J_main_cross_0" to="main_r0" fromLane="0" toLane="1" via=":J_main_cross_12_0" dir="r" state="m"/>
+    <connection from=":J_main_cross_12" to="main_r0" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_main_cross_1" to="cross_r0" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_main_cross_2" to="main_f1" fromLane="0" toLane="1" via=":J_main_cross_13_0" dir="l" state="m"/>
+    <connection from=":J_main_cross_13" to="main_f1" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_main_cross_3" to="cross_f1" fromLane="0" toLane="1" via=":J_main_cross_14_0" dir="r" state="m"/>
+    <connection from=":J_main_cross_14" to="cross_f1" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_main_cross_4" to="main_r0" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_main_cross_5" to="cross_r0" fromLane="0" toLane="1" via=":J_main_cross_15_0" dir="l" state="m"/>
+    <connection from=":J_main_cross_15" to="cross_r0" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_main_cross_6" to="main_f1" fromLane="0" toLane="1" via=":J_main_cross_16_0" dir="r" state="m"/>
+    <connection from=":J_main_cross_16" to="main_f1" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_main_cross_7" to="cross_f1" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_main_cross_8" to="main_r0" fromLane="0" toLane="1" via=":J_main_cross_17_0" dir="l" state="m"/>
+    <connection from=":J_main_cross_17" to="main_r0" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_main_cross_9" to="cross_r0" fromLane="0" toLane="1" via=":J_main_cross_18_0" dir="r" state="m"/>
+    <connection from=":J_main_cross_18" to="cross_r0" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_main_cross_10" to="main_f1" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_main_cross_11" to="cross_f1" fromLane="0" toLane="1" via=":J_main_cross_19_0" dir="l" state="m"/>
+    <connection from=":J_main_cross_19" to="cross_f1" fromLane="0" toLane="1" dir="l" state="m"/>
+
+    <connection from=":E_cross_0_w0" to="cross_f0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="cross_r0" to=":E_cross_0_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":E_cross_1_w0" to="cross_r1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="cross_f1" to=":E_cross_1_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":E_main_0_w0" to="main_f0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="main_r0" to=":E_main_0_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":E_main_1_w0" to="main_r1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="main_f1" to=":E_main_1_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_main_cross_c0" to=":J_main_cross_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_main_cross_c1" to=":J_main_cross_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_main_cross_c2" to=":J_main_cross_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_main_cross_c3" to=":J_main_cross_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_main_cross_w0" to=":J_main_cross_c3" fromLane="0" toLane="0" tl="J_main_cross" linkIndex="15" dir="s" state="M"/>
+    <connection from=":J_main_cross_w0" to="main_r0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="cross_r1" to=":J_main_cross_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_main_cross_w1" to=":J_main_cross_c0" fromLane="0" toLane="0" tl="J_main_cross" linkIndex="12" dir="s" state="M"/>
+    <connection from=":J_main_cross_w1" to="cross_f1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="main_r1" to=":J_main_cross_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_main_cross_w2" to=":J_main_cross_c1" fromLane="0" toLane="0" tl="J_main_cross" linkIndex="13" dir="s" state="M"/>
+    <connection from=":J_main_cross_w2" to="main_f1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="cross_f0" to=":J_main_cross_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_main_cross_w3" to=":J_main_cross_c2" fromLane="0" toLane="0" tl="J_main_cross" linkIndex="14" dir="s" state="M"/>
+    <connection from=":J_main_cross_w3" to="cross_r0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="main_f0" to=":J_main_cross_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+</net>

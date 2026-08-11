@@ -1,0 +1,1961 @@
+{
+  "name": "map4_london",
+  "title": "Map 4 - stylised London block (native)",
+  "extent": [
+    0.0,
+    0.0,
+    360.0,
+    260.0
+  ],
+  "signal_backend": "native_full",
+  "roads": [
+    {
+      "id": "high",
+      "axis": "h",
+      "c": 40.0,
+      "lo": 0.0,
+      "hi": 360.0,
+      "role": "main",
+      "veh_per_hour": 500.0,
+      "routes": {
+        "f": [
+          "high_f0",
+          "high_f1",
+          "high_f2",
+          "high_f3"
+        ],
+        "r": [
+          "high_r3",
+          "high_r2",
+          "high_r1",
+          "high_r0"
+        ]
+      }
+    },
+    {
+      "id": "market",
+      "axis": "h",
+      "c": 140.0,
+      "lo": 70.0,
+      "hi": 360.0,
+      "role": "main",
+      "veh_per_hour": 200.0,
+      "routes": {
+        "f": [
+          "market_f0",
+          "market_f1",
+          "market_f2"
+        ],
+        "r": [
+          "market_r2",
+          "market_r1",
+          "market_r0"
+        ]
+      }
+    },
+    {
+      "id": "garden",
+      "axis": "h",
+      "c": 220.0,
+      "lo": 70.0,
+      "hi": 300.0,
+      "role": "main",
+      "veh_per_hour": 0.0,
+      "routes": {
+        "f": [
+          "garden_f0"
+        ],
+        "r": [
+          "garden_r0"
+        ]
+      }
+    },
+    {
+      "id": "church",
+      "axis": "v",
+      "c": 70.0,
+      "lo": 0.0,
+      "hi": 260.0,
+      "role": "cross",
+      "veh_per_hour": 150.0,
+      "routes": {
+        "f": [
+          "church_f0",
+          "church_f1",
+          "church_f2",
+          "church_f3"
+        ],
+        "r": [
+          "church_r3",
+          "church_r2",
+          "church_r1",
+          "church_r0"
+        ]
+      }
+    },
+    {
+      "id": "mews",
+      "axis": "v",
+      "c": 180.0,
+      "lo": 40.0,
+      "hi": 140.0,
+      "role": "cross",
+      "veh_per_hour": 0.0,
+      "routes": {
+        "f": [
+          "mews_f0"
+        ],
+        "r": [
+          "mews_r0"
+        ]
+      }
+    },
+    {
+      "id": "bridge",
+      "axis": "v",
+      "c": 300.0,
+      "lo": 40.0,
+      "hi": 260.0,
+      "role": "cross",
+      "veh_per_hour": 150.0,
+      "routes": {
+        "f": [
+          "bridge_f0",
+          "bridge_f1",
+          "bridge_f2"
+        ],
+        "r": [
+          "bridge_r2",
+          "bridge_r1",
+          "bridge_r0"
+        ]
+      }
+    }
+  ],
+  "sidewalks": [
+    {
+      "edge": "bridge_f0",
+      "lane": "bridge_f0_0",
+      "length": 85.6,
+      "rect": [
+        303.2,
+        47.2,
+        305.2,
+        132.8
+      ]
+    },
+    {
+      "edge": "bridge_f1",
+      "lane": "bridge_f1_0",
+      "length": 65.6,
+      "rect": [
+        303.2,
+        147.2,
+        305.2,
+        212.8
+      ]
+    },
+    {
+      "edge": "bridge_f2",
+      "lane": "bridge_f2_0",
+      "length": 32.8,
+      "rect": [
+        303.2,
+        227.2,
+        305.2,
+        260.0
+      ]
+    },
+    {
+      "edge": "bridge_r0",
+      "lane": "bridge_r0_0",
+      "length": 85.6,
+      "rect": [
+        294.8,
+        47.2,
+        296.8,
+        132.8
+      ]
+    },
+    {
+      "edge": "bridge_r1",
+      "lane": "bridge_r1_0",
+      "length": 65.6,
+      "rect": [
+        294.8,
+        147.2,
+        296.8,
+        212.8
+      ]
+    },
+    {
+      "edge": "bridge_r2",
+      "lane": "bridge_r2_0",
+      "length": 32.8,
+      "rect": [
+        294.8,
+        227.2,
+        296.8,
+        260.0
+      ]
+    },
+    {
+      "edge": "church_f0",
+      "lane": "church_f0_0",
+      "length": 32.8,
+      "rect": [
+        73.2,
+        0.0,
+        75.2,
+        32.8
+      ]
+    },
+    {
+      "edge": "church_f1",
+      "lane": "church_f1_0",
+      "length": 85.6,
+      "rect": [
+        73.2,
+        47.2,
+        75.2,
+        132.8
+      ]
+    },
+    {
+      "edge": "church_f2",
+      "lane": "church_f2_0",
+      "length": 65.6,
+      "rect": [
+        73.2,
+        147.2,
+        75.2,
+        212.8
+      ]
+    },
+    {
+      "edge": "church_f3",
+      "lane": "church_f3_0",
+      "length": 32.8,
+      "rect": [
+        73.2,
+        227.2,
+        75.2,
+        260.0
+      ]
+    },
+    {
+      "edge": "church_r0",
+      "lane": "church_r0_0",
+      "length": 32.8,
+      "rect": [
+        64.8,
+        0.0,
+        66.8,
+        32.8
+      ]
+    },
+    {
+      "edge": "church_r1",
+      "lane": "church_r1_0",
+      "length": 85.6,
+      "rect": [
+        64.8,
+        47.2,
+        66.8,
+        132.8
+      ]
+    },
+    {
+      "edge": "church_r2",
+      "lane": "church_r2_0",
+      "length": 65.6,
+      "rect": [
+        64.8,
+        147.2,
+        66.8,
+        212.8
+      ]
+    },
+    {
+      "edge": "church_r3",
+      "lane": "church_r3_0",
+      "length": 32.8,
+      "rect": [
+        64.8,
+        227.2,
+        66.8,
+        260.0
+      ]
+    },
+    {
+      "edge": "garden_f0",
+      "lane": "garden_f0_0",
+      "length": 215.6,
+      "rect": [
+        77.2,
+        214.8,
+        292.8,
+        216.8
+      ]
+    },
+    {
+      "edge": "garden_r0",
+      "lane": "garden_r0_0",
+      "length": 215.6,
+      "rect": [
+        77.2,
+        223.2,
+        292.8,
+        225.2
+      ]
+    },
+    {
+      "edge": "high_f0",
+      "lane": "high_f0_0",
+      "length": 62.8,
+      "rect": [
+        0.0,
+        34.8,
+        62.8,
+        36.8
+      ]
+    },
+    {
+      "edge": "high_f1",
+      "lane": "high_f1_0",
+      "length": 95.6,
+      "rect": [
+        77.2,
+        34.8,
+        172.8,
+        36.8
+      ]
+    },
+    {
+      "edge": "high_f2",
+      "lane": "high_f2_0",
+      "length": 105.6,
+      "rect": [
+        187.2,
+        34.8,
+        292.8,
+        36.8
+      ]
+    },
+    {
+      "edge": "high_f3",
+      "lane": "high_f3_0",
+      "length": 52.8,
+      "rect": [
+        307.2,
+        34.8,
+        360.0,
+        36.8
+      ]
+    },
+    {
+      "edge": "high_r0",
+      "lane": "high_r0_0",
+      "length": 62.8,
+      "rect": [
+        0.0,
+        43.2,
+        62.8,
+        45.2
+      ]
+    },
+    {
+      "edge": "high_r1",
+      "lane": "high_r1_0",
+      "length": 95.6,
+      "rect": [
+        77.2,
+        43.2,
+        172.8,
+        45.2
+      ]
+    },
+    {
+      "edge": "high_r2",
+      "lane": "high_r2_0",
+      "length": 105.6,
+      "rect": [
+        187.2,
+        43.2,
+        292.8,
+        45.2
+      ]
+    },
+    {
+      "edge": "high_r3",
+      "lane": "high_r3_0",
+      "length": 52.8,
+      "rect": [
+        307.2,
+        43.2,
+        360.0,
+        45.2
+      ]
+    },
+    {
+      "edge": "market_f0",
+      "lane": "market_f0_0",
+      "length": 95.6,
+      "rect": [
+        77.2,
+        134.8,
+        172.8,
+        136.8
+      ]
+    },
+    {
+      "edge": "market_f1",
+      "lane": "market_f1_0",
+      "length": 105.6,
+      "rect": [
+        187.2,
+        134.8,
+        292.8,
+        136.8
+      ]
+    },
+    {
+      "edge": "market_f2",
+      "lane": "market_f2_0",
+      "length": 52.8,
+      "rect": [
+        307.2,
+        134.8,
+        360.0,
+        136.8
+      ]
+    },
+    {
+      "edge": "market_r0",
+      "lane": "market_r0_0",
+      "length": 95.6,
+      "rect": [
+        77.2,
+        143.2,
+        172.8,
+        145.2
+      ]
+    },
+    {
+      "edge": "market_r1",
+      "lane": "market_r1_0",
+      "length": 105.6,
+      "rect": [
+        187.2,
+        143.2,
+        292.8,
+        145.2
+      ]
+    },
+    {
+      "edge": "market_r2",
+      "lane": "market_r2_0",
+      "length": 52.8,
+      "rect": [
+        307.2,
+        143.2,
+        360.0,
+        145.2
+      ]
+    },
+    {
+      "edge": "mews_f0",
+      "lane": "mews_f0_0",
+      "length": 85.6,
+      "rect": [
+        183.2,
+        47.2,
+        185.2,
+        132.8
+      ]
+    },
+    {
+      "edge": "mews_r0",
+      "lane": "mews_r0_0",
+      "length": 85.6,
+      "rect": [
+        174.8,
+        47.2,
+        176.8,
+        132.8
+      ]
+    },
+    {
+      "edge": "stub_J_garden_bridge_E_in",
+      "lane": "stub_J_garden_bridge_E_in_0",
+      "length": 6.8,
+      "rect": [
+        307.2,
+        223.2,
+        314.0,
+        225.2
+      ]
+    },
+    {
+      "edge": "stub_J_garden_bridge_E_out",
+      "lane": "stub_J_garden_bridge_E_out_0",
+      "length": 6.8,
+      "rect": [
+        307.2,
+        214.8,
+        314.0,
+        216.8
+      ]
+    },
+    {
+      "edge": "stub_J_garden_church_W_in",
+      "lane": "stub_J_garden_church_W_in_0",
+      "length": 6.8,
+      "rect": [
+        56.0,
+        214.8,
+        62.8,
+        216.8
+      ]
+    },
+    {
+      "edge": "stub_J_garden_church_W_out",
+      "lane": "stub_J_garden_church_W_out_0",
+      "length": 6.8,
+      "rect": [
+        56.0,
+        223.2,
+        62.8,
+        225.2
+      ]
+    },
+    {
+      "edge": "stub_J_high_bridge_S_in",
+      "lane": "stub_J_high_bridge_S_in_0",
+      "length": 6.8,
+      "rect": [
+        303.2,
+        26.0,
+        305.2,
+        32.8
+      ]
+    },
+    {
+      "edge": "stub_J_high_bridge_S_out",
+      "lane": "stub_J_high_bridge_S_out_0",
+      "length": 6.8,
+      "rect": [
+        294.8,
+        26.0,
+        296.8,
+        32.8
+      ]
+    },
+    {
+      "edge": "stub_J_high_mews_S_in",
+      "lane": "stub_J_high_mews_S_in_0",
+      "length": 6.8,
+      "rect": [
+        183.2,
+        26.0,
+        185.2,
+        32.8
+      ]
+    },
+    {
+      "edge": "stub_J_high_mews_S_out",
+      "lane": "stub_J_high_mews_S_out_0",
+      "length": 6.8,
+      "rect": [
+        174.8,
+        26.0,
+        176.8,
+        32.8
+      ]
+    },
+    {
+      "edge": "stub_J_market_church_W_in",
+      "lane": "stub_J_market_church_W_in_0",
+      "length": 6.8,
+      "rect": [
+        56.0,
+        134.8,
+        62.8,
+        136.8
+      ]
+    },
+    {
+      "edge": "stub_J_market_church_W_out",
+      "lane": "stub_J_market_church_W_out_0",
+      "length": 6.8,
+      "rect": [
+        56.0,
+        143.2,
+        62.8,
+        145.2
+      ]
+    },
+    {
+      "edge": "stub_J_market_mews_N_in",
+      "lane": "stub_J_market_mews_N_in_0",
+      "length": 6.8,
+      "rect": [
+        174.8,
+        147.2,
+        176.8,
+        154.0
+      ]
+    },
+    {
+      "edge": "stub_J_market_mews_N_out",
+      "lane": "stub_J_market_mews_N_out_0",
+      "length": 6.8,
+      "rect": [
+        183.2,
+        147.2,
+        185.2,
+        154.0
+      ]
+    }
+  ],
+  "walkable_rects": [
+    [
+      303.2,
+      47.2,
+      305.2,
+      132.8
+    ],
+    [
+      303.2,
+      147.2,
+      305.2,
+      212.8
+    ],
+    [
+      303.2,
+      227.2,
+      305.2,
+      260.0
+    ],
+    [
+      294.8,
+      47.2,
+      296.8,
+      132.8
+    ],
+    [
+      294.8,
+      147.2,
+      296.8,
+      212.8
+    ],
+    [
+      294.8,
+      227.2,
+      296.8,
+      260.0
+    ],
+    [
+      73.2,
+      0.0,
+      75.2,
+      32.8
+    ],
+    [
+      73.2,
+      47.2,
+      75.2,
+      132.8
+    ],
+    [
+      73.2,
+      147.2,
+      75.2,
+      212.8
+    ],
+    [
+      73.2,
+      227.2,
+      75.2,
+      260.0
+    ],
+    [
+      64.8,
+      0.0,
+      66.8,
+      32.8
+    ],
+    [
+      64.8,
+      47.2,
+      66.8,
+      132.8
+    ],
+    [
+      64.8,
+      147.2,
+      66.8,
+      212.8
+    ],
+    [
+      64.8,
+      227.2,
+      66.8,
+      260.0
+    ],
+    [
+      77.2,
+      214.8,
+      292.8,
+      216.8
+    ],
+    [
+      77.2,
+      223.2,
+      292.8,
+      225.2
+    ],
+    [
+      0.0,
+      34.8,
+      62.8,
+      36.8
+    ],
+    [
+      77.2,
+      34.8,
+      172.8,
+      36.8
+    ],
+    [
+      187.2,
+      34.8,
+      292.8,
+      36.8
+    ],
+    [
+      307.2,
+      34.8,
+      360.0,
+      36.8
+    ],
+    [
+      0.0,
+      43.2,
+      62.8,
+      45.2
+    ],
+    [
+      77.2,
+      43.2,
+      172.8,
+      45.2
+    ],
+    [
+      187.2,
+      43.2,
+      292.8,
+      45.2
+    ],
+    [
+      307.2,
+      43.2,
+      360.0,
+      45.2
+    ],
+    [
+      77.2,
+      134.8,
+      172.8,
+      136.8
+    ],
+    [
+      187.2,
+      134.8,
+      292.8,
+      136.8
+    ],
+    [
+      307.2,
+      134.8,
+      360.0,
+      136.8
+    ],
+    [
+      77.2,
+      143.2,
+      172.8,
+      145.2
+    ],
+    [
+      187.2,
+      143.2,
+      292.8,
+      145.2
+    ],
+    [
+      307.2,
+      143.2,
+      360.0,
+      145.2
+    ],
+    [
+      183.2,
+      47.2,
+      185.2,
+      132.8
+    ],
+    [
+      174.8,
+      47.2,
+      176.8,
+      132.8
+    ],
+    [
+      307.2,
+      223.2,
+      314.0,
+      225.2
+    ],
+    [
+      307.2,
+      214.8,
+      314.0,
+      216.8
+    ],
+    [
+      56.0,
+      214.8,
+      62.8,
+      216.8
+    ],
+    [
+      56.0,
+      223.2,
+      62.8,
+      225.2
+    ],
+    [
+      303.2,
+      26.0,
+      305.2,
+      32.8
+    ],
+    [
+      294.8,
+      26.0,
+      296.8,
+      32.8
+    ],
+    [
+      183.2,
+      26.0,
+      185.2,
+      32.8
+    ],
+    [
+      174.8,
+      26.0,
+      176.8,
+      32.8
+    ],
+    [
+      56.0,
+      134.8,
+      62.8,
+      136.8
+    ],
+    [
+      56.0,
+      143.2,
+      62.8,
+      145.2
+    ],
+    [
+      174.8,
+      147.2,
+      176.8,
+      154.0
+    ],
+    [
+      183.2,
+      147.2,
+      185.2,
+      154.0
+    ]
+  ],
+  "crossings": [
+    {
+      "id": ":J_garden_bridge_c0",
+      "rect": [
+        296.8,
+        223.2,
+        303.2,
+        227.2
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_garden_bridge",
+      "linkIndex": 12,
+      "strips": {
+        "E": [
+          295.0,
+          223.2,
+          296.8,
+          227.2
+        ],
+        "W": [
+          303.2,
+          223.2,
+          305.0,
+          227.2
+        ]
+      },
+      "road": "bridge",
+      "junction": "J_garden_bridge"
+    },
+    {
+      "id": ":J_garden_bridge_c1",
+      "rect": [
+        303.2,
+        216.8,
+        307.2,
+        223.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_garden_bridge",
+      "linkIndex": 13,
+      "strips": {
+        "N": [
+          303.2,
+          215.0,
+          307.2,
+          216.8
+        ],
+        "S": [
+          303.2,
+          223.2,
+          307.2,
+          225.0
+        ]
+      },
+      "road": "garden",
+      "junction": "J_garden_bridge"
+    },
+    {
+      "id": ":J_garden_bridge_c2",
+      "rect": [
+        296.8,
+        212.8,
+        303.2,
+        216.8
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_garden_bridge",
+      "linkIndex": 14,
+      "strips": {
+        "E": [
+          295.0,
+          212.8,
+          296.8,
+          216.8
+        ],
+        "W": [
+          303.2,
+          212.8,
+          305.0,
+          216.8
+        ]
+      },
+      "road": "bridge",
+      "junction": "J_garden_bridge"
+    },
+    {
+      "id": ":J_garden_bridge_c3",
+      "rect": [
+        292.8,
+        216.8,
+        296.8,
+        223.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_garden_bridge",
+      "linkIndex": 15,
+      "strips": {
+        "N": [
+          292.8,
+          215.0,
+          296.8,
+          216.8
+        ],
+        "S": [
+          292.8,
+          223.2,
+          296.8,
+          225.0
+        ]
+      },
+      "road": "garden",
+      "junction": "J_garden_bridge"
+    },
+    {
+      "id": ":J_garden_church_c0",
+      "rect": [
+        66.8,
+        223.2,
+        73.2,
+        227.2
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_garden_church",
+      "linkIndex": 12,
+      "strips": {
+        "E": [
+          65.0,
+          223.2,
+          66.8,
+          227.2
+        ],
+        "W": [
+          73.2,
+          223.2,
+          75.0,
+          227.2
+        ]
+      },
+      "road": "church",
+      "junction": "J_garden_church"
+    },
+    {
+      "id": ":J_garden_church_c1",
+      "rect": [
+        73.2,
+        216.8,
+        77.2,
+        223.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_garden_church",
+      "linkIndex": 13,
+      "strips": {
+        "N": [
+          73.2,
+          215.0,
+          77.2,
+          216.8
+        ],
+        "S": [
+          73.2,
+          223.2,
+          77.2,
+          225.0
+        ]
+      },
+      "road": "garden",
+      "junction": "J_garden_church"
+    },
+    {
+      "id": ":J_garden_church_c2",
+      "rect": [
+        66.8,
+        212.8,
+        73.2,
+        216.8
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_garden_church",
+      "linkIndex": 14,
+      "strips": {
+        "E": [
+          65.0,
+          212.8,
+          66.8,
+          216.8
+        ],
+        "W": [
+          73.2,
+          212.8,
+          75.0,
+          216.8
+        ]
+      },
+      "road": "church",
+      "junction": "J_garden_church"
+    },
+    {
+      "id": ":J_garden_church_c3",
+      "rect": [
+        62.8,
+        216.8,
+        66.8,
+        223.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_garden_church",
+      "linkIndex": 15,
+      "strips": {
+        "N": [
+          62.8,
+          215.0,
+          66.8,
+          216.8
+        ],
+        "S": [
+          62.8,
+          223.2,
+          66.8,
+          225.0
+        ]
+      },
+      "road": "garden",
+      "junction": "J_garden_church"
+    },
+    {
+      "id": ":J_high_bridge_c0",
+      "rect": [
+        296.8,
+        43.2,
+        303.2,
+        47.2
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_high_bridge",
+      "linkIndex": 12,
+      "strips": {
+        "E": [
+          295.0,
+          43.2,
+          296.8,
+          47.2
+        ],
+        "W": [
+          303.2,
+          43.2,
+          305.0,
+          47.2
+        ]
+      },
+      "road": "bridge",
+      "junction": "J_high_bridge"
+    },
+    {
+      "id": ":J_high_bridge_c1",
+      "rect": [
+        303.2,
+        36.8,
+        307.2,
+        43.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_high_bridge",
+      "linkIndex": 13,
+      "strips": {
+        "N": [
+          303.2,
+          35.0,
+          307.2,
+          36.8
+        ],
+        "S": [
+          303.2,
+          43.2,
+          307.2,
+          45.0
+        ]
+      },
+      "road": "high",
+      "junction": "J_high_bridge"
+    },
+    {
+      "id": ":J_high_bridge_c2",
+      "rect": [
+        296.8,
+        32.8,
+        303.2,
+        36.8
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_high_bridge",
+      "linkIndex": 14,
+      "strips": {
+        "E": [
+          295.0,
+          32.8,
+          296.8,
+          36.8
+        ],
+        "W": [
+          303.2,
+          32.8,
+          305.0,
+          36.8
+        ]
+      },
+      "road": "bridge",
+      "junction": "J_high_bridge"
+    },
+    {
+      "id": ":J_high_bridge_c3",
+      "rect": [
+        292.8,
+        36.8,
+        296.8,
+        43.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_high_bridge",
+      "linkIndex": 15,
+      "strips": {
+        "N": [
+          292.8,
+          35.0,
+          296.8,
+          36.8
+        ],
+        "S": [
+          292.8,
+          43.2,
+          296.8,
+          45.0
+        ]
+      },
+      "road": "high",
+      "junction": "J_high_bridge"
+    },
+    {
+      "id": ":J_high_church_c0",
+      "rect": [
+        66.8,
+        43.2,
+        73.2,
+        47.2
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_high_church",
+      "linkIndex": 12,
+      "strips": {
+        "E": [
+          65.0,
+          43.2,
+          66.8,
+          47.2
+        ],
+        "W": [
+          73.2,
+          43.2,
+          75.0,
+          47.2
+        ]
+      },
+      "road": "church",
+      "junction": "J_high_church"
+    },
+    {
+      "id": ":J_high_church_c1",
+      "rect": [
+        73.2,
+        36.8,
+        77.2,
+        43.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_high_church",
+      "linkIndex": 13,
+      "strips": {
+        "N": [
+          73.2,
+          35.0,
+          77.2,
+          36.8
+        ],
+        "S": [
+          73.2,
+          43.2,
+          77.2,
+          45.0
+        ]
+      },
+      "road": "high",
+      "junction": "J_high_church"
+    },
+    {
+      "id": ":J_high_church_c2",
+      "rect": [
+        66.8,
+        32.8,
+        73.2,
+        36.8
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_high_church",
+      "linkIndex": 14,
+      "strips": {
+        "E": [
+          65.0,
+          32.8,
+          66.8,
+          36.8
+        ],
+        "W": [
+          73.2,
+          32.8,
+          75.0,
+          36.8
+        ]
+      },
+      "road": "church",
+      "junction": "J_high_church"
+    },
+    {
+      "id": ":J_high_church_c3",
+      "rect": [
+        62.8,
+        36.8,
+        66.8,
+        43.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_high_church",
+      "linkIndex": 15,
+      "strips": {
+        "N": [
+          62.8,
+          35.0,
+          66.8,
+          36.8
+        ],
+        "S": [
+          62.8,
+          43.2,
+          66.8,
+          45.0
+        ]
+      },
+      "road": "high",
+      "junction": "J_high_church"
+    },
+    {
+      "id": ":J_high_mews_c0",
+      "rect": [
+        176.8,
+        43.2,
+        183.2,
+        47.2
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_high_mews",
+      "linkIndex": 12,
+      "strips": {
+        "E": [
+          175.0,
+          43.2,
+          176.8,
+          47.2
+        ],
+        "W": [
+          183.2,
+          43.2,
+          185.0,
+          47.2
+        ]
+      },
+      "road": "mews",
+      "junction": "J_high_mews"
+    },
+    {
+      "id": ":J_high_mews_c1",
+      "rect": [
+        183.2,
+        36.8,
+        187.2,
+        43.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_high_mews",
+      "linkIndex": 13,
+      "strips": {
+        "N": [
+          183.2,
+          35.0,
+          187.2,
+          36.8
+        ],
+        "S": [
+          183.2,
+          43.2,
+          187.2,
+          45.0
+        ]
+      },
+      "road": "high",
+      "junction": "J_high_mews"
+    },
+    {
+      "id": ":J_high_mews_c2",
+      "rect": [
+        176.8,
+        32.8,
+        183.2,
+        36.8
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_high_mews",
+      "linkIndex": 14,
+      "strips": {
+        "E": [
+          175.0,
+          32.8,
+          176.8,
+          36.8
+        ],
+        "W": [
+          183.2,
+          32.8,
+          185.0,
+          36.8
+        ]
+      },
+      "road": "mews",
+      "junction": "J_high_mews"
+    },
+    {
+      "id": ":J_high_mews_c3",
+      "rect": [
+        172.8,
+        36.8,
+        176.8,
+        43.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_high_mews",
+      "linkIndex": 15,
+      "strips": {
+        "N": [
+          172.8,
+          35.0,
+          176.8,
+          36.8
+        ],
+        "S": [
+          172.8,
+          43.2,
+          176.8,
+          45.0
+        ]
+      },
+      "road": "high",
+      "junction": "J_high_mews"
+    },
+    {
+      "id": ":J_market_bridge_c0",
+      "rect": [
+        296.8,
+        143.2,
+        303.2,
+        147.2
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_market_bridge",
+      "linkIndex": 12,
+      "strips": {
+        "E": [
+          295.0,
+          143.2,
+          296.8,
+          147.2
+        ],
+        "W": [
+          303.2,
+          143.2,
+          305.0,
+          147.2
+        ]
+      },
+      "road": "bridge",
+      "junction": "J_market_bridge"
+    },
+    {
+      "id": ":J_market_bridge_c1",
+      "rect": [
+        303.2,
+        136.8,
+        307.2,
+        143.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_market_bridge",
+      "linkIndex": 13,
+      "strips": {
+        "N": [
+          303.2,
+          135.0,
+          307.2,
+          136.8
+        ],
+        "S": [
+          303.2,
+          143.2,
+          307.2,
+          145.0
+        ]
+      },
+      "road": "market",
+      "junction": "J_market_bridge"
+    },
+    {
+      "id": ":J_market_bridge_c2",
+      "rect": [
+        296.8,
+        132.8,
+        303.2,
+        136.8
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_market_bridge",
+      "linkIndex": 14,
+      "strips": {
+        "E": [
+          295.0,
+          132.8,
+          296.8,
+          136.8
+        ],
+        "W": [
+          303.2,
+          132.8,
+          305.0,
+          136.8
+        ]
+      },
+      "road": "bridge",
+      "junction": "J_market_bridge"
+    },
+    {
+      "id": ":J_market_bridge_c3",
+      "rect": [
+        292.8,
+        136.8,
+        296.8,
+        143.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_market_bridge",
+      "linkIndex": 15,
+      "strips": {
+        "N": [
+          292.8,
+          135.0,
+          296.8,
+          136.8
+        ],
+        "S": [
+          292.8,
+          143.2,
+          296.8,
+          145.0
+        ]
+      },
+      "road": "market",
+      "junction": "J_market_bridge"
+    },
+    {
+      "id": ":J_market_church_c0",
+      "rect": [
+        66.8,
+        143.2,
+        73.2,
+        147.2
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_market_church",
+      "linkIndex": 12,
+      "strips": {
+        "E": [
+          65.0,
+          143.2,
+          66.8,
+          147.2
+        ],
+        "W": [
+          73.2,
+          143.2,
+          75.0,
+          147.2
+        ]
+      },
+      "road": "church",
+      "junction": "J_market_church"
+    },
+    {
+      "id": ":J_market_church_c1",
+      "rect": [
+        73.2,
+        136.8,
+        77.2,
+        143.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_market_church",
+      "linkIndex": 13,
+      "strips": {
+        "N": [
+          73.2,
+          135.0,
+          77.2,
+          136.8
+        ],
+        "S": [
+          73.2,
+          143.2,
+          77.2,
+          145.0
+        ]
+      },
+      "road": "market",
+      "junction": "J_market_church"
+    },
+    {
+      "id": ":J_market_church_c2",
+      "rect": [
+        66.8,
+        132.8,
+        73.2,
+        136.8
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_market_church",
+      "linkIndex": 14,
+      "strips": {
+        "E": [
+          65.0,
+          132.8,
+          66.8,
+          136.8
+        ],
+        "W": [
+          73.2,
+          132.8,
+          75.0,
+          136.8
+        ]
+      },
+      "road": "church",
+      "junction": "J_market_church"
+    },
+    {
+      "id": ":J_market_church_c3",
+      "rect": [
+        62.8,
+        136.8,
+        66.8,
+        143.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_market_church",
+      "linkIndex": 15,
+      "strips": {
+        "N": [
+          62.8,
+          135.0,
+          66.8,
+          136.8
+        ],
+        "S": [
+          62.8,
+          143.2,
+          66.8,
+          145.0
+        ]
+      },
+      "road": "market",
+      "junction": "J_market_church"
+    },
+    {
+      "id": ":J_market_mews_c0",
+      "rect": [
+        176.8,
+        143.2,
+        183.2,
+        147.2
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_market_mews",
+      "linkIndex": 12,
+      "strips": {
+        "E": [
+          175.0,
+          143.2,
+          176.8,
+          147.2
+        ],
+        "W": [
+          183.2,
+          143.2,
+          185.0,
+          147.2
+        ]
+      },
+      "road": "mews",
+      "junction": "J_market_mews"
+    },
+    {
+      "id": ":J_market_mews_c1",
+      "rect": [
+        183.2,
+        136.8,
+        187.2,
+        143.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_market_mews",
+      "linkIndex": 13,
+      "strips": {
+        "N": [
+          183.2,
+          135.0,
+          187.2,
+          136.8
+        ],
+        "S": [
+          183.2,
+          143.2,
+          187.2,
+          145.0
+        ]
+      },
+      "road": "market",
+      "junction": "J_market_mews"
+    },
+    {
+      "id": ":J_market_mews_c2",
+      "rect": [
+        176.8,
+        132.8,
+        183.2,
+        136.8
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_market_mews",
+      "linkIndex": 14,
+      "strips": {
+        "E": [
+          175.0,
+          132.8,
+          176.8,
+          136.8
+        ],
+        "W": [
+          183.2,
+          132.8,
+          185.0,
+          136.8
+        ]
+      },
+      "road": "mews",
+      "junction": "J_market_mews"
+    },
+    {
+      "id": ":J_market_mews_c3",
+      "rect": [
+        172.8,
+        136.8,
+        176.8,
+        143.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_market_mews",
+      "linkIndex": 15,
+      "strips": {
+        "N": [
+          172.8,
+          135.0,
+          176.8,
+          136.8
+        ],
+        "S": [
+          172.8,
+          143.2,
+          176.8,
+          145.0
+        ]
+      },
+      "road": "market",
+      "junction": "J_market_mews"
+    }
+  ],
+  "tls": [
+    "J_garden_bridge",
+    "J_garden_church",
+    "J_high_bridge",
+    "J_high_church",
+    "J_high_mews",
+    "J_market_bridge",
+    "J_market_church",
+    "J_market_mews"
+  ],
+  "plazas": [
+    {
+      "id": "queen_square",
+      "rect": [
+        232.0,
+        147.0,
+        291.0,
+        213.0
+      ]
+    }
+  ],
+  "robot": {
+    "start": [
+      2.0,
+      44.2
+    ],
+    "goal": [
+      358.0,
+      144.2
+    ],
+    "waypoints": [
+      [
+        2.0,
+        44.2
+      ],
+      [
+        295.4,
+        44.2
+      ],
+      [
+        295.4,
+        144.2
+      ],
+      [
+        358.0,
+        144.2
+      ]
+    ]
+  },
+  "routes": {
+    "default": [
+      [
+        2.0,
+        44.2
+      ],
+      [
+        295.4,
+        44.2
+      ],
+      [
+        295.4,
+        144.2
+      ],
+      [
+        358.0,
+        144.2
+      ]
+    ],
+    "path1": [
+      [
+        2.0,
+        44.2
+      ],
+      [
+        295.4,
+        44.2
+      ],
+      [
+        295.4,
+        144.2
+      ],
+      [
+        358.0,
+        144.2
+      ]
+    ],
+    "path2": [
+      [
+        2.0,
+        44.2
+      ],
+      [
+        175.8,
+        44.2
+      ],
+      [
+        175.8,
+        135.8
+      ],
+      [
+        295.8,
+        135.8
+      ],
+      [
+        295.8,
+        258.0
+      ]
+    ]
+  },
+  "signal_params": {
+    "wait_strip": 1.8
+  }
+}

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <!-- native demand: map=map4_london mode=all seed=1 -->
+    <vType id="t_pf0" vClass="pedestrian" maxSpeed="1.478" width="0.64" length="0.35"/>
+    <vType id="t_pf1" vClass="pedestrian" maxSpeed="1.004" width="0.64" length="0.35"/>
+    <vType id="t_pf2" vClass="pedestrian" maxSpeed="1.160" width="0.64" length="0.35"/>
+    <vType id="t_pf3" vClass="pedestrian" maxSpeed="1.431" width="0.64" length="0.35"/>
+    <vType id="t_pf4" vClass="pedestrian" maxSpeed="1.054" width="0.64" length="0.35"/>
+    <vType id="t_pf5" vClass="pedestrian" maxSpeed="1.320" width="0.64" length="0.35"/>
+    <vType id="t_pf6" vClass="pedestrian" maxSpeed="1.505" width="0.64" length="0.35"/>
+    <vType id="t_pf7" vClass="pedestrian" maxSpeed="1.575" width="0.64" length="0.35"/>
+    <vType id="t_pf8" vClass="pedestrian" maxSpeed="1.562" width="0.64" length="0.35"/>
+    <vType id="t_pf9" vClass="pedestrian" maxSpeed="1.133" width="0.64" length="0.35"/>
+    <vType id="t_pf10" vClass="pedestrian" maxSpeed="1.538" width="0.64" length="0.35"/>
+    <vType id="t_pf11" vClass="pedestrian" maxSpeed="1.303" width="0.64" length="0.35"/>
+    <vType id="t_pf12" vClass="pedestrian" maxSpeed="1.506" width="0.64" length="0.35"/>
+    <vType id="t_pf13" vClass="pedestrian" maxSpeed="1.421" width="0.64" length="0.35"/>
+    <vType id="t_pf14" vClass="pedestrian" maxSpeed="1.391" width="0.64" length="0.35"/>
+    <vType id="t_pf15" vClass="pedestrian" maxSpeed="0.869" width="0.64" length="0.35"/>
+    <vType id="t_pf16" vClass="pedestrian" maxSpeed="0.845" width="0.64" length="0.35"/>
+    <vType id="t_pf17" vClass="pedestrian" maxSpeed="1.496" width="0.64" length="0.35"/>
+    <vType id="t_pf18" vClass="pedestrian" maxSpeed="1.256" width="0.64" length="0.35"/>
+    <vType id="t_pf19" vClass="pedestrian" maxSpeed="0.960" width="0.64" length="0.35"/>
+    <vType id="t_pf20" vClass="pedestrian" maxSpeed="0.948" width="0.64" length="0.35"/>
+    <vType id="t_pf21" vClass="pedestrian" maxSpeed="1.032" width="0.64" length="0.35"/>
+    <vType id="t_pf22" vClass="pedestrian" maxSpeed="0.934" width="0.64" length="0.35"/>
+    <vType id="t_pf23" vClass="pedestrian" maxSpeed="1.004" width="0.64" length="0.35"/>
+    <flow id="veh_high_f" begin="0.00" end="36000.00" vehsPerHour="500.00" from="high_f0" to="high_f3" departLane="best" departSpeed="max"/>
+    <flow id="veh_high_r" begin="0.00" end="36000.00" vehsPerHour="500.00" from="high_r3" to="high_r0" departLane="best" departSpeed="max"/>
+    <flow id="veh_market_f" begin="0.00" end="36000.00" vehsPerHour="200.00" from="market_f0" to="market_f2" departLane="best" departSpeed="max"/>
+    <flow id="veh_market_r" begin="0.00" end="36000.00" vehsPerHour="200.00" from="market_r2" to="market_r0" departLane="best" departSpeed="max"/>
+    <flow id="veh_church_f" begin="0.00" end="36000.00" vehsPerHour="150.00" from="church_f0" to="church_f3" departLane="best" departSpeed="max"/>
+    <flow id="veh_church_r" begin="0.00" end="36000.00" vehsPerHour="150.00" from="church_r3" to="church_r0" departLane="best" departSpeed="max"/>
+    <flow id="veh_bridge_f" begin="0.00" end="36000.00" vehsPerHour="150.00" from="bridge_f0" to="bridge_f2" departLane="best" departSpeed="max"/>
+    <flow id="veh_bridge_r" begin="0.00" end="36000.00" vehsPerHour="150.00" from="bridge_r2" to="bridge_r0" departLane="best" departSpeed="max"/>
+    <person id="stand_high_0" depart="0.00" departPos="3.38">
+        <walk edges="high_r3" arrivalPos="4.38" speed="0.00002"/>
+    </person>
+    <person id="stand_high_1" depart="0.00" departPos="45.97">
+        <walk edges="high_r2" arrivalPos="46.97" speed="0.00002"/>
+    </person>
+    <person id="stand_high_2" depart="0.00" departPos="42.91">
+        <walk edges="high_f0" arrivalPos="43.91" speed="0.00002"/>
+    </person>
+    <person id="stand_high_3" depart="0.00" departPos="44.43">
+        <walk edges="high_r0" arrivalPos="45.43" speed="0.00002"/>
+    </person>
+    <person id="stand_high_4" depart="0.00" departPos="30.85">
+        <walk edges="high_f3" arrivalPos="31.85" speed="0.00002"/>
+    </person>
+    <person id="stand_market_0" depart="0.00" departPos="24.52">
+        <walk edges="market_r1" arrivalPos="25.52" speed="0.00002"/>
+    </person>
+    <person id="stand_market_1" depart="0.00" departPos="88.03">
+        <walk edges="market_r0" arrivalPos="89.03" speed="0.00002"/>
+    </person>
+    <person id="stand_market_2" depart="0.00" departPos="25.68">
+        <walk edges="market_r1" arrivalPos="26.68" speed="0.00002"/>
+    </person>
+    <person id="stand_market_3" depart="0.00" departPos="70.77">
+        <walk edges="market_f1" arrivalPos="71.77" speed="0.00002"/>
+    </person>
+    <person id="stand_garden_0" depart="0.00" departPos="159.25">
+        <walk edges="garden_f0" arrivalPos="160.25" speed="0.00002"/>
+    </person>
+    <person id="stand_garden_1" depart="0.00" departPos="109.43">
+        <walk edges="garden_r0" arrivalPos="110.43" speed="0.00002"/>
+    </person>
+    <person id="stand_garden_2" depart="0.00" departPos="66.19">
+        <walk edges="garden_f0" arrivalPos="67.19" speed="0.00002"/>
+    </person>
+    <person id="stand_garden_3" depart="0.00" departPos="181.06">
+        <walk edges="garden_r0" arrivalPos="182.06" speed="0.00002"/>
+    </person>
+    <person id="stand_garden_4" depart="0.00" departPos="126.63">
+        <walk edges="garden_r0" arrivalPos="127.63" speed="0.00002"/>
+    </person>
+    <person id="stand_garden_5" depart="0.00" departPos="103.62">
+        <walk edges="garden_f0" arrivalPos="104.62" speed="0.00002"/>
+    </person>
+    <person id="stand_garden_6" depart="0.00" departPos="89.67">
+        <walk edges="garden_r0" arrivalPos="90.67" speed="0.00002"/>
+    </person>
+    <person id="stand_garden_7" depart="0.00" departPos="79.68">
+        <walk edges="garden_f0" arrivalPos="80.68" speed="0.00002"/>
+    </person>
+    <person id="stand_church_0" depart="0.00" departPos="65.52">
+        <walk edges="church_f1" arrivalPos="66.52" speed="0.00002"/>
+    </person>
+    <person id="stand_church_1" depart="0.00" departPos="24.82">
+        <walk edges="church_r2" arrivalPos="25.82" speed="0.00002"/>
+    </person>
+    <person id="stand_church_2" depart="0.00" departPos="15.52">
+        <walk edges="church_f0" arrivalPos="16.52" speed="0.00002"/>
+    </person>
+    <person id="stand_church_3" depart="0.00" departPos="22.26">
+        <walk edges="church_r0" arrivalPos="23.26" speed="0.00002"/>
+    </person>
+    <person id="stand_church_4" depart="0.00" departPos="41.86">
+        <walk edges="church_r2" arrivalPos="42.86" speed="0.00002"/>
+    </person>
+    <person id="stand_church_5" depart="0.00" departPos="32.94">
+        <walk edges="church_f2" arrivalPos="33.94" speed="0.00002"/>
+    </person>
+    <person id="stand_church_6" depart="0.00" departPos="24.19">
+        <walk edges="church_f0" arrivalPos="25.19" speed="0.00002"/>
+    </person>
+    <person id="stand_church_7" depart="0.00" departPos="13.65">
+        <walk edges="church_f3" arrivalPos="14.65" speed="0.00002"/>
+    </person>
+    <person id="stand_church_8" depart="0.00" departPos="79.72">
+        <walk edges="church_r1" arrivalPos="80.72" speed="0.00002"/>
+    </person>
+    <person id="stand_church_9" depart="0.00" departPos="39.47">
+        <walk edges="church_r1" arrivalPos="40.47" speed="0.00002"/>
+    </person>
+    <person id="stand_church_10" depart="0.00" departPos="20.99">
+        <walk edges="church_r0" arrivalPos="21.99" speed="0.00002"/>
+    </person>
+    <person id="stand_church_11" depart="0.00" departPos="13.05">
+        <walk edges="church_f0" arrivalPos="14.05" speed="0.00002"/>
+    </person>
+    <person id="stand_church_12" depart="0.00" departPos="33.95">
+        <walk edges="church_f2" arrivalPos="34.95" speed="0.00002"/>
+    </person>
+    <person id="stand_church_13" depart="0.00" departPos="14.27">
+        <walk edges="church_f3" arrivalPos="15.27" speed="0.00002"/>
+    </person>
+    <person id="stand_mews_0" depart="0.00" departPos="41.57">
+        <walk edges="mews_r0" arrivalPos="42.57" speed="0.00002"/>
+    </person>
+    <person id="stand_mews_1" depart="0.00" departPos="35.82">
+        <walk edges="mews_r0" arrivalPos="36.82" speed="0.00002"/>
+    </person>
+    <person id="stand_mews_2" depart="0.00" departPos="45.94">
+        <walk edges="mews_f0" arrivalPos="46.94" speed="0.00002"/>
+    </person>
+    <person id="stand_mews_3" depart="0.00" departPos="39.38">
+        <walk edges="mews_r0" arrivalPos="40.38" speed="0.00002"/>
+    </person>
+    <person id="stand_mews_4" depart="0.00" departPos="67.65">
+        <walk edges="mews_f0" arrivalPos="68.65" speed="0.00002"/>
+    </person>
+    <person id="stand_mews_5" depart="0.00" departPos="46.94">
+        <walk edges="mews_f0" arrivalPos="47.94" speed="0.00002"/>
+    </person>
+    <person id="stand_mews_6" depart="0.00" departPos="72.26">
+        <walk edges="mews_f0" arrivalPos="73.26" speed="0.00002"/>
+    </person>
+    <person id="stand_mews_7" depart="0.00" departPos="4.65">
+        <walk edges="mews_r0" arrivalPos="5.65" speed="0.00002"/>
+    </person>
+    <person id="stand_mews_8" depart="0.00" departPos="8.79">
+        <walk edges="mews_f0" arrivalPos="9.79" speed="0.00002"/>
+    </person>
+    <person id="stand_mews_9" depart="0.00" departPos="38.96">
+        <walk edges="mews_f0" arrivalPos="39.96" speed="0.00002"/>
+    </person>
+    <person id="stand_mews_10" depart="0.00" departPos="22.36">
+        <walk edges="mews_r0" arrivalPos="23.36" speed="0.00002"/>
+    </person>
+    <person id="stand_mews_11" depart="0.00" departPos="67.06">
+        <walk edges="mews_f0" arrivalPos="68.06" speed="0.00002"/>
+    </person>
+    <person id="stand_bridge_0" depart="0.00" departPos="9.86">
+        <walk edges="bridge_r2" arrivalPos="10.86" speed="0.00002"/>
+    </person>
+    <person id="stand_bridge_1" depart="0.00" departPos="10.48">
+        <walk edges="bridge_r2" arrivalPos="11.48" speed="0.00002"/>
+    </person>
+    <person id="stand_bridge_2" depart="0.00" departPos="11.27">
+        <walk edges="bridge_r2" arrivalPos="12.27" speed="0.00002"/>
+    </person>
+    <person id="stand_bridge_3" depart="0.00" departPos="11.32">
+        <walk edges="bridge_r0" arrivalPos="12.32" speed="0.00002"/>
+    </person>
+    <person id="stand_bridge_4" depart="0.00" departPos="13.13">
+        <walk edges="bridge_f2" arrivalPos="14.13" speed="0.00002"/>
+    </person>
+    <person id="stand_bridge_5" depart="0.00" departPos="66.97">
+        <walk edges="bridge_r0" arrivalPos="67.97" speed="0.00002"/>
+    </person>
+    <personFlow id="pf0" type="t_pf0" begin="0.00" end="36000.00" period="exp(0.032300)" departPos="52.50">
+        <walk edges="high_f3 high_f2 high_f1 high_f0" arrivalPos="0.30"/>
+    </personFlow>
+    <personFlow id="pf1" type="t_pf1" begin="0.00" end="36000.00" period="exp(0.079505)" departPos="0.30">
+        <walk edges="high_f0 high_f1 high_f2 high_f3" arrivalPos="52.50"/>
+    </personFlow>
+    <personFlow id="pf2" type="t_pf2" begin="0.00" end="36000.00" period="exp(0.059380)" departPos="0.30">
+        <walk edges="high_r3 high_r2 high_r1 high_r0" arrivalPos="62.50"/>
+    </personFlow>
+    <personFlow id="pf3" type="t_pf3" begin="0.00" end="36000.00" period="exp(0.071092)" departPos="62.50">
+        <walk edges="high_r0 high_r1 high_r2 high_r3" arrivalPos="0.30"/>
+    </personFlow>
+    <personFlow id="pf4" type="t_pf4" begin="0.00" end="36000.00" period="exp(0.029889)" departPos="52.50">
+        <walk edges="market_f2 market_f1 market_f0" arrivalPos="0.30"/>
+    </personFlow>
+    <personFlow id="pf5" type="t_pf5" begin="0.00" end="36000.00" period="exp(0.023896)" departPos="0.30">
+        <walk edges="market_f0 market_f1 market_f2" arrivalPos="52.50"/>
+    </personFlow>
+    <personFlow id="pf6" type="t_pf6" begin="0.00" end="36000.00" period="exp(0.022913)" departPos="0.30">
+        <walk edges="market_r2 market_r1 market_r0" arrivalPos="95.30"/>
+    </personFlow>
+    <personFlow id="pf7" type="t_pf7" begin="0.00" end="36000.00" period="exp(0.073709)" departPos="95.30">
+        <walk edges="market_r0 market_r1 market_r2" arrivalPos="0.30"/>
+    </personFlow>
+    <personFlow id="pf8" type="t_pf8" begin="0.00" end="36000.00" period="exp(0.079293)" departPos="215.30">
+        <walk edges="garden_f0" arrivalPos="0.30"/>
+    </personFlow>
+    <personFlow id="pf9" type="t_pf9" begin="0.00" end="36000.00" period="exp(0.091710)" departPos="0.30">
+        <walk edges="garden_f0" arrivalPos="215.30"/>
+    </personFlow>
+    <personFlow id="pf10" type="t_pf10" begin="0.00" end="36000.00" period="exp(0.090942)" departPos="0.30">
+        <walk edges="garden_r0" arrivalPos="215.30"/>
+    </personFlow>
+    <personFlow id="pf11" type="t_pf11" begin="0.00" end="36000.00" period="exp(0.029722)" departPos="215.30">
+        <walk edges="garden_r0" arrivalPos="0.30"/>
+    </personFlow>
+    <personFlow id="pf12" type="t_pf12" begin="0.00" end="36000.00" period="exp(0.038889)" departPos="0.30">
+        <walk edges="church_f0 church_f1 church_f2 church_f3" arrivalPos="32.50"/>
+    </personFlow>
+    <personFlow id="pf13" type="t_pf13" begin="0.00" end="36000.00" period="exp(0.038889)" departPos="32.50">
+        <walk edges="church_f3 church_f2 church_f1 church_f0" arrivalPos="0.30"/>
+    </personFlow>
+    <personFlow id="pf14" type="t_pf14" begin="0.00" end="36000.00" period="exp(0.038889)" departPos="32.50">
+        <walk edges="church_r0 church_r1 church_r2 church_r3" arrivalPos="0.30"/>
+    </personFlow>
+    <personFlow id="pf15" type="t_pf15" begin="0.00" end="36000.00" period="exp(0.038889)" departPos="0.30">
+        <walk edges="church_r3 church_r2 church_r1 church_r0" arrivalPos="32.50"/>
+    </personFlow>
+    <personFlow id="pf16" type="t_pf16" begin="0.00" end="36000.00" period="exp(0.038889)" departPos="0.30">
+        <walk edges="mews_f0" arrivalPos="85.30"/>
+    </personFlow>
+    <personFlow id="pf17" type="t_pf17" begin="0.00" end="36000.00" period="exp(0.038889)" departPos="85.30">
+        <walk edges="mews_f0" arrivalPos="0.30"/>
+    </personFlow>
+    <personFlow id="pf18" type="t_pf18" begin="0.00" end="36000.00" period="exp(0.038889)" departPos="85.30">
+        <walk edges="mews_r0" arrivalPos="0.30"/>
+    </personFlow>
+    <personFlow id="pf19" type="t_pf19" begin="0.00" end="36000.00" period="exp(0.038889)" departPos="0.30">
+        <walk edges="mews_r0" arrivalPos="85.30"/>
+    </personFlow>
+    <personFlow id="pf20" type="t_pf20" begin="0.00" end="36000.00" period="exp(0.038889)" departPos="0.30">
+        <walk edges="bridge_f0 bridge_f1 bridge_f2" arrivalPos="32.50"/>
+    </personFlow>
+    <personFlow id="pf21" type="t_pf21" begin="0.00" end="36000.00" period="exp(0.038889)" departPos="32.50">
+        <walk edges="bridge_f2 bridge_f1 bridge_f0" arrivalPos="0.30"/>
+    </personFlow>
+    <personFlow id="pf22" type="t_pf22" begin="0.00" end="36000.00" period="exp(0.038889)" departPos="85.30">
+        <walk edges="bridge_r0 bridge_r1 bridge_r2" arrivalPos="0.30"/>
+    </personFlow>
+    <personFlow id="pf23" type="t_pf23" begin="0.00" end="36000.00" period="exp(0.038889)" departPos="0.30">
+        <walk edges="bridge_r2 bridge_r1 bridge_r0" arrivalPos="85.30"/>
+    </personFlow>
+</routes>

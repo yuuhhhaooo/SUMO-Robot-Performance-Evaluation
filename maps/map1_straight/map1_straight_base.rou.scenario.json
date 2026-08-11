@@ -1,0 +1,90 @@
+{
+  "map": "map1_straight",
+  "mode": "all",
+  "seed": 1,
+  "flows": [
+    {
+      "id": "pf0",
+      "edges": [
+        "main_f0",
+        "..."
+      ],
+      "side": "f.a",
+      "speed": 1.478,
+      "per_hour": 116.28,
+      "backward": true
+    },
+    {
+      "id": "pf1",
+      "edges": [
+        "main_f0",
+        "..."
+      ],
+      "side": "f.b",
+      "speed": 1.004,
+      "per_hour": 286.22,
+      "backward": false
+    },
+    {
+      "id": "pf2",
+      "edges": [
+        "main_r0",
+        "..."
+      ],
+      "side": "r.a",
+      "speed": 1.16,
+      "per_hour": 213.77,
+      "backward": false
+    },
+    {
+      "id": "pf3",
+      "edges": [
+        "main_r0",
+        "..."
+      ],
+      "side": "r.b",
+      "speed": 1.431,
+      "per_hour": 255.93,
+      "backward": true
+    }
+  ],
+  "static": [
+    {
+      "id": "stand_main_0",
+      "edge": "main_r0",
+      "pos": 10.39
+    },
+    {
+      "id": "stand_main_1",
+      "edge": "main_r0",
+      "pos": 130.1
+    },
+    {
+      "id": "stand_main_2",
+      "edge": "main_f0",
+      "pos": 207.97
+    },
+    {
+      "id": "stand_main_3",
+      "edge": "main_r0",
+      "pos": 215.58
+    },
+    {
+      "id": "stand_main_4",
+      "edge": "main_f0",
+      "pos": 176.98
+    }
+  ],
+  "vehicles": [
+    {
+      "road": "main",
+      "dir": "f",
+      "vehs_per_hour": 600.0
+    },
+    {
+      "road": "main",
+      "dir": "r",
+      "vehs_per_hour": 600.0
+    }
+  ]
+}

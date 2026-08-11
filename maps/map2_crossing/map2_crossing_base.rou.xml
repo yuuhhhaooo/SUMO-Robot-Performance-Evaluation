@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <!-- native demand: map=map2_crossing mode=mixed seed=1 -->
+    <vType id="t_pf0" vClass="pedestrian" maxSpeed="1.478" width="0.64" length="0.35"/>
+    <vType id="t_pf1" vClass="pedestrian" maxSpeed="1.004" width="0.64" length="0.35"/>
+    <vType id="t_pf2" vClass="pedestrian" maxSpeed="1.160" width="0.64" length="0.35"/>
+    <vType id="t_pf3" vClass="pedestrian" maxSpeed="1.431" width="0.64" length="0.35"/>
+    <vType id="t_pf4" vClass="pedestrian" maxSpeed="0.875" width="0.64" length="0.35"/>
+    <vType id="t_pf5" vClass="pedestrian" maxSpeed="0.823" width="0.64" length="0.35"/>
+    <vType id="t_pf6" vClass="pedestrian" maxSpeed="1.469" width="0.64" length="0.35"/>
+    <vType id="t_pf7" vClass="pedestrian" maxSpeed="1.146" width="0.64" length="0.35"/>
+    <flow id="veh_main_f" begin="0.00" end="36000.00" vehsPerHour="600.00" from="main_f0" to="main_f1" departLane="best" departSpeed="max"/>
+    <flow id="veh_main_r" begin="0.00" end="36000.00" vehsPerHour="600.00" from="main_r1" to="main_r0" departLane="best" departSpeed="max"/>
+    <flow id="veh_cross_f" begin="0.00" end="36000.00" vehsPerHour="120.00" from="cross_f0" to="cross_f1" departLane="best" departSpeed="max"/>
+    <flow id="veh_cross_r" begin="0.00" end="36000.00" vehsPerHour="120.00" from="cross_r1" to="cross_r0" departLane="best" departSpeed="max"/>
+    <personFlow id="pf0" type="t_pf0" begin="0.00" end="36000.00" period="exp(0.032300)" departPos="142.50">
+        <walk edges="main_f1 main_f0" arrivalPos="0.30"/>
+    </personFlow>
+    <personFlow id="pf1" type="t_pf1" begin="0.00" end="36000.00" period="exp(0.079505)" departPos="0.30">
+        <walk edges="main_f0 main_f1" arrivalPos="142.50"/>
+    </personFlow>
+    <personFlow id="pf2" type="t_pf2" begin="0.00" end="36000.00" period="exp(0.059380)" departPos="0.30">
+        <walk edges="main_r1 main_r0" arrivalPos="142.50"/>
+    </personFlow>
+    <personFlow id="pf3" type="t_pf3" begin="0.00" end="36000.00" period="exp(0.071092)" departPos="142.50">
+        <walk edges="main_r0 main_r1" arrivalPos="0.30"/>
+    </personFlow>
+    <personFlow id="pf4" type="t_pf4" begin="0.00" end="36000.00" period="exp(0.038889)" departPos="0.30">
+        <walk edges="cross_f0 cross_f1" arrivalPos="72.50"/>
+    </personFlow>
+    <personFlow id="pf5" type="t_pf5" begin="0.00" end="36000.00" period="exp(0.038889)" departPos="72.50">
+        <walk edges="cross_f1 cross_f0" arrivalPos="0.30"/>
+    </personFlow>
+    <personFlow id="pf6" type="t_pf6" begin="0.00" end="36000.00" period="exp(0.038889)" departPos="72.50">
+        <walk edges="cross_r0 cross_r1" arrivalPos="0.30"/>
+    </personFlow>
+    <personFlow id="pf7" type="t_pf7" begin="0.00" end="36000.00" period="exp(0.038889)" departPos="0.30">
+        <walk edges="cross_r1 cross_r0" arrivalPos="72.50"/>
+    </personFlow>
+</routes>

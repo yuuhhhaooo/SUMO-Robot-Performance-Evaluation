@@ -1,0 +1,1624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-08-05T15:36:07.535117+00:00 by Eclipse SUMO netconvert 1.27.1
+<netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <node-files value="/home/claude/optB/_ncbuild/n.nod.xml"/>
+        <edge-files value="/home/claude/optB/_ncbuild/n.edg.xml"/>
+    </input>
+
+    <output>
+        <output-file value="/home/claude/optB/maps/map4_london/map4_london.net.xml"/>
+    </output>
+
+    <processing>
+        <offset.disable-normalization value="true"/>
+    </processing>
+
+    <tls_building>
+        <tls.green.time value="22"/>
+        <tls.yellow.time value="3"/>
+        <tls.crossing-min.time value="8"/>
+        <tls.crossing-clearance.time value="5"/>
+    </tls_building>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+    </junctions>
+
+    <pedestrian>
+        <crossings.guess value="true"/>
+    </pedestrian>
+
+</netconvertConfiguration>
+-->
+
+<net version="1.20" junctionCornerDetail="5" walkingareas="true" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+
+    <location netOffset="0.00,0.00" convBoundary="0.00,0.00,360.00,260.00" origBoundary="0.00,0.00,360.00,260.00" projParameter="!"/>
+
+    <edge id=":E_bridge_1_w0" function="walkingarea">
+        <lane id=":E_bridge_1_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="296.80,260.00 294.80,260.00 305.20,260.00 303.20,260.00"/>
+    </edge>
+    <edge id=":E_church_0_w0" function="walkingarea">
+        <lane id=":E_church_0_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="73.20,0.00 75.20,0.00 64.80,0.00 66.80,0.00"/>
+    </edge>
+    <edge id=":E_church_1_w0" function="walkingarea">
+        <lane id=":E_church_1_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="66.80,260.00 64.80,260.00 75.20,260.00 73.20,260.00"/>
+    </edge>
+    <edge id=":E_high_0_w0" function="walkingarea">
+        <lane id=":E_high_0_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="0.00,36.80 0.00,34.80 0.00,45.20 0.00,43.20"/>
+    </edge>
+    <edge id=":E_high_1_w0" function="walkingarea">
+        <lane id=":E_high_1_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="360.00,43.20 360.00,45.20 360.00,34.80 360.00,36.80"/>
+    </edge>
+    <edge id=":E_market_1_w0" function="walkingarea">
+        <lane id=":E_market_1_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="360.00,143.20 360.00,145.20 360.00,134.80 360.00,136.80"/>
+    </edge>
+    <edge id=":J_garden_bridge_0" function="internal">
+        <lane id=":J_garden_bridge_0_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="298.40,227.20 298.05,224.75 297.00,223.00 296.80,222.88"/>
+    </edge>
+    <edge id=":J_garden_bridge_1" function="internal">
+        <lane id=":J_garden_bridge_1_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="298.40,227.20 298.40,212.80"/>
+    </edge>
+    <edge id=":J_garden_bridge_2" function="internal">
+        <lane id=":J_garden_bridge_2_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="298.40,227.20 298.95,223.35 299.04,223.20"/>
+    </edge>
+    <edge id=":J_garden_bridge_12" function="internal">
+        <lane id=":J_garden_bridge_12_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="296.80,222.88 295.25,221.95 292.80,221.60"/>
+    </edge>
+    <edge id=":J_garden_bridge_13" function="internal">
+        <lane id=":J_garden_bridge_13_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="299.04,223.20 300.60,220.60 303.35,218.95 307.20,218.40"/>
+    </edge>
+    <edge id=":J_garden_bridge_3" function="internal">
+        <lane id=":J_garden_bridge_3_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="307.20,221.60 304.75,221.95 303.00,223.00 302.88,223.20"/>
+    </edge>
+    <edge id=":J_garden_bridge_4" function="internal">
+        <lane id=":J_garden_bridge_4_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="307.20,221.60 292.80,221.60"/>
+    </edge>
+    <edge id=":J_garden_bridge_5" function="internal">
+        <lane id=":J_garden_bridge_5_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="307.20,221.60 303.35,221.05 303.20,220.96"/>
+    </edge>
+    <edge id=":J_garden_bridge_14" function="internal">
+        <lane id=":J_garden_bridge_14_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="302.88,223.20 301.95,224.75 301.60,227.20"/>
+    </edge>
+    <edge id=":J_garden_bridge_15" function="internal">
+        <lane id=":J_garden_bridge_15_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="303.20,220.96 300.60,219.40 298.95,216.65 298.40,212.80"/>
+    </edge>
+    <edge id=":J_garden_bridge_6" function="internal">
+        <lane id=":J_garden_bridge_6_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="301.60,212.80 301.95,215.25 303.00,217.00 303.20,217.12"/>
+    </edge>
+    <edge id=":J_garden_bridge_7" function="internal">
+        <lane id=":J_garden_bridge_7_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="301.60,212.80 301.60,227.20"/>
+    </edge>
+    <edge id=":J_garden_bridge_8" function="internal">
+        <lane id=":J_garden_bridge_8_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="301.60,212.80 301.05,216.65 300.96,216.80"/>
+    </edge>
+    <edge id=":J_garden_bridge_16" function="internal">
+        <lane id=":J_garden_bridge_16_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="303.20,217.12 304.75,218.05 307.20,218.40"/>
+    </edge>
+    <edge id=":J_garden_bridge_17" function="internal">
+        <lane id=":J_garden_bridge_17_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="300.96,216.80 299.40,219.40 296.65,221.05 292.80,221.60"/>
+    </edge>
+    <edge id=":J_garden_bridge_9" function="internal">
+        <lane id=":J_garden_bridge_9_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="292.80,218.40 295.25,218.05 297.00,217.00 297.12,216.80"/>
+    </edge>
+    <edge id=":J_garden_bridge_10" function="internal">
+        <lane id=":J_garden_bridge_10_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="292.80,218.40 307.20,218.40"/>
+    </edge>
+    <edge id=":J_garden_bridge_11" function="internal">
+        <lane id=":J_garden_bridge_11_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="292.80,218.40 296.65,218.95 296.80,219.04"/>
+    </edge>
+    <edge id=":J_garden_bridge_18" function="internal">
+        <lane id=":J_garden_bridge_18_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="297.12,216.80 298.05,215.25 298.40,212.80"/>
+    </edge>
+    <edge id=":J_garden_bridge_19" function="internal">
+        <lane id=":J_garden_bridge_19_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="296.80,219.04 299.40,220.60 301.05,223.35 301.60,227.20"/>
+    </edge>
+    <edge id=":J_garden_bridge_c0" function="crossing" crossingEdges="bridge_f2 bridge_r2">
+        <lane id=":J_garden_bridge_c0_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="303.20,225.20 296.80,225.20" outlineShape="303.20,227.20 296.80,227.20 292.80,223.20 292.80,225.20 294.80,227.20 296.80,227.20 292.80,223.20 307.20,223.20 305.98,223.31 304.98,223.64 304.20,224.20 303.64,224.98 303.31,225.98"/>
+    </edge>
+    <edge id=":J_garden_bridge_c1" function="crossing" crossingEdges="stub_J_garden_bridge_E_out stub_J_garden_bridge_E_in">
+        <lane id=":J_garden_bridge_c1_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="305.20,216.80 305.20,223.20" outlineShape="307.20,216.70 307.20,223.30 303.20,227.20 305.20,227.20 307.20,225.20 307.20,223.20 303.20,227.20 303.20,212.80 303.31,214.02 303.64,215.02 304.20,215.80 304.98,216.36 305.98,216.69"/>
+    </edge>
+    <edge id=":J_garden_bridge_c2" function="crossing" crossingEdges="bridge_r1 bridge_f1">
+        <lane id=":J_garden_bridge_c2_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="296.80,214.80 303.20,214.80" outlineShape="296.80,212.80 303.20,212.80 307.20,216.80 307.20,214.80 305.20,212.80 303.20,212.80 307.20,216.80 292.80,216.80 294.02,216.69 295.02,216.36 295.80,215.80 296.36,215.02 296.69,214.02"/>
+    </edge>
+    <edge id=":J_garden_bridge_c3" function="crossing" crossingEdges="garden_r0 garden_f0">
+        <lane id=":J_garden_bridge_c3_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="294.80,223.20 294.80,216.80" outlineShape="292.80,223.30 292.80,216.70 296.80,212.80 294.80,212.80 292.80,214.80 292.80,216.80 296.80,212.80 296.80,227.20 296.69,225.98 296.36,224.98 295.80,224.20 295.02,223.64 294.02,223.31"/>
+    </edge>
+    <edge id=":J_garden_bridge_w0" function="walkingarea">
+        <lane id=":J_garden_bridge_w0_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="292.80,223.20 292.80,225.20 294.80,227.20 296.80,227.20 296.69,225.98 296.36,224.98 295.80,224.20 295.02,223.64 294.02,223.31"/>
+    </edge>
+    <edge id=":J_garden_bridge_w1" function="walkingarea">
+        <lane id=":J_garden_bridge_w1_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="303.20,227.20 305.20,227.20 307.20,225.20 307.20,223.20 305.98,223.31 304.98,223.64 304.20,224.20 303.64,224.98 303.31,225.98"/>
+    </edge>
+    <edge id=":J_garden_bridge_w2" function="walkingarea">
+        <lane id=":J_garden_bridge_w2_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="307.20,216.80 307.20,214.80 305.20,212.80 303.20,212.80 303.31,214.02 303.64,215.02 304.20,215.80 304.98,216.36 305.98,216.69"/>
+    </edge>
+    <edge id=":J_garden_bridge_w3" function="walkingarea">
+        <lane id=":J_garden_bridge_w3_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="296.80,212.80 294.80,212.80 292.80,214.80 292.80,216.80 294.02,216.69 295.02,216.36 295.80,215.80 296.36,215.02 296.69,214.02"/>
+    </edge>
+    <edge id=":J_garden_church_0" function="internal">
+        <lane id=":J_garden_church_0_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="68.40,227.20 68.05,224.75 67.00,223.00 66.80,222.88"/>
+    </edge>
+    <edge id=":J_garden_church_1" function="internal">
+        <lane id=":J_garden_church_1_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="68.40,227.20 68.40,212.80"/>
+    </edge>
+    <edge id=":J_garden_church_2" function="internal">
+        <lane id=":J_garden_church_2_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="68.40,227.20 68.95,223.35 69.04,223.20"/>
+    </edge>
+    <edge id=":J_garden_church_12" function="internal">
+        <lane id=":J_garden_church_12_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="66.80,222.88 65.25,221.95 62.80,221.60"/>
+    </edge>
+    <edge id=":J_garden_church_13" function="internal">
+        <lane id=":J_garden_church_13_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="69.04,223.20 70.60,220.60 73.35,218.95 77.20,218.40"/>
+    </edge>
+    <edge id=":J_garden_church_3" function="internal">
+        <lane id=":J_garden_church_3_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="77.20,221.60 74.75,221.95 73.00,223.00 72.88,223.20"/>
+    </edge>
+    <edge id=":J_garden_church_4" function="internal">
+        <lane id=":J_garden_church_4_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="77.20,221.60 62.80,221.60"/>
+    </edge>
+    <edge id=":J_garden_church_5" function="internal">
+        <lane id=":J_garden_church_5_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="77.20,221.60 73.35,221.05 73.20,220.96"/>
+    </edge>
+    <edge id=":J_garden_church_14" function="internal">
+        <lane id=":J_garden_church_14_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="72.88,223.20 71.95,224.75 71.60,227.20"/>
+    </edge>
+    <edge id=":J_garden_church_15" function="internal">
+        <lane id=":J_garden_church_15_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="73.20,220.96 70.60,219.40 68.95,216.65 68.40,212.80"/>
+    </edge>
+    <edge id=":J_garden_church_6" function="internal">
+        <lane id=":J_garden_church_6_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="71.60,212.80 71.95,215.25 73.00,217.00 73.20,217.12"/>
+    </edge>
+    <edge id=":J_garden_church_7" function="internal">
+        <lane id=":J_garden_church_7_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="71.60,212.80 71.60,227.20"/>
+    </edge>
+    <edge id=":J_garden_church_8" function="internal">
+        <lane id=":J_garden_church_8_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="71.60,212.80 71.05,216.65 70.96,216.80"/>
+    </edge>
+    <edge id=":J_garden_church_16" function="internal">
+        <lane id=":J_garden_church_16_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="73.20,217.12 74.75,218.05 77.20,218.40"/>
+    </edge>
+    <edge id=":J_garden_church_17" function="internal">
+        <lane id=":J_garden_church_17_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="70.96,216.80 69.40,219.40 66.65,221.05 62.80,221.60"/>
+    </edge>
+    <edge id=":J_garden_church_9" function="internal">
+        <lane id=":J_garden_church_9_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="62.80,218.40 65.25,218.05 67.00,217.00 67.12,216.80"/>
+    </edge>
+    <edge id=":J_garden_church_10" function="internal">
+        <lane id=":J_garden_church_10_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="62.80,218.40 77.20,218.40"/>
+    </edge>
+    <edge id=":J_garden_church_11" function="internal">
+        <lane id=":J_garden_church_11_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="62.80,218.40 66.65,218.95 66.80,219.04"/>
+    </edge>
+    <edge id=":J_garden_church_18" function="internal">
+        <lane id=":J_garden_church_18_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="67.12,216.80 68.05,215.25 68.40,212.80"/>
+    </edge>
+    <edge id=":J_garden_church_19" function="internal">
+        <lane id=":J_garden_church_19_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="66.80,219.04 69.40,220.60 71.05,223.35 71.60,227.20"/>
+    </edge>
+    <edge id=":J_garden_church_c0" function="crossing" crossingEdges="church_f3 church_r3">
+        <lane id=":J_garden_church_c0_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="73.20,225.20 66.80,225.20" outlineShape="73.30,227.20 66.70,227.20 66.69,225.98 66.36,224.98 65.80,224.20 65.02,223.64 64.69,223.53 66.80,223.20 73.20,223.20 75.31,223.53 74.98,223.64 74.20,224.20 73.64,224.98 73.31,225.98"/>
+    </edge>
+    <edge id=":J_garden_church_c1" function="crossing" crossingEdges="garden_f0 garden_r0">
+        <lane id=":J_garden_church_c1_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="75.20,216.80 75.20,223.20" outlineShape="77.20,216.70 77.20,223.30 73.20,227.20 75.20,227.20 77.20,225.20 77.20,223.20 73.20,227.20 73.20,212.80 73.31,214.02 73.64,215.02 74.20,215.80 74.98,216.36 75.98,216.69"/>
+    </edge>
+    <edge id=":J_garden_church_c2" function="crossing" crossingEdges="church_r2 church_f2">
+        <lane id=":J_garden_church_c2_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="66.80,214.80 73.20,214.80" outlineShape="66.70,212.80 73.30,212.80 73.31,214.02 73.64,215.02 74.20,215.80 74.98,216.36 75.31,216.47 73.20,216.80 66.80,216.80 64.69,216.47 65.02,216.36 65.80,215.80 66.36,215.02 66.69,214.02"/>
+    </edge>
+    <edge id=":J_garden_church_c3" function="crossing" crossingEdges="stub_J_garden_church_W_out stub_J_garden_church_W_in">
+        <lane id=":J_garden_church_c3_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="64.80,223.20 64.80,216.80" outlineShape="62.80,223.30 62.80,216.70 64.02,216.69 65.02,216.36 65.80,215.80 66.36,215.02 66.47,214.69 66.80,216.80 66.80,223.20 66.47,225.31 66.36,224.98 65.80,224.20 65.02,223.64 64.02,223.31"/>
+    </edge>
+    <edge id=":J_garden_church_w0" function="walkingarea">
+        <lane id=":J_garden_church_w0_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="62.80,223.20 62.80,225.20 64.80,227.20 66.80,227.20 66.69,225.98 66.36,224.98 65.80,224.20 65.02,223.64 64.02,223.31"/>
+    </edge>
+    <edge id=":J_garden_church_w1" function="walkingarea">
+        <lane id=":J_garden_church_w1_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="73.20,227.20 75.20,227.20 77.20,225.20 77.20,223.20 75.98,223.31 74.98,223.64 74.20,224.20 73.64,224.98 73.31,225.98"/>
+    </edge>
+    <edge id=":J_garden_church_w2" function="walkingarea">
+        <lane id=":J_garden_church_w2_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="77.20,216.80 77.20,214.80 75.20,212.80 73.20,212.80 73.31,214.02 73.64,215.02 74.20,215.80 74.98,216.36 75.98,216.69"/>
+    </edge>
+    <edge id=":J_garden_church_w3" function="walkingarea">
+        <lane id=":J_garden_church_w3_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="66.80,212.80 64.80,212.80 62.80,214.80 62.80,216.80 64.02,216.69 65.02,216.36 65.80,215.80 66.36,215.02 66.69,214.02"/>
+    </edge>
+    <edge id=":J_high_bridge_0" function="internal">
+        <lane id=":J_high_bridge_0_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="298.40,47.20 298.05,44.75 297.00,43.00 296.80,42.88"/>
+    </edge>
+    <edge id=":J_high_bridge_1" function="internal">
+        <lane id=":J_high_bridge_1_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="298.40,47.20 298.40,32.80"/>
+    </edge>
+    <edge id=":J_high_bridge_2" function="internal">
+        <lane id=":J_high_bridge_2_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="298.40,47.20 298.95,43.35 299.04,43.20"/>
+    </edge>
+    <edge id=":J_high_bridge_12" function="internal">
+        <lane id=":J_high_bridge_12_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="296.80,42.88 295.25,41.95 292.80,41.60"/>
+    </edge>
+    <edge id=":J_high_bridge_13" function="internal">
+        <lane id=":J_high_bridge_13_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="299.04,43.20 300.60,40.60 303.35,38.95 307.20,38.40"/>
+    </edge>
+    <edge id=":J_high_bridge_3" function="internal">
+        <lane id=":J_high_bridge_3_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="307.20,41.60 304.75,41.95 303.00,43.00 302.88,43.20"/>
+    </edge>
+    <edge id=":J_high_bridge_4" function="internal">
+        <lane id=":J_high_bridge_4_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="307.20,41.60 292.80,41.60"/>
+    </edge>
+    <edge id=":J_high_bridge_5" function="internal">
+        <lane id=":J_high_bridge_5_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="307.20,41.60 303.35,41.05 303.20,40.96"/>
+    </edge>
+    <edge id=":J_high_bridge_14" function="internal">
+        <lane id=":J_high_bridge_14_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="302.88,43.20 301.95,44.75 301.60,47.20"/>
+    </edge>
+    <edge id=":J_high_bridge_15" function="internal">
+        <lane id=":J_high_bridge_15_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="303.20,40.96 300.60,39.40 298.95,36.65 298.40,32.80"/>
+    </edge>
+    <edge id=":J_high_bridge_6" function="internal">
+        <lane id=":J_high_bridge_6_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="301.60,32.80 301.95,35.25 303.00,37.00 303.20,37.12"/>
+    </edge>
+    <edge id=":J_high_bridge_7" function="internal">
+        <lane id=":J_high_bridge_7_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="301.60,32.80 301.60,47.20"/>
+    </edge>
+    <edge id=":J_high_bridge_8" function="internal">
+        <lane id=":J_high_bridge_8_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="301.60,32.80 301.05,36.65 300.96,36.80"/>
+    </edge>
+    <edge id=":J_high_bridge_16" function="internal">
+        <lane id=":J_high_bridge_16_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="303.20,37.12 304.75,38.05 307.20,38.40"/>
+    </edge>
+    <edge id=":J_high_bridge_17" function="internal">
+        <lane id=":J_high_bridge_17_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="300.96,36.80 299.40,39.40 296.65,41.05 292.80,41.60"/>
+    </edge>
+    <edge id=":J_high_bridge_9" function="internal">
+        <lane id=":J_high_bridge_9_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="292.80,38.40 295.25,38.05 297.00,37.00 297.12,36.80"/>
+    </edge>
+    <edge id=":J_high_bridge_10" function="internal">
+        <lane id=":J_high_bridge_10_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="292.80,38.40 307.20,38.40"/>
+    </edge>
+    <edge id=":J_high_bridge_11" function="internal">
+        <lane id=":J_high_bridge_11_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="292.80,38.40 296.65,38.95 296.80,39.04"/>
+    </edge>
+    <edge id=":J_high_bridge_18" function="internal">
+        <lane id=":J_high_bridge_18_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="297.12,36.80 298.05,35.25 298.40,32.80"/>
+    </edge>
+    <edge id=":J_high_bridge_19" function="internal">
+        <lane id=":J_high_bridge_19_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="296.80,39.04 299.40,40.60 301.05,43.35 301.60,47.20"/>
+    </edge>
+    <edge id=":J_high_bridge_c0" function="crossing" crossingEdges="bridge_f0 bridge_r0">
+        <lane id=":J_high_bridge_c0_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="303.20,45.20 296.80,45.20" outlineShape="303.20,47.20 296.80,47.20 292.80,43.20 292.80,45.20 294.80,47.20 296.80,47.20 292.80,43.20 307.20,43.20 305.98,43.31 304.98,43.64 304.20,44.20 303.64,44.98 303.31,45.98"/>
+    </edge>
+    <edge id=":J_high_bridge_c1" function="crossing" crossingEdges="high_f3 high_r3">
+        <lane id=":J_high_bridge_c1_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="305.20,36.80 305.20,43.20" outlineShape="307.20,36.80 307.20,43.20 303.20,47.20 305.20,47.20 307.20,45.20 307.20,43.20 303.20,47.20 303.20,32.80 303.31,34.02 303.64,35.02 304.20,35.80 304.98,36.36 305.98,36.69"/>
+    </edge>
+    <edge id=":J_high_bridge_c2" function="crossing" crossingEdges="stub_J_high_bridge_S_out stub_J_high_bridge_S_in">
+        <lane id=":J_high_bridge_c2_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="296.80,34.80 303.20,34.80" outlineShape="296.80,32.80 303.20,32.80 303.31,34.02 303.64,35.02 304.20,35.80 304.98,36.36 305.31,36.47 303.20,36.80 296.80,36.80 294.69,36.47 295.02,36.36 295.80,35.80 296.36,35.02 296.69,34.02"/>
+    </edge>
+    <edge id=":J_high_bridge_c3" function="crossing" crossingEdges="high_r2 high_f2">
+        <lane id=":J_high_bridge_c3_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="294.80,43.20 294.80,36.80" outlineShape="292.80,43.20 292.80,36.80 296.80,32.80 294.80,32.80 292.80,34.80 292.80,36.80 296.80,32.80 296.80,47.20 296.69,45.98 296.36,44.98 295.80,44.20 295.02,43.64 294.02,43.31"/>
+    </edge>
+    <edge id=":J_high_bridge_w0" function="walkingarea">
+        <lane id=":J_high_bridge_w0_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="292.80,43.20 292.80,45.20 294.80,47.20 296.80,47.20 296.69,45.98 296.36,44.98 295.80,44.20 295.02,43.64 294.02,43.31"/>
+    </edge>
+    <edge id=":J_high_bridge_w1" function="walkingarea">
+        <lane id=":J_high_bridge_w1_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="303.20,47.20 305.20,47.20 307.20,45.20 307.20,43.20 305.98,43.31 304.98,43.64 304.20,44.20 303.64,44.98 303.31,45.98"/>
+    </edge>
+    <edge id=":J_high_bridge_w2" function="walkingarea">
+        <lane id=":J_high_bridge_w2_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="307.20,36.80 307.20,34.80 305.20,32.80 303.20,32.80 303.31,34.02 303.64,35.02 304.20,35.80 304.98,36.36 305.98,36.69"/>
+    </edge>
+    <edge id=":J_high_bridge_w3" function="walkingarea">
+        <lane id=":J_high_bridge_w3_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="296.80,32.80 294.80,32.80 292.80,34.80 292.80,36.80 294.02,36.69 295.02,36.36 295.80,35.80 296.36,35.02 296.69,34.02"/>
+    </edge>
+    <edge id=":J_high_church_0" function="internal">
+        <lane id=":J_high_church_0_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="68.40,47.20 68.05,44.75 67.00,43.00 66.80,42.88"/>
+    </edge>
+    <edge id=":J_high_church_1" function="internal">
+        <lane id=":J_high_church_1_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="68.40,47.20 68.40,32.80"/>
+    </edge>
+    <edge id=":J_high_church_2" function="internal">
+        <lane id=":J_high_church_2_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="68.40,47.20 68.95,43.35 69.04,43.20"/>
+    </edge>
+    <edge id=":J_high_church_12" function="internal">
+        <lane id=":J_high_church_12_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="66.80,42.88 65.25,41.95 62.80,41.60"/>
+    </edge>
+    <edge id=":J_high_church_13" function="internal">
+        <lane id=":J_high_church_13_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="69.04,43.20 70.60,40.60 73.35,38.95 77.20,38.40"/>
+    </edge>
+    <edge id=":J_high_church_3" function="internal">
+        <lane id=":J_high_church_3_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="77.20,41.60 74.75,41.95 73.00,43.00 72.88,43.20"/>
+    </edge>
+    <edge id=":J_high_church_4" function="internal">
+        <lane id=":J_high_church_4_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="77.20,41.60 62.80,41.60"/>
+    </edge>
+    <edge id=":J_high_church_5" function="internal">
+        <lane id=":J_high_church_5_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="77.20,41.60 73.35,41.05 73.20,40.96"/>
+    </edge>
+    <edge id=":J_high_church_14" function="internal">
+        <lane id=":J_high_church_14_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="72.88,43.20 71.95,44.75 71.60,47.20"/>
+    </edge>
+    <edge id=":J_high_church_15" function="internal">
+        <lane id=":J_high_church_15_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="73.20,40.96 70.60,39.40 68.95,36.65 68.40,32.80"/>
+    </edge>
+    <edge id=":J_high_church_6" function="internal">
+        <lane id=":J_high_church_6_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="71.60,32.80 71.95,35.25 73.00,37.00 73.20,37.12"/>
+    </edge>
+    <edge id=":J_high_church_7" function="internal">
+        <lane id=":J_high_church_7_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="71.60,32.80 71.60,47.20"/>
+    </edge>
+    <edge id=":J_high_church_8" function="internal">
+        <lane id=":J_high_church_8_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="71.60,32.80 71.05,36.65 70.96,36.80"/>
+    </edge>
+    <edge id=":J_high_church_16" function="internal">
+        <lane id=":J_high_church_16_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="73.20,37.12 74.75,38.05 77.20,38.40"/>
+    </edge>
+    <edge id=":J_high_church_17" function="internal">
+        <lane id=":J_high_church_17_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="70.96,36.80 69.40,39.40 66.65,41.05 62.80,41.60"/>
+    </edge>
+    <edge id=":J_high_church_9" function="internal">
+        <lane id=":J_high_church_9_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="62.80,38.40 65.25,38.05 67.00,37.00 67.12,36.80"/>
+    </edge>
+    <edge id=":J_high_church_10" function="internal">
+        <lane id=":J_high_church_10_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="62.80,38.40 77.20,38.40"/>
+    </edge>
+    <edge id=":J_high_church_11" function="internal">
+        <lane id=":J_high_church_11_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="62.80,38.40 66.65,38.95 66.80,39.04"/>
+    </edge>
+    <edge id=":J_high_church_18" function="internal">
+        <lane id=":J_high_church_18_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="67.12,36.80 68.05,35.25 68.40,32.80"/>
+    </edge>
+    <edge id=":J_high_church_19" function="internal">
+        <lane id=":J_high_church_19_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="66.80,39.04 69.40,40.60 71.05,43.35 71.60,47.20"/>
+    </edge>
+    <edge id=":J_high_church_c0" function="crossing" crossingEdges="church_f1 church_r1">
+        <lane id=":J_high_church_c0_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="73.20,45.20 66.80,45.20" outlineShape="73.30,47.20 66.70,47.20 66.69,45.98 66.36,44.98 65.80,44.20 65.02,43.64 64.69,43.53 66.80,43.20 73.20,43.20 75.31,43.53 74.98,43.64 74.20,44.20 73.64,44.98 73.31,45.98"/>
+    </edge>
+    <edge id=":J_high_church_c1" function="crossing" crossingEdges="high_f1 high_r1">
+        <lane id=":J_high_church_c1_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="75.20,36.80 75.20,43.20" outlineShape="77.20,36.80 77.20,43.20 73.20,47.20 75.20,47.20 77.20,45.20 77.20,43.20 73.20,47.20 73.20,32.80 73.31,34.02 73.64,35.02 74.20,35.80 74.98,36.36 75.98,36.69"/>
+    </edge>
+    <edge id=":J_high_church_c2" function="crossing" crossingEdges="church_r0 church_f0">
+        <lane id=":J_high_church_c2_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="66.80,34.80 73.20,34.80" outlineShape="66.70,32.80 73.30,32.80 73.31,34.02 73.64,35.02 74.20,35.80 74.98,36.36 75.31,36.47 73.20,36.80 66.80,36.80 64.69,36.47 65.02,36.36 65.80,35.80 66.36,35.02 66.69,34.02"/>
+    </edge>
+    <edge id=":J_high_church_c3" function="crossing" crossingEdges="high_r0 high_f0">
+        <lane id=":J_high_church_c3_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="64.80,43.20 64.80,36.80" outlineShape="62.80,43.20 62.80,36.80 66.80,32.80 64.80,32.80 62.80,34.80 62.80,36.80 66.80,32.80 66.80,47.20 66.69,45.98 66.36,44.98 65.80,44.20 65.02,43.64 64.02,43.31"/>
+    </edge>
+    <edge id=":J_high_church_w0" function="walkingarea">
+        <lane id=":J_high_church_w0_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="62.80,43.20 62.80,45.20 64.80,47.20 66.80,47.20 66.69,45.98 66.36,44.98 65.80,44.20 65.02,43.64 64.02,43.31"/>
+    </edge>
+    <edge id=":J_high_church_w1" function="walkingarea">
+        <lane id=":J_high_church_w1_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="73.20,47.20 75.20,47.20 77.20,45.20 77.20,43.20 75.98,43.31 74.98,43.64 74.20,44.20 73.64,44.98 73.31,45.98"/>
+    </edge>
+    <edge id=":J_high_church_w2" function="walkingarea">
+        <lane id=":J_high_church_w2_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="77.20,36.80 77.20,34.80 75.20,32.80 73.20,32.80 73.31,34.02 73.64,35.02 74.20,35.80 74.98,36.36 75.98,36.69"/>
+    </edge>
+    <edge id=":J_high_church_w3" function="walkingarea">
+        <lane id=":J_high_church_w3_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="66.80,32.80 64.80,32.80 62.80,34.80 62.80,36.80 64.02,36.69 65.02,36.36 65.80,35.80 66.36,35.02 66.69,34.02"/>
+    </edge>
+    <edge id=":J_high_mews_0" function="internal">
+        <lane id=":J_high_mews_0_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="178.40,47.20 178.05,44.75 177.00,43.00 176.80,42.88"/>
+    </edge>
+    <edge id=":J_high_mews_1" function="internal">
+        <lane id=":J_high_mews_1_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="178.40,47.20 178.40,32.80"/>
+    </edge>
+    <edge id=":J_high_mews_2" function="internal">
+        <lane id=":J_high_mews_2_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="178.40,47.20 178.95,43.35 179.04,43.20"/>
+    </edge>
+    <edge id=":J_high_mews_12" function="internal">
+        <lane id=":J_high_mews_12_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="176.80,42.88 175.25,41.95 172.80,41.60"/>
+    </edge>
+    <edge id=":J_high_mews_13" function="internal">
+        <lane id=":J_high_mews_13_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="179.04,43.20 180.60,40.60 183.35,38.95 187.20,38.40"/>
+    </edge>
+    <edge id=":J_high_mews_3" function="internal">
+        <lane id=":J_high_mews_3_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="187.20,41.60 184.75,41.95 183.00,43.00 182.88,43.20"/>
+    </edge>
+    <edge id=":J_high_mews_4" function="internal">
+        <lane id=":J_high_mews_4_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="187.20,41.60 172.80,41.60"/>
+    </edge>
+    <edge id=":J_high_mews_5" function="internal">
+        <lane id=":J_high_mews_5_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="187.20,41.60 183.35,41.05 183.20,40.96"/>
+    </edge>
+    <edge id=":J_high_mews_14" function="internal">
+        <lane id=":J_high_mews_14_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="182.88,43.20 181.95,44.75 181.60,47.20"/>
+    </edge>
+    <edge id=":J_high_mews_15" function="internal">
+        <lane id=":J_high_mews_15_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="183.20,40.96 180.60,39.40 178.95,36.65 178.40,32.80"/>
+    </edge>
+    <edge id=":J_high_mews_6" function="internal">
+        <lane id=":J_high_mews_6_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="181.60,32.80 181.95,35.25 183.00,37.00 183.20,37.12"/>
+    </edge>
+    <edge id=":J_high_mews_7" function="internal">
+        <lane id=":J_high_mews_7_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="181.60,32.80 181.60,47.20"/>
+    </edge>
+    <edge id=":J_high_mews_8" function="internal">
+        <lane id=":J_high_mews_8_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="181.60,32.80 181.05,36.65 180.96,36.80"/>
+    </edge>
+    <edge id=":J_high_mews_16" function="internal">
+        <lane id=":J_high_mews_16_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="183.20,37.12 184.75,38.05 187.20,38.40"/>
+    </edge>
+    <edge id=":J_high_mews_17" function="internal">
+        <lane id=":J_high_mews_17_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="180.96,36.80 179.40,39.40 176.65,41.05 172.80,41.60"/>
+    </edge>
+    <edge id=":J_high_mews_9" function="internal">
+        <lane id=":J_high_mews_9_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="172.80,38.40 175.25,38.05 177.00,37.00 177.12,36.80"/>
+    </edge>
+    <edge id=":J_high_mews_10" function="internal">
+        <lane id=":J_high_mews_10_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="172.80,38.40 187.20,38.40"/>
+    </edge>
+    <edge id=":J_high_mews_11" function="internal">
+        <lane id=":J_high_mews_11_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="172.80,38.40 176.65,38.95 176.80,39.04"/>
+    </edge>
+    <edge id=":J_high_mews_18" function="internal">
+        <lane id=":J_high_mews_18_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="177.12,36.80 178.05,35.25 178.40,32.80"/>
+    </edge>
+    <edge id=":J_high_mews_19" function="internal">
+        <lane id=":J_high_mews_19_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="176.80,39.04 179.40,40.60 181.05,43.35 181.60,47.20"/>
+    </edge>
+    <edge id=":J_high_mews_c0" function="crossing" crossingEdges="mews_f0 mews_r0">
+        <lane id=":J_high_mews_c0_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="183.20,45.20 176.80,45.20" outlineShape="183.30,47.20 176.70,47.20 172.80,43.20 172.80,45.20 174.80,47.20 176.80,47.20 172.80,43.20 187.20,43.20 185.98,43.31 184.98,43.64 184.20,44.20 183.64,44.98 183.31,45.98"/>
+    </edge>
+    <edge id=":J_high_mews_c1" function="crossing" crossingEdges="high_f2 high_r2">
+        <lane id=":J_high_mews_c1_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="185.20,36.80 185.20,43.20" outlineShape="187.20,36.80 187.20,43.20 183.20,47.20 185.20,47.20 187.20,45.20 187.20,43.20 183.20,47.20 183.20,32.80 183.31,34.02 183.64,35.02 184.20,35.80 184.98,36.36 185.98,36.69"/>
+    </edge>
+    <edge id=":J_high_mews_c2" function="crossing" crossingEdges="stub_J_high_mews_S_out stub_J_high_mews_S_in">
+        <lane id=":J_high_mews_c2_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="176.80,34.80 183.20,34.80" outlineShape="176.70,32.80 183.30,32.80 183.31,34.02 183.64,35.02 184.20,35.80 184.98,36.36 185.31,36.47 183.20,36.80 176.80,36.80 174.69,36.47 175.02,36.36 175.80,35.80 176.36,35.02 176.69,34.02"/>
+    </edge>
+    <edge id=":J_high_mews_c3" function="crossing" crossingEdges="high_r1 high_f1">
+        <lane id=":J_high_mews_c3_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="174.80,43.20 174.80,36.80" outlineShape="172.80,43.20 172.80,36.80 176.80,32.80 174.80,32.80 172.80,34.80 172.80,36.80 176.80,32.80 176.80,47.20 176.69,45.98 176.36,44.98 175.80,44.20 175.02,43.64 174.02,43.31"/>
+    </edge>
+    <edge id=":J_high_mews_w0" function="walkingarea">
+        <lane id=":J_high_mews_w0_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="172.80,43.20 172.80,45.20 174.80,47.20 176.80,47.20 176.69,45.98 176.36,44.98 175.80,44.20 175.02,43.64 174.02,43.31"/>
+    </edge>
+    <edge id=":J_high_mews_w1" function="walkingarea">
+        <lane id=":J_high_mews_w1_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="183.20,47.20 185.20,47.20 187.20,45.20 187.20,43.20 185.98,43.31 184.98,43.64 184.20,44.20 183.64,44.98 183.31,45.98"/>
+    </edge>
+    <edge id=":J_high_mews_w2" function="walkingarea">
+        <lane id=":J_high_mews_w2_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="187.20,36.80 187.20,34.80 185.20,32.80 183.20,32.80 183.31,34.02 183.64,35.02 184.20,35.80 184.98,36.36 185.98,36.69"/>
+    </edge>
+    <edge id=":J_high_mews_w3" function="walkingarea">
+        <lane id=":J_high_mews_w3_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="176.80,32.80 174.80,32.80 172.80,34.80 172.80,36.80 174.02,36.69 175.02,36.36 175.80,35.80 176.36,35.02 176.69,34.02"/>
+    </edge>
+    <edge id=":J_market_bridge_0" function="internal">
+        <lane id=":J_market_bridge_0_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="298.40,147.20 298.05,144.75 297.00,143.00 296.80,142.88"/>
+    </edge>
+    <edge id=":J_market_bridge_1" function="internal">
+        <lane id=":J_market_bridge_1_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="298.40,147.20 298.40,132.80"/>
+    </edge>
+    <edge id=":J_market_bridge_2" function="internal">
+        <lane id=":J_market_bridge_2_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="298.40,147.20 298.95,143.35 299.04,143.20"/>
+    </edge>
+    <edge id=":J_market_bridge_12" function="internal">
+        <lane id=":J_market_bridge_12_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="296.80,142.88 295.25,141.95 292.80,141.60"/>
+    </edge>
+    <edge id=":J_market_bridge_13" function="internal">
+        <lane id=":J_market_bridge_13_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="299.04,143.20 300.60,140.60 303.35,138.95 307.20,138.40"/>
+    </edge>
+    <edge id=":J_market_bridge_3" function="internal">
+        <lane id=":J_market_bridge_3_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="307.20,141.60 304.75,141.95 303.00,143.00 302.88,143.20"/>
+    </edge>
+    <edge id=":J_market_bridge_4" function="internal">
+        <lane id=":J_market_bridge_4_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="307.20,141.60 292.80,141.60"/>
+    </edge>
+    <edge id=":J_market_bridge_5" function="internal">
+        <lane id=":J_market_bridge_5_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="307.20,141.60 303.35,141.05 303.20,140.96"/>
+    </edge>
+    <edge id=":J_market_bridge_14" function="internal">
+        <lane id=":J_market_bridge_14_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="302.88,143.20 301.95,144.75 301.60,147.20"/>
+    </edge>
+    <edge id=":J_market_bridge_15" function="internal">
+        <lane id=":J_market_bridge_15_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="303.20,140.96 300.60,139.40 298.95,136.65 298.40,132.80"/>
+    </edge>
+    <edge id=":J_market_bridge_6" function="internal">
+        <lane id=":J_market_bridge_6_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="301.60,132.80 301.95,135.25 303.00,137.00 303.20,137.12"/>
+    </edge>
+    <edge id=":J_market_bridge_7" function="internal">
+        <lane id=":J_market_bridge_7_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="301.60,132.80 301.60,147.20"/>
+    </edge>
+    <edge id=":J_market_bridge_8" function="internal">
+        <lane id=":J_market_bridge_8_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="301.60,132.80 301.05,136.65 300.96,136.80"/>
+    </edge>
+    <edge id=":J_market_bridge_16" function="internal">
+        <lane id=":J_market_bridge_16_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="303.20,137.12 304.75,138.05 307.20,138.40"/>
+    </edge>
+    <edge id=":J_market_bridge_17" function="internal">
+        <lane id=":J_market_bridge_17_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="300.96,136.80 299.40,139.40 296.65,141.05 292.80,141.60"/>
+    </edge>
+    <edge id=":J_market_bridge_9" function="internal">
+        <lane id=":J_market_bridge_9_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="292.80,138.40 295.25,138.05 297.00,137.00 297.12,136.80"/>
+    </edge>
+    <edge id=":J_market_bridge_10" function="internal">
+        <lane id=":J_market_bridge_10_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="292.80,138.40 307.20,138.40"/>
+    </edge>
+    <edge id=":J_market_bridge_11" function="internal">
+        <lane id=":J_market_bridge_11_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="292.80,138.40 296.65,138.95 296.80,139.04"/>
+    </edge>
+    <edge id=":J_market_bridge_18" function="internal">
+        <lane id=":J_market_bridge_18_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="297.12,136.80 298.05,135.25 298.40,132.80"/>
+    </edge>
+    <edge id=":J_market_bridge_19" function="internal">
+        <lane id=":J_market_bridge_19_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="296.80,139.04 299.40,140.60 301.05,143.35 301.60,147.20"/>
+    </edge>
+    <edge id=":J_market_bridge_c0" function="crossing" crossingEdges="bridge_f1 bridge_r1">
+        <lane id=":J_market_bridge_c0_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="303.20,145.20 296.80,145.20" outlineShape="303.20,147.20 296.80,147.20 292.80,143.20 292.80,145.20 294.80,147.20 296.80,147.20 292.80,143.20 307.20,143.20 305.98,143.31 304.98,143.64 304.20,144.20 303.64,144.98 303.31,145.98"/>
+    </edge>
+    <edge id=":J_market_bridge_c1" function="crossing" crossingEdges="market_f2 market_r2">
+        <lane id=":J_market_bridge_c1_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="305.20,136.80 305.20,143.20" outlineShape="307.20,136.70 307.20,143.30 303.20,147.20 305.20,147.20 307.20,145.20 307.20,143.20 303.20,147.20 303.20,132.80 303.31,134.02 303.64,135.02 304.20,135.80 304.98,136.36 305.98,136.69"/>
+    </edge>
+    <edge id=":J_market_bridge_c2" function="crossing" crossingEdges="bridge_r0 bridge_f0">
+        <lane id=":J_market_bridge_c2_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="296.80,134.80 303.20,134.80" outlineShape="296.80,132.80 303.20,132.80 307.20,136.80 307.20,134.80 305.20,132.80 303.20,132.80 307.20,136.80 292.80,136.80 294.02,136.69 295.02,136.36 295.80,135.80 296.36,135.02 296.69,134.02"/>
+    </edge>
+    <edge id=":J_market_bridge_c3" function="crossing" crossingEdges="market_r1 market_f1">
+        <lane id=":J_market_bridge_c3_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="294.80,143.20 294.80,136.80" outlineShape="292.80,143.30 292.80,136.70 296.80,132.80 294.80,132.80 292.80,134.80 292.80,136.80 296.80,132.80 296.80,147.20 296.69,145.98 296.36,144.98 295.80,144.20 295.02,143.64 294.02,143.31"/>
+    </edge>
+    <edge id=":J_market_bridge_w0" function="walkingarea">
+        <lane id=":J_market_bridge_w0_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="292.80,143.20 292.80,145.20 294.80,147.20 296.80,147.20 296.69,145.98 296.36,144.98 295.80,144.20 295.02,143.64 294.02,143.31"/>
+    </edge>
+    <edge id=":J_market_bridge_w1" function="walkingarea">
+        <lane id=":J_market_bridge_w1_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="303.20,147.20 305.20,147.20 307.20,145.20 307.20,143.20 305.98,143.31 304.98,143.64 304.20,144.20 303.64,144.98 303.31,145.98"/>
+    </edge>
+    <edge id=":J_market_bridge_w2" function="walkingarea">
+        <lane id=":J_market_bridge_w2_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="307.20,136.80 307.20,134.80 305.20,132.80 303.20,132.80 303.31,134.02 303.64,135.02 304.20,135.80 304.98,136.36 305.98,136.69"/>
+    </edge>
+    <edge id=":J_market_bridge_w3" function="walkingarea">
+        <lane id=":J_market_bridge_w3_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="296.80,132.80 294.80,132.80 292.80,134.80 292.80,136.80 294.02,136.69 295.02,136.36 295.80,135.80 296.36,135.02 296.69,134.02"/>
+    </edge>
+    <edge id=":J_market_church_0" function="internal">
+        <lane id=":J_market_church_0_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="68.40,147.20 68.05,144.75 67.00,143.00 66.80,142.88"/>
+    </edge>
+    <edge id=":J_market_church_1" function="internal">
+        <lane id=":J_market_church_1_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="68.40,147.20 68.40,132.80"/>
+    </edge>
+    <edge id=":J_market_church_2" function="internal">
+        <lane id=":J_market_church_2_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="68.40,147.20 68.95,143.35 69.04,143.20"/>
+    </edge>
+    <edge id=":J_market_church_12" function="internal">
+        <lane id=":J_market_church_12_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="66.80,142.88 65.25,141.95 62.80,141.60"/>
+    </edge>
+    <edge id=":J_market_church_13" function="internal">
+        <lane id=":J_market_church_13_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="69.04,143.20 70.60,140.60 73.35,138.95 77.20,138.40"/>
+    </edge>
+    <edge id=":J_market_church_3" function="internal">
+        <lane id=":J_market_church_3_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="77.20,141.60 74.75,141.95 73.00,143.00 72.88,143.20"/>
+    </edge>
+    <edge id=":J_market_church_4" function="internal">
+        <lane id=":J_market_church_4_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="77.20,141.60 62.80,141.60"/>
+    </edge>
+    <edge id=":J_market_church_5" function="internal">
+        <lane id=":J_market_church_5_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="77.20,141.60 73.35,141.05 73.20,140.96"/>
+    </edge>
+    <edge id=":J_market_church_14" function="internal">
+        <lane id=":J_market_church_14_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="72.88,143.20 71.95,144.75 71.60,147.20"/>
+    </edge>
+    <edge id=":J_market_church_15" function="internal">
+        <lane id=":J_market_church_15_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="73.20,140.96 70.60,139.40 68.95,136.65 68.40,132.80"/>
+    </edge>
+    <edge id=":J_market_church_6" function="internal">
+        <lane id=":J_market_church_6_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="71.60,132.80 71.95,135.25 73.00,137.00 73.20,137.12"/>
+    </edge>
+    <edge id=":J_market_church_7" function="internal">
+        <lane id=":J_market_church_7_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="71.60,132.80 71.60,147.20"/>
+    </edge>
+    <edge id=":J_market_church_8" function="internal">
+        <lane id=":J_market_church_8_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="71.60,132.80 71.05,136.65 70.96,136.80"/>
+    </edge>
+    <edge id=":J_market_church_16" function="internal">
+        <lane id=":J_market_church_16_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="73.20,137.12 74.75,138.05 77.20,138.40"/>
+    </edge>
+    <edge id=":J_market_church_17" function="internal">
+        <lane id=":J_market_church_17_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="70.96,136.80 69.40,139.40 66.65,141.05 62.80,141.60"/>
+    </edge>
+    <edge id=":J_market_church_9" function="internal">
+        <lane id=":J_market_church_9_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="62.80,138.40 65.25,138.05 67.00,137.00 67.12,136.80"/>
+    </edge>
+    <edge id=":J_market_church_10" function="internal">
+        <lane id=":J_market_church_10_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="62.80,138.40 77.20,138.40"/>
+    </edge>
+    <edge id=":J_market_church_11" function="internal">
+        <lane id=":J_market_church_11_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="62.80,138.40 66.65,138.95 66.80,139.04"/>
+    </edge>
+    <edge id=":J_market_church_18" function="internal">
+        <lane id=":J_market_church_18_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="67.12,136.80 68.05,135.25 68.40,132.80"/>
+    </edge>
+    <edge id=":J_market_church_19" function="internal">
+        <lane id=":J_market_church_19_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="66.80,139.04 69.40,140.60 71.05,143.35 71.60,147.20"/>
+    </edge>
+    <edge id=":J_market_church_c0" function="crossing" crossingEdges="church_f2 church_r2">
+        <lane id=":J_market_church_c0_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="73.20,145.20 66.80,145.20" outlineShape="73.30,147.20 66.70,147.20 66.69,145.98 66.36,144.98 65.80,144.20 65.02,143.64 64.69,143.53 66.80,143.20 73.20,143.20 75.31,143.53 74.98,143.64 74.20,144.20 73.64,144.98 73.31,145.98"/>
+    </edge>
+    <edge id=":J_market_church_c1" function="crossing" crossingEdges="market_f0 market_r0">
+        <lane id=":J_market_church_c1_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="75.20,136.80 75.20,143.20" outlineShape="77.20,136.70 77.20,143.30 73.20,147.20 75.20,147.20 77.20,145.20 77.20,143.20 73.20,147.20 73.20,132.80 73.31,134.02 73.64,135.02 74.20,135.80 74.98,136.36 75.98,136.69"/>
+    </edge>
+    <edge id=":J_market_church_c2" function="crossing" crossingEdges="church_r1 church_f1">
+        <lane id=":J_market_church_c2_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="66.80,134.80 73.20,134.80" outlineShape="66.70,132.80 73.30,132.80 73.31,134.02 73.64,135.02 74.20,135.80 74.98,136.36 75.31,136.47 73.20,136.80 66.80,136.80 64.69,136.47 65.02,136.36 65.80,135.80 66.36,135.02 66.69,134.02"/>
+    </edge>
+    <edge id=":J_market_church_c3" function="crossing" crossingEdges="stub_J_market_church_W_out stub_J_market_church_W_in">
+        <lane id=":J_market_church_c3_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="64.80,143.20 64.80,136.80" outlineShape="62.80,143.30 62.80,136.70 64.02,136.69 65.02,136.36 65.80,135.80 66.36,135.02 66.47,134.69 66.80,136.80 66.80,143.20 66.47,145.31 66.36,144.98 65.80,144.20 65.02,143.64 64.02,143.31"/>
+    </edge>
+    <edge id=":J_market_church_w0" function="walkingarea">
+        <lane id=":J_market_church_w0_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="62.80,143.20 62.80,145.20 64.80,147.20 66.80,147.20 66.69,145.98 66.36,144.98 65.80,144.20 65.02,143.64 64.02,143.31"/>
+    </edge>
+    <edge id=":J_market_church_w1" function="walkingarea">
+        <lane id=":J_market_church_w1_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="73.20,147.20 75.20,147.20 77.20,145.20 77.20,143.20 75.98,143.31 74.98,143.64 74.20,144.20 73.64,144.98 73.31,145.98"/>
+    </edge>
+    <edge id=":J_market_church_w2" function="walkingarea">
+        <lane id=":J_market_church_w2_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="77.20,136.80 77.20,134.80 75.20,132.80 73.20,132.80 73.31,134.02 73.64,135.02 74.20,135.80 74.98,136.36 75.98,136.69"/>
+    </edge>
+    <edge id=":J_market_church_w3" function="walkingarea">
+        <lane id=":J_market_church_w3_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="66.80,132.80 64.80,132.80 62.80,134.80 62.80,136.80 64.02,136.69 65.02,136.36 65.80,135.80 66.36,135.02 66.69,134.02"/>
+    </edge>
+    <edge id=":J_market_mews_0" function="internal">
+        <lane id=":J_market_mews_0_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="178.40,147.20 178.05,144.75 177.00,143.00 176.80,142.88"/>
+    </edge>
+    <edge id=":J_market_mews_1" function="internal">
+        <lane id=":J_market_mews_1_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="178.40,147.20 178.40,132.80"/>
+    </edge>
+    <edge id=":J_market_mews_2" function="internal">
+        <lane id=":J_market_mews_2_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="178.40,147.20 178.95,143.35 179.04,143.20"/>
+    </edge>
+    <edge id=":J_market_mews_12" function="internal">
+        <lane id=":J_market_mews_12_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="176.80,142.88 175.25,141.95 172.80,141.60"/>
+    </edge>
+    <edge id=":J_market_mews_13" function="internal">
+        <lane id=":J_market_mews_13_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="179.04,143.20 180.60,140.60 183.35,138.95 187.20,138.40"/>
+    </edge>
+    <edge id=":J_market_mews_3" function="internal">
+        <lane id=":J_market_mews_3_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="187.20,141.60 184.75,141.95 183.00,143.00 182.88,143.20"/>
+    </edge>
+    <edge id=":J_market_mews_4" function="internal">
+        <lane id=":J_market_mews_4_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="187.20,141.60 172.80,141.60"/>
+    </edge>
+    <edge id=":J_market_mews_5" function="internal">
+        <lane id=":J_market_mews_5_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="187.20,141.60 183.35,141.05 183.20,140.96"/>
+    </edge>
+    <edge id=":J_market_mews_14" function="internal">
+        <lane id=":J_market_mews_14_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="182.88,143.20 181.95,144.75 181.60,147.20"/>
+    </edge>
+    <edge id=":J_market_mews_15" function="internal">
+        <lane id=":J_market_mews_15_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="183.20,140.96 180.60,139.40 178.95,136.65 178.40,132.80"/>
+    </edge>
+    <edge id=":J_market_mews_6" function="internal">
+        <lane id=":J_market_mews_6_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="181.60,132.80 181.95,135.25 183.00,137.00 183.20,137.12"/>
+    </edge>
+    <edge id=":J_market_mews_7" function="internal">
+        <lane id=":J_market_mews_7_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="181.60,132.80 181.60,147.20"/>
+    </edge>
+    <edge id=":J_market_mews_8" function="internal">
+        <lane id=":J_market_mews_8_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="181.60,132.80 181.05,136.65 180.96,136.80"/>
+    </edge>
+    <edge id=":J_market_mews_16" function="internal">
+        <lane id=":J_market_mews_16_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="183.20,137.12 184.75,138.05 187.20,138.40"/>
+    </edge>
+    <edge id=":J_market_mews_17" function="internal">
+        <lane id=":J_market_mews_17_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="180.96,136.80 179.40,139.40 176.65,141.05 172.80,141.60"/>
+    </edge>
+    <edge id=":J_market_mews_9" function="internal">
+        <lane id=":J_market_mews_9_0" index="0" disallow="pedestrian" speed="6.51" length="4.75" shape="172.80,138.40 175.25,138.05 177.00,137.00 177.12,136.80"/>
+    </edge>
+    <edge id=":J_market_mews_10" function="internal">
+        <lane id=":J_market_mews_10_0" index="0" disallow="pedestrian" speed="13.89" length="14.40" shape="172.80,138.40 187.20,138.40"/>
+    </edge>
+    <edge id=":J_market_mews_11" function="internal">
+        <lane id=":J_market_mews_11_0" index="0" disallow="pedestrian" speed="8.00" length="4.07" shape="172.80,138.40 176.65,138.95 176.80,139.04"/>
+    </edge>
+    <edge id=":J_market_mews_18" function="internal">
+        <lane id=":J_market_mews_18_0" index="0" disallow="pedestrian" speed="6.51" length="4.28" shape="177.12,136.80 178.05,135.25 178.40,132.80"/>
+    </edge>
+    <edge id=":J_market_mews_19" function="internal">
+        <lane id=":J_market_mews_19_0" index="0" disallow="pedestrian" speed="8.00" length="10.13" shape="176.80,139.04 179.40,140.60 181.05,143.35 181.60,147.20"/>
+    </edge>
+    <edge id=":J_market_mews_c0" function="crossing" crossingEdges="stub_J_market_mews_N_out stub_J_market_mews_N_in">
+        <lane id=":J_market_mews_c0_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="183.20,145.20 176.80,145.20" outlineShape="183.30,147.20 176.70,147.20 172.80,143.20 172.80,145.20 174.80,147.20 176.80,147.20 172.80,143.20 187.20,143.20 185.98,143.31 184.98,143.64 184.20,144.20 183.64,144.98 183.31,145.98"/>
+    </edge>
+    <edge id=":J_market_mews_c1" function="crossing" crossingEdges="market_f1 market_r1">
+        <lane id=":J_market_mews_c1_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="185.20,136.80 185.20,143.20" outlineShape="187.20,136.70 187.20,143.30 183.20,147.20 185.20,147.20 187.20,145.20 187.20,143.20 183.20,147.20 183.20,132.80 183.31,134.02 183.64,135.02 184.20,135.80 184.98,136.36 185.98,136.69"/>
+    </edge>
+    <edge id=":J_market_mews_c2" function="crossing" crossingEdges="mews_r0 mews_f0">
+        <lane id=":J_market_mews_c2_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="176.80,134.80 183.20,134.80" outlineShape="176.70,132.80 183.30,132.80 187.20,136.80 187.20,134.80 185.20,132.80 183.20,132.80 187.20,136.80 172.80,136.80 174.02,136.69 175.02,136.36 175.80,135.80 176.36,135.02 176.69,134.02"/>
+    </edge>
+    <edge id=":J_market_mews_c3" function="crossing" crossingEdges="market_r0 market_f0">
+        <lane id=":J_market_mews_c3_0" index="0" allow="pedestrian" speed="2.78" length="6.40" width="4.00" shape="174.80,143.20 174.80,136.80" outlineShape="172.80,143.30 172.80,136.70 176.80,132.80 174.80,132.80 172.80,134.80 172.80,136.80 176.80,132.80 176.80,147.20 176.69,145.98 176.36,144.98 175.80,144.20 175.02,143.64 174.02,143.31"/>
+    </edge>
+    <edge id=":J_market_mews_w0" function="walkingarea">
+        <lane id=":J_market_mews_w0_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="172.80,143.20 172.80,145.20 174.80,147.20 176.80,147.20 176.69,145.98 176.36,144.98 175.80,144.20 175.02,143.64 174.02,143.31"/>
+    </edge>
+    <edge id=":J_market_mews_w1" function="walkingarea">
+        <lane id=":J_market_mews_w1_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="183.20,147.20 185.20,147.20 187.20,145.20 187.20,143.20 185.98,143.31 184.98,143.64 184.20,144.20 183.64,144.98 183.31,145.98"/>
+    </edge>
+    <edge id=":J_market_mews_w2" function="walkingarea">
+        <lane id=":J_market_mews_w2_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="187.20,136.80 187.20,134.80 185.20,132.80 183.20,132.80 183.31,134.02 183.64,135.02 184.20,135.80 184.98,136.36 185.98,136.69"/>
+    </edge>
+    <edge id=":J_market_mews_w3" function="walkingarea">
+        <lane id=":J_market_mews_w3_0" index="0" allow="pedestrian" speed="2.78" length="3.30" width="4.00" shape="176.80,132.80 174.80,132.80 172.80,134.80 172.80,136.80 174.02,136.69 175.02,136.36 175.80,135.80 176.36,135.02 176.69,134.02"/>
+    </edge>
+    <edge id=":S_J_garden_bridge_E_w0" function="walkingarea">
+        <lane id=":S_J_garden_bridge_E_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="314.00,223.20 314.00,225.20 314.00,214.80 314.00,216.80"/>
+    </edge>
+    <edge id=":S_J_garden_church_W_w0" function="walkingarea">
+        <lane id=":S_J_garden_church_W_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="56.00,216.80 56.00,214.80 56.00,225.20 56.00,223.20"/>
+    </edge>
+    <edge id=":S_J_high_bridge_S_w0" function="walkingarea">
+        <lane id=":S_J_high_bridge_S_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="303.20,26.00 305.20,26.00 294.80,26.00 296.80,26.00"/>
+    </edge>
+    <edge id=":S_J_high_mews_S_w0" function="walkingarea">
+        <lane id=":S_J_high_mews_S_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="183.20,26.00 185.20,26.00 174.80,26.00 176.80,26.00"/>
+    </edge>
+    <edge id=":S_J_market_church_W_w0" function="walkingarea">
+        <lane id=":S_J_market_church_W_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="56.00,136.80 56.00,134.80 56.00,145.20 56.00,143.20"/>
+    </edge>
+    <edge id=":S_J_market_mews_N_w0" function="walkingarea">
+        <lane id=":S_J_market_mews_N_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="176.80,154.00 174.80,154.00 185.20,154.00 183.20,154.00"/>
+    </edge>
+
+    <edge id="bridge_f0" from="J_high_bridge" to="J_market_bridge" priority="-1">
+        <lane id="bridge_f0_0" index="0" allow="pedestrian" speed="13.89" length="85.60" width="2.00" shape="304.20,47.20 304.20,132.80"/>
+        <lane id="bridge_f0_1" index="1" disallow="pedestrian" speed="13.89" length="85.60" shape="301.60,47.20 301.60,132.80"/>
+    </edge>
+    <edge id="bridge_f1" from="J_market_bridge" to="J_garden_bridge" priority="-1">
+        <lane id="bridge_f1_0" index="0" allow="pedestrian" speed="13.89" length="65.60" width="2.00" shape="304.20,147.20 304.20,212.80"/>
+        <lane id="bridge_f1_1" index="1" disallow="pedestrian" speed="13.89" length="65.60" shape="301.60,147.20 301.60,212.80"/>
+    </edge>
+    <edge id="bridge_f2" from="J_garden_bridge" to="E_bridge_1" priority="-1">
+        <lane id="bridge_f2_0" index="0" allow="pedestrian" speed="13.89" length="32.80" width="2.00" shape="304.20,227.20 304.20,260.00"/>
+        <lane id="bridge_f2_1" index="1" disallow="pedestrian" speed="13.89" length="32.80" shape="301.60,227.20 301.60,260.00"/>
+    </edge>
+    <edge id="bridge_r0" from="J_market_bridge" to="J_high_bridge" priority="-1">
+        <lane id="bridge_r0_0" index="0" allow="pedestrian" speed="13.89" length="85.60" width="2.00" shape="295.80,132.80 295.80,47.20"/>
+        <lane id="bridge_r0_1" index="1" disallow="pedestrian" speed="13.89" length="85.60" shape="298.40,132.80 298.40,47.20"/>
+    </edge>
+    <edge id="bridge_r1" from="J_garden_bridge" to="J_market_bridge" priority="-1">
+        <lane id="bridge_r1_0" index="0" allow="pedestrian" speed="13.89" length="65.60" width="2.00" shape="295.80,212.80 295.80,147.20"/>
+        <lane id="bridge_r1_1" index="1" disallow="pedestrian" speed="13.89" length="65.60" shape="298.40,212.80 298.40,147.20"/>
+    </edge>
+    <edge id="bridge_r2" from="E_bridge_1" to="J_garden_bridge" priority="-1">
+        <lane id="bridge_r2_0" index="0" allow="pedestrian" speed="13.89" length="32.80" width="2.00" shape="295.80,260.00 295.80,227.20"/>
+        <lane id="bridge_r2_1" index="1" disallow="pedestrian" speed="13.89" length="32.80" shape="298.40,260.00 298.40,227.20"/>
+    </edge>
+    <edge id="church_f0" from="E_church_0" to="J_high_church" priority="-1">
+        <lane id="church_f0_0" index="0" allow="pedestrian" speed="13.89" length="32.80" width="2.00" shape="74.20,0.00 74.20,32.80"/>
+        <lane id="church_f0_1" index="1" disallow="pedestrian" speed="13.89" length="32.80" shape="71.60,0.00 71.60,32.80"/>
+    </edge>
+    <edge id="church_f1" from="J_high_church" to="J_market_church" priority="-1">
+        <lane id="church_f1_0" index="0" allow="pedestrian" speed="13.89" length="85.60" width="2.00" shape="74.20,47.20 74.20,132.80"/>
+        <lane id="church_f1_1" index="1" disallow="pedestrian" speed="13.89" length="85.60" shape="71.60,47.20 71.60,132.80"/>
+    </edge>
+    <edge id="church_f2" from="J_market_church" to="J_garden_church" priority="-1">
+        <lane id="church_f2_0" index="0" allow="pedestrian" speed="13.89" length="65.60" width="2.00" shape="74.20,147.20 74.20,212.80"/>
+        <lane id="church_f2_1" index="1" disallow="pedestrian" speed="13.89" length="65.60" shape="71.60,147.20 71.60,212.80"/>
+    </edge>
+    <edge id="church_f3" from="J_garden_church" to="E_church_1" priority="-1">
+        <lane id="church_f3_0" index="0" allow="pedestrian" speed="13.89" length="32.80" width="2.00" shape="74.20,227.20 74.20,260.00"/>
+        <lane id="church_f3_1" index="1" disallow="pedestrian" speed="13.89" length="32.80" shape="71.60,227.20 71.60,260.00"/>
+    </edge>
+    <edge id="church_r0" from="J_high_church" to="E_church_0" priority="-1">
+        <lane id="church_r0_0" index="0" allow="pedestrian" speed="13.89" length="32.80" width="2.00" shape="65.80,32.80 65.80,0.00"/>
+        <lane id="church_r0_1" index="1" disallow="pedestrian" speed="13.89" length="32.80" shape="68.40,32.80 68.40,0.00"/>
+    </edge>
+    <edge id="church_r1" from="J_market_church" to="J_high_church" priority="-1">
+        <lane id="church_r1_0" index="0" allow="pedestrian" speed="13.89" length="85.60" width="2.00" shape="65.80,132.80 65.80,47.20"/>
+        <lane id="church_r1_1" index="1" disallow="pedestrian" speed="13.89" length="85.60" shape="68.40,132.80 68.40,47.20"/>
+    </edge>
+    <edge id="church_r2" from="J_garden_church" to="J_market_church" priority="-1">
+        <lane id="church_r2_0" index="0" allow="pedestrian" speed="13.89" length="65.60" width="2.00" shape="65.80,212.80 65.80,147.20"/>
+        <lane id="church_r2_1" index="1" disallow="pedestrian" speed="13.89" length="65.60" shape="68.40,212.80 68.40,147.20"/>
+    </edge>
+    <edge id="church_r3" from="E_church_1" to="J_garden_church" priority="-1">
+        <lane id="church_r3_0" index="0" allow="pedestrian" speed="13.89" length="32.80" width="2.00" shape="65.80,260.00 65.80,227.20"/>
+        <lane id="church_r3_1" index="1" disallow="pedestrian" speed="13.89" length="32.80" shape="68.40,260.00 68.40,227.20"/>
+    </edge>
+    <edge id="garden_f0" from="J_garden_church" to="J_garden_bridge" priority="-1">
+        <lane id="garden_f0_0" index="0" allow="pedestrian" speed="13.89" length="215.60" width="2.00" shape="77.20,215.80 292.80,215.80"/>
+        <lane id="garden_f0_1" index="1" disallow="pedestrian" speed="13.89" length="215.60" shape="77.20,218.40 292.80,218.40"/>
+    </edge>
+    <edge id="garden_r0" from="J_garden_bridge" to="J_garden_church" priority="-1">
+        <lane id="garden_r0_0" index="0" allow="pedestrian" speed="13.89" length="215.60" width="2.00" shape="292.80,224.20 77.20,224.20"/>
+        <lane id="garden_r0_1" index="1" disallow="pedestrian" speed="13.89" length="215.60" shape="292.80,221.60 77.20,221.60"/>
+    </edge>
+    <edge id="high_f0" from="E_high_0" to="J_high_church" priority="-1">
+        <lane id="high_f0_0" index="0" allow="pedestrian" speed="13.89" length="62.80" width="2.00" shape="0.00,35.80 62.80,35.80"/>
+        <lane id="high_f0_1" index="1" disallow="pedestrian" speed="13.89" length="62.80" shape="0.00,38.40 62.80,38.40"/>
+    </edge>
+    <edge id="high_f1" from="J_high_church" to="J_high_mews" priority="-1">
+        <lane id="high_f1_0" index="0" allow="pedestrian" speed="13.89" length="95.60" width="2.00" shape="77.20,35.80 172.80,35.80"/>
+        <lane id="high_f1_1" index="1" disallow="pedestrian" speed="13.89" length="95.60" shape="77.20,38.40 172.80,38.40"/>
+    </edge>
+    <edge id="high_f2" from="J_high_mews" to="J_high_bridge" priority="-1">
+        <lane id="high_f2_0" index="0" allow="pedestrian" speed="13.89" length="105.60" width="2.00" shape="187.20,35.80 292.80,35.80"/>
+        <lane id="high_f2_1" index="1" disallow="pedestrian" speed="13.89" length="105.60" shape="187.20,38.40 292.80,38.40"/>
+    </edge>
+    <edge id="high_f3" from="J_high_bridge" to="E_high_1" priority="-1">
+        <lane id="high_f3_0" index="0" allow="pedestrian" speed="13.89" length="52.80" width="2.00" shape="307.20,35.80 360.00,35.80"/>
+        <lane id="high_f3_1" index="1" disallow="pedestrian" speed="13.89" length="52.80" shape="307.20,38.40 360.00,38.40"/>
+    </edge>
+    <edge id="high_r0" from="J_high_church" to="E_high_0" priority="-1">
+        <lane id="high_r0_0" index="0" allow="pedestrian" speed="13.89" length="62.80" width="2.00" shape="62.80,44.20 0.00,44.20"/>
+        <lane id="high_r0_1" index="1" disallow="pedestrian" speed="13.89" length="62.80" shape="62.80,41.60 0.00,41.60"/>
+    </edge>
+    <edge id="high_r1" from="J_high_mews" to="J_high_church" priority="-1">
+        <lane id="high_r1_0" index="0" allow="pedestrian" speed="13.89" length="95.60" width="2.00" shape="172.80,44.20 77.20,44.20"/>
+        <lane id="high_r1_1" index="1" disallow="pedestrian" speed="13.89" length="95.60" shape="172.80,41.60 77.20,41.60"/>
+    </edge>
+    <edge id="high_r2" from="J_high_bridge" to="J_high_mews" priority="-1">
+        <lane id="high_r2_0" index="0" allow="pedestrian" speed="13.89" length="105.60" width="2.00" shape="292.80,44.20 187.20,44.20"/>
+        <lane id="high_r2_1" index="1" disallow="pedestrian" speed="13.89" length="105.60" shape="292.80,41.60 187.20,41.60"/>
+    </edge>
+    <edge id="high_r3" from="E_high_1" to="J_high_bridge" priority="-1">
+        <lane id="high_r3_0" index="0" allow="pedestrian" speed="13.89" length="52.80" width="2.00" shape="360.00,44.20 307.20,44.20"/>
+        <lane id="high_r3_1" index="1" disallow="pedestrian" speed="13.89" length="52.80" shape="360.00,41.60 307.20,41.60"/>
+    </edge>
+    <edge id="market_f0" from="J_market_church" to="J_market_mews" priority="-1">
+        <lane id="market_f0_0" index="0" allow="pedestrian" speed="13.89" length="95.60" width="2.00" shape="77.20,135.80 172.80,135.80"/>
+        <lane id="market_f0_1" index="1" disallow="pedestrian" speed="13.89" length="95.60" shape="77.20,138.40 172.80,138.40"/>
+    </edge>
+    <edge id="market_f1" from="J_market_mews" to="J_market_bridge" priority="-1">
+        <lane id="market_f1_0" index="0" allow="pedestrian" speed="13.89" length="105.60" width="2.00" shape="187.20,135.80 292.80,135.80"/>
+        <lane id="market_f1_1" index="1" disallow="pedestrian" speed="13.89" length="105.60" shape="187.20,138.40 292.80,138.40"/>
+    </edge>
+    <edge id="market_f2" from="J_market_bridge" to="E_market_1" priority="-1">
+        <lane id="market_f2_0" index="0" allow="pedestrian" speed="13.89" length="52.80" width="2.00" shape="307.20,135.80 360.00,135.80"/>
+        <lane id="market_f2_1" index="1" disallow="pedestrian" speed="13.89" length="52.80" shape="307.20,138.40 360.00,138.40"/>
+    </edge>
+    <edge id="market_r0" from="J_market_mews" to="J_market_church" priority="-1">
+        <lane id="market_r0_0" index="0" allow="pedestrian" speed="13.89" length="95.60" width="2.00" shape="172.80,144.20 77.20,144.20"/>
+        <lane id="market_r0_1" index="1" disallow="pedestrian" speed="13.89" length="95.60" shape="172.80,141.60 77.20,141.60"/>
+    </edge>
+    <edge id="market_r1" from="J_market_bridge" to="J_market_mews" priority="-1">
+        <lane id="market_r1_0" index="0" allow="pedestrian" speed="13.89" length="105.60" width="2.00" shape="292.80,144.20 187.20,144.20"/>
+        <lane id="market_r1_1" index="1" disallow="pedestrian" speed="13.89" length="105.60" shape="292.80,141.60 187.20,141.60"/>
+    </edge>
+    <edge id="market_r2" from="E_market_1" to="J_market_bridge" priority="-1">
+        <lane id="market_r2_0" index="0" allow="pedestrian" speed="13.89" length="52.80" width="2.00" shape="360.00,144.20 307.20,144.20"/>
+        <lane id="market_r2_1" index="1" disallow="pedestrian" speed="13.89" length="52.80" shape="360.00,141.60 307.20,141.60"/>
+    </edge>
+    <edge id="mews_f0" from="J_high_mews" to="J_market_mews" priority="-1">
+        <lane id="mews_f0_0" index="0" allow="pedestrian" speed="13.89" length="85.60" width="2.00" shape="184.20,47.20 184.20,132.80"/>
+        <lane id="mews_f0_1" index="1" disallow="pedestrian" speed="13.89" length="85.60" shape="181.60,47.20 181.60,132.80"/>
+    </edge>
+    <edge id="mews_r0" from="J_market_mews" to="J_high_mews" priority="-1">
+        <lane id="mews_r0_0" index="0" allow="pedestrian" speed="13.89" length="85.60" width="2.00" shape="175.80,132.80 175.80,47.20"/>
+        <lane id="mews_r0_1" index="1" disallow="pedestrian" speed="13.89" length="85.60" shape="178.40,132.80 178.40,47.20"/>
+    </edge>
+    <edge id="stub_J_garden_bridge_E_in" from="S_J_garden_bridge_E" to="J_garden_bridge" priority="-1">
+        <lane id="stub_J_garden_bridge_E_in_0" index="0" allow="pedestrian" speed="13.89" length="6.80" width="2.00" shape="314.00,224.20 307.20,224.20"/>
+        <lane id="stub_J_garden_bridge_E_in_1" index="1" disallow="pedestrian" speed="13.89" length="6.80" shape="314.00,221.60 307.20,221.60"/>
+    </edge>
+    <edge id="stub_J_garden_bridge_E_out" from="J_garden_bridge" to="S_J_garden_bridge_E" priority="-1">
+        <lane id="stub_J_garden_bridge_E_out_0" index="0" allow="pedestrian" speed="13.89" length="6.80" width="2.00" shape="307.20,215.80 314.00,215.80"/>
+        <lane id="stub_J_garden_bridge_E_out_1" index="1" disallow="pedestrian" speed="13.89" length="6.80" shape="307.20,218.40 314.00,218.40"/>
+    </edge>
+    <edge id="stub_J_garden_church_W_in" from="S_J_garden_church_W" to="J_garden_church" priority="-1">
+        <lane id="stub_J_garden_church_W_in_0" index="0" allow="pedestrian" speed="13.89" length="6.80" width="2.00" shape="56.00,215.80 62.80,215.80"/>
+        <lane id="stub_J_garden_church_W_in_1" index="1" disallow="pedestrian" speed="13.89" length="6.80" shape="56.00,218.40 62.80,218.40"/>
+    </edge>
+    <edge id="stub_J_garden_church_W_out" from="J_garden_church" to="S_J_garden_church_W" priority="-1">
+        <lane id="stub_J_garden_church_W_out_0" index="0" allow="pedestrian" speed="13.89" length="6.80" width="2.00" shape="62.80,224.20 56.00,224.20"/>
+        <lane id="stub_J_garden_church_W_out_1" index="1" disallow="pedestrian" speed="13.89" length="6.80" shape="62.80,221.60 56.00,221.60"/>
+    </edge>
+    <edge id="stub_J_high_bridge_S_in" from="S_J_high_bridge_S" to="J_high_bridge" priority="-1">
+        <lane id="stub_J_high_bridge_S_in_0" index="0" allow="pedestrian" speed="13.89" length="6.80" width="2.00" shape="304.20,26.00 304.20,32.80"/>
+        <lane id="stub_J_high_bridge_S_in_1" index="1" disallow="pedestrian" speed="13.89" length="6.80" shape="301.60,26.00 301.60,32.80"/>
+    </edge>
+    <edge id="stub_J_high_bridge_S_out" from="J_high_bridge" to="S_J_high_bridge_S" priority="-1">
+        <lane id="stub_J_high_bridge_S_out_0" index="0" allow="pedestrian" speed="13.89" length="6.80" width="2.00" shape="295.80,32.80 295.80,26.00"/>
+        <lane id="stub_J_high_bridge_S_out_1" index="1" disallow="pedestrian" speed="13.89" length="6.80" shape="298.40,32.80 298.40,26.00"/>
+    </edge>
+    <edge id="stub_J_high_mews_S_in" from="S_J_high_mews_S" to="J_high_mews" priority="-1">
+        <lane id="stub_J_high_mews_S_in_0" index="0" allow="pedestrian" speed="13.89" length="6.80" width="2.00" shape="184.20,26.00 184.20,32.80"/>
+        <lane id="stub_J_high_mews_S_in_1" index="1" disallow="pedestrian" speed="13.89" length="6.80" shape="181.60,26.00 181.60,32.80"/>
+    </edge>
+    <edge id="stub_J_high_mews_S_out" from="J_high_mews" to="S_J_high_mews_S" priority="-1">
+        <lane id="stub_J_high_mews_S_out_0" index="0" allow="pedestrian" speed="13.89" length="6.80" width="2.00" shape="175.80,32.80 175.80,26.00"/>
+        <lane id="stub_J_high_mews_S_out_1" index="1" disallow="pedestrian" speed="13.89" length="6.80" shape="178.40,32.80 178.40,26.00"/>
+    </edge>
+    <edge id="stub_J_market_church_W_in" from="S_J_market_church_W" to="J_market_church" priority="-1">
+        <lane id="stub_J_market_church_W_in_0" index="0" allow="pedestrian" speed="13.89" length="6.80" width="2.00" shape="56.00,135.80 62.80,135.80"/>
+        <lane id="stub_J_market_church_W_in_1" index="1" disallow="pedestrian" speed="13.89" length="6.80" shape="56.00,138.40 62.80,138.40"/>
+    </edge>
+    <edge id="stub_J_market_church_W_out" from="J_market_church" to="S_J_market_church_W" priority="-1">
+        <lane id="stub_J_market_church_W_out_0" index="0" allow="pedestrian" speed="13.89" length="6.80" width="2.00" shape="62.80,144.20 56.00,144.20"/>
+        <lane id="stub_J_market_church_W_out_1" index="1" disallow="pedestrian" speed="13.89" length="6.80" shape="62.80,141.60 56.00,141.60"/>
+    </edge>
+    <edge id="stub_J_market_mews_N_in" from="S_J_market_mews_N" to="J_market_mews" priority="-1">
+        <lane id="stub_J_market_mews_N_in_0" index="0" allow="pedestrian" speed="13.89" length="6.80" width="2.00" shape="175.80,154.00 175.80,147.20"/>
+        <lane id="stub_J_market_mews_N_in_1" index="1" disallow="pedestrian" speed="13.89" length="6.80" shape="178.40,154.00 178.40,147.20"/>
+    </edge>
+    <edge id="stub_J_market_mews_N_out" from="J_market_mews" to="S_J_market_mews_N" priority="-1">
+        <lane id="stub_J_market_mews_N_out_0" index="0" allow="pedestrian" speed="13.89" length="6.80" width="2.00" shape="184.20,147.20 184.20,154.00"/>
+        <lane id="stub_J_market_mews_N_out_1" index="1" disallow="pedestrian" speed="13.89" length="6.80" shape="181.60,147.20 181.60,154.00"/>
+    </edge>
+
+    <tlLogic id="J_garden_bridge" type="static" programID="0" offset="0">
+        <phase duration="17" state="gGgrrrgGgrrrrGrG"/>
+        <phase duration="5"  state="gGgrrrgGgrrrrrrr"/>
+        <phase duration="3"  state="yyyrrryyyrrrrrrr"/>
+        <phase duration="17" state="rrrgGgrrrgGgGrGr"/>
+        <phase duration="5"  state="rrrgGgrrrgGgrrrr"/>
+        <phase duration="3"  state="rrryyyrrryyyrrrr"/>
+    </tlLogic>
+    <tlLogic id="J_garden_church" type="static" programID="0" offset="0">
+        <phase duration="17" state="gGgrrrgGgrrrrGrG"/>
+        <phase duration="5"  state="gGgrrrgGgrrrrrrr"/>
+        <phase duration="3"  state="yyyrrryyyrrrrrrr"/>
+        <phase duration="17" state="rrrgGgrrrgGgGrGr"/>
+        <phase duration="5"  state="rrrgGgrrrgGgrrrr"/>
+        <phase duration="3"  state="rrryyyrrryyyrrrr"/>
+    </tlLogic>
+    <tlLogic id="J_high_bridge" type="static" programID="0" offset="0">
+        <phase duration="17" state="gGgrrrgGgrrrrGrG"/>
+        <phase duration="5"  state="gGgrrrgGgrrrrrrr"/>
+        <phase duration="3"  state="yyyrrryyyrrrrrrr"/>
+        <phase duration="17" state="rrrgGgrrrgGgGrGr"/>
+        <phase duration="5"  state="rrrgGgrrrgGgrrrr"/>
+        <phase duration="3"  state="rrryyyrrryyyrrrr"/>
+    </tlLogic>
+    <tlLogic id="J_high_church" type="static" programID="0" offset="0">
+        <phase duration="17" state="gGgrrrgGgrrrrGrG"/>
+        <phase duration="5"  state="gGgrrrgGgrrrrrrr"/>
+        <phase duration="3"  state="yyyrrryyyrrrrrrr"/>
+        <phase duration="17" state="rrrgGgrrrgGgGrGr"/>
+        <phase duration="5"  state="rrrgGgrrrgGgrrrr"/>
+        <phase duration="3"  state="rrryyyrrryyyrrrr"/>
+    </tlLogic>
+    <tlLogic id="J_high_mews" type="static" programID="0" offset="0">
+        <phase duration="17" state="gGgrrrgGgrrrrGrG"/>
+        <phase duration="5"  state="gGgrrrgGgrrrrrrr"/>
+        <phase duration="3"  state="yyyrrryyyrrrrrrr"/>
+        <phase duration="17" state="rrrgGgrrrgGgGrGr"/>
+        <phase duration="5"  state="rrrgGgrrrgGgrrrr"/>
+        <phase duration="3"  state="rrryyyrrryyyrrrr"/>
+    </tlLogic>
+    <tlLogic id="J_market_bridge" type="static" programID="0" offset="0">
+        <phase duration="17" state="gGgrrrgGgrrrrGrG"/>
+        <phase duration="5"  state="gGgrrrgGgrrrrrrr"/>
+        <phase duration="3"  state="yyyrrryyyrrrrrrr"/>
+        <phase duration="17" state="rrrgGgrrrgGgGrGr"/>
+        <phase duration="5"  state="rrrgGgrrrgGgrrrr"/>
+        <phase duration="3"  state="rrryyyrrryyyrrrr"/>
+    </tlLogic>
+    <tlLogic id="J_market_church" type="static" programID="0" offset="0">
+        <phase duration="17" state="gGgrrrgGgrrrrGrG"/>
+        <phase duration="5"  state="gGgrrrgGgrrrrrrr"/>
+        <phase duration="3"  state="yyyrrryyyrrrrrrr"/>
+        <phase duration="17" state="rrrgGgrrrgGgGrGr"/>
+        <phase duration="5"  state="rrrgGgrrrgGgrrrr"/>
+        <phase duration="3"  state="rrryyyrrryyyrrrr"/>
+    </tlLogic>
+    <tlLogic id="J_market_mews" type="static" programID="0" offset="0">
+        <phase duration="17" state="gGgrrrgGgrrrrGrG"/>
+        <phase duration="5"  state="gGgrrrgGgrrrrrrr"/>
+        <phase duration="3"  state="yyyrrryyyrrrrrrr"/>
+        <phase duration="17" state="rrrgGgrrrgGgGrGr"/>
+        <phase duration="5"  state="rrrgGgrrrgGgrrrr"/>
+        <phase duration="3"  state="rrryyyrrryyyrrrr"/>
+    </tlLogic>
+
+    <junction id="E_bridge_1" type="dead_end" x="300.00" y="260.00" incLanes="bridge_f2_0 bridge_f2_1" intLanes="" shape="300.00,260.00 305.20,260.00 300.00,260.00"/>
+    <junction id="E_church_0" type="dead_end" x="70.00" y="0.00" incLanes="church_r0_0 church_r0_1" intLanes="" shape="70.00,0.00 64.80,0.00 70.00,0.00"/>
+    <junction id="E_church_1" type="dead_end" x="70.00" y="260.00" incLanes="church_f3_0 church_f3_1" intLanes="" shape="70.00,260.00 75.20,260.00 70.00,260.00"/>
+    <junction id="E_high_0" type="dead_end" x="0.00" y="40.00" incLanes="high_r0_0 high_r0_1" intLanes="" shape="0.00,40.00 0.00,45.20 0.00,40.00"/>
+    <junction id="E_high_1" type="dead_end" x="360.00" y="40.00" incLanes="high_f3_0 high_f3_1" intLanes="" shape="360.00,40.00 360.00,34.80 360.00,40.00"/>
+    <junction id="E_market_1" type="dead_end" x="360.00" y="140.00" incLanes="market_f2_0 market_f2_1" intLanes="" shape="360.00,140.00 360.00,134.80 360.00,140.00"/>
+    <junction id="J_garden_bridge" type="traffic_light" x="300.00" y="220.00" incLanes="bridge_r2_0 bridge_r2_1 stub_J_garden_bridge_E_in_0 stub_J_garden_bridge_E_in_1 bridge_f1_0 bridge_f1_1 garden_f0_0 garden_f0_1 :J_garden_bridge_w1_0 :J_garden_bridge_w2_0 :J_garden_bridge_w3_0 :J_garden_bridge_w0_0" intLanes=":J_garden_bridge_12_0 :J_garden_bridge_1_0 :J_garden_bridge_13_0 :J_garden_bridge_14_0 :J_garden_bridge_4_0 :J_garden_bridge_15_0 :J_garden_bridge_16_0 :J_garden_bridge_7_0 :J_garden_bridge_17_0 :J_garden_bridge_18_0 :J_garden_bridge_10_0 :J_garden_bridge_19_0 :J_garden_bridge_c0_0 :J_garden_bridge_c1_0 :J_garden_bridge_c2_0 :J_garden_bridge_c3_0" shape="294.80,227.20 305.20,227.20 305.42,226.09 305.70,225.70 306.09,225.42 306.59,225.26 307.20,225.20 307.20,214.80 306.09,214.58 305.70,214.30 305.42,213.91 305.26,213.41 305.20,212.80 294.80,212.80 294.58,213.91 294.30,214.30 293.91,214.58 293.41,214.74 292.80,214.80 292.80,225.20 293.91,225.42 294.30,225.70 294.58,226.09 294.74,226.59">
+        <request index="0"  response="1001000000000000" foes="1001000100010000" cont="1"/>
+        <request index="1"  response="0101101000100000" foes="0101111100110000" cont="0"/>
+        <request index="2"  response="0011100011100000" foes="0011110111110000" cont="1"/>
+        <request index="3"  response="0011000010000000" foes="0011100010000000" cont="1"/>
+        <request index="4"  response="1010000110000111" foes="1010100110000111" cont="0"/>
+        <request index="5"  response="0110011110000110" foes="0110111110000110" cont="1"/>
+        <request index="6"  response="0110000000000000" foes="0110010000000100" cont="1"/>
+        <request index="7"  response="0101100000101000" foes="0101110000111100" cont="0"/>
+        <request index="8"  response="1100100000100111" foes="1100110000110111" cont="1"/>
+        <request index="9"  response="1100000000000010" foes="1100000000100010" cont="1"/>
+        <request index="10" response="1010000111000110" foes="1010000111100110" cont="0"/>
+        <request index="11" response="1001000110111110" foes="1001000110111110" cont="1"/>
+        <request index="12" response="0000000000000000" foes="0000100010001111" cont="0"/>
+        <request index="13" response="0000000000000000" foes="0000010001111100" cont="0"/>
+        <request index="14" response="0000000000000000" foes="0000001111100010" cont="0"/>
+        <request index="15" response="0000000000000000" foes="0000111100010001" cont="0"/>
+    </junction>
+    <junction id="J_garden_church" type="traffic_light" x="70.00" y="220.00" incLanes="church_r3_0 church_r3_1 garden_r0_0 garden_r0_1 church_f2_0 church_f2_1 stub_J_garden_church_W_in_0 stub_J_garden_church_W_in_1 :J_garden_church_w1_0 :J_garden_church_w2_0 :J_garden_church_w3_0 :J_garden_church_w0_0" intLanes=":J_garden_church_12_0 :J_garden_church_1_0 :J_garden_church_13_0 :J_garden_church_14_0 :J_garden_church_4_0 :J_garden_church_15_0 :J_garden_church_16_0 :J_garden_church_7_0 :J_garden_church_17_0 :J_garden_church_18_0 :J_garden_church_10_0 :J_garden_church_19_0 :J_garden_church_c0_0 :J_garden_church_c1_0 :J_garden_church_c2_0 :J_garden_church_c3_0" shape="64.80,227.20 75.20,227.20 75.42,226.09 75.70,225.70 76.09,225.42 76.59,225.26 77.20,225.20 77.20,214.80 76.09,214.58 75.70,214.30 75.42,213.91 75.26,213.41 75.20,212.80 64.80,212.80 64.58,213.91 64.30,214.30 63.91,214.58 63.41,214.74 62.80,214.80 62.80,225.20 63.91,225.42 64.30,225.70 64.58,226.09 64.74,226.59">
+        <request index="0"  response="1001000000000000" foes="1001000100010000" cont="1"/>
+        <request index="1"  response="0101101000100000" foes="0101111100110000" cont="0"/>
+        <request index="2"  response="0011100011100000" foes="0011110111110000" cont="1"/>
+        <request index="3"  response="0011000010000000" foes="0011100010000000" cont="1"/>
+        <request index="4"  response="1010000110000111" foes="1010100110000111" cont="0"/>
+        <request index="5"  response="0110111110000110" foes="0110111110000110" cont="1"/>
+        <request index="6"  response="0110000000000000" foes="0110010000000100" cont="1"/>
+        <request index="7"  response="0101100000101000" foes="0101110000111100" cont="0"/>
+        <request index="8"  response="1100100000100111" foes="1100110000110111" cont="1"/>
+        <request index="9"  response="1100000000000010" foes="1100000000100010" cont="1"/>
+        <request index="10" response="1010000111000110" foes="1010000111100110" cont="0"/>
+        <request index="11" response="1001000110011110" foes="1001000110111110" cont="1"/>
+        <request index="12" response="0000000000000000" foes="0000100010001111" cont="0"/>
+        <request index="13" response="0000000000000000" foes="0000010001111100" cont="0"/>
+        <request index="14" response="0000000000000000" foes="0000001111100010" cont="0"/>
+        <request index="15" response="0000000000000000" foes="0000111100010001" cont="0"/>
+    </junction>
+    <junction id="J_high_bridge" type="traffic_light" x="300.00" y="40.00" incLanes="bridge_r0_0 bridge_r0_1 high_r3_0 high_r3_1 stub_J_high_bridge_S_in_0 stub_J_high_bridge_S_in_1 high_f2_0 high_f2_1 :J_high_bridge_w1_0 :J_high_bridge_w2_0 :J_high_bridge_w3_0 :J_high_bridge_w0_0" intLanes=":J_high_bridge_12_0 :J_high_bridge_1_0 :J_high_bridge_13_0 :J_high_bridge_14_0 :J_high_bridge_4_0 :J_high_bridge_15_0 :J_high_bridge_16_0 :J_high_bridge_7_0 :J_high_bridge_17_0 :J_high_bridge_18_0 :J_high_bridge_10_0 :J_high_bridge_19_0 :J_high_bridge_c0_0 :J_high_bridge_c1_0 :J_high_bridge_c2_0 :J_high_bridge_c3_0" shape="294.80,47.20 305.20,47.20 305.42,46.09 305.70,45.70 306.09,45.42 306.59,45.26 307.20,45.20 307.20,34.80 306.09,34.58 305.70,34.30 305.42,33.91 305.26,33.41 305.20,32.80 294.80,32.80 294.58,33.91 294.30,34.30 293.91,34.58 293.41,34.74 292.80,34.80 292.80,45.20 293.91,45.42 294.30,45.70 294.58,46.09 294.74,46.59">
+        <request index="0"  response="1001000000000000" foes="1001000100010000" cont="1"/>
+        <request index="1"  response="0101101000100000" foes="0101111100110000" cont="0"/>
+        <request index="2"  response="0011100111100000" foes="0011110111110000" cont="1"/>
+        <request index="3"  response="0011000010000000" foes="0011100010000000" cont="1"/>
+        <request index="4"  response="1010000110000111" foes="1010100110000111" cont="0"/>
+        <request index="5"  response="0110011110000110" foes="0110111110000110" cont="1"/>
+        <request index="6"  response="0110000000000000" foes="0110010000000100" cont="1"/>
+        <request index="7"  response="0101100000101000" foes="0101110000111100" cont="0"/>
+        <request index="8"  response="1100100000100011" foes="1100110000110111" cont="1"/>
+        <request index="9"  response="1100000000000010" foes="1100000000100010" cont="1"/>
+        <request index="10" response="1010000111000110" foes="1010000111100110" cont="0"/>
+        <request index="11" response="1001000110111110" foes="1001000110111110" cont="1"/>
+        <request index="12" response="0000000000000000" foes="0000100010001111" cont="0"/>
+        <request index="13" response="0000000000000000" foes="0000010001111100" cont="0"/>
+        <request index="14" response="0000000000000000" foes="0000001111100010" cont="0"/>
+        <request index="15" response="0000000000000000" foes="0000111100010001" cont="0"/>
+    </junction>
+    <junction id="J_high_church" type="traffic_light" x="70.00" y="40.00" incLanes="church_r1_0 church_r1_1 high_r1_0 high_r1_1 church_f0_0 church_f0_1 high_f0_0 high_f0_1 :J_high_church_w1_0 :J_high_church_w2_0 :J_high_church_w3_0 :J_high_church_w0_0" intLanes=":J_high_church_12_0 :J_high_church_1_0 :J_high_church_13_0 :J_high_church_14_0 :J_high_church_4_0 :J_high_church_15_0 :J_high_church_16_0 :J_high_church_7_0 :J_high_church_17_0 :J_high_church_18_0 :J_high_church_10_0 :J_high_church_19_0 :J_high_church_c0_0 :J_high_church_c1_0 :J_high_church_c2_0 :J_high_church_c3_0" shape="64.80,47.20 75.20,47.20 75.42,46.09 75.70,45.70 76.09,45.42 76.59,45.26 77.20,45.20 77.20,34.80 76.09,34.58 75.70,34.30 75.42,33.91 75.26,33.41 75.20,32.80 64.80,32.80 64.58,33.91 64.30,34.30 63.91,34.58 63.41,34.74 62.80,34.80 62.80,45.20 63.91,45.42 64.30,45.70 64.58,46.09 64.74,46.59">
+        <request index="0"  response="1001000000000000" foes="1001000100010000" cont="1"/>
+        <request index="1"  response="0101101000100000" foes="0101111100110000" cont="0"/>
+        <request index="2"  response="0011100011100000" foes="0011110111110000" cont="1"/>
+        <request index="3"  response="0011000010000000" foes="0011100010000000" cont="1"/>
+        <request index="4"  response="1010000110000111" foes="1010100110000111" cont="0"/>
+        <request index="5"  response="0110011110000110" foes="0110111110000110" cont="1"/>
+        <request index="6"  response="0110000000000000" foes="0110010000000100" cont="1"/>
+        <request index="7"  response="0101100000101000" foes="0101110000111100" cont="0"/>
+        <request index="8"  response="1100100000100111" foes="1100110000110111" cont="1"/>
+        <request index="9"  response="1100000000000010" foes="1100000000100010" cont="1"/>
+        <request index="10" response="1010000111000110" foes="1010000111100110" cont="0"/>
+        <request index="11" response="1001000110111110" foes="1001000110111110" cont="1"/>
+        <request index="12" response="0000000000000000" foes="0000100010001111" cont="0"/>
+        <request index="13" response="0000000000000000" foes="0000010001111100" cont="0"/>
+        <request index="14" response="0000000000000000" foes="0000001111100010" cont="0"/>
+        <request index="15" response="0000000000000000" foes="0000111100010001" cont="0"/>
+    </junction>
+    <junction id="J_high_mews" type="traffic_light" x="180.00" y="40.00" incLanes="mews_r0_0 mews_r0_1 high_r2_0 high_r2_1 stub_J_high_mews_S_in_0 stub_J_high_mews_S_in_1 high_f1_0 high_f1_1 :J_high_mews_w1_0 :J_high_mews_w2_0 :J_high_mews_w3_0 :J_high_mews_w0_0" intLanes=":J_high_mews_12_0 :J_high_mews_1_0 :J_high_mews_13_0 :J_high_mews_14_0 :J_high_mews_4_0 :J_high_mews_15_0 :J_high_mews_16_0 :J_high_mews_7_0 :J_high_mews_17_0 :J_high_mews_18_0 :J_high_mews_10_0 :J_high_mews_19_0 :J_high_mews_c0_0 :J_high_mews_c1_0 :J_high_mews_c2_0 :J_high_mews_c3_0" shape="174.80,47.20 185.20,47.20 185.42,46.09 185.70,45.70 186.09,45.42 186.59,45.26 187.20,45.20 187.20,34.80 186.09,34.58 185.70,34.30 185.42,33.91 185.26,33.41 185.20,32.80 174.80,32.80 174.58,33.91 174.30,34.30 173.91,34.58 173.41,34.74 172.80,34.80 172.80,45.20 173.91,45.42 174.30,45.70 174.58,46.09 174.74,46.59">
+        <request index="0"  response="1001000000000000" foes="1001000100010000" cont="1"/>
+        <request index="1"  response="0101101000100000" foes="0101111100110000" cont="0"/>
+        <request index="2"  response="0011100111100000" foes="0011110111110000" cont="1"/>
+        <request index="3"  response="0011000010000000" foes="0011100010000000" cont="1"/>
+        <request index="4"  response="1010000110000111" foes="1010100110000111" cont="0"/>
+        <request index="5"  response="0110011110000110" foes="0110111110000110" cont="1"/>
+        <request index="6"  response="0110000000000000" foes="0110010000000100" cont="1"/>
+        <request index="7"  response="0101100000101000" foes="0101110000111100" cont="0"/>
+        <request index="8"  response="1100100000100011" foes="1100110000110111" cont="1"/>
+        <request index="9"  response="1100000000000010" foes="1100000000100010" cont="1"/>
+        <request index="10" response="1010000111000110" foes="1010000111100110" cont="0"/>
+        <request index="11" response="1001000110111110" foes="1001000110111110" cont="1"/>
+        <request index="12" response="0000000000000000" foes="0000100010001111" cont="0"/>
+        <request index="13" response="0000000000000000" foes="0000010001111100" cont="0"/>
+        <request index="14" response="0000000000000000" foes="0000001111100010" cont="0"/>
+        <request index="15" response="0000000000000000" foes="0000111100010001" cont="0"/>
+    </junction>
+    <junction id="J_market_bridge" type="traffic_light" x="300.00" y="140.00" incLanes="bridge_r1_0 bridge_r1_1 market_r2_0 market_r2_1 bridge_f0_0 bridge_f0_1 market_f1_0 market_f1_1 :J_market_bridge_w1_0 :J_market_bridge_w2_0 :J_market_bridge_w3_0 :J_market_bridge_w0_0" intLanes=":J_market_bridge_12_0 :J_market_bridge_1_0 :J_market_bridge_13_0 :J_market_bridge_14_0 :J_market_bridge_4_0 :J_market_bridge_15_0 :J_market_bridge_16_0 :J_market_bridge_7_0 :J_market_bridge_17_0 :J_market_bridge_18_0 :J_market_bridge_10_0 :J_market_bridge_19_0 :J_market_bridge_c0_0 :J_market_bridge_c1_0 :J_market_bridge_c2_0 :J_market_bridge_c3_0" shape="294.80,147.20 305.20,147.20 305.42,146.09 305.70,145.70 306.09,145.42 306.59,145.26 307.20,145.20 307.20,134.80 306.09,134.58 305.70,134.30 305.42,133.91 305.26,133.41 305.20,132.80 294.80,132.80 294.58,133.91 294.30,134.30 293.91,134.58 293.41,134.74 292.80,134.80 292.80,145.20 293.91,145.42 294.30,145.70 294.58,146.09 294.74,146.59">
+        <request index="0"  response="1001000000000000" foes="1001000100010000" cont="1"/>
+        <request index="1"  response="0101101000100000" foes="0101111100110000" cont="0"/>
+        <request index="2"  response="0011100011100000" foes="0011110111110000" cont="1"/>
+        <request index="3"  response="0011000010000000" foes="0011100010000000" cont="1"/>
+        <request index="4"  response="1010000110000111" foes="1010100110000111" cont="0"/>
+        <request index="5"  response="0110011110000110" foes="0110111110000110" cont="1"/>
+        <request index="6"  response="0110000000000000" foes="0110010000000100" cont="1"/>
+        <request index="7"  response="0101100000101000" foes="0101110000111100" cont="0"/>
+        <request index="8"  response="1100100000100111" foes="1100110000110111" cont="1"/>
+        <request index="9"  response="1100000000000010" foes="1100000000100010" cont="1"/>
+        <request index="10" response="1010000111000110" foes="1010000111100110" cont="0"/>
+        <request index="11" response="1001000110111110" foes="1001000110111110" cont="1"/>
+        <request index="12" response="0000000000000000" foes="0000100010001111" cont="0"/>
+        <request index="13" response="0000000000000000" foes="0000010001111100" cont="0"/>
+        <request index="14" response="0000000000000000" foes="0000001111100010" cont="0"/>
+        <request index="15" response="0000000000000000" foes="0000111100010001" cont="0"/>
+    </junction>
+    <junction id="J_market_church" type="traffic_light" x="70.00" y="140.00" incLanes="church_r2_0 church_r2_1 market_r0_0 market_r0_1 church_f1_0 church_f1_1 stub_J_market_church_W_in_0 stub_J_market_church_W_in_1 :J_market_church_w1_0 :J_market_church_w2_0 :J_market_church_w3_0 :J_market_church_w0_0" intLanes=":J_market_church_12_0 :J_market_church_1_0 :J_market_church_13_0 :J_market_church_14_0 :J_market_church_4_0 :J_market_church_15_0 :J_market_church_16_0 :J_market_church_7_0 :J_market_church_17_0 :J_market_church_18_0 :J_market_church_10_0 :J_market_church_19_0 :J_market_church_c0_0 :J_market_church_c1_0 :J_market_church_c2_0 :J_market_church_c3_0" shape="64.80,147.20 75.20,147.20 75.42,146.09 75.70,145.70 76.09,145.42 76.59,145.26 77.20,145.20 77.20,134.80 76.09,134.58 75.70,134.30 75.42,133.91 75.26,133.41 75.20,132.80 64.80,132.80 64.58,133.91 64.30,134.30 63.91,134.58 63.41,134.74 62.80,134.80 62.80,145.20 63.91,145.42 64.30,145.70 64.58,146.09 64.74,146.59">
+        <request index="0"  response="1001000000000000" foes="1001000100010000" cont="1"/>
+        <request index="1"  response="0101101000100000" foes="0101111100110000" cont="0"/>
+        <request index="2"  response="0011100011100000" foes="0011110111110000" cont="1"/>
+        <request index="3"  response="0011000010000000" foes="0011100010000000" cont="1"/>
+        <request index="4"  response="1010000110000111" foes="1010100110000111" cont="0"/>
+        <request index="5"  response="0110111110000110" foes="0110111110000110" cont="1"/>
+        <request index="6"  response="0110000000000000" foes="0110010000000100" cont="1"/>
+        <request index="7"  response="0101100000101000" foes="0101110000111100" cont="0"/>
+        <request index="8"  response="1100100000100111" foes="1100110000110111" cont="1"/>
+        <request index="9"  response="1100000000000010" foes="1100000000100010" cont="1"/>
+        <request index="10" response="1010000111000110" foes="1010000111100110" cont="0"/>
+        <request index="11" response="1001000110011110" foes="1001000110111110" cont="1"/>
+        <request index="12" response="0000000000000000" foes="0000100010001111" cont="0"/>
+        <request index="13" response="0000000000000000" foes="0000010001111100" cont="0"/>
+        <request index="14" response="0000000000000000" foes="0000001111100010" cont="0"/>
+        <request index="15" response="0000000000000000" foes="0000111100010001" cont="0"/>
+    </junction>
+    <junction id="J_market_mews" type="traffic_light" x="180.00" y="140.00" incLanes="stub_J_market_mews_N_in_0 stub_J_market_mews_N_in_1 market_r1_0 market_r1_1 mews_f0_0 mews_f0_1 market_f0_0 market_f0_1 :J_market_mews_w1_0 :J_market_mews_w2_0 :J_market_mews_w3_0 :J_market_mews_w0_0" intLanes=":J_market_mews_12_0 :J_market_mews_1_0 :J_market_mews_13_0 :J_market_mews_14_0 :J_market_mews_4_0 :J_market_mews_15_0 :J_market_mews_16_0 :J_market_mews_7_0 :J_market_mews_17_0 :J_market_mews_18_0 :J_market_mews_10_0 :J_market_mews_19_0 :J_market_mews_c0_0 :J_market_mews_c1_0 :J_market_mews_c2_0 :J_market_mews_c3_0" shape="174.80,147.20 185.20,147.20 185.42,146.09 185.70,145.70 186.09,145.42 186.59,145.26 187.20,145.20 187.20,134.80 186.09,134.58 185.70,134.30 185.42,133.91 185.26,133.41 185.20,132.80 174.80,132.80 174.58,133.91 174.30,134.30 173.91,134.58 173.41,134.74 172.80,134.80 172.80,145.20 173.91,145.42 174.30,145.70 174.58,146.09 174.74,146.59">
+        <request index="0"  response="1001000000000000" foes="1001000100010000" cont="1"/>
+        <request index="1"  response="0101101000100000" foes="0101111100110000" cont="0"/>
+        <request index="2"  response="0011100011100000" foes="0011110111110000" cont="1"/>
+        <request index="3"  response="0011000010000000" foes="0011100010000000" cont="1"/>
+        <request index="4"  response="1010000110000111" foes="1010100110000111" cont="0"/>
+        <request index="5"  response="0110011110000110" foes="0110111110000110" cont="1"/>
+        <request index="6"  response="0110000000000000" foes="0110010000000100" cont="1"/>
+        <request index="7"  response="0101100000101000" foes="0101110000111100" cont="0"/>
+        <request index="8"  response="1100100000100111" foes="1100110000110111" cont="1"/>
+        <request index="9"  response="1100000000000010" foes="1100000000100010" cont="1"/>
+        <request index="10" response="1010000111000110" foes="1010000111100110" cont="0"/>
+        <request index="11" response="1001000110111110" foes="1001000110111110" cont="1"/>
+        <request index="12" response="0000000000000000" foes="0000100010001111" cont="0"/>
+        <request index="13" response="0000000000000000" foes="0000010001111100" cont="0"/>
+        <request index="14" response="0000000000000000" foes="0000001111100010" cont="0"/>
+        <request index="15" response="0000000000000000" foes="0000111100010001" cont="0"/>
+    </junction>
+    <junction id="S_J_garden_bridge_E" type="dead_end" x="314.00" y="220.00" incLanes="stub_J_garden_bridge_E_out_0 stub_J_garden_bridge_E_out_1" intLanes="" shape="314.00,220.00 314.00,214.80 314.00,220.00"/>
+    <junction id="S_J_garden_church_W" type="dead_end" x="56.00" y="220.00" incLanes="stub_J_garden_church_W_out_0 stub_J_garden_church_W_out_1" intLanes="" shape="56.00,220.00 56.00,225.20 56.00,220.00"/>
+    <junction id="S_J_high_bridge_S" type="dead_end" x="300.00" y="26.00" incLanes="stub_J_high_bridge_S_out_0 stub_J_high_bridge_S_out_1" intLanes="" shape="300.00,26.00 294.80,26.00 300.00,26.00"/>
+    <junction id="S_J_high_mews_S" type="dead_end" x="180.00" y="26.00" incLanes="stub_J_high_mews_S_out_0 stub_J_high_mews_S_out_1" intLanes="" shape="180.00,26.00 174.80,26.00 180.00,26.00"/>
+    <junction id="S_J_market_church_W" type="dead_end" x="56.00" y="140.00" incLanes="stub_J_market_church_W_out_0 stub_J_market_church_W_out_1" intLanes="" shape="56.00,140.00 56.00,145.20 56.00,140.00"/>
+    <junction id="S_J_market_mews_N" type="dead_end" x="180.00" y="154.00" incLanes="stub_J_market_mews_N_out_0 stub_J_market_mews_N_out_1" intLanes="" shape="180.00,154.00 185.20,154.00 180.00,154.00"/>
+
+    <junction id=":J_garden_bridge_12_0" type="internal" x="296.80" y="222.88" incLanes=":J_garden_bridge_0_0" intLanes=":J_garden_bridge_4_0 :J_garden_bridge_8_0 :J_garden_bridge_c0_0 :J_garden_bridge_c3_0"/>
+    <junction id=":J_garden_bridge_13_0" type="internal" x="299.04" y="223.20" incLanes=":J_garden_bridge_2_0 bridge_f1_1" intLanes=":J_garden_bridge_4_0 :J_garden_bridge_5_0 :J_garden_bridge_6_0 :J_garden_bridge_7_0 :J_garden_bridge_10_0 :J_garden_bridge_11_0 :J_garden_bridge_c0_0 :J_garden_bridge_c1_0"/>
+    <junction id=":J_garden_bridge_14_0" type="internal" x="302.88" y="223.20" incLanes=":J_garden_bridge_3_0" intLanes=":J_garden_bridge_7_0 :J_garden_bridge_11_0 :J_garden_bridge_c0_0 :J_garden_bridge_c1_0"/>
+    <junction id=":J_garden_bridge_15_0" type="internal" x="303.20" y="220.96" incLanes=":J_garden_bridge_5_0 garden_f0_1" intLanes=":J_garden_bridge_1_0 :J_garden_bridge_2_0 :J_garden_bridge_7_0 :J_garden_bridge_8_0 :J_garden_bridge_9_0 :J_garden_bridge_10_0 :J_garden_bridge_c1_0 :J_garden_bridge_c2_0"/>
+    <junction id=":J_garden_bridge_16_0" type="internal" x="303.20" y="217.12" incLanes=":J_garden_bridge_6_0" intLanes=":J_garden_bridge_2_0 :J_garden_bridge_10_0 :J_garden_bridge_c1_0 :J_garden_bridge_c2_0"/>
+    <junction id=":J_garden_bridge_17_0" type="internal" x="300.96" y="216.80" incLanes=":J_garden_bridge_8_0 bridge_r2_1" intLanes=":J_garden_bridge_0_0 :J_garden_bridge_1_0 :J_garden_bridge_4_0 :J_garden_bridge_5_0 :J_garden_bridge_10_0 :J_garden_bridge_11_0 :J_garden_bridge_c2_0 :J_garden_bridge_c3_0"/>
+    <junction id=":J_garden_bridge_18_0" type="internal" x="297.12" y="216.80" incLanes=":J_garden_bridge_9_0" intLanes=":J_garden_bridge_1_0 :J_garden_bridge_5_0 :J_garden_bridge_c2_0 :J_garden_bridge_c3_0"/>
+    <junction id=":J_garden_bridge_19_0" type="internal" x="296.80" y="219.04" incLanes=":J_garden_bridge_11_0 stub_J_garden_bridge_E_in_1" intLanes=":J_garden_bridge_1_0 :J_garden_bridge_2_0 :J_garden_bridge_3_0 :J_garden_bridge_4_0 :J_garden_bridge_7_0 :J_garden_bridge_8_0 :J_garden_bridge_c0_0 :J_garden_bridge_c3_0"/>
+    <junction id=":J_garden_church_12_0" type="internal" x="66.80" y="222.88" incLanes=":J_garden_church_0_0" intLanes=":J_garden_church_4_0 :J_garden_church_8_0 :J_garden_church_c0_0 :J_garden_church_c3_0"/>
+    <junction id=":J_garden_church_13_0" type="internal" x="69.04" y="223.20" incLanes=":J_garden_church_2_0 church_f2_1" intLanes=":J_garden_church_4_0 :J_garden_church_5_0 :J_garden_church_6_0 :J_garden_church_7_0 :J_garden_church_10_0 :J_garden_church_11_0 :J_garden_church_c0_0 :J_garden_church_c1_0"/>
+    <junction id=":J_garden_church_14_0" type="internal" x="72.88" y="223.20" incLanes=":J_garden_church_3_0" intLanes=":J_garden_church_7_0 :J_garden_church_11_0 :J_garden_church_c0_0 :J_garden_church_c1_0"/>
+    <junction id=":J_garden_church_15_0" type="internal" x="73.20" y="220.96" incLanes=":J_garden_church_5_0 stub_J_garden_church_W_in_1" intLanes=":J_garden_church_1_0 :J_garden_church_2_0 :J_garden_church_7_0 :J_garden_church_8_0 :J_garden_church_9_0 :J_garden_church_10_0 :J_garden_church_c1_0 :J_garden_church_c2_0"/>
+    <junction id=":J_garden_church_16_0" type="internal" x="73.20" y="217.12" incLanes=":J_garden_church_6_0" intLanes=":J_garden_church_2_0 :J_garden_church_10_0 :J_garden_church_c1_0 :J_garden_church_c2_0"/>
+    <junction id=":J_garden_church_17_0" type="internal" x="70.96" y="216.80" incLanes=":J_garden_church_8_0 church_r3_1" intLanes=":J_garden_church_0_0 :J_garden_church_1_0 :J_garden_church_4_0 :J_garden_church_5_0 :J_garden_church_10_0 :J_garden_church_11_0 :J_garden_church_c2_0 :J_garden_church_c3_0"/>
+    <junction id=":J_garden_church_18_0" type="internal" x="67.12" y="216.80" incLanes=":J_garden_church_9_0" intLanes=":J_garden_church_1_0 :J_garden_church_5_0 :J_garden_church_c2_0 :J_garden_church_c3_0"/>
+    <junction id=":J_garden_church_19_0" type="internal" x="66.80" y="219.04" incLanes=":J_garden_church_11_0 garden_r0_1" intLanes=":J_garden_church_1_0 :J_garden_church_2_0 :J_garden_church_3_0 :J_garden_church_4_0 :J_garden_church_7_0 :J_garden_church_8_0 :J_garden_church_c0_0 :J_garden_church_c3_0"/>
+    <junction id=":J_high_bridge_12_0" type="internal" x="296.80" y="42.88" incLanes=":J_high_bridge_0_0" intLanes=":J_high_bridge_4_0 :J_high_bridge_8_0 :J_high_bridge_c0_0 :J_high_bridge_c3_0"/>
+    <junction id=":J_high_bridge_13_0" type="internal" x="299.04" y="43.20" incLanes=":J_high_bridge_2_0 stub_J_high_bridge_S_in_1" intLanes=":J_high_bridge_4_0 :J_high_bridge_5_0 :J_high_bridge_6_0 :J_high_bridge_7_0 :J_high_bridge_10_0 :J_high_bridge_11_0 :J_high_bridge_c0_0 :J_high_bridge_c1_0"/>
+    <junction id=":J_high_bridge_14_0" type="internal" x="302.88" y="43.20" incLanes=":J_high_bridge_3_0" intLanes=":J_high_bridge_7_0 :J_high_bridge_11_0 :J_high_bridge_c0_0 :J_high_bridge_c1_0"/>
+    <junction id=":J_high_bridge_15_0" type="internal" x="303.20" y="40.96" incLanes=":J_high_bridge_5_0 high_f2_1" intLanes=":J_high_bridge_1_0 :J_high_bridge_2_0 :J_high_bridge_7_0 :J_high_bridge_8_0 :J_high_bridge_9_0 :J_high_bridge_10_0 :J_high_bridge_c1_0 :J_high_bridge_c2_0"/>
+    <junction id=":J_high_bridge_16_0" type="internal" x="303.20" y="37.12" incLanes=":J_high_bridge_6_0" intLanes=":J_high_bridge_2_0 :J_high_bridge_10_0 :J_high_bridge_c1_0 :J_high_bridge_c2_0"/>
+    <junction id=":J_high_bridge_17_0" type="internal" x="300.96" y="36.80" incLanes=":J_high_bridge_8_0 bridge_r0_1" intLanes=":J_high_bridge_0_0 :J_high_bridge_1_0 :J_high_bridge_4_0 :J_high_bridge_5_0 :J_high_bridge_10_0 :J_high_bridge_11_0 :J_high_bridge_c2_0 :J_high_bridge_c3_0"/>
+    <junction id=":J_high_bridge_18_0" type="internal" x="297.12" y="36.80" incLanes=":J_high_bridge_9_0" intLanes=":J_high_bridge_1_0 :J_high_bridge_5_0 :J_high_bridge_c2_0 :J_high_bridge_c3_0"/>
+    <junction id=":J_high_bridge_19_0" type="internal" x="296.80" y="39.04" incLanes=":J_high_bridge_11_0 high_r3_1" intLanes=":J_high_bridge_1_0 :J_high_bridge_2_0 :J_high_bridge_3_0 :J_high_bridge_4_0 :J_high_bridge_7_0 :J_high_bridge_8_0 :J_high_bridge_c0_0 :J_high_bridge_c3_0"/>
+    <junction id=":J_high_church_12_0" type="internal" x="66.80" y="42.88" incLanes=":J_high_church_0_0" intLanes=":J_high_church_4_0 :J_high_church_8_0 :J_high_church_c0_0 :J_high_church_c3_0"/>
+    <junction id=":J_high_church_13_0" type="internal" x="69.04" y="43.20" incLanes=":J_high_church_2_0 church_f0_1" intLanes=":J_high_church_4_0 :J_high_church_5_0 :J_high_church_6_0 :J_high_church_7_0 :J_high_church_10_0 :J_high_church_11_0 :J_high_church_c0_0 :J_high_church_c1_0"/>
+    <junction id=":J_high_church_14_0" type="internal" x="72.88" y="43.20" incLanes=":J_high_church_3_0" intLanes=":J_high_church_7_0 :J_high_church_11_0 :J_high_church_c0_0 :J_high_church_c1_0"/>
+    <junction id=":J_high_church_15_0" type="internal" x="73.20" y="40.96" incLanes=":J_high_church_5_0 high_f0_1" intLanes=":J_high_church_1_0 :J_high_church_2_0 :J_high_church_7_0 :J_high_church_8_0 :J_high_church_9_0 :J_high_church_10_0 :J_high_church_c1_0 :J_high_church_c2_0"/>
+    <junction id=":J_high_church_16_0" type="internal" x="73.20" y="37.12" incLanes=":J_high_church_6_0" intLanes=":J_high_church_2_0 :J_high_church_10_0 :J_high_church_c1_0 :J_high_church_c2_0"/>
+    <junction id=":J_high_church_17_0" type="internal" x="70.96" y="36.80" incLanes=":J_high_church_8_0 church_r1_1" intLanes=":J_high_church_0_0 :J_high_church_1_0 :J_high_church_4_0 :J_high_church_5_0 :J_high_church_10_0 :J_high_church_11_0 :J_high_church_c2_0 :J_high_church_c3_0"/>
+    <junction id=":J_high_church_18_0" type="internal" x="67.12" y="36.80" incLanes=":J_high_church_9_0" intLanes=":J_high_church_1_0 :J_high_church_5_0 :J_high_church_c2_0 :J_high_church_c3_0"/>
+    <junction id=":J_high_church_19_0" type="internal" x="66.80" y="39.04" incLanes=":J_high_church_11_0 high_r1_1" intLanes=":J_high_church_1_0 :J_high_church_2_0 :J_high_church_3_0 :J_high_church_4_0 :J_high_church_7_0 :J_high_church_8_0 :J_high_church_c0_0 :J_high_church_c3_0"/>
+    <junction id=":J_high_mews_12_0" type="internal" x="176.80" y="42.88" incLanes=":J_high_mews_0_0" intLanes=":J_high_mews_4_0 :J_high_mews_8_0 :J_high_mews_c0_0 :J_high_mews_c3_0"/>
+    <junction id=":J_high_mews_13_0" type="internal" x="179.04" y="43.20" incLanes=":J_high_mews_2_0 stub_J_high_mews_S_in_1" intLanes=":J_high_mews_4_0 :J_high_mews_5_0 :J_high_mews_6_0 :J_high_mews_7_0 :J_high_mews_10_0 :J_high_mews_11_0 :J_high_mews_c0_0 :J_high_mews_c1_0"/>
+    <junction id=":J_high_mews_14_0" type="internal" x="182.88" y="43.20" incLanes=":J_high_mews_3_0" intLanes=":J_high_mews_7_0 :J_high_mews_11_0 :J_high_mews_c0_0 :J_high_mews_c1_0"/>
+    <junction id=":J_high_mews_15_0" type="internal" x="183.20" y="40.96" incLanes=":J_high_mews_5_0 high_f1_1" intLanes=":J_high_mews_1_0 :J_high_mews_2_0 :J_high_mews_7_0 :J_high_mews_8_0 :J_high_mews_9_0 :J_high_mews_10_0 :J_high_mews_c1_0 :J_high_mews_c2_0"/>
+    <junction id=":J_high_mews_16_0" type="internal" x="183.20" y="37.12" incLanes=":J_high_mews_6_0" intLanes=":J_high_mews_2_0 :J_high_mews_10_0 :J_high_mews_c1_0 :J_high_mews_c2_0"/>
+    <junction id=":J_high_mews_17_0" type="internal" x="180.96" y="36.80" incLanes=":J_high_mews_8_0 mews_r0_1" intLanes=":J_high_mews_0_0 :J_high_mews_1_0 :J_high_mews_4_0 :J_high_mews_5_0 :J_high_mews_10_0 :J_high_mews_11_0 :J_high_mews_c2_0 :J_high_mews_c3_0"/>
+    <junction id=":J_high_mews_18_0" type="internal" x="177.12" y="36.80" incLanes=":J_high_mews_9_0" intLanes=":J_high_mews_1_0 :J_high_mews_5_0 :J_high_mews_c2_0 :J_high_mews_c3_0"/>
+    <junction id=":J_high_mews_19_0" type="internal" x="176.80" y="39.04" incLanes=":J_high_mews_11_0 high_r2_1" intLanes=":J_high_mews_1_0 :J_high_mews_2_0 :J_high_mews_3_0 :J_high_mews_4_0 :J_high_mews_7_0 :J_high_mews_8_0 :J_high_mews_c0_0 :J_high_mews_c3_0"/>
+    <junction id=":J_market_bridge_12_0" type="internal" x="296.80" y="142.88" incLanes=":J_market_bridge_0_0" intLanes=":J_market_bridge_4_0 :J_market_bridge_8_0 :J_market_bridge_c0_0 :J_market_bridge_c3_0"/>
+    <junction id=":J_market_bridge_13_0" type="internal" x="299.04" y="143.20" incLanes=":J_market_bridge_2_0 bridge_f0_1" intLanes=":J_market_bridge_4_0 :J_market_bridge_5_0 :J_market_bridge_6_0 :J_market_bridge_7_0 :J_market_bridge_10_0 :J_market_bridge_11_0 :J_market_bridge_c0_0 :J_market_bridge_c1_0"/>
+    <junction id=":J_market_bridge_14_0" type="internal" x="302.88" y="143.20" incLanes=":J_market_bridge_3_0" intLanes=":J_market_bridge_7_0 :J_market_bridge_11_0 :J_market_bridge_c0_0 :J_market_bridge_c1_0"/>
+    <junction id=":J_market_bridge_15_0" type="internal" x="303.20" y="140.96" incLanes=":J_market_bridge_5_0 market_f1_1" intLanes=":J_market_bridge_1_0 :J_market_bridge_2_0 :J_market_bridge_7_0 :J_market_bridge_8_0 :J_market_bridge_9_0 :J_market_bridge_10_0 :J_market_bridge_c1_0 :J_market_bridge_c2_0"/>
+    <junction id=":J_market_bridge_16_0" type="internal" x="303.20" y="137.12" incLanes=":J_market_bridge_6_0" intLanes=":J_market_bridge_2_0 :J_market_bridge_10_0 :J_market_bridge_c1_0 :J_market_bridge_c2_0"/>
+    <junction id=":J_market_bridge_17_0" type="internal" x="300.96" y="136.80" incLanes=":J_market_bridge_8_0 bridge_r1_1" intLanes=":J_market_bridge_0_0 :J_market_bridge_1_0 :J_market_bridge_4_0 :J_market_bridge_5_0 :J_market_bridge_10_0 :J_market_bridge_11_0 :J_market_bridge_c2_0 :J_market_bridge_c3_0"/>
+    <junction id=":J_market_bridge_18_0" type="internal" x="297.12" y="136.80" incLanes=":J_market_bridge_9_0" intLanes=":J_market_bridge_1_0 :J_market_bridge_5_0 :J_market_bridge_c2_0 :J_market_bridge_c3_0"/>
+    <junction id=":J_market_bridge_19_0" type="internal" x="296.80" y="139.04" incLanes=":J_market_bridge_11_0 market_r2_1" intLanes=":J_market_bridge_1_0 :J_market_bridge_2_0 :J_market_bridge_3_0 :J_market_bridge_4_0 :J_market_bridge_7_0 :J_market_bridge_8_0 :J_market_bridge_c0_0 :J_market_bridge_c3_0"/>
+    <junction id=":J_market_church_12_0" type="internal" x="66.80" y="142.88" incLanes=":J_market_church_0_0" intLanes=":J_market_church_4_0 :J_market_church_8_0 :J_market_church_c0_0 :J_market_church_c3_0"/>
+    <junction id=":J_market_church_13_0" type="internal" x="69.04" y="143.20" incLanes=":J_market_church_2_0 church_f1_1" intLanes=":J_market_church_4_0 :J_market_church_5_0 :J_market_church_6_0 :J_market_church_7_0 :J_market_church_10_0 :J_market_church_11_0 :J_market_church_c0_0 :J_market_church_c1_0"/>
+    <junction id=":J_market_church_14_0" type="internal" x="72.88" y="143.20" incLanes=":J_market_church_3_0" intLanes=":J_market_church_7_0 :J_market_church_11_0 :J_market_church_c0_0 :J_market_church_c1_0"/>
+    <junction id=":J_market_church_15_0" type="internal" x="73.20" y="140.96" incLanes=":J_market_church_5_0 stub_J_market_church_W_in_1" intLanes=":J_market_church_1_0 :J_market_church_2_0 :J_market_church_7_0 :J_market_church_8_0 :J_market_church_9_0 :J_market_church_10_0 :J_market_church_c1_0 :J_market_church_c2_0"/>
+    <junction id=":J_market_church_16_0" type="internal" x="73.20" y="137.12" incLanes=":J_market_church_6_0" intLanes=":J_market_church_2_0 :J_market_church_10_0 :J_market_church_c1_0 :J_market_church_c2_0"/>
+    <junction id=":J_market_church_17_0" type="internal" x="70.96" y="136.80" incLanes=":J_market_church_8_0 church_r2_1" intLanes=":J_market_church_0_0 :J_market_church_1_0 :J_market_church_4_0 :J_market_church_5_0 :J_market_church_10_0 :J_market_church_11_0 :J_market_church_c2_0 :J_market_church_c3_0"/>
+    <junction id=":J_market_church_18_0" type="internal" x="67.12" y="136.80" incLanes=":J_market_church_9_0" intLanes=":J_market_church_1_0 :J_market_church_5_0 :J_market_church_c2_0 :J_market_church_c3_0"/>
+    <junction id=":J_market_church_19_0" type="internal" x="66.80" y="139.04" incLanes=":J_market_church_11_0 market_r0_1" intLanes=":J_market_church_1_0 :J_market_church_2_0 :J_market_church_3_0 :J_market_church_4_0 :J_market_church_7_0 :J_market_church_8_0 :J_market_church_c0_0 :J_market_church_c3_0"/>
+    <junction id=":J_market_mews_12_0" type="internal" x="176.80" y="142.88" incLanes=":J_market_mews_0_0" intLanes=":J_market_mews_4_0 :J_market_mews_8_0 :J_market_mews_c0_0 :J_market_mews_c3_0"/>
+    <junction id=":J_market_mews_13_0" type="internal" x="179.04" y="143.20" incLanes=":J_market_mews_2_0 mews_f0_1" intLanes=":J_market_mews_4_0 :J_market_mews_5_0 :J_market_mews_6_0 :J_market_mews_7_0 :J_market_mews_10_0 :J_market_mews_11_0 :J_market_mews_c0_0 :J_market_mews_c1_0"/>
+    <junction id=":J_market_mews_14_0" type="internal" x="182.88" y="143.20" incLanes=":J_market_mews_3_0" intLanes=":J_market_mews_7_0 :J_market_mews_11_0 :J_market_mews_c0_0 :J_market_mews_c1_0"/>
+    <junction id=":J_market_mews_15_0" type="internal" x="183.20" y="140.96" incLanes=":J_market_mews_5_0 market_f0_1" intLanes=":J_market_mews_1_0 :J_market_mews_2_0 :J_market_mews_7_0 :J_market_mews_8_0 :J_market_mews_9_0 :J_market_mews_10_0 :J_market_mews_c1_0 :J_market_mews_c2_0"/>
+    <junction id=":J_market_mews_16_0" type="internal" x="183.20" y="137.12" incLanes=":J_market_mews_6_0" intLanes=":J_market_mews_2_0 :J_market_mews_10_0 :J_market_mews_c1_0 :J_market_mews_c2_0"/>
+    <junction id=":J_market_mews_17_0" type="internal" x="180.96" y="136.80" incLanes=":J_market_mews_8_0 stub_J_market_mews_N_in_1" intLanes=":J_market_mews_0_0 :J_market_mews_1_0 :J_market_mews_4_0 :J_market_mews_5_0 :J_market_mews_10_0 :J_market_mews_11_0 :J_market_mews_c2_0 :J_market_mews_c3_0"/>
+    <junction id=":J_market_mews_18_0" type="internal" x="177.12" y="136.80" incLanes=":J_market_mews_9_0" intLanes=":J_market_mews_1_0 :J_market_mews_5_0 :J_market_mews_c2_0 :J_market_mews_c3_0"/>
+    <junction id=":J_market_mews_19_0" type="internal" x="176.80" y="139.04" incLanes=":J_market_mews_11_0 market_r1_1" intLanes=":J_market_mews_1_0 :J_market_mews_2_0 :J_market_mews_3_0 :J_market_mews_4_0 :J_market_mews_7_0 :J_market_mews_8_0 :J_market_mews_c0_0 :J_market_mews_c3_0"/>
+
+    <connection from="bridge_f0" to="market_f2" fromLane="1" toLane="1" via=":J_market_bridge_6_0" tl="J_market_bridge" linkIndex="6" dir="r" state="o"/>
+    <connection from="bridge_f0" to="bridge_f1" fromLane="1" toLane="1" via=":J_market_bridge_7_0" tl="J_market_bridge" linkIndex="7" dir="s" state="o"/>
+    <connection from="bridge_f0" to="market_r1" fromLane="1" toLane="1" via=":J_market_bridge_8_0" tl="J_market_bridge" linkIndex="8" dir="l" state="o"/>
+    <connection from="bridge_f1" to="stub_J_garden_bridge_E_out" fromLane="1" toLane="1" via=":J_garden_bridge_6_0" tl="J_garden_bridge" linkIndex="6" dir="r" state="o"/>
+    <connection from="bridge_f1" to="bridge_f2" fromLane="1" toLane="1" via=":J_garden_bridge_7_0" tl="J_garden_bridge" linkIndex="7" dir="s" state="o"/>
+    <connection from="bridge_f1" to="garden_r0" fromLane="1" toLane="1" via=":J_garden_bridge_8_0" tl="J_garden_bridge" linkIndex="8" dir="l" state="o"/>
+    <connection from="bridge_r0" to="high_r2" fromLane="1" toLane="1" via=":J_high_bridge_0_0" tl="J_high_bridge" linkIndex="0" dir="r" state="o"/>
+    <connection from="bridge_r0" to="stub_J_high_bridge_S_out" fromLane="1" toLane="1" via=":J_high_bridge_1_0" tl="J_high_bridge" linkIndex="1" dir="s" state="o"/>
+    <connection from="bridge_r0" to="high_f3" fromLane="1" toLane="1" via=":J_high_bridge_2_0" tl="J_high_bridge" linkIndex="2" dir="l" state="o"/>
+    <connection from="bridge_r1" to="market_r1" fromLane="1" toLane="1" via=":J_market_bridge_0_0" tl="J_market_bridge" linkIndex="0" dir="r" state="o"/>
+    <connection from="bridge_r1" to="bridge_r0" fromLane="1" toLane="1" via=":J_market_bridge_1_0" tl="J_market_bridge" linkIndex="1" dir="s" state="o"/>
+    <connection from="bridge_r1" to="market_f2" fromLane="1" toLane="1" via=":J_market_bridge_2_0" tl="J_market_bridge" linkIndex="2" dir="l" state="o"/>
+    <connection from="bridge_r2" to="garden_r0" fromLane="1" toLane="1" via=":J_garden_bridge_0_0" tl="J_garden_bridge" linkIndex="0" dir="r" state="o"/>
+    <connection from="bridge_r2" to="bridge_r1" fromLane="1" toLane="1" via=":J_garden_bridge_1_0" tl="J_garden_bridge" linkIndex="1" dir="s" state="o"/>
+    <connection from="bridge_r2" to="stub_J_garden_bridge_E_out" fromLane="1" toLane="1" via=":J_garden_bridge_2_0" tl="J_garden_bridge" linkIndex="2" dir="l" state="o"/>
+    <connection from="church_f0" to="high_f1" fromLane="1" toLane="1" via=":J_high_church_6_0" tl="J_high_church" linkIndex="6" dir="r" state="o"/>
+    <connection from="church_f0" to="church_f1" fromLane="1" toLane="1" via=":J_high_church_7_0" tl="J_high_church" linkIndex="7" dir="s" state="o"/>
+    <connection from="church_f0" to="high_r0" fromLane="1" toLane="1" via=":J_high_church_8_0" tl="J_high_church" linkIndex="8" dir="l" state="o"/>
+    <connection from="church_f1" to="market_f0" fromLane="1" toLane="1" via=":J_market_church_6_0" tl="J_market_church" linkIndex="6" dir="r" state="o"/>
+    <connection from="church_f1" to="church_f2" fromLane="1" toLane="1" via=":J_market_church_7_0" tl="J_market_church" linkIndex="7" dir="s" state="o"/>
+    <connection from="church_f1" to="stub_J_market_church_W_out" fromLane="1" toLane="1" via=":J_market_church_8_0" tl="J_market_church" linkIndex="8" dir="l" state="o"/>
+    <connection from="church_f2" to="garden_f0" fromLane="1" toLane="1" via=":J_garden_church_6_0" tl="J_garden_church" linkIndex="6" dir="r" state="o"/>
+    <connection from="church_f2" to="church_f3" fromLane="1" toLane="1" via=":J_garden_church_7_0" tl="J_garden_church" linkIndex="7" dir="s" state="o"/>
+    <connection from="church_f2" to="stub_J_garden_church_W_out" fromLane="1" toLane="1" via=":J_garden_church_8_0" tl="J_garden_church" linkIndex="8" dir="l" state="o"/>
+    <connection from="church_r1" to="high_r0" fromLane="1" toLane="1" via=":J_high_church_0_0" tl="J_high_church" linkIndex="0" dir="r" state="o"/>
+    <connection from="church_r1" to="church_r0" fromLane="1" toLane="1" via=":J_high_church_1_0" tl="J_high_church" linkIndex="1" dir="s" state="o"/>
+    <connection from="church_r1" to="high_f1" fromLane="1" toLane="1" via=":J_high_church_2_0" tl="J_high_church" linkIndex="2" dir="l" state="o"/>
+    <connection from="church_r2" to="stub_J_market_church_W_out" fromLane="1" toLane="1" via=":J_market_church_0_0" tl="J_market_church" linkIndex="0" dir="r" state="o"/>
+    <connection from="church_r2" to="church_r1" fromLane="1" toLane="1" via=":J_market_church_1_0" tl="J_market_church" linkIndex="1" dir="s" state="o"/>
+    <connection from="church_r2" to="market_f0" fromLane="1" toLane="1" via=":J_market_church_2_0" tl="J_market_church" linkIndex="2" dir="l" state="o"/>
+    <connection from="church_r3" to="stub_J_garden_church_W_out" fromLane="1" toLane="1" via=":J_garden_church_0_0" tl="J_garden_church" linkIndex="0" dir="r" state="o"/>
+    <connection from="church_r3" to="church_r2" fromLane="1" toLane="1" via=":J_garden_church_1_0" tl="J_garden_church" linkIndex="1" dir="s" state="o"/>
+    <connection from="church_r3" to="garden_f0" fromLane="1" toLane="1" via=":J_garden_church_2_0" tl="J_garden_church" linkIndex="2" dir="l" state="o"/>
+    <connection from="garden_f0" to="bridge_r1" fromLane="1" toLane="1" via=":J_garden_bridge_9_0" tl="J_garden_bridge" linkIndex="9" dir="r" state="o"/>
+    <connection from="garden_f0" to="stub_J_garden_bridge_E_out" fromLane="1" toLane="1" via=":J_garden_bridge_10_0" tl="J_garden_bridge" linkIndex="10" dir="s" state="o"/>
+    <connection from="garden_f0" to="bridge_f2" fromLane="1" toLane="1" via=":J_garden_bridge_11_0" tl="J_garden_bridge" linkIndex="11" dir="l" state="o"/>
+    <connection from="garden_r0" to="church_f3" fromLane="1" toLane="1" via=":J_garden_church_3_0" tl="J_garden_church" linkIndex="3" dir="r" state="o"/>
+    <connection from="garden_r0" to="stub_J_garden_church_W_out" fromLane="1" toLane="1" via=":J_garden_church_4_0" tl="J_garden_church" linkIndex="4" dir="s" state="o"/>
+    <connection from="garden_r0" to="church_r2" fromLane="1" toLane="1" via=":J_garden_church_5_0" tl="J_garden_church" linkIndex="5" dir="l" state="o"/>
+    <connection from="high_f0" to="church_r0" fromLane="1" toLane="1" via=":J_high_church_9_0" tl="J_high_church" linkIndex="9" dir="r" state="o"/>
+    <connection from="high_f0" to="high_f1" fromLane="1" toLane="1" via=":J_high_church_10_0" tl="J_high_church" linkIndex="10" dir="s" state="o"/>
+    <connection from="high_f0" to="church_f1" fromLane="1" toLane="1" via=":J_high_church_11_0" tl="J_high_church" linkIndex="11" dir="l" state="o"/>
+    <connection from="high_f1" to="stub_J_high_mews_S_out" fromLane="1" toLane="1" via=":J_high_mews_9_0" tl="J_high_mews" linkIndex="9" dir="r" state="o"/>
+    <connection from="high_f1" to="high_f2" fromLane="1" toLane="1" via=":J_high_mews_10_0" tl="J_high_mews" linkIndex="10" dir="s" state="o"/>
+    <connection from="high_f1" to="mews_f0" fromLane="1" toLane="1" via=":J_high_mews_11_0" tl="J_high_mews" linkIndex="11" dir="l" state="o"/>
+    <connection from="high_f2" to="stub_J_high_bridge_S_out" fromLane="1" toLane="1" via=":J_high_bridge_9_0" tl="J_high_bridge" linkIndex="9" dir="r" state="o"/>
+    <connection from="high_f2" to="high_f3" fromLane="1" toLane="1" via=":J_high_bridge_10_0" tl="J_high_bridge" linkIndex="10" dir="s" state="o"/>
+    <connection from="high_f2" to="bridge_f0" fromLane="1" toLane="1" via=":J_high_bridge_11_0" tl="J_high_bridge" linkIndex="11" dir="l" state="o"/>
+    <connection from="high_r1" to="church_f1" fromLane="1" toLane="1" via=":J_high_church_3_0" tl="J_high_church" linkIndex="3" dir="r" state="o"/>
+    <connection from="high_r1" to="high_r0" fromLane="1" toLane="1" via=":J_high_church_4_0" tl="J_high_church" linkIndex="4" dir="s" state="o"/>
+    <connection from="high_r1" to="church_r0" fromLane="1" toLane="1" via=":J_high_church_5_0" tl="J_high_church" linkIndex="5" dir="l" state="o"/>
+    <connection from="high_r2" to="mews_f0" fromLane="1" toLane="1" via=":J_high_mews_3_0" tl="J_high_mews" linkIndex="3" dir="r" state="o"/>
+    <connection from="high_r2" to="high_r1" fromLane="1" toLane="1" via=":J_high_mews_4_0" tl="J_high_mews" linkIndex="4" dir="s" state="o"/>
+    <connection from="high_r2" to="stub_J_high_mews_S_out" fromLane="1" toLane="1" via=":J_high_mews_5_0" tl="J_high_mews" linkIndex="5" dir="l" state="o"/>
+    <connection from="high_r3" to="bridge_f0" fromLane="1" toLane="1" via=":J_high_bridge_3_0" tl="J_high_bridge" linkIndex="3" dir="r" state="o"/>
+    <connection from="high_r3" to="high_r2" fromLane="1" toLane="1" via=":J_high_bridge_4_0" tl="J_high_bridge" linkIndex="4" dir="s" state="o"/>
+    <connection from="high_r3" to="stub_J_high_bridge_S_out" fromLane="1" toLane="1" via=":J_high_bridge_5_0" tl="J_high_bridge" linkIndex="5" dir="l" state="o"/>
+    <connection from="market_f0" to="mews_r0" fromLane="1" toLane="1" via=":J_market_mews_9_0" tl="J_market_mews" linkIndex="9" dir="r" state="o"/>
+    <connection from="market_f0" to="market_f1" fromLane="1" toLane="1" via=":J_market_mews_10_0" tl="J_market_mews" linkIndex="10" dir="s" state="o"/>
+    <connection from="market_f0" to="stub_J_market_mews_N_out" fromLane="1" toLane="1" via=":J_market_mews_11_0" tl="J_market_mews" linkIndex="11" dir="l" state="o"/>
+    <connection from="market_f1" to="bridge_r0" fromLane="1" toLane="1" via=":J_market_bridge_9_0" tl="J_market_bridge" linkIndex="9" dir="r" state="o"/>
+    <connection from="market_f1" to="market_f2" fromLane="1" toLane="1" via=":J_market_bridge_10_0" tl="J_market_bridge" linkIndex="10" dir="s" state="o"/>
+    <connection from="market_f1" to="bridge_f1" fromLane="1" toLane="1" via=":J_market_bridge_11_0" tl="J_market_bridge" linkIndex="11" dir="l" state="o"/>
+    <connection from="market_r0" to="church_f2" fromLane="1" toLane="1" via=":J_market_church_3_0" tl="J_market_church" linkIndex="3" dir="r" state="o"/>
+    <connection from="market_r0" to="stub_J_market_church_W_out" fromLane="1" toLane="1" via=":J_market_church_4_0" tl="J_market_church" linkIndex="4" dir="s" state="o"/>
+    <connection from="market_r0" to="church_r1" fromLane="1" toLane="1" via=":J_market_church_5_0" tl="J_market_church" linkIndex="5" dir="l" state="o"/>
+    <connection from="market_r1" to="stub_J_market_mews_N_out" fromLane="1" toLane="1" via=":J_market_mews_3_0" tl="J_market_mews" linkIndex="3" dir="r" state="o"/>
+    <connection from="market_r1" to="market_r0" fromLane="1" toLane="1" via=":J_market_mews_4_0" tl="J_market_mews" linkIndex="4" dir="s" state="o"/>
+    <connection from="market_r1" to="mews_r0" fromLane="1" toLane="1" via=":J_market_mews_5_0" tl="J_market_mews" linkIndex="5" dir="l" state="o"/>
+    <connection from="market_r2" to="bridge_f1" fromLane="1" toLane="1" via=":J_market_bridge_3_0" tl="J_market_bridge" linkIndex="3" dir="r" state="o"/>
+    <connection from="market_r2" to="market_r1" fromLane="1" toLane="1" via=":J_market_bridge_4_0" tl="J_market_bridge" linkIndex="4" dir="s" state="o"/>
+    <connection from="market_r2" to="bridge_r0" fromLane="1" toLane="1" via=":J_market_bridge_5_0" tl="J_market_bridge" linkIndex="5" dir="l" state="o"/>
+    <connection from="mews_f0" to="market_f1" fromLane="1" toLane="1" via=":J_market_mews_6_0" tl="J_market_mews" linkIndex="6" dir="r" state="o"/>
+    <connection from="mews_f0" to="stub_J_market_mews_N_out" fromLane="1" toLane="1" via=":J_market_mews_7_0" tl="J_market_mews" linkIndex="7" dir="s" state="o"/>
+    <connection from="mews_f0" to="market_r0" fromLane="1" toLane="1" via=":J_market_mews_8_0" tl="J_market_mews" linkIndex="8" dir="l" state="o"/>
+    <connection from="mews_r0" to="high_r1" fromLane="1" toLane="1" via=":J_high_mews_0_0" tl="J_high_mews" linkIndex="0" dir="r" state="o"/>
+    <connection from="mews_r0" to="stub_J_high_mews_S_out" fromLane="1" toLane="1" via=":J_high_mews_1_0" tl="J_high_mews" linkIndex="1" dir="s" state="o"/>
+    <connection from="mews_r0" to="high_f2" fromLane="1" toLane="1" via=":J_high_mews_2_0" tl="J_high_mews" linkIndex="2" dir="l" state="o"/>
+    <connection from="stub_J_garden_bridge_E_in" to="bridge_f2" fromLane="1" toLane="1" via=":J_garden_bridge_3_0" tl="J_garden_bridge" linkIndex="3" dir="r" state="o"/>
+    <connection from="stub_J_garden_bridge_E_in" to="garden_r0" fromLane="1" toLane="1" via=":J_garden_bridge_4_0" tl="J_garden_bridge" linkIndex="4" dir="s" state="o"/>
+    <connection from="stub_J_garden_bridge_E_in" to="bridge_r1" fromLane="1" toLane="1" via=":J_garden_bridge_5_0" tl="J_garden_bridge" linkIndex="5" dir="l" state="o"/>
+    <connection from="stub_J_garden_church_W_in" to="church_r2" fromLane="1" toLane="1" via=":J_garden_church_9_0" tl="J_garden_church" linkIndex="9" dir="r" state="o"/>
+    <connection from="stub_J_garden_church_W_in" to="garden_f0" fromLane="1" toLane="1" via=":J_garden_church_10_0" tl="J_garden_church" linkIndex="10" dir="s" state="o"/>
+    <connection from="stub_J_garden_church_W_in" to="church_f3" fromLane="1" toLane="1" via=":J_garden_church_11_0" tl="J_garden_church" linkIndex="11" dir="l" state="o"/>
+    <connection from="stub_J_high_bridge_S_in" to="high_f3" fromLane="1" toLane="1" via=":J_high_bridge_6_0" tl="J_high_bridge" linkIndex="6" dir="r" state="o"/>
+    <connection from="stub_J_high_bridge_S_in" to="bridge_f0" fromLane="1" toLane="1" via=":J_high_bridge_7_0" tl="J_high_bridge" linkIndex="7" dir="s" state="o"/>
+    <connection from="stub_J_high_bridge_S_in" to="high_r2" fromLane="1" toLane="1" via=":J_high_bridge_8_0" tl="J_high_bridge" linkIndex="8" dir="l" state="o"/>
+    <connection from="stub_J_high_mews_S_in" to="high_f2" fromLane="1" toLane="1" via=":J_high_mews_6_0" tl="J_high_mews" linkIndex="6" dir="r" state="o"/>
+    <connection from="stub_J_high_mews_S_in" to="mews_f0" fromLane="1" toLane="1" via=":J_high_mews_7_0" tl="J_high_mews" linkIndex="7" dir="s" state="o"/>
+    <connection from="stub_J_high_mews_S_in" to="high_r1" fromLane="1" toLane="1" via=":J_high_mews_8_0" tl="J_high_mews" linkIndex="8" dir="l" state="o"/>
+    <connection from="stub_J_market_church_W_in" to="church_r1" fromLane="1" toLane="1" via=":J_market_church_9_0" tl="J_market_church" linkIndex="9" dir="r" state="o"/>
+    <connection from="stub_J_market_church_W_in" to="market_f0" fromLane="1" toLane="1" via=":J_market_church_10_0" tl="J_market_church" linkIndex="10" dir="s" state="o"/>
+    <connection from="stub_J_market_church_W_in" to="church_f2" fromLane="1" toLane="1" via=":J_market_church_11_0" tl="J_market_church" linkIndex="11" dir="l" state="o"/>
+    <connection from="stub_J_market_mews_N_in" to="market_r0" fromLane="1" toLane="1" via=":J_market_mews_0_0" tl="J_market_mews" linkIndex="0" dir="r" state="o"/>
+    <connection from="stub_J_market_mews_N_in" to="mews_r0" fromLane="1" toLane="1" via=":J_market_mews_1_0" tl="J_market_mews" linkIndex="1" dir="s" state="o"/>
+    <connection from="stub_J_market_mews_N_in" to="market_f1" fromLane="1" toLane="1" via=":J_market_mews_2_0" tl="J_market_mews" linkIndex="2" dir="l" state="o"/>
+
+    <connection from=":J_garden_bridge_0" to="garden_r0" fromLane="0" toLane="1" via=":J_garden_bridge_12_0" dir="r" state="m"/>
+    <connection from=":J_garden_bridge_12" to="garden_r0" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_garden_bridge_1" to="bridge_r1" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_garden_bridge_2" to="stub_J_garden_bridge_E_out" fromLane="0" toLane="1" via=":J_garden_bridge_13_0" dir="l" state="m"/>
+    <connection from=":J_garden_bridge_13" to="stub_J_garden_bridge_E_out" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_garden_bridge_3" to="bridge_f2" fromLane="0" toLane="1" via=":J_garden_bridge_14_0" dir="r" state="m"/>
+    <connection from=":J_garden_bridge_14" to="bridge_f2" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_garden_bridge_4" to="garden_r0" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_garden_bridge_5" to="bridge_r1" fromLane="0" toLane="1" via=":J_garden_bridge_15_0" dir="l" state="m"/>
+    <connection from=":J_garden_bridge_15" to="bridge_r1" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_garden_bridge_6" to="stub_J_garden_bridge_E_out" fromLane="0" toLane="1" via=":J_garden_bridge_16_0" dir="r" state="m"/>
+    <connection from=":J_garden_bridge_16" to="stub_J_garden_bridge_E_out" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_garden_bridge_7" to="bridge_f2" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_garden_bridge_8" to="garden_r0" fromLane="0" toLane="1" via=":J_garden_bridge_17_0" dir="l" state="m"/>
+    <connection from=":J_garden_bridge_17" to="garden_r0" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_garden_bridge_9" to="bridge_r1" fromLane="0" toLane="1" via=":J_garden_bridge_18_0" dir="r" state="m"/>
+    <connection from=":J_garden_bridge_18" to="bridge_r1" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_garden_bridge_10" to="stub_J_garden_bridge_E_out" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_garden_bridge_11" to="bridge_f2" fromLane="0" toLane="1" via=":J_garden_bridge_19_0" dir="l" state="m"/>
+    <connection from=":J_garden_bridge_19" to="bridge_f2" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_garden_church_0" to="stub_J_garden_church_W_out" fromLane="0" toLane="1" via=":J_garden_church_12_0" dir="r" state="m"/>
+    <connection from=":J_garden_church_12" to="stub_J_garden_church_W_out" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_garden_church_1" to="church_r2" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_garden_church_2" to="garden_f0" fromLane="0" toLane="1" via=":J_garden_church_13_0" dir="l" state="m"/>
+    <connection from=":J_garden_church_13" to="garden_f0" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_garden_church_3" to="church_f3" fromLane="0" toLane="1" via=":J_garden_church_14_0" dir="r" state="m"/>
+    <connection from=":J_garden_church_14" to="church_f3" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_garden_church_4" to="stub_J_garden_church_W_out" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_garden_church_5" to="church_r2" fromLane="0" toLane="1" via=":J_garden_church_15_0" dir="l" state="m"/>
+    <connection from=":J_garden_church_15" to="church_r2" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_garden_church_6" to="garden_f0" fromLane="0" toLane="1" via=":J_garden_church_16_0" dir="r" state="m"/>
+    <connection from=":J_garden_church_16" to="garden_f0" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_garden_church_7" to="church_f3" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_garden_church_8" to="stub_J_garden_church_W_out" fromLane="0" toLane="1" via=":J_garden_church_17_0" dir="l" state="m"/>
+    <connection from=":J_garden_church_17" to="stub_J_garden_church_W_out" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_garden_church_9" to="church_r2" fromLane="0" toLane="1" via=":J_garden_church_18_0" dir="r" state="m"/>
+    <connection from=":J_garden_church_18" to="church_r2" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_garden_church_10" to="garden_f0" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_garden_church_11" to="church_f3" fromLane="0" toLane="1" via=":J_garden_church_19_0" dir="l" state="m"/>
+    <connection from=":J_garden_church_19" to="church_f3" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_high_bridge_0" to="high_r2" fromLane="0" toLane="1" via=":J_high_bridge_12_0" dir="r" state="m"/>
+    <connection from=":J_high_bridge_12" to="high_r2" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_high_bridge_1" to="stub_J_high_bridge_S_out" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_high_bridge_2" to="high_f3" fromLane="0" toLane="1" via=":J_high_bridge_13_0" dir="l" state="m"/>
+    <connection from=":J_high_bridge_13" to="high_f3" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_high_bridge_3" to="bridge_f0" fromLane="0" toLane="1" via=":J_high_bridge_14_0" dir="r" state="m"/>
+    <connection from=":J_high_bridge_14" to="bridge_f0" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_high_bridge_4" to="high_r2" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_high_bridge_5" to="stub_J_high_bridge_S_out" fromLane="0" toLane="1" via=":J_high_bridge_15_0" dir="l" state="m"/>
+    <connection from=":J_high_bridge_15" to="stub_J_high_bridge_S_out" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_high_bridge_6" to="high_f3" fromLane="0" toLane="1" via=":J_high_bridge_16_0" dir="r" state="m"/>
+    <connection from=":J_high_bridge_16" to="high_f3" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_high_bridge_7" to="bridge_f0" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_high_bridge_8" to="high_r2" fromLane="0" toLane="1" via=":J_high_bridge_17_0" dir="l" state="m"/>
+    <connection from=":J_high_bridge_17" to="high_r2" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_high_bridge_9" to="stub_J_high_bridge_S_out" fromLane="0" toLane="1" via=":J_high_bridge_18_0" dir="r" state="m"/>
+    <connection from=":J_high_bridge_18" to="stub_J_high_bridge_S_out" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_high_bridge_10" to="high_f3" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_high_bridge_11" to="bridge_f0" fromLane="0" toLane="1" via=":J_high_bridge_19_0" dir="l" state="m"/>
+    <connection from=":J_high_bridge_19" to="bridge_f0" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_high_church_0" to="high_r0" fromLane="0" toLane="1" via=":J_high_church_12_0" dir="r" state="m"/>
+    <connection from=":J_high_church_12" to="high_r0" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_high_church_1" to="church_r0" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_high_church_2" to="high_f1" fromLane="0" toLane="1" via=":J_high_church_13_0" dir="l" state="m"/>
+    <connection from=":J_high_church_13" to="high_f1" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_high_church_3" to="church_f1" fromLane="0" toLane="1" via=":J_high_church_14_0" dir="r" state="m"/>
+    <connection from=":J_high_church_14" to="church_f1" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_high_church_4" to="high_r0" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_high_church_5" to="church_r0" fromLane="0" toLane="1" via=":J_high_church_15_0" dir="l" state="m"/>
+    <connection from=":J_high_church_15" to="church_r0" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_high_church_6" to="high_f1" fromLane="0" toLane="1" via=":J_high_church_16_0" dir="r" state="m"/>
+    <connection from=":J_high_church_16" to="high_f1" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_high_church_7" to="church_f1" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_high_church_8" to="high_r0" fromLane="0" toLane="1" via=":J_high_church_17_0" dir="l" state="m"/>
+    <connection from=":J_high_church_17" to="high_r0" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_high_church_9" to="church_r0" fromLane="0" toLane="1" via=":J_high_church_18_0" dir="r" state="m"/>
+    <connection from=":J_high_church_18" to="church_r0" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_high_church_10" to="high_f1" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_high_church_11" to="church_f1" fromLane="0" toLane="1" via=":J_high_church_19_0" dir="l" state="m"/>
+    <connection from=":J_high_church_19" to="church_f1" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_high_mews_0" to="high_r1" fromLane="0" toLane="1" via=":J_high_mews_12_0" dir="r" state="m"/>
+    <connection from=":J_high_mews_12" to="high_r1" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_high_mews_1" to="stub_J_high_mews_S_out" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_high_mews_2" to="high_f2" fromLane="0" toLane="1" via=":J_high_mews_13_0" dir="l" state="m"/>
+    <connection from=":J_high_mews_13" to="high_f2" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_high_mews_3" to="mews_f0" fromLane="0" toLane="1" via=":J_high_mews_14_0" dir="r" state="m"/>
+    <connection from=":J_high_mews_14" to="mews_f0" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_high_mews_4" to="high_r1" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_high_mews_5" to="stub_J_high_mews_S_out" fromLane="0" toLane="1" via=":J_high_mews_15_0" dir="l" state="m"/>
+    <connection from=":J_high_mews_15" to="stub_J_high_mews_S_out" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_high_mews_6" to="high_f2" fromLane="0" toLane="1" via=":J_high_mews_16_0" dir="r" state="m"/>
+    <connection from=":J_high_mews_16" to="high_f2" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_high_mews_7" to="mews_f0" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_high_mews_8" to="high_r1" fromLane="0" toLane="1" via=":J_high_mews_17_0" dir="l" state="m"/>
+    <connection from=":J_high_mews_17" to="high_r1" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_high_mews_9" to="stub_J_high_mews_S_out" fromLane="0" toLane="1" via=":J_high_mews_18_0" dir="r" state="m"/>
+    <connection from=":J_high_mews_18" to="stub_J_high_mews_S_out" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_high_mews_10" to="high_f2" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_high_mews_11" to="mews_f0" fromLane="0" toLane="1" via=":J_high_mews_19_0" dir="l" state="m"/>
+    <connection from=":J_high_mews_19" to="mews_f0" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_market_bridge_0" to="market_r1" fromLane="0" toLane="1" via=":J_market_bridge_12_0" dir="r" state="m"/>
+    <connection from=":J_market_bridge_12" to="market_r1" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_market_bridge_1" to="bridge_r0" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_market_bridge_2" to="market_f2" fromLane="0" toLane="1" via=":J_market_bridge_13_0" dir="l" state="m"/>
+    <connection from=":J_market_bridge_13" to="market_f2" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_market_bridge_3" to="bridge_f1" fromLane="0" toLane="1" via=":J_market_bridge_14_0" dir="r" state="m"/>
+    <connection from=":J_market_bridge_14" to="bridge_f1" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_market_bridge_4" to="market_r1" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_market_bridge_5" to="bridge_r0" fromLane="0" toLane="1" via=":J_market_bridge_15_0" dir="l" state="m"/>
+    <connection from=":J_market_bridge_15" to="bridge_r0" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_market_bridge_6" to="market_f2" fromLane="0" toLane="1" via=":J_market_bridge_16_0" dir="r" state="m"/>
+    <connection from=":J_market_bridge_16" to="market_f2" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_market_bridge_7" to="bridge_f1" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_market_bridge_8" to="market_r1" fromLane="0" toLane="1" via=":J_market_bridge_17_0" dir="l" state="m"/>
+    <connection from=":J_market_bridge_17" to="market_r1" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_market_bridge_9" to="bridge_r0" fromLane="0" toLane="1" via=":J_market_bridge_18_0" dir="r" state="m"/>
+    <connection from=":J_market_bridge_18" to="bridge_r0" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_market_bridge_10" to="market_f2" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_market_bridge_11" to="bridge_f1" fromLane="0" toLane="1" via=":J_market_bridge_19_0" dir="l" state="m"/>
+    <connection from=":J_market_bridge_19" to="bridge_f1" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_market_church_0" to="stub_J_market_church_W_out" fromLane="0" toLane="1" via=":J_market_church_12_0" dir="r" state="m"/>
+    <connection from=":J_market_church_12" to="stub_J_market_church_W_out" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_market_church_1" to="church_r1" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_market_church_2" to="market_f0" fromLane="0" toLane="1" via=":J_market_church_13_0" dir="l" state="m"/>
+    <connection from=":J_market_church_13" to="market_f0" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_market_church_3" to="church_f2" fromLane="0" toLane="1" via=":J_market_church_14_0" dir="r" state="m"/>
+    <connection from=":J_market_church_14" to="church_f2" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_market_church_4" to="stub_J_market_church_W_out" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_market_church_5" to="church_r1" fromLane="0" toLane="1" via=":J_market_church_15_0" dir="l" state="m"/>
+    <connection from=":J_market_church_15" to="church_r1" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_market_church_6" to="market_f0" fromLane="0" toLane="1" via=":J_market_church_16_0" dir="r" state="m"/>
+    <connection from=":J_market_church_16" to="market_f0" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_market_church_7" to="church_f2" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_market_church_8" to="stub_J_market_church_W_out" fromLane="0" toLane="1" via=":J_market_church_17_0" dir="l" state="m"/>
+    <connection from=":J_market_church_17" to="stub_J_market_church_W_out" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_market_church_9" to="church_r1" fromLane="0" toLane="1" via=":J_market_church_18_0" dir="r" state="m"/>
+    <connection from=":J_market_church_18" to="church_r1" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_market_church_10" to="market_f0" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_market_church_11" to="church_f2" fromLane="0" toLane="1" via=":J_market_church_19_0" dir="l" state="m"/>
+    <connection from=":J_market_church_19" to="church_f2" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_market_mews_0" to="market_r0" fromLane="0" toLane="1" via=":J_market_mews_12_0" dir="r" state="m"/>
+    <connection from=":J_market_mews_12" to="market_r0" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_market_mews_1" to="mews_r0" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_market_mews_2" to="market_f1" fromLane="0" toLane="1" via=":J_market_mews_13_0" dir="l" state="m"/>
+    <connection from=":J_market_mews_13" to="market_f1" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_market_mews_3" to="stub_J_market_mews_N_out" fromLane="0" toLane="1" via=":J_market_mews_14_0" dir="r" state="m"/>
+    <connection from=":J_market_mews_14" to="stub_J_market_mews_N_out" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_market_mews_4" to="market_r0" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_market_mews_5" to="mews_r0" fromLane="0" toLane="1" via=":J_market_mews_15_0" dir="l" state="m"/>
+    <connection from=":J_market_mews_15" to="mews_r0" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_market_mews_6" to="market_f1" fromLane="0" toLane="1" via=":J_market_mews_16_0" dir="r" state="m"/>
+    <connection from=":J_market_mews_16" to="market_f1" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_market_mews_7" to="stub_J_market_mews_N_out" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_market_mews_8" to="market_r0" fromLane="0" toLane="1" via=":J_market_mews_17_0" dir="l" state="m"/>
+    <connection from=":J_market_mews_17" to="market_r0" fromLane="0" toLane="1" dir="l" state="m"/>
+    <connection from=":J_market_mews_9" to="mews_r0" fromLane="0" toLane="1" via=":J_market_mews_18_0" dir="r" state="m"/>
+    <connection from=":J_market_mews_18" to="mews_r0" fromLane="0" toLane="1" dir="r" state="m"/>
+    <connection from=":J_market_mews_10" to="market_f1" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J_market_mews_11" to="stub_J_market_mews_N_out" fromLane="0" toLane="1" via=":J_market_mews_19_0" dir="l" state="m"/>
+    <connection from=":J_market_mews_19" to="stub_J_market_mews_N_out" fromLane="0" toLane="1" dir="l" state="m"/>
+
+    <connection from=":E_bridge_1_w0" to="bridge_r2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="bridge_f2" to=":E_bridge_1_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":E_church_0_w0" to="church_f0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="church_r0" to=":E_church_0_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":E_church_1_w0" to="church_r3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="church_f3" to=":E_church_1_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":E_high_0_w0" to="high_f0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="high_r0" to=":E_high_0_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":E_high_1_w0" to="high_r3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="high_f3" to=":E_high_1_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":E_market_1_w0" to="market_r2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="market_f2" to=":E_market_1_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_garden_bridge_c0" to=":J_garden_bridge_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_garden_bridge_c1" to=":J_garden_bridge_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_garden_bridge_c2" to=":J_garden_bridge_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_garden_bridge_c3" to=":J_garden_bridge_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_garden_bridge_w0" to=":J_garden_bridge_c3" fromLane="0" toLane="0" tl="J_garden_bridge" linkIndex="15" dir="s" state="M"/>
+    <connection from=":J_garden_bridge_w0" to="garden_r0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="bridge_r2" to=":J_garden_bridge_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_garden_bridge_w1" to=":J_garden_bridge_c0" fromLane="0" toLane="0" tl="J_garden_bridge" linkIndex="12" dir="s" state="M"/>
+    <connection from=":J_garden_bridge_w1" to="bridge_f2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="stub_J_garden_bridge_E_in" to=":J_garden_bridge_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_garden_bridge_w2" to=":J_garden_bridge_c1" fromLane="0" toLane="0" tl="J_garden_bridge" linkIndex="13" dir="s" state="M"/>
+    <connection from=":J_garden_bridge_w2" to="stub_J_garden_bridge_E_out" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="bridge_f1" to=":J_garden_bridge_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_garden_bridge_w3" to=":J_garden_bridge_c2" fromLane="0" toLane="0" tl="J_garden_bridge" linkIndex="14" dir="s" state="M"/>
+    <connection from=":J_garden_bridge_w3" to="bridge_r1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="garden_f0" to=":J_garden_bridge_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_garden_church_c0" to=":J_garden_church_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_garden_church_c1" to=":J_garden_church_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_garden_church_c2" to=":J_garden_church_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_garden_church_c3" to=":J_garden_church_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_garden_church_w0" to=":J_garden_church_c3" fromLane="0" toLane="0" tl="J_garden_church" linkIndex="15" dir="s" state="M"/>
+    <connection from=":J_garden_church_w0" to="stub_J_garden_church_W_out" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="church_r3" to=":J_garden_church_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_garden_church_w1" to=":J_garden_church_c0" fromLane="0" toLane="0" tl="J_garden_church" linkIndex="12" dir="s" state="M"/>
+    <connection from=":J_garden_church_w1" to="church_f3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="garden_r0" to=":J_garden_church_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_garden_church_w2" to=":J_garden_church_c1" fromLane="0" toLane="0" tl="J_garden_church" linkIndex="13" dir="s" state="M"/>
+    <connection from=":J_garden_church_w2" to="garden_f0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="church_f2" to=":J_garden_church_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_garden_church_w3" to=":J_garden_church_c2" fromLane="0" toLane="0" tl="J_garden_church" linkIndex="14" dir="s" state="M"/>
+    <connection from=":J_garden_church_w3" to="church_r2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="stub_J_garden_church_W_in" to=":J_garden_church_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_bridge_c0" to=":J_high_bridge_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_bridge_c1" to=":J_high_bridge_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_bridge_c2" to=":J_high_bridge_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_bridge_c3" to=":J_high_bridge_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_bridge_w0" to=":J_high_bridge_c3" fromLane="0" toLane="0" tl="J_high_bridge" linkIndex="15" dir="s" state="M"/>
+    <connection from=":J_high_bridge_w0" to="high_r2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="bridge_r0" to=":J_high_bridge_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_bridge_w1" to=":J_high_bridge_c0" fromLane="0" toLane="0" tl="J_high_bridge" linkIndex="12" dir="s" state="M"/>
+    <connection from=":J_high_bridge_w1" to="bridge_f0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="high_r3" to=":J_high_bridge_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_bridge_w2" to=":J_high_bridge_c1" fromLane="0" toLane="0" tl="J_high_bridge" linkIndex="13" dir="s" state="M"/>
+    <connection from=":J_high_bridge_w2" to="high_f3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="stub_J_high_bridge_S_in" to=":J_high_bridge_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_bridge_w3" to=":J_high_bridge_c2" fromLane="0" toLane="0" tl="J_high_bridge" linkIndex="14" dir="s" state="M"/>
+    <connection from=":J_high_bridge_w3" to="stub_J_high_bridge_S_out" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="high_f2" to=":J_high_bridge_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_church_c0" to=":J_high_church_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_church_c1" to=":J_high_church_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_church_c2" to=":J_high_church_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_church_c3" to=":J_high_church_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_church_w0" to=":J_high_church_c3" fromLane="0" toLane="0" tl="J_high_church" linkIndex="15" dir="s" state="M"/>
+    <connection from=":J_high_church_w0" to="high_r0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="church_r1" to=":J_high_church_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_church_w1" to=":J_high_church_c0" fromLane="0" toLane="0" tl="J_high_church" linkIndex="12" dir="s" state="M"/>
+    <connection from=":J_high_church_w1" to="church_f1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="high_r1" to=":J_high_church_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_church_w2" to=":J_high_church_c1" fromLane="0" toLane="0" tl="J_high_church" linkIndex="13" dir="s" state="M"/>
+    <connection from=":J_high_church_w2" to="high_f1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="church_f0" to=":J_high_church_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_church_w3" to=":J_high_church_c2" fromLane="0" toLane="0" tl="J_high_church" linkIndex="14" dir="s" state="M"/>
+    <connection from=":J_high_church_w3" to="church_r0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="high_f0" to=":J_high_church_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_mews_c0" to=":J_high_mews_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_mews_c1" to=":J_high_mews_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_mews_c2" to=":J_high_mews_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_mews_c3" to=":J_high_mews_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_mews_w0" to=":J_high_mews_c3" fromLane="0" toLane="0" tl="J_high_mews" linkIndex="15" dir="s" state="M"/>
+    <connection from=":J_high_mews_w0" to="high_r1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="mews_r0" to=":J_high_mews_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_mews_w1" to=":J_high_mews_c0" fromLane="0" toLane="0" tl="J_high_mews" linkIndex="12" dir="s" state="M"/>
+    <connection from=":J_high_mews_w1" to="mews_f0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="high_r2" to=":J_high_mews_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_mews_w2" to=":J_high_mews_c1" fromLane="0" toLane="0" tl="J_high_mews" linkIndex="13" dir="s" state="M"/>
+    <connection from=":J_high_mews_w2" to="high_f2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="stub_J_high_mews_S_in" to=":J_high_mews_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_high_mews_w3" to=":J_high_mews_c2" fromLane="0" toLane="0" tl="J_high_mews" linkIndex="14" dir="s" state="M"/>
+    <connection from=":J_high_mews_w3" to="stub_J_high_mews_S_out" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="high_f1" to=":J_high_mews_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_bridge_c0" to=":J_market_bridge_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_bridge_c1" to=":J_market_bridge_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_bridge_c2" to=":J_market_bridge_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_bridge_c3" to=":J_market_bridge_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_bridge_w0" to=":J_market_bridge_c3" fromLane="0" toLane="0" tl="J_market_bridge" linkIndex="15" dir="s" state="M"/>
+    <connection from=":J_market_bridge_w0" to="market_r1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="bridge_r1" to=":J_market_bridge_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_bridge_w1" to=":J_market_bridge_c0" fromLane="0" toLane="0" tl="J_market_bridge" linkIndex="12" dir="s" state="M"/>
+    <connection from=":J_market_bridge_w1" to="bridge_f1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="market_r2" to=":J_market_bridge_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_bridge_w2" to=":J_market_bridge_c1" fromLane="0" toLane="0" tl="J_market_bridge" linkIndex="13" dir="s" state="M"/>
+    <connection from=":J_market_bridge_w2" to="market_f2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="bridge_f0" to=":J_market_bridge_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_bridge_w3" to=":J_market_bridge_c2" fromLane="0" toLane="0" tl="J_market_bridge" linkIndex="14" dir="s" state="M"/>
+    <connection from=":J_market_bridge_w3" to="bridge_r0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="market_f1" to=":J_market_bridge_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_church_c0" to=":J_market_church_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_church_c1" to=":J_market_church_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_church_c2" to=":J_market_church_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_church_c3" to=":J_market_church_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_church_w0" to=":J_market_church_c3" fromLane="0" toLane="0" tl="J_market_church" linkIndex="15" dir="s" state="M"/>
+    <connection from=":J_market_church_w0" to="stub_J_market_church_W_out" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="church_r2" to=":J_market_church_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_church_w1" to=":J_market_church_c0" fromLane="0" toLane="0" tl="J_market_church" linkIndex="12" dir="s" state="M"/>
+    <connection from=":J_market_church_w1" to="church_f2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="market_r0" to=":J_market_church_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_church_w2" to=":J_market_church_c1" fromLane="0" toLane="0" tl="J_market_church" linkIndex="13" dir="s" state="M"/>
+    <connection from=":J_market_church_w2" to="market_f0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="church_f1" to=":J_market_church_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_church_w3" to=":J_market_church_c2" fromLane="0" toLane="0" tl="J_market_church" linkIndex="14" dir="s" state="M"/>
+    <connection from=":J_market_church_w3" to="church_r1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="stub_J_market_church_W_in" to=":J_market_church_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_mews_c0" to=":J_market_mews_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_mews_c1" to=":J_market_mews_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_mews_c2" to=":J_market_mews_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_mews_c3" to=":J_market_mews_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_mews_w0" to=":J_market_mews_c3" fromLane="0" toLane="0" tl="J_market_mews" linkIndex="15" dir="s" state="M"/>
+    <connection from=":J_market_mews_w0" to="market_r0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="stub_J_market_mews_N_in" to=":J_market_mews_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_mews_w1" to=":J_market_mews_c0" fromLane="0" toLane="0" tl="J_market_mews" linkIndex="12" dir="s" state="M"/>
+    <connection from=":J_market_mews_w1" to="stub_J_market_mews_N_out" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="market_r1" to=":J_market_mews_w1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_mews_w2" to=":J_market_mews_c1" fromLane="0" toLane="0" tl="J_market_mews" linkIndex="13" dir="s" state="M"/>
+    <connection from=":J_market_mews_w2" to="market_f1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="mews_f0" to=":J_market_mews_w2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J_market_mews_w3" to=":J_market_mews_c2" fromLane="0" toLane="0" tl="J_market_mews" linkIndex="14" dir="s" state="M"/>
+    <connection from=":J_market_mews_w3" to="mews_r0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="market_f0" to=":J_market_mews_w3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":S_J_garden_bridge_E_w0" to="stub_J_garden_bridge_E_in" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="stub_J_garden_bridge_E_out" to=":S_J_garden_bridge_E_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":S_J_garden_church_W_w0" to="stub_J_garden_church_W_in" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="stub_J_garden_church_W_out" to=":S_J_garden_church_W_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":S_J_high_bridge_S_w0" to="stub_J_high_bridge_S_in" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="stub_J_high_bridge_S_out" to=":S_J_high_bridge_S_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":S_J_high_mews_S_w0" to="stub_J_high_mews_S_in" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="stub_J_high_mews_S_out" to=":S_J_high_mews_S_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":S_J_market_church_W_w0" to="stub_J_market_church_W_in" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="stub_J_market_church_W_out" to=":S_J_market_church_W_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":S_J_market_mews_N_w0" to="stub_J_market_mews_N_in" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="stub_J_market_mews_N_out" to=":S_J_market_mews_N_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+</net>

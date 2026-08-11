@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+results/
+results_*/
+sanity_check/
+*.log
+batch.log

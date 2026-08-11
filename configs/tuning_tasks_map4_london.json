@@ -1,0 +1,68 @@
+{
+ "map": "map4_london",
+ "sampling_script": "sim/sample_tasks.py",
+ "sampling_seed": 20260811,
+ "length_bins_m": [
+  150.0,
+  260.0,
+  370.0,
+  480.0
+ ],
+ "per_bin_target": 1,
+ "screening": {
+  "attempts": 22,
+  "rejected_same_edge": 0,
+  "rejected_unreachable": 0
+ },
+ "note": "Shared crowd seed fixes demand, spawn times, walking speeds and appearance -- NOT identical realised trajectories once reactive pedestrians interact with the robot.",
+ "tasks": [
+  {
+   "id": "tt01",
+   "start": [
+    65.8,
+    207.3
+   ],
+   "goal": [
+    274.88,
+    215.8
+   ],
+   "path_length_m": 215.9,
+   "n_turns": 1,
+   "min_sidewalk_width_m": 2.0,
+   "n_signalised_junctions": 1,
+   "n_route_edges": 2
+  },
+  {
+   "id": "tt02",
+   "start": [
+    304.2,
+    154.57
+   ],
+   "goal": [
+    74.2,
+    73.51
+   ],
+   "path_length_m": 306.8,
+   "n_turns": 6,
+   "min_sidewalk_width_m": 2.0,
+   "n_signalised_junctions": 3,
+   "n_route_edges": 4
+  },
+  {
+   "id": "tt03",
+   "start": [
+    262.04,
+    44.2
+   ],
+   "goal": [
+    100.05,
+    215.8
+   ],
+   "path_length_m": 377.3,
+   "n_turns": 10,
+   "min_sidewalk_width_m": 2.0,
+   "n_signalised_junctions": 4,
+   "n_route_edges": 5
+  }
+ ]
+}

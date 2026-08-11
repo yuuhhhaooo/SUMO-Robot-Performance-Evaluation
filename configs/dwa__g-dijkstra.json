@@ -1,0 +1,8 @@
+{
+  "predict_time": 2.4252441915355387,
+  "goal_cost_gain": 3.193899688326231,
+  "speed_cost_gain": 1.7937179620011747,
+  "obstacle_cost_gain": 0.5649268471624099,
+  "centerline_cost_gain": 0.25574909304801713,
+  "social_distance": 0.981784411728195
+}

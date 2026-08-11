@@ -1,0 +1,68 @@
+{
+ "map": "map3_grid",
+ "sampling_script": "sim/sample_tasks.py",
+ "sampling_seed": 20260811,
+ "length_bins_m": [
+  120.0,
+  206.7,
+  293.3,
+  380.0
+ ],
+ "per_bin_target": 1,
+ "screening": {
+  "attempts": 12,
+  "rejected_same_edge": 0,
+  "rejected_unreachable": 0
+ },
+ "note": "Shared crowd seed fixes demand, spawn times, walking speeds and appearance -- NOT identical realised trajectories once reactive pedestrians interact with the robot.",
+ "tasks": [
+  {
+   "id": "tt01",
+   "start": [
+    276.2,
+    54.2
+   ],
+   "goal": [
+    233.57,
+    145.8
+   ],
+   "path_length_m": 189.5,
+   "n_turns": 4,
+   "min_sidewalk_width_m": 2.0,
+   "n_signalised_junctions": 2,
+   "n_route_edges": 3
+  },
+  {
+   "id": "tt02",
+   "start": [
+    126.72,
+    154.2
+   ],
+   "goal": [
+    6.17,
+    45.8
+   ],
+   "path_length_m": 224.6,
+   "n_turns": 5,
+   "min_sidewalk_width_m": 2.0,
+   "n_signalised_junctions": 2,
+   "n_route_edges": 3
+  },
+  {
+   "id": "tt03",
+   "start": [
+    292.23,
+    54.2
+   ],
+   "goal": [
+    85.09,
+    145.8
+   ],
+   "path_length_m": 295.5,
+   "n_turns": 3,
+   "min_sidewalk_width_m": 2.0,
+   "n_signalised_junctions": 3,
+   "n_route_edges": 4
+  }
+ ]
+}

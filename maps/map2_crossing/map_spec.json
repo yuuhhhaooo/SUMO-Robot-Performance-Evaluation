@@ -1,0 +1,352 @@
+{
+  "name": "map2_crossing",
+  "title": "Map 2 - single crossing (native)",
+  "extent": [
+    0.0,
+    -80.0,
+    300.0,
+    80.0
+  ],
+  "signal_backend": "native_full",
+  "roads": [
+    {
+      "id": "main",
+      "axis": "h",
+      "c": 0.0,
+      "lo": 0.0,
+      "hi": 300.0,
+      "role": "main",
+      "veh_per_hour": 600.0,
+      "routes": {
+        "f": [
+          "main_f0",
+          "main_f1"
+        ],
+        "r": [
+          "main_r1",
+          "main_r0"
+        ]
+      }
+    },
+    {
+      "id": "cross",
+      "axis": "v",
+      "c": 150.0,
+      "lo": -80.0,
+      "hi": 80.0,
+      "role": "cross",
+      "veh_per_hour": 120.0,
+      "routes": {
+        "f": [
+          "cross_f0",
+          "cross_f1"
+        ],
+        "r": [
+          "cross_r1",
+          "cross_r0"
+        ]
+      }
+    }
+  ],
+  "sidewalks": [
+    {
+      "edge": "cross_f0",
+      "lane": "cross_f0_0",
+      "length": 72.8,
+      "rect": [
+        153.2,
+        -80.0,
+        155.2,
+        -7.2
+      ]
+    },
+    {
+      "edge": "cross_f1",
+      "lane": "cross_f1_0",
+      "length": 72.8,
+      "rect": [
+        153.2,
+        7.2,
+        155.2,
+        80.0
+      ]
+    },
+    {
+      "edge": "cross_r0",
+      "lane": "cross_r0_0",
+      "length": 72.8,
+      "rect": [
+        144.8,
+        -80.0,
+        146.8,
+        -7.2
+      ]
+    },
+    {
+      "edge": "cross_r1",
+      "lane": "cross_r1_0",
+      "length": 72.8,
+      "rect": [
+        144.8,
+        7.2,
+        146.8,
+        80.0
+      ]
+    },
+    {
+      "edge": "main_f0",
+      "lane": "main_f0_0",
+      "length": 142.8,
+      "rect": [
+        0.0,
+        -5.2,
+        142.8,
+        -3.2
+      ]
+    },
+    {
+      "edge": "main_f1",
+      "lane": "main_f1_0",
+      "length": 142.8,
+      "rect": [
+        157.2,
+        -5.2,
+        300.0,
+        -3.2
+      ]
+    },
+    {
+      "edge": "main_r0",
+      "lane": "main_r0_0",
+      "length": 142.8,
+      "rect": [
+        0.0,
+        3.2,
+        142.8,
+        5.2
+      ]
+    },
+    {
+      "edge": "main_r1",
+      "lane": "main_r1_0",
+      "length": 142.8,
+      "rect": [
+        157.2,
+        3.2,
+        300.0,
+        5.2
+      ]
+    }
+  ],
+  "walkable_rects": [
+    [
+      153.2,
+      -80.0,
+      155.2,
+      -7.2
+    ],
+    [
+      153.2,
+      7.2,
+      155.2,
+      80.0
+    ],
+    [
+      144.8,
+      -80.0,
+      146.8,
+      -7.2
+    ],
+    [
+      144.8,
+      7.2,
+      146.8,
+      80.0
+    ],
+    [
+      0.0,
+      -5.2,
+      142.8,
+      -3.2
+    ],
+    [
+      157.2,
+      -5.2,
+      300.0,
+      -3.2
+    ],
+    [
+      0.0,
+      3.2,
+      142.8,
+      5.2
+    ],
+    [
+      157.2,
+      3.2,
+      300.0,
+      5.2
+    ]
+  ],
+  "crossings": [
+    {
+      "id": ":J_main_cross_c0",
+      "rect": [
+        146.8,
+        3.2,
+        153.2,
+        7.2
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_main_cross",
+      "linkIndex": 12,
+      "strips": {
+        "E": [
+          145.0,
+          3.2,
+          146.8,
+          7.2
+        ],
+        "W": [
+          153.2,
+          3.2,
+          155.0,
+          7.2
+        ]
+      },
+      "road": "cross",
+      "junction": "J_main_cross"
+    },
+    {
+      "id": ":J_main_cross_c1",
+      "rect": [
+        153.2,
+        -3.2,
+        157.2,
+        3.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_main_cross",
+      "linkIndex": 13,
+      "strips": {
+        "N": [
+          153.2,
+          -5.0,
+          157.2,
+          -3.2
+        ],
+        "S": [
+          153.2,
+          3.2,
+          157.2,
+          5.0
+        ]
+      },
+      "road": "main",
+      "junction": "J_main_cross"
+    },
+    {
+      "id": ":J_main_cross_c2",
+      "rect": [
+        146.8,
+        -7.2,
+        153.2,
+        -3.2
+      ],
+      "axis": "h",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_main_cross",
+      "linkIndex": 14,
+      "strips": {
+        "E": [
+          145.0,
+          -7.2,
+          146.8,
+          -3.2
+        ],
+        "W": [
+          153.2,
+          -7.2,
+          155.0,
+          -3.2
+        ]
+      },
+      "road": "cross",
+      "junction": "J_main_cross"
+    },
+    {
+      "id": ":J_main_cross_c3",
+      "rect": [
+        142.8,
+        -3.2,
+        146.8,
+        3.2
+      ],
+      "axis": "v",
+      "length": 6.4,
+      "width": 4.0,
+      "tls": "J_main_cross",
+      "linkIndex": 15,
+      "strips": {
+        "N": [
+          142.8,
+          -5.0,
+          146.8,
+          -3.2
+        ],
+        "S": [
+          142.8,
+          3.2,
+          146.8,
+          5.0
+        ]
+      },
+      "road": "main",
+      "junction": "J_main_cross"
+    }
+  ],
+  "tls": [
+    "J_main_cross"
+  ],
+  "plazas": [],
+  "robot": {
+    "start": [
+      2.0,
+      4.2
+    ],
+    "goal": [
+      298.0,
+      4.2
+    ],
+    "waypoints": [
+      [
+        2.0,
+        4.2
+      ],
+      [
+        298.0,
+        4.2
+      ]
+    ]
+  },
+  "routes": {
+    "default": [
+      [
+        2.0,
+        4.2
+      ],
+      [
+        298.0,
+        4.2
+      ]
+    ]
+  },
+  "signal_params": {
+    "wait_strip": 1.8
+  }
+}

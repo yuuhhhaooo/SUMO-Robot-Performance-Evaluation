@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <!-- native demand: map=map1_straight mode=all seed=1 -->
+    <vType id="t_pf0" vClass="pedestrian" maxSpeed="1.478" width="0.64" length="0.35"/>
+    <vType id="t_pf1" vClass="pedestrian" maxSpeed="1.004" width="0.64" length="0.35"/>
+    <vType id="t_pf2" vClass="pedestrian" maxSpeed="1.160" width="0.64" length="0.35"/>
+    <vType id="t_pf3" vClass="pedestrian" maxSpeed="1.431" width="0.64" length="0.35"/>
+    <flow id="veh_main_f" begin="0.00" end="36000.00" vehsPerHour="600.00" from="main_f0" to="main_f0" departLane="best" departSpeed="max"/>
+    <flow id="veh_main_r" begin="0.00" end="36000.00" vehsPerHour="600.00" from="main_r0" to="main_r0" departLane="best" departSpeed="max"/>
+    <person id="stand_main_0" depart="0.00" departPos="10.39">
+        <walk edges="main_r0" arrivalPos="11.39" speed="0.00002"/>
+    </person>
+    <person id="stand_main_1" depart="0.00" departPos="130.10">
+        <walk edges="main_r0" arrivalPos="131.10" speed="0.00002"/>
+    </person>
+    <person id="stand_main_2" depart="0.00" departPos="207.97">
+        <walk edges="main_f0" arrivalPos="208.97" speed="0.00002"/>
+    </person>
+    <person id="stand_main_3" depart="0.00" departPos="215.58">
+        <walk edges="main_r0" arrivalPos="216.58" speed="0.00002"/>
+    </person>
+    <person id="stand_main_4" depart="0.00" departPos="176.98">
+        <walk edges="main_f0" arrivalPos="177.98" speed="0.00002"/>
+    </person>
+    <personFlow id="pf0" type="t_pf0" begin="0.00" end="36000.00" period="exp(0.032300)" departPos="299.70">
+        <walk edges="main_f0" arrivalPos="0.30"/>
+    </personFlow>
+    <personFlow id="pf1" type="t_pf1" begin="0.00" end="36000.00" period="exp(0.079505)" departPos="0.30">
+        <walk edges="main_f0" arrivalPos="299.70"/>
+    </personFlow>
+    <personFlow id="pf2" type="t_pf2" begin="0.00" end="36000.00" period="exp(0.059380)" departPos="0.30">
+        <walk edges="main_r0" arrivalPos="299.70"/>
+    </personFlow>
+    <personFlow id="pf3" type="t_pf3" begin="0.00" end="36000.00" period="exp(0.071092)" departPos="299.70">
+        <walk edges="main_r0" arrivalPos="0.30"/>
+    </personFlow>
+</routes>

@@ -1,0 +1,226 @@
+{
+  "map": "map3_grid",
+  "mode": "mixed",
+  "seed": 1,
+  "flows": [
+    {
+      "id": "pf0",
+      "edges": [
+        "A_f2",
+        "..."
+      ],
+      "side": "f.a",
+      "speed": 1.478,
+      "per_hour": 116.28,
+      "backward": true
+    },
+    {
+      "id": "pf1",
+      "edges": [
+        "A_f0",
+        "..."
+      ],
+      "side": "f.b",
+      "speed": 1.004,
+      "per_hour": 286.22,
+      "backward": false
+    },
+    {
+      "id": "pf2",
+      "edges": [
+        "A_r2",
+        "..."
+      ],
+      "side": "r.a",
+      "speed": 1.16,
+      "per_hour": 213.77,
+      "backward": false
+    },
+    {
+      "id": "pf3",
+      "edges": [
+        "A_r0",
+        "..."
+      ],
+      "side": "r.b",
+      "speed": 1.431,
+      "per_hour": 255.93,
+      "backward": true
+    },
+    {
+      "id": "pf4",
+      "edges": [
+        "B_f2",
+        "..."
+      ],
+      "side": "f.a",
+      "speed": 0.823,
+      "per_hour": 105.34,
+      "backward": true
+    },
+    {
+      "id": "pf5",
+      "edges": [
+        "B_f0",
+        "..."
+      ],
+      "side": "f.b",
+      "speed": 1.146,
+      "per_hour": 305.66,
+      "backward": false
+    },
+    {
+      "id": "pf6",
+      "edges": [
+        "B_r2",
+        "..."
+      ],
+      "side": "r.a",
+      "speed": 0.802,
+      "per_hour": 285.82,
+      "backward": false
+    },
+    {
+      "id": "pf7",
+      "edges": [
+        "B_r0",
+        "..."
+      ],
+      "side": "r.b",
+      "speed": 1.377,
+      "per_hour": 200.25,
+      "backward": true
+    },
+    {
+      "id": "pf8",
+      "edges": [
+        "V1_f0",
+        "..."
+      ],
+      "side": "f.a",
+      "speed": 0.983,
+      "per_hour": 140.0,
+      "backward": false
+    },
+    {
+      "id": "pf9",
+      "edges": [
+        "V1_f2",
+        "..."
+      ],
+      "side": "f.b",
+      "speed": 1.556,
+      "per_hour": 140.0,
+      "backward": true
+    },
+    {
+      "id": "pf10",
+      "edges": [
+        "V1_r0",
+        "..."
+      ],
+      "side": "r.a",
+      "speed": 1.521,
+      "per_hour": 140.0,
+      "backward": true
+    },
+    {
+      "id": "pf11",
+      "edges": [
+        "V1_r2",
+        "..."
+      ],
+      "side": "r.b",
+      "speed": 0.824,
+      "per_hour": 140.0,
+      "backward": false
+    },
+    {
+      "id": "pf12",
+      "edges": [
+        "V2_f0",
+        "..."
+      ],
+      "side": "f.a",
+      "speed": 0.82,
+      "per_hour": 140.0,
+      "backward": false
+    },
+    {
+      "id": "pf13",
+      "edges": [
+        "V2_f2",
+        "..."
+      ],
+      "side": "f.b",
+      "speed": 1.233,
+      "per_hour": 140.0,
+      "backward": true
+    },
+    {
+      "id": "pf14",
+      "edges": [
+        "V2_r0",
+        "..."
+      ],
+      "side": "r.a",
+      "speed": 1.551,
+      "per_hour": 140.0,
+      "backward": true
+    },
+    {
+      "id": "pf15",
+      "edges": [
+        "V2_r2",
+        "..."
+      ],
+      "side": "r.b",
+      "speed": 1.105,
+      "per_hour": 140.0,
+      "backward": false
+    }
+  ],
+  "static": [],
+  "vehicles": [
+    {
+      "road": "A",
+      "dir": "f",
+      "vehs_per_hour": 400.0
+    },
+    {
+      "road": "A",
+      "dir": "r",
+      "vehs_per_hour": 400.0
+    },
+    {
+      "road": "B",
+      "dir": "f",
+      "vehs_per_hour": 400.0
+    },
+    {
+      "road": "B",
+      "dir": "r",
+      "vehs_per_hour": 400.0
+    },
+    {
+      "road": "V1",
+      "dir": "f",
+      "vehs_per_hour": 100.0
+    },
+    {
+      "road": "V1",
+      "dir": "r",
+      "vehs_per_hour": 100.0
+    },
+    {
+      "road": "V2",
+      "dir": "f",
+      "vehs_per_hour": 100.0
+    },
+    {
+      "road": "V2",
+      "dir": "r",
+      "vehs_per_hour": 100.0
+    }
+  ]
+}

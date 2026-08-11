@@ -1,0 +1,560 @@
+{
+  "map": "map4_london",
+  "mode": "all",
+  "seed": 1,
+  "flows": [
+    {
+      "id": "pf0",
+      "edges": [
+        "high_f3",
+        "..."
+      ],
+      "side": "f.a",
+      "speed": 1.478,
+      "per_hour": 116.28,
+      "backward": true
+    },
+    {
+      "id": "pf1",
+      "edges": [
+        "high_f0",
+        "..."
+      ],
+      "side": "f.b",
+      "speed": 1.004,
+      "per_hour": 286.22,
+      "backward": false
+    },
+    {
+      "id": "pf2",
+      "edges": [
+        "high_r3",
+        "..."
+      ],
+      "side": "r.a",
+      "speed": 1.16,
+      "per_hour": 213.77,
+      "backward": false
+    },
+    {
+      "id": "pf3",
+      "edges": [
+        "high_r0",
+        "..."
+      ],
+      "side": "r.b",
+      "speed": 1.431,
+      "per_hour": 255.93,
+      "backward": true
+    },
+    {
+      "id": "pf4",
+      "edges": [
+        "market_f2",
+        "..."
+      ],
+      "side": "f.a",
+      "speed": 1.054,
+      "per_hour": 107.6,
+      "backward": true
+    },
+    {
+      "id": "pf5",
+      "edges": [
+        "market_f0",
+        "..."
+      ],
+      "side": "f.b",
+      "speed": 1.32,
+      "per_hour": 86.03,
+      "backward": false
+    },
+    {
+      "id": "pf6",
+      "edges": [
+        "market_r2",
+        "..."
+      ],
+      "side": "r.a",
+      "speed": 1.505,
+      "per_hour": 82.49,
+      "backward": false
+    },
+    {
+      "id": "pf7",
+      "edges": [
+        "market_r0",
+        "..."
+      ],
+      "side": "r.b",
+      "speed": 1.575,
+      "per_hour": 265.35,
+      "backward": true
+    },
+    {
+      "id": "pf8",
+      "edges": [
+        "garden_f0",
+        "..."
+      ],
+      "side": "f.a",
+      "speed": 1.562,
+      "per_hour": 285.46,
+      "backward": true
+    },
+    {
+      "id": "pf9",
+      "edges": [
+        "garden_f0",
+        "..."
+      ],
+      "side": "f.b",
+      "speed": 1.133,
+      "per_hour": 330.16,
+      "backward": false
+    },
+    {
+      "id": "pf10",
+      "edges": [
+        "garden_r0",
+        "..."
+      ],
+      "side": "r.a",
+      "speed": 1.538,
+      "per_hour": 327.39,
+      "backward": false
+    },
+    {
+      "id": "pf11",
+      "edges": [
+        "garden_r0",
+        "..."
+      ],
+      "side": "r.b",
+      "speed": 1.303,
+      "per_hour": 107.0,
+      "backward": true
+    },
+    {
+      "id": "pf12",
+      "edges": [
+        "church_f0",
+        "..."
+      ],
+      "side": "f.a",
+      "speed": 1.506,
+      "per_hour": 140.0,
+      "backward": false
+    },
+    {
+      "id": "pf13",
+      "edges": [
+        "church_f3",
+        "..."
+      ],
+      "side": "f.b",
+      "speed": 1.421,
+      "per_hour": 140.0,
+      "backward": true
+    },
+    {
+      "id": "pf14",
+      "edges": [
+        "church_r0",
+        "..."
+      ],
+      "side": "r.a",
+      "speed": 1.391,
+      "per_hour": 140.0,
+      "backward": true
+    },
+    {
+      "id": "pf15",
+      "edges": [
+        "church_r3",
+        "..."
+      ],
+      "side": "r.b",
+      "speed": 0.869,
+      "per_hour": 140.0,
+      "backward": false
+    },
+    {
+      "id": "pf16",
+      "edges": [
+        "mews_f0",
+        "..."
+      ],
+      "side": "f.a",
+      "speed": 0.845,
+      "per_hour": 140.0,
+      "backward": false
+    },
+    {
+      "id": "pf17",
+      "edges": [
+        "mews_f0",
+        "..."
+      ],
+      "side": "f.b",
+      "speed": 1.496,
+      "per_hour": 140.0,
+      "backward": true
+    },
+    {
+      "id": "pf18",
+      "edges": [
+        "mews_r0",
+        "..."
+      ],
+      "side": "r.a",
+      "speed": 1.256,
+      "per_hour": 140.0,
+      "backward": true
+    },
+    {
+      "id": "pf19",
+      "edges": [
+        "mews_r0",
+        "..."
+      ],
+      "side": "r.b",
+      "speed": 0.96,
+      "per_hour": 140.0,
+      "backward": false
+    },
+    {
+      "id": "pf20",
+      "edges": [
+        "bridge_f0",
+        "..."
+      ],
+      "side": "f.a",
+      "speed": 0.948,
+      "per_hour": 140.0,
+      "backward": false
+    },
+    {
+      "id": "pf21",
+      "edges": [
+        "bridge_f2",
+        "..."
+      ],
+      "side": "f.b",
+      "speed": 1.032,
+      "per_hour": 140.0,
+      "backward": true
+    },
+    {
+      "id": "pf22",
+      "edges": [
+        "bridge_r0",
+        "..."
+      ],
+      "side": "r.a",
+      "speed": 0.934,
+      "per_hour": 140.0,
+      "backward": true
+    },
+    {
+      "id": "pf23",
+      "edges": [
+        "bridge_r2",
+        "..."
+      ],
+      "side": "r.b",
+      "speed": 1.004,
+      "per_hour": 140.0,
+      "backward": false
+    }
+  ],
+  "static": [
+    {
+      "id": "stand_high_0",
+      "edge": "high_r3",
+      "pos": 3.38
+    },
+    {
+      "id": "stand_high_1",
+      "edge": "high_r2",
+      "pos": 45.97
+    },
+    {
+      "id": "stand_high_2",
+      "edge": "high_f0",
+      "pos": 42.91
+    },
+    {
+      "id": "stand_high_3",
+      "edge": "high_r0",
+      "pos": 44.43
+    },
+    {
+      "id": "stand_high_4",
+      "edge": "high_f3",
+      "pos": 30.85
+    },
+    {
+      "id": "stand_market_0",
+      "edge": "market_r1",
+      "pos": 24.52
+    },
+    {
+      "id": "stand_market_1",
+      "edge": "market_r0",
+      "pos": 88.03
+    },
+    {
+      "id": "stand_market_2",
+      "edge": "market_r1",
+      "pos": 25.68
+    },
+    {
+      "id": "stand_market_3",
+      "edge": "market_f1",
+      "pos": 70.77
+    },
+    {
+      "id": "stand_garden_0",
+      "edge": "garden_f0",
+      "pos": 159.25
+    },
+    {
+      "id": "stand_garden_1",
+      "edge": "garden_r0",
+      "pos": 109.43
+    },
+    {
+      "id": "stand_garden_2",
+      "edge": "garden_f0",
+      "pos": 66.19
+    },
+    {
+      "id": "stand_garden_3",
+      "edge": "garden_r0",
+      "pos": 181.06
+    },
+    {
+      "id": "stand_garden_4",
+      "edge": "garden_r0",
+      "pos": 126.63
+    },
+    {
+      "id": "stand_garden_5",
+      "edge": "garden_f0",
+      "pos": 103.62
+    },
+    {
+      "id": "stand_garden_6",
+      "edge": "garden_r0",
+      "pos": 89.67
+    },
+    {
+      "id": "stand_garden_7",
+      "edge": "garden_f0",
+      "pos": 79.68
+    },
+    {
+      "id": "stand_church_0",
+      "edge": "church_f1",
+      "pos": 65.52
+    },
+    {
+      "id": "stand_church_1",
+      "edge": "church_r2",
+      "pos": 24.82
+    },
+    {
+      "id": "stand_church_2",
+      "edge": "church_f0",
+      "pos": 15.52
+    },
+    {
+      "id": "stand_church_3",
+      "edge": "church_r0",
+      "pos": 22.26
+    },
+    {
+      "id": "stand_church_4",
+      "edge": "church_r2",
+      "pos": 41.86
+    },
+    {
+      "id": "stand_church_5",
+      "edge": "church_f2",
+      "pos": 32.94
+    },
+    {
+      "id": "stand_church_6",
+      "edge": "church_f0",
+      "pos": 24.19
+    },
+    {
+      "id": "stand_church_7",
+      "edge": "church_f3",
+      "pos": 13.65
+    },
+    {
+      "id": "stand_church_8",
+      "edge": "church_r1",
+      "pos": 79.72
+    },
+    {
+      "id": "stand_church_9",
+      "edge": "church_r1",
+      "pos": 39.47
+    },
+    {
+      "id": "stand_church_10",
+      "edge": "church_r0",
+      "pos": 20.99
+    },
+    {
+      "id": "stand_church_11",
+      "edge": "church_f0",
+      "pos": 13.05
+    },
+    {
+      "id": "stand_church_12",
+      "edge": "church_f2",
+      "pos": 33.95
+    },
+    {
+      "id": "stand_church_13",
+      "edge": "church_f3",
+      "pos": 14.27
+    },
+    {
+      "id": "stand_mews_0",
+      "edge": "mews_r0",
+      "pos": 41.57
+    },
+    {
+      "id": "stand_mews_1",
+      "edge": "mews_r0",
+      "pos": 35.82
+    },
+    {
+      "id": "stand_mews_2",
+      "edge": "mews_f0",
+      "pos": 45.94
+    },
+    {
+      "id": "stand_mews_3",
+      "edge": "mews_r0",
+      "pos": 39.38
+    },
+    {
+      "id": "stand_mews_4",
+      "edge": "mews_f0",
+      "pos": 67.65
+    },
+    {
+      "id": "stand_mews_5",
+      "edge": "mews_f0",
+      "pos": 46.94
+    },
+    {
+      "id": "stand_mews_6",
+      "edge": "mews_f0",
+      "pos": 72.26
+    },
+    {
+      "id": "stand_mews_7",
+      "edge": "mews_r0",
+      "pos": 4.65
+    },
+    {
+      "id": "stand_mews_8",
+      "edge": "mews_f0",
+      "pos": 8.79
+    },
+    {
+      "id": "stand_mews_9",
+      "edge": "mews_f0",
+      "pos": 38.96
+    },
+    {
+      "id": "stand_mews_10",
+      "edge": "mews_r0",
+      "pos": 22.36
+    },
+    {
+      "id": "stand_mews_11",
+      "edge": "mews_f0",
+      "pos": 67.06
+    },
+    {
+      "id": "stand_bridge_0",
+      "edge": "bridge_r2",
+      "pos": 9.86
+    },
+    {
+      "id": "stand_bridge_1",
+      "edge": "bridge_r2",
+      "pos": 10.48
+    },
+    {
+      "id": "stand_bridge_2",
+      "edge": "bridge_r2",
+      "pos": 11.27
+    },
+    {
+      "id": "stand_bridge_3",
+      "edge": "bridge_r0",
+      "pos": 11.32
+    },
+    {
+      "id": "stand_bridge_4",
+      "edge": "bridge_f2",
+      "pos": 13.13
+    },
+    {
+      "id": "stand_bridge_5",
+      "edge": "bridge_r0",
+      "pos": 66.97
+    }
+  ],
+  "vehicles": [
+    {
+      "road": "high",
+      "dir": "f",
+      "vehs_per_hour": 500.0
+    },
+    {
+      "road": "high",
+      "dir": "r",
+      "vehs_per_hour": 500.0
+    },
+    {
+      "road": "market",
+      "dir": "f",
+      "vehs_per_hour": 200.0
+    },
+    {
+      "road": "market",
+      "dir": "r",
+      "vehs_per_hour": 200.0
+    },
+    {
+      "road": "church",
+      "dir": "f",
+      "vehs_per_hour": 150.0
+    },
+    {
+      "road": "church",
+      "dir": "r",
+      "vehs_per_hour": 150.0
+    },
+    {
+      "road": "bridge",
+      "dir": "f",
+      "vehs_per_hour": 150.0
+    },
+    {
+      "road": "bridge",
+      "dir": "r",
+      "vehs_per_hour": 150.0
+    }
+  ]
+}

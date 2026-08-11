@@ -1,6 +1,0 @@
-success,termination_reason,steps,total_time_s,path_length_m,straight_line_distance_m,extra_distance_ratio,normalized_time_ratio,final_goal_distance_m,min_person_distance_m,collision_steps,hazard_steps_lt_social_distance,hazard_time_ratio,hazard_ratio_given_social_presence,sidewalk_violation_steps,sidewalk_violation_ratio,mean_speed_mps,mean_abs_yaw_rate_radps,mean_abs_accel_mps2,mean_abs_jerk_mps3,seed,algorithm
-False,collision,419,209.0,212.73,295.85,0.719,0.8477,84.463,0.363,1,11,0.0263,0.0263,0,0.0,1.016,0.078,0.153,0.523,1,dwa
-False,collision,55,27.0,22.14,295.85,0.0748,0.1095,273.798,0.241,1,8,0.1455,0.1455,0,0.0,0.811,0.123,0.293,1.042,2,dwa
-False,max_time,841,420.0,171.48,295.85,0.5796,1.7036,124.833,0.544,0,12,0.0143,0.0143,0,0.0,0.408,0.035,0.048,0.157,3,dwa
-False,collision,502,250.5,233.037,295.85,0.7877,1.0161,85.63,0.18,1,8,0.0159,0.017,0,0.0,0.929,0.153,0.194,0.629,4,dwa
-False,max_time,841,420.0,129.36,295.85,0.4372,1.7036,166.775,0.888,0,0,0.0,0.0,0,0.0,0.308,0.029,0.011,0.037,5,dwa

@@ -1,0 +1,180 @@
+{
+ "map": "map3_grid",
+ "sampling_script": "sim/sample_tasks.py",
+ "sampling_seed": 20260810,
+ "length_bins_m": [
+  120.0,
+  213.3,
+  306.7,
+  400.0
+ ],
+ "per_bin_target": 4,
+ "screening": {
+  "attempts": 68,
+  "rejected_same_edge": 1,
+  "rejected_unreachable": 0
+ },
+ "note": "Shared crowd seed fixes demand, spawn times, walking speeds and appearance -- NOT identical realised trajectories once reactive pedestrians interact with the robot.",
+ "tasks": [
+  {
+   "id": "t01",
+   "start": [
+    168.18,
+    54.2
+   ],
+   "goal": [
+    147.87,
+    154.2
+   ],
+   "path_length_m": 172.1,
+   "n_turns": 3,
+   "min_sidewalk_width_m": 2.0,
+   "n_signalised_junctions": 2,
+   "n_route_edges": 3
+  },
+  {
+   "id": "t02",
+   "start": [
+    157.22,
+    145.8
+   ],
+   "goal": [
+    164.65,
+    45.8
+   ],
+   "path_length_m": 166.3,
+   "n_turns": 3,
+   "min_sidewalk_width_m": 2.0,
+   "n_signalised_junctions": 2,
+   "n_route_edges": 3
+  },
+  {
+   "id": "t03",
+   "start": [
+    195.8,
+    117.26
+   ],
+   "goal": [
+    255.98,
+    54.2
+   ],
+   "path_length_m": 121.6,
+   "n_turns": 1,
+   "min_sidewalk_width_m": 2.0,
+   "n_signalised_junctions": 1,
+   "n_route_edges": 2
+  },
+  {
+   "id": "t04",
+   "start": [
+    95.8,
+    108.61
+   ],
+   "goal": [
+    225.46,
+    145.8
+   ],
+   "path_length_m": 165.4,
+   "n_turns": 1,
+   "min_sidewalk_width_m": 2.0,
+   "n_signalised_junctions": 2,
+   "n_route_edges": 3
+  },
+  {
+   "id": "t05",
+   "start": [
+    4.52,
+    145.8
+   ],
+   "goal": [
+    5.03,
+    45.8
+   ],
+   "path_length_m": 278.7,
+   "n_turns": 3,
+   "min_sidewalk_width_m": 2.0,
+   "n_signalised_junctions": 2,
+   "n_route_edges": 3
+  },
+  {
+   "id": "t06",
+   "start": [
+    210.0,
+    154.2
+   ],
+   "goal": [
+    10.15,
+    45.8
+   ],
+   "path_length_m": 302.8,
+   "n_turns": 9,
+   "min_sidewalk_width_m": 2.0,
+   "n_signalised_junctions": 3,
+   "n_route_edges": 4
+  },
+  {
+   "id": "t07",
+   "start": [
+    195.8,
+    198.12
+   ],
+   "goal": [
+    297.47,
+    45.8
+   ],
+   "path_length_m": 251.5,
+   "n_turns": 4,
+   "min_sidewalk_width_m": 2.0,
+   "n_signalised_junctions": 2,
+   "n_route_edges": 3
+  },
+  {
+   "id": "t08",
+   "start": [
+    40.02,
+    45.8
+   ],
+   "goal": [
+    28.38,
+    154.2
+   ],
+   "path_length_m": 228.3,
+   "n_turns": 2,
+   "min_sidewalk_width_m": 2.0,
+   "n_signalised_junctions": 2,
+   "n_route_edges": 3
+  },
+  {
+   "id": "t09",
+   "start": [
+    22.46,
+    145.8
+   ],
+   "goal": [
+    283.02,
+    54.2
+   ],
+   "path_length_m": 349.0,
+   "n_turns": 3,
+   "min_sidewalk_width_m": 2.0,
+   "n_signalised_junctions": 3,
+   "n_route_edges": 4
+  },
+  {
+   "id": "t10",
+   "start": [
+    104.2,
+    0.99
+   ],
+   "goal": [
+    277.37,
+    154.2
+   ],
+   "path_length_m": 320.3,
+   "n_turns": 7,
+   "min_sidewalk_width_m": 2.0,
+   "n_signalised_junctions": 3,
+   "n_route_edges": 4
+  }
+ ]
+}

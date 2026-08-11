@@ -1,0 +1,18 @@
+# Pinned environment for the sidewalk-robot social-navigation benchmark.
+# Python 3.11+ (developed on 3.11/3.12). SUMO is installed via pip below;
+# a standalone SUMO 1.27.1 installation with SUMO_HOME set works equally.
+eclipse-sumo==1.27.1
+traci==1.27.1
+sumolib==1.27.1
+numpy==2.4.4
+matplotlib==3.10.8
+shapely==2.1.2
+scipy==1.17.1
+pyproj==3.7.2
+# Parameter tuning (equal-budget Optuna studies)
+optuna==4.9.0
+# Analysis (mixed models, effect sizes, ranking stability)
+pandas==3.0.2
+statsmodels==0.14.6
+# Learning-based planners (SARL / CADRL / LSTM-RL); CPU build is sufficient
+torch==2.13.0

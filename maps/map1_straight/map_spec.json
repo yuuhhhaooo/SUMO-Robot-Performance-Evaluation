@@ -1,0 +1,106 @@
+{
+  "name": "map1_straight",
+  "title": "Map 1 - straight road (native)",
+  "extent": [
+    0.0,
+    -8.0,
+    300.0,
+    8.0
+  ],
+  "signal_backend": "native_full",
+  "roads": [
+    {
+      "id": "main",
+      "axis": "h",
+      "c": 0.0,
+      "lo": 0.0,
+      "hi": 300.0,
+      "role": "main",
+      "veh_per_hour": 600.0,
+      "routes": {
+        "f": [
+          "main_f0"
+        ],
+        "r": [
+          "main_r0"
+        ]
+      }
+    }
+  ],
+  "sidewalks": [
+    {
+      "edge": "main_f0",
+      "lane": "main_f0_0",
+      "length": 300.0,
+      "rect": [
+        0.0,
+        -5.2,
+        300.0,
+        -3.2
+      ]
+    },
+    {
+      "edge": "main_r0",
+      "lane": "main_r0_0",
+      "length": 300.0,
+      "rect": [
+        0.0,
+        3.2,
+        300.0,
+        5.2
+      ]
+    }
+  ],
+  "walkable_rects": [
+    [
+      0.0,
+      -5.2,
+      300.0,
+      -3.2
+    ],
+    [
+      0.0,
+      3.2,
+      300.0,
+      5.2
+    ]
+  ],
+  "crossings": [],
+  "tls": [],
+  "plazas": [],
+  "robot": {
+    "start": [
+      2.0,
+      4.2
+    ],
+    "goal": [
+      298.0,
+      4.2
+    ],
+    "waypoints": [
+      [
+        2.0,
+        4.2
+      ],
+      [
+        298.0,
+        4.2
+      ]
+    ]
+  },
+  "routes": {
+    "default": [
+      [
+        2.0,
+        4.2
+      ],
+      [
+        298.0,
+        4.2
+      ]
+    ]
+  },
+  "signal_params": {
+    "wait_strip": 1.8
+  }
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-08-05T15:36:07.217307+00:00 by Eclipse SUMO netconvert 1.27.1
+<netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <node-files value="/home/claude/optB/_ncbuild/n.nod.xml"/>
+        <edge-files value="/home/claude/optB/_ncbuild/n.edg.xml"/>
+    </input>
+
+    <output>
+        <output-file value="/home/claude/optB/maps/map1_straight/map1_straight.net.xml"/>
+    </output>
+
+    <processing>
+        <offset.disable-normalization value="true"/>
+    </processing>
+
+    <tls_building>
+        <tls.green.time value="22"/>
+        <tls.yellow.time value="3"/>
+        <tls.crossing-min.time value="8"/>
+        <tls.crossing-clearance.time value="5"/>
+    </tls_building>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+    </junctions>
+
+    <pedestrian>
+        <crossings.guess value="true"/>
+    </pedestrian>
+
+</netconvertConfiguration>
+-->
+
+<net version="1.20" junctionCornerDetail="5" walkingareas="true" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+
+    <location netOffset="0.00,0.00" convBoundary="0.00,0.00,300.00,0.00" origBoundary="0.00,0.00,300.00,0.00" projParameter="!"/>
+
+    <edge id=":E_main_0_w0" function="walkingarea">
+        <lane id=":E_main_0_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="0.00,-3.20 0.00,-5.20 0.00,5.20 0.00,3.20"/>
+    </edge>
+    <edge id=":E_main_1_w0" function="walkingarea">
+        <lane id=":E_main_1_w0_0" index="0" allow="pedestrian" speed="2.78" length="8.40" width="2.00" shape="300.00,3.20 300.00,5.20 300.00,-5.20 300.00,-3.20"/>
+    </edge>
+    <edge id="main_f0" from="E_main_0" to="E_main_1" priority="-1">
+        <lane id="main_f0_0" index="0" allow="pedestrian" speed="13.89" length="300.00" width="2.00" shape="0.00,-4.20 300.00,-4.20"/>
+        <lane id="main_f0_1" index="1" disallow="pedestrian" speed="13.89" length="300.00" shape="0.00,-1.60 300.00,-1.60"/>
+    </edge>
+    <edge id="main_r0" from="E_main_1" to="E_main_0" priority="-1">
+        <lane id="main_r0_0" index="0" allow="pedestrian" speed="13.89" length="300.00" width="2.00" shape="300.00,4.20 0.00,4.20"/>
+        <lane id="main_r0_1" index="1" disallow="pedestrian" speed="13.89" length="300.00" shape="300.00,1.60 0.00,1.60"/>
+    </edge>
+
+    <junction id="E_main_0" type="dead_end" x="0.00" y="0.00" incLanes="main_r0_0 main_r0_1" intLanes="" shape="0.00,0.00 0.00,5.20 0.00,0.00"/>
+    <junction id="E_main_1" type="dead_end" x="300.00" y="0.00" incLanes="main_f0_0 main_f0_1" intLanes="" shape="300.00,0.00 300.00,-5.20 300.00,0.00"/>
+
+    <connection from=":E_main_0_w0" to="main_f0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="main_r0" to=":E_main_0_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":E_main_1_w0" to="main_r0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="main_f0" to=":E_main_1_w0" fromLane="0" toLane="0" dir="s" state="M"/>
+</net>
