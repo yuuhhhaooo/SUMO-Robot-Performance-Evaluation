@@ -76,6 +76,31 @@ pip install pysocialforce==1.1.2 socialforce==0.2.3
 (CPython 3.12 and 3.13, Windows x64). On any other platform or Python version,
 build from `sim/third_party/pyteb/` — see its `PATCHES.md`.
 
+## Quick reference
+
+| I want to… | command |
+|---|---|
+| check nothing is broken | `python sim/benchmark_runner.py --map map2_crossing --mode mixed --algorithm dwa --seed 1 --max-time 200` |
+| see what a sweep will cost | `python sim/run_protocol.py --dry-run --preset paired --jobs 24` |
+| run the sweep on one machine | `python sim/run_protocol.py --preset paired --jobs 24 --out-root results` |
+| **run it across 3 machines** | `python sim/run_protocol.py --preset paired --shard K/3 --jobs 22 --out-root //share/results` — same command on each, only `K` changes (0, 1, 2) |
+| prove every run exists | `python sim/run_protocol.py --preset paired --verify-only --out-root results` |
+| analyse | `python analysis/benchmark_plots.py --results results/peds_sfm` then `python analysis/stats_models.py --results results/peds_sfm` |
+
+`--preset` picks the algorithm set: `readme` (7) · `published` (8) ·
+`classical` (10) · `paired` (12) · `all` (18). Details, per-planner runtimes and
+the multi-machine sharding rules are under
+[Full evaluation protocol](#full-evaluation-protocol).
+
+**Before a long sweep, on the machine that will run it:** build RVO2
+(`python sim/third_party/build_rvo2.py`) or `orca` fails at import, and smoke
+the whole planner set in under a minute with
+
+```bash
+python sim/run_protocol.py --preset paired --maps map2_crossing --tasks none \
+    --global-planners fixed --seeds 1 2 --max-time 60 --jobs 8 --out-root /tmp/validate
+```
+
 ## Smoke test (bit-reproducible reference run)
 
 ```bash
