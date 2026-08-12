@@ -5,3 +5,9 @@ results_*/
 sanity_check/
 *.log
 batch.log
+
+# randomTrips.py writes routes.rou.xml into the CWD during OSM demand
+# generation (that happens before the runner chdirs into the map dir), and
+# importing pysocialforce drops a file.log there. Neither is an artefact.
+routes.rou.xml
+file.log
