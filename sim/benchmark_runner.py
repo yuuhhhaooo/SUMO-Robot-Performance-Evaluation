@@ -946,7 +946,13 @@ def main():
                  else f"{args.map}__{route_name}")
     if task_id:
         map_label += f"__{task_id}"
-    if gp not in ("fixed", "dijkstra"):
+    # every non-default global-planner level gets its own directory. This MUST
+    # match the plan-failure path above and benchmark_batch's _run_dir: while
+    # 'dijkstra' shared the bare label with 'fixed', a sweep crossing both
+    # levels wrote them to one directory (silently losing the 'fixed' run) and
+    # the batch then reported "runner exited 0 but wrote no metrics" for every
+    # dijkstra cell -- 3,500 of them on the full protocol design.
+    if gp != "fixed":
         map_label += f"__g-{gp}"
     run_dir = (Path(args.out_root) / map_label / args.mode / args.algorithm
                / f"seed_{args.seed}")

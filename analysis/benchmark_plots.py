@@ -569,7 +569,7 @@ def main():
         algos = sorted(algod, key=unit_key)
         fig, axes = plt.subplots(2, 3, figsize=(13, 6.4))
         for ax, (key, label, is_rate) in zip(axes.flat, METRIC_DEFS):
-            vals, errs = [], []
+            vals, errs, ns = [], [], []
             for a in algos:
                 xs = []
                 for m in algod[a]:
@@ -585,28 +585,49 @@ def main():
                     # averaged -- float(None) raises and inf poisons the mean.
                     if v is None:
                         continue
+                    # "time to finish" and "path length" are only defined for
+                    # runs that actually finished. Averaging failed runs mixes
+                    # truncated collisions and --max-time caps into the bar and
+                    # INVERTS the ranking relative to the mixed models, which
+                    # restrict to successes: on map3_grid the two fastest-
+                    # looking bars were the two algorithms with zero successes.
+                    if key in ("sim_time_s", "path_length_m") \
+                            and not m.get("success"):
+                        continue
                     v = float(v)
                     if not math.isfinite(v):
                         continue
                     xs.append(v)
-                vals.append(sum(xs) / len(xs) if xs else 0.0)
+                # NaN, not 0.0: matplotlib omits the bar entirely. A 0.0 here
+                # reads as "the robot was touching a pedestrian" when the truth
+                # is "no usable sample".
+                vals.append(sum(xs) / len(xs) if xs else float("nan"))
+                ns.append(len(xs))
                 n = len(xs)
                 if n < 2:
                     errs.append(0.0)
                 elif is_rate:
-                    # Wilson 95% CI half-width for a proportion
+                    # Wilson 95% interval. The half-width must be centred on
+                    # the Wilson CENTRE, not on the raw proportion -- centring
+                    # on p-hat produced intervals reaching negative success
+                    # rates for 0/n cells and roughly half the true width.
                     z = 1.96
                     ph = vals[-1]
                     den = 1 + z * z / n
+                    centre = (ph + z * z / (2 * n)) / den
                     half = (z * math.sqrt(ph * (1 - ph) / n
                                           + z * z / (4 * n * n))) / den
-                    errs.append(half)
+                    lo, hi = max(0.0, centre - half), min(1.0, centre + half)
+                    errs.append((max(0.0, ph - lo), max(0.0, hi - ph)))
                 else:
                     mu = vals[-1]
                     sd = (sum((v - mu) ** 2 for v in xs)
                           / (n - 1)) ** 0.5
                     errs.append(1.96 * sd / n ** 0.5)   # 95% CI
-            ax.bar(range(len(algos)), vals, yerr=errs, capsize=3,
+            # errs mixes scalars and (lo, hi) pairs; normalise to a 2xN array
+            lo_err = [e[0] if isinstance(e, tuple) else e for e in errs]
+            hi_err = [e[1] if isinstance(e, tuple) else e for e in errs]
+            ax.bar(range(len(algos)), vals, yerr=[lo_err, hi_err], capsize=3,
                    color=[unit_color(a) for a in algos],
                    hatch=[unit_hatch(a) for a in algos],
                    edgecolor="black", linewidth=0.4)
@@ -692,7 +713,14 @@ def main():
             if d is None:
                 continue
             import csv as _csv
-            with open(d / "robot_trace.csv") as fh:
+            # traces are the bulk of a 10k-run tree and are routinely pruned
+            # or partially copied off a cluster; every other reader in this
+            # file guards, and an unguarded open here killed the whole
+            # plotting stage (and, via --unit both + check=True, its parent)
+            tf = d / "robot_trace.csv"
+            if not tf.exists():
+                continue
+            with open(tf) as fh:
                 rd = list(_csv.DictReader(fh))
             if len(rd) < 10:
                 continue
@@ -737,13 +765,16 @@ def main():
             ph = sum(v) / n
             z = 1.96
             den = 1 + z * z / n
+            centre = (ph + z * z / (2 * n)) / den
             half = (z * math.sqrt(ph * (1 - ph) / n
                                   + z * z / (4 * n * n))) / den
+            lo, hi = max(0.0, centre - half), min(1.0, centre + half)
             ys.append(ph)
-            es.append(half)
+            es.append((max(0.0, ph - lo), max(0.0, hi - ph)))
         ax.bar(xs, ys, width=width, color=unit_color(a), label=a,
                hatch=unit_hatch(a), edgecolor="black", linewidth=0.5,
-               yerr=es, capsize=2, error_kw={"lw": 0.8})
+               yerr=[[e[0] for e in es], [e[1] for e in es]],
+               capsize=2, error_kw={"lw": 0.8})
     ax.set_xticks([j + 0.4 - width / 2 for j in range(len(maps))])
     ax.set_xticklabels(maps)
     ax.set_ylim(0, 1.05)

@@ -49,7 +49,14 @@ def load_rows(results: Path) -> pd.DataFrame:
         if not rows:
             raise SystemExit(f"no results under {results}")
         df = pd.DataFrame(rows)
-    df["success"] = df["success"].astype(bool).astype(int)
+    # A blank success field (DictWriter writes "" for a key a run omitted)
+    # makes the column object dtype, and bool("") is False but bool(nan) is
+    # True -- a missing outcome would silently count as a SUCCESS. Map
+    # explicitly and default the unknown case to failure.
+    df["success"] = (df["success"]
+                     .map({True: 1, False: 0, 1: 1, 0: 0, "True": 1,
+                           "False": 0, "true": 1, "false": 0, "1": 1, "0": 0})
+                     .fillna(0).astype(int))
     for col, default in (("route", "default"), ("global_planner", "fixed"),
                          ("reactive_peds", "off"), ("task", "t0")):
         if col not in df.columns:
@@ -228,6 +235,9 @@ def fit_lmm(df, endog, reference, out, subset_success=False):
     d = df.copy()
     if subset_success:
         d = d[d["success"] == 1]
+    # an all-null column arrives as object dtype on the JSON path, where
+    # np.isfinite raises "ufunc not supported for the input types"
+    d[endog] = pd.to_numeric(d[endog], errors="coerce")
     d = d[np.isfinite(d[endog])]
     n = len(d)
     if n >= 2 and d["algorithm"].nunique() >= 1:
@@ -246,13 +256,31 @@ def fit_lmm(df, endog, reference, out, subset_success=False):
     # otherwise the Treatment() fallbacks below reference an absent level
     reference = _effective_reference(d, reference)
     fixed_full = _fixed_formula(d, reference)
+    # CROSSED random effects for seed / map / task, as the README claims.
+    #
+    # The previous form passed groups=seed together with map/task variance
+    # components. That is wrong twice over. First, statsmodels' MixedLM drops
+    # the group random intercept entirely when re_formula is None and a
+    # vc_formula is supplied (exog_re becomes None, k_re 0), so there was no
+    # seed effect at all -- visible in the output as a "map Var" row with no
+    # "Group Var" row. Second, variance components are realised WITHIN each
+    # group, so "map" was a per-(seed, map) effect, i.e. a seed x map
+    # interaction nested inside seed, not a crossed map main effect.
+    #
+    # The standard statsmodels recipe for crossed effects is a single constant
+    # group with every factor as a variance component. Validated by recovering
+    # injected effects from synthetic data: the crossed form returns
+    # map 1.363 / seed 1.309 / task 0.030 against a truth of a +2 map shift
+    # plus a seed effect, where the nested form reported no seed at all and an
+    # inflated map variance of 2.189.
     vc = {}
+    if d["seed"].nunique() > 1:
+        vc["seed"] = "0 + C(seed)"
     if d["cell_map"].nunique() > 1:
         vc["map"] = "0 + C(cell_map)"
     if d["task"].nunique() > 1:
         vc["task"] = "0 + C(task)"
-    groups = d["seed"].astype(str) if d["seed"].nunique() > 1 \
-        else pd.Series(["g"] * len(d), index=d.index)
+    groups = pd.Series(["all"] * len(d), index=d.index)
 
     attempts = [(fixed_full, vc if vc else None, "LMM"),
                 (fixed_full, None, "LMM (no variance components)"),
@@ -267,6 +295,18 @@ def fit_lmm(df, endog, reference, out, subset_success=False):
             if not np.all(np.isfinite(fit.params.values)):
                 raise ValueError("non-finite coefficients")
             note = label + (f" (small sample: n={n})" if n < 20 else "")
+            # the reference can be swapped per-endog when the requested one
+            # has no rows in that subset; without this, two coefficient
+            # tables in the same directory can have different baselines and
+            # nothing records it
+            note += f" [reference={reference}]"
+            if not getattr(fit, "converged", True):
+                note += " [NON-CONVERGED]"
+            try:
+                if len(getattr(fit, "vcomp", [])) and                         np.any(np.asarray(fit.vcomp) <= 1e-10):
+                    note += " [singular RE covariance]"
+            except Exception:
+                pass
             break
         except Exception as exc:
             last_exc = exc
