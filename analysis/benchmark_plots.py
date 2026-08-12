@@ -11,6 +11,7 @@ Plus results-wide:
 from __future__ import annotations
 
 import argparse
+import sys
 import csv
 import json
 from collections import defaultdict
@@ -32,6 +33,48 @@ ALGO_ORDER = ["dwa", "astar", "dijkstra", "rrt", "orca", "mpc", "teb",
               "sarl", "cadrl", "lstm_rl"]
 CMAP = plt.get_cmap("tab10")
 ALGO_COLOR = {a: CMAP(i % 10) for i, a in enumerate(ALGO_ORDER)}
+
+# units are either plain local algorithms ("dwa") or global+local
+# combinations ("astar+dwa").  colour encodes the local algorithm,
+# linestyle (lines) / hatch (bars) encodes the global planner.
+_LS_CYCLE = ["-", "--", ":", "-."]
+_HATCH_CYCLE = ["", "//", "xx", ".."]
+_GPL_SEEN: dict = {}
+
+
+def unit_local(u):
+    return u.split("+")[-1]
+
+
+def unit_gpl(u):
+    return u.split("+")[0] if "+" in u else ""
+
+
+def _gpl_idx(g):
+    if g not in _GPL_SEEN:
+        _GPL_SEEN[g] = len(_GPL_SEEN)
+    return _GPL_SEEN[g]
+
+
+def unit_color(u):
+    a = unit_local(u)
+    if a not in ALGO_COLOR:
+        ALGO_COLOR[a] = CMAP(len(ALGO_COLOR) % 10)
+    return ALGO_COLOR[a]
+
+
+def unit_ls(u):
+    return _LS_CYCLE[_gpl_idx(unit_gpl(u)) % len(_LS_CYCLE)]
+
+
+def unit_hatch(u):
+    return _HATCH_CYCLE[_gpl_idx(unit_gpl(u)) % len(_HATCH_CYCLE)]
+
+
+def unit_key(u):
+    a = unit_local(u)
+    ai = ALGO_ORDER.index(a) if a in ALGO_ORDER else 99
+    return (ai, unit_gpl(u))
 
 METRIC_DEFS = [
     ("success", "success rate", True),
@@ -281,11 +324,17 @@ def envelope_figure(spec, items, algo, mp, mode, color, dpi, out_png):
     q90[keep] = np.nanpercentile(D[:, keep], 90, axis=0)
     base, nvec = _route_point(grid, W, S, T)
     from shapely.geometry import LineString
-    bx = spec.get("bbox") or [0, 0, 360, 90]
-    w = max(bx[2] - bx[0], 40.0); h = max(bx[3] - bx[1], 30.0)
-    sc = min(13.0 / w, 9.5 / h)
-    fig, ax = plt.subplots(figsize=(max(7, w * sc), max(4.5, h * sc)))
+    lo_pts = base + nvec * q10[:, None]
+    hi_pts = base + nvec * q90[:, None]
+    allp = np.vstack([lo_pts[keep], hi_pts[keep], np.asarray(wps)])
+    vx0, vx1 = allp[:, 0].min() - 5, allp[:, 0].max() + 5
+    vy0, vy1 = allp[:, 1].min() - 5, allp[:, 1].max() + 5
+    fig_h = max(2.8, min(9.0, 13.0 * (vy1 - vy0) / (vx1 - vx0) + 1.2))
+    fig, ax = plt.subplots(figsize=(13.0, max(fig_h, 4.0)))
     draw_map(ax, spec)
+    ax.set_xlim(vx0, vx1)
+    ax.set_ylim(vy0, vy1)
+    ax.set_aspect("auto")   # vertical exaggeration for the thin band
     ax.plot(*np.asarray(
         LineString(wps).simplify(0.3).coords).T,
         color="0.35", lw=1.0, ls="--", zorder=6, label="planned route")
@@ -301,8 +350,9 @@ def envelope_figure(spec, items, algo, mp, mode, color, dpi, out_png):
     succ = sum(1 for _, m, _ in items if m.get("success"))
     ax.set_title(f"{algo.upper()} on {mp} | mode={mode} | median + "
                  f"10-90% envelope over {len(items)} seeds "
-                 f"({succ} success)")
-    ax.legend(loc="upper right", fontsize=8)
+                 f"({succ} success, y stretched)")
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.18),
+              ncol=3, fontsize=8)
     fig.tight_layout()
     fig.savefig(out_png, dpi=dpi, bbox_inches="tight")
     plt.close(fig)
@@ -316,9 +366,23 @@ def main():
     ap.add_argument("--dpi", type=int, default=190)
     ap.add_argument("--full-map", action="store_true",
                     help="old whole-map view instead of route-strip view")
+    ap.add_argument("--unit", choices=["algorithm", "combo", "both"],
+                    default="both",
+                    help="compare local algorithms (per global planner), "
+                         "global+local combinations, or both (default)")
     args = ap.parse_args()
+    if args.unit == "both":
+        import subprocess
+        for u in ("algorithm", "combo"):
+            cmd = [sys.executable, __file__, "--results", args.results,
+                   "--maps-dir", args.maps_dir, "--dpi", str(args.dpi),
+                   "--unit", u]
+            if args.full_map:
+                cmd.append("--full-map")
+            subprocess.run(cmd, check=True)
+        return
     res = Path(args.results)
-    plots = res / "plots"
+    plots = res / ("plots_combo" if args.unit == "combo" else "plots")
     plots.mkdir(parents=True, exist_ok=True)
 
     runs = []                # (map_label, mode, algo, seed, metrics, dir)
@@ -326,8 +390,14 @@ def main():
         m = json.loads(mfile.read_text())
         rt = m.get("route", "default")
         label = m["map"] if rt == "default" else f"{m['map']}[{rt}]"
+        tk = m.get("task")
+        if tk:
+            label += f"[{tk}]"
         gpl = m.get("global_planner", "fixed")
-        if gpl not in ("fixed", "dijkstra"):
+        if args.unit == "combo":
+            if gpl != "fixed":
+                m["algorithm"] = f"{gpl}+{m['algorithm']}"
+        elif gpl != "fixed":
             label += f"{{{gpl}}}"
         m["_label"] = label
         runs.append((label, m["mode"], m["algorithm"], int(m["seed"]),
@@ -364,7 +434,7 @@ def main():
         if len(items) < 2:
             continue
         spec = specs[mp]
-        items = sorted(items, key=lambda it: ALGO_ORDER.index(it[0]))
+        items = sorted(items, key=lambda it: unit_key(it[0]))
         title = (f"{mp} | mode={mode} | seed={seed} -- all algorithms "
                  f"(x collision, o goal, s timeout)")
         if args.full_map:
@@ -372,9 +442,9 @@ def main():
             draw_map(ax, spec)
             for algo, m, d in items:
                 xs, ys = read_trace(d / "robot_trace.csv")
-                ax.plot(xs, ys, lw=1.5, color=ALGO_COLOR[algo], alpha=0.9,
-                        zorder=7, label=algo)
-                outcome_marker(ax, m, xs, ys, ALGO_COLOR[algo])
+                ax.plot(xs, ys, lw=1.5, color=unit_color(algo),
+                        ls=unit_ls(algo), alpha=0.9, zorder=7, label=algo)
+                outcome_marker(ax, m, xs, ys, unit_color(algo))
             start_goal(ax, items[0][1])
             ax.set_title(title)
             ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.14),
@@ -384,11 +454,12 @@ def main():
             fig, axes = strip_axes(title, legs, spec)
             for algo, m, d in items:
                 rows = read_trace_rows(d / "robot_trace.csv")
-                plot_strip_trace(axes, legs, rows, ALGO_COLOR[algo],
+                plot_strip_trace(axes, legs, rows, unit_color(algo),
                                  label=algo)
-                strip_outcome(axes, legs, rows, m, ALGO_COLOR[algo])
+                strip_outcome(axes, legs, rows, m, unit_color(algo))
             strip_start_goal(axes, legs)
-            handles = [Line2D([0], [0], color=ALGO_COLOR[a], lw=2, label=a)
+            handles = [Line2D([0], [0], color=unit_color(a),
+                              ls=unit_ls(a), lw=2, label=a)
                        for a, _, _ in items]
             fig.legend(handles=handles, loc="lower center",
                        ncol=min(6, len(items)), fontsize=8,
@@ -405,8 +476,8 @@ def main():
     seed_cmap = plt.get_cmap("viridis")
     for (mp, mode, algo), items in sorted(by_algo.items()):
         spec = specs[mp]
-        base = ALGO_COLOR[algo]
-        items = sorted(items)
+        base = unit_color(algo)
+        items = sorted(items, key=lambda it: it[0])
         succ = sum(1 for _, m, _ in items if m.get("success"))
         title = (f"{algo.upper()} on {mp} | mode={mode} | "
                  f"{succ}/{len(items)} success across seeds "
@@ -476,7 +547,7 @@ def main():
     for mp, mode, algo, seed, m, d in runs:
         by_mm[(mp, mode)][algo].append(m)
     for (mp, mode), algod in sorted(by_mm.items()):
-        algos = [a for a in ALGO_ORDER if a in algod]
+        algos = sorted(algod, key=unit_key)
         fig, axes = plt.subplots(2, 3, figsize=(13, 6.4))
         for ax, (key, label, is_rate) in zip(axes.flat, METRIC_DEFS):
             vals, errs = [], []
@@ -502,7 +573,9 @@ def main():
                           / (n - 1)) ** 0.5
                     errs.append(1.96 * sd / n ** 0.5)   # 95% CI
             ax.bar(range(len(algos)), vals, yerr=errs, capsize=3,
-                   color=[ALGO_COLOR[a] for a in algos])
+                   color=[unit_color(a) for a in algos],
+                   hatch=[unit_hatch(a) for a in algos],
+                   edgecolor="black", linewidth=0.4)
             ax.set_xticks(range(len(algos)))
             ax.set_xticklabels(algos, rotation=45, ha="right", fontsize=8)
             ax.set_title(label, fontsize=10)
@@ -518,9 +591,14 @@ def main():
         plt.close(fig)
 
     # ---- 3b) occupancy hexbin per (map, mode): where do runs spend time
+    import re as _re
+
+    def base_map(lbl):
+        return _re.sub(r"\[.*?\]|\{.*?\}", "", lbl).split("__")[0]
+
     specs = {}
-    for _mp in {r[0].split("__")[0] for r in runs}:
-        _sp = Path("maps") / _mp / "map_spec.json"
+    for _mp in {base_map(r[0]) for r in runs}:
+        _sp = Path(args.maps_dir) / _mp / "map_spec.json"
         if _sp.exists():
             specs[_mp] = json.loads(_sp.read_text())
     rundirs = {(r[0], r[1], r[2], r[3]): r[5] for r in runs}
@@ -533,7 +611,7 @@ def main():
         return (max(7, w * sc), max(4.5, h * sc))
 
     for (mp, mode), algod in sorted(by_mm.items()):
-        spec = specs.get(mp.split("__")[0])
+        spec = specs.get(base_map(mp))
         if spec is None:
             continue
         X, Y = [], []
@@ -547,13 +625,20 @@ def main():
                 Y.extend(ys)
         if len(X) < 200:
             continue
-        fig, ax = plt.subplots(figsize=fig_size2(spec))
+        xr = max(X) - min(X)
+        vy0, vy1 = min(Y) - 3.0, max(Y) + 3.0
+        fig, ax = plt.subplots(
+            figsize=(13, max(4.2, min(8.0,
+                                      2.4 * 13 * (vy1 - vy0) / (xr + 10)))))
         draw_map(ax, spec)
-        hb = ax.hexbin(X, Y, gridsize=70, cmap="inferno", mincnt=1,
-                       alpha=0.85, zorder=6, linewidths=0)
-        fig.colorbar(hb, ax=ax, label="robot presence (samples)")
+        hb = ax.hexbin(X, Y, gridsize=(120, 14), cmap="inferno", mincnt=1,
+                       bins="log", alpha=0.95, zorder=6, linewidths=0)
+        fig.colorbar(hb, ax=ax, label="robot presence (samples, log scale)")
+        ax.set_xlim(min(X) - 5, max(X) + 5)
+        ax.set_ylim(vy0, vy1)
+        ax.set_aspect("auto")   # vertical exaggeration for the thin band
         ax.set_title(f"{mp} | mode={mode} | occupancy over all "
-                     f"algorithms & seeds")
+                     f"units & seeds (y stretched)")
         fig.tight_layout()
         fig.savefig(plots / f"occupancy_{mp}_{mode}.png", dpi=args.dpi,
                     bbox_inches="tight")
@@ -563,7 +648,7 @@ def main():
     from matplotlib.collections import LineCollection
     import numpy as _np
     for (mp, mode), algod in sorted(by_mm.items()):
-        base_mp = mp.split("__")[0]
+        base_mp = base_map(mp)
         spec = specs.get(base_mp)
         if spec is None or not spec.get("osm"):
             continue
@@ -600,9 +685,10 @@ def main():
     for mp, mode, algo, seed, m, d in runs:
         by_map[mp][algo].append(1.0 if m.get("success") else 0.0)
     maps = sorted(by_map)
-    algos = [a for a in ALGO_ORDER
-             if any(a in by_map[mp] for mp in maps)]
-    fig, ax = plt.subplots(figsize=(1.9 + 1.9 * len(maps), 4.4))
+    algos = sorted({a for mp in maps for a in by_map[mp]},
+                   key=unit_key)
+    fig, ax = plt.subplots(
+        figsize=(1.6 + max(2.2, 0.45 * len(algos)) * len(maps), 4.8))
     width = 0.8 / max(len(algos), 1)
     for i, a in enumerate(algos):
         xs = [j + i * width for j in range(len(maps))]
@@ -622,14 +708,16 @@ def main():
                                 + z * z / (4 * n * n))) / den
             ys.append(ph)
             es.append(half)
-        ax.bar(xs, ys, width=width, color=ALGO_COLOR[a], label=a,
+        ax.bar(xs, ys, width=width, color=unit_color(a), label=a,
+               hatch=unit_hatch(a), edgecolor="black", linewidth=0.5,
                yerr=es, capsize=2, error_kw={"lw": 0.8})
     ax.set_xticks([j + 0.4 - width / 2 for j in range(len(maps))])
     ax.set_xticklabels(maps)
     ax.set_ylim(0, 1.05)
     ax.set_ylabel("success rate (all modes & seeds; Wilson 95% CI)")
     ax.grid(True, axis="y", lw=0.3, alpha=0.4)
-    ax.legend(ncol=min(5, len(algos)), fontsize=8)
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.10),
+              ncol=min(4, len(algos)), fontsize=8, frameon=False)
     fig.tight_layout()
     fig.savefig(plots / "success_overall.png", dpi=args.dpi,
                 bbox_inches="tight")

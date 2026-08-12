@@ -25,6 +25,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import sys
 import json
 import warnings
 from pathlib import Path
@@ -87,12 +88,20 @@ def _fixed_formula(df: pd.DataFrame, reference: str) -> str:
     for extra in ("mode", "global_planner", "reactive_peds"):
         if df[extra].nunique() > 1:
             terms.append(f"C({extra})")
+    kept = []
     for cont in ("task_path_length_m", "task_n_turns",
                  "task_min_sidewalk_width_m",
                  "task_n_signalised_junctions", "osm_mode_flow_ph"):
         if cont in df.columns and pd.api.types.is_numeric_dtype(df[cont]) \
                 and df[cont].nunique() > 1:
             df[cont] = df[cont].fillna(df[cont].mean())
+            # collinearity guard: with few distinct tasks the geometry
+            # features are (near-)perfectly correlated with each other;
+            # keep only one representative per correlated cluster so the
+            # mixed models stay identifiable
+            if any(abs(df[cont].corr(df[k])) > 0.95 for k in kept):
+                continue
+            kept.append(cont)
             terms.append(f"standardize({cont})")
     return " + ".join(terms)
 
@@ -157,15 +166,64 @@ def fit_success_glmm(df, reference, out):
     return fit, res, vcp
 
 
+def _abs_means_forest(d, endog, out):
+    """Per-algorithm absolute mean +/- 95% CI (no reference algorithm)."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    # absolute-level forest: per-algorithm mean +/- 95% CI (no reference)
+    g = d.groupby("algorithm")[endog]
+    means = g.mean()
+    sem = g.std(ddof=1) / np.sqrt(g.count())
+    ci95 = 1.96 * sem.fillna(0.0)
+    order = means.sort_values().index.tolist()
+    abs_tab = pd.DataFrame({
+        "algorithm": order,
+        "n": g.count().reindex(order).values,
+        "mean": means.reindex(order).round(3).values,
+        "ci_lo": (means - ci95).reindex(order).round(3).values,
+        "ci_hi": (means + ci95).reindex(order).round(3).values,
+    })
+    abs_tab.to_csv(out / f"means_{endog}.csv", index=False)
+    fig, ax = plt.subplots(figsize=(7, 0.5 * len(order) + 1.8))
+    y = range(len(order))
+    ax.errorbar(means.reindex(order).values, y,
+                xerr=ci95.reindex(order).values,
+                fmt="s", capsize=4, color="#1565c0")
+    ax.set_yticks(list(y), order)
+    ax.set_xlabel(f"{endog}: mean per algorithm (95% CI)")
+    ax.set_title(f"Absolute means: {endog}"
+                 + (f" (n={len(d)}, small sample)" if len(d) < 20 else ""))
+    fig.tight_layout()
+    fig.savefig(out / f"means_{endog}_forest.png", dpi=150)
+    plt.close(fig)
+
+
 def fit_lmm(df, endog, reference, out, subset_success=False):
+    """Fit a linear mixed model, degrading gracefully on small samples.
+
+    Returns (fit, note).  fit is None only when there is truly nothing to
+    fit; note explains what happened (subset size, fallback used, ...).
+    """
     import statsmodels.formula.api as smf
     d = df.copy()
     if subset_success:
         d = d[d["success"] == 1]
     d = d[np.isfinite(d[endog])]
-    if len(d) < 20 or d["algorithm"].nunique() < 2:
-        return None
-    fixed = _fixed_formula(d, reference)
+    n = len(d)
+    if n >= 2 and d["algorithm"].nunique() >= 1:
+        try:
+            _abs_means_forest(d, endog, out)
+        except Exception:
+            pass
+    if n < 8 or d["algorithm"].nunique() < 2:
+        return None, (f"skipped: only {n} usable rows "
+                      f"({d['algorithm'].nunique()} algorithms)"
+                      + (" after restricting to successful runs"
+                         if subset_success else "")
+                      + " - need >=8 rows and >=2 algorithms; "
+                        "run more seeds/maps")
+    fixed_full = _fixed_formula(d, reference)
     vc = {}
     if d["cell_map"].nunique() > 1:
         vc["map"] = "0 + C(cell_map)"
@@ -173,9 +231,34 @@ def fit_lmm(df, endog, reference, out, subset_success=False):
         vc["task"] = "0 + C(task)"
     groups = d["seed"].astype(str) if d["seed"].nunique() > 1 \
         else pd.Series(["g"] * len(d), index=d.index)
-    model = smf.mixedlm(f"{endog} ~ {fixed}", d, groups=groups,
-                        vc_formula=vc if vc else None)
-    fit = model.fit(reml=True, method="lbfgs")
+
+    attempts = [(fixed_full, vc if vc else None, "LMM"),
+                (fixed_full, None, "LMM (no variance components)"),
+                (f"C(algorithm, Treatment('{reference}'))", None,
+                 "LMM (algorithm-only fixed effects)")]
+    last_exc = None
+    for fixed, vcf, label in attempts:
+        try:
+            model = smf.mixedlm(f"{endog} ~ {fixed}", d, groups=groups,
+                                vc_formula=vcf)
+            fit = model.fit(reml=True, method="lbfgs")
+            if not np.all(np.isfinite(fit.params.values)):
+                raise ValueError("non-finite coefficients")
+            note = label + (f" (small sample: n={n})" if n < 20 else "")
+            break
+        except Exception as exc:
+            last_exc = exc
+            fit = None
+    if fit is None:
+        # final fallback: plain OLS, clearly labelled
+        try:
+            model = smf.ols(
+                f"{endog} ~ C(algorithm, Treatment('{reference}'))", d)
+            fit = model.fit()
+            note = (f"OLS fallback (mixed model failed: {last_exc}; "
+                    f"n={n}, seeds treated as independent)")
+        except Exception as exc:
+            return None, f"skipped: {exc}"
     ci = fit.conf_int()
     res = pd.DataFrame({
         "term": fit.params.index,
@@ -189,7 +272,7 @@ def fit_lmm(df, endog, reference, out, subset_success=False):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    ar = res[res["term"].str.startswith("C(algorithm)")].copy()
+    ar = res[res["term"].str.startswith("C(algorithm")].copy()
     if len(ar):
         ar["label"] = (ar["term"].str.extract(r"\[T\.(.+)\]")[0]
                        .fillna(ar["term"]))
@@ -202,11 +285,12 @@ def fit_lmm(df, endog, reference, out, subset_success=False):
         ax.axvline(0.0, color="0.4", ls="--", lw=1)
         ax.set_yticks(list(y), ar["label"])
         ax.set_xlabel(f"{endog}: coefficient vs reference (95% CI)")
-        ax.set_title(f"LMM {endog}: algorithm effects")
+        ax.set_title(f"{note}: {endog}")
         fig.tight_layout()
         fig.savefig(out / f"lmm_{endog}_forest.png", dpi=150)
         plt.close(fig)
-    return fit
+
+    return fit, note
 
 
 def failure_taxonomy(df, out):
@@ -309,14 +393,38 @@ def main():
     ap.add_argument("--reference", default="dwa",
                     help="reference algorithm for effect sizes")
     ap.add_argument("--bootstrap", type=int, default=2000)
+    ap.add_argument("--unit", choices=["algorithm", "combo", "both"],
+                    default="both",
+                    help="comparison unit: local algorithm, "
+                         "global+local combination, or both (default)")
     args = ap.parse_args()
+    if args.unit == "both":
+        import subprocess
+        for u in ("algorithm", "combo"):
+            subprocess.run([sys.executable, __file__,
+                            "--results", args.results,
+                            "--reference", args.reference,
+                            "--bootstrap", str(args.bootstrap),
+                            "--unit", u], check=True)
+        return
     results = Path(args.results)
-    out = results / "stats"
-    out.mkdir(parents=True, exist_ok=True)
     df = load_rows(results)
+    if args.unit == "combo":
+        df["algorithm"] = (df["global_planner"].astype(str) + "+"
+                           + df["algorithm"].astype(str))
+        df["global_planner"] = "combined"   # absorbed into the unit
+        out = results / "stats_combo"
+    else:
+        out = results / "stats"
+    out.mkdir(parents=True, exist_ok=True)
     if args.reference not in set(df["algorithm"]):
-        args.reference = sorted(df["algorithm"])[0]
-    lines = [f"n runs = {len(df)}; algorithms = {sorted(set(df['algorithm']))}",
+        # reference may be a local algo, a global planner, or a full combo
+        cands = sorted(a for a in set(df["algorithm"])
+                       if a.endswith("+" + args.reference)
+                       or a.startswith(args.reference + "+"))
+        args.reference = cands[0] if cands else sorted(set(df["algorithm"]))[0]
+    lines = [f"unit = {args.unit}",
+             f"n runs = {len(df)}; units = {sorted(set(df['algorithm']))}",
              f"maps = {sorted(set(df['cell_map']))}; "
              f"modes = {sorted(set(df['mode']))}; "
              f"seeds = {df['seed'].nunique()}",
@@ -335,17 +443,24 @@ def main():
 
     # 2) linear mixed models
     for endog, subset in (("sim_time_s", True), ("path_length_m", True),
-                          ("min_pedestrian_distance_m", False)):
+                          ("min_pedestrian_distance_m", False),
+                          ("ped_delay_s_mean", False),
+                          ("ped_deflection_m_mean", False),
+                          ("ped_personal_space_s_total", False),
+                          ("social_work", False),
+                          ("social_force_on_agents", False),
+                          ("social_force_on_robot", False)):
         if endog not in df.columns:
             continue
         try:
-            fit = fit_lmm(df, endog, args.reference, out,
-                          subset_success=subset)
+            fit, note = fit_lmm(df, endog, args.reference, out,
+                                subset_success=subset)
+            lines.append(f"== LMM {endog}"
+                         f"{' (successful runs)' if subset else ''} ==")
+            lines.append(f"[{note}]")
             if fit is not None:
-                lines.append(f"== LMM {endog}"
-                             f"{' (successful runs)' if subset else ''} ==")
                 lines.append(str(fit.summary().tables[1]))
-                lines.append("")
+            lines.append("")
         except Exception as exc:
             lines.append(f"LMM {endog} skipped: {exc}\n")
 

@@ -59,6 +59,12 @@ class SocialForceLayer:
         # cost imposed on pedestrians BY the robot, measured against each
         # captured pedestrian's own intent (desired speed + heading)
         self._done = []        # finished per-ped stats dicts
+        # HuNavSim social-work components (arXiv:2305.01303 Table I):
+        #   social_work = social_force_on_robot + obstacle_force_on_robot
+        #                 + social_force_on_agents
+        self.sf_on_robot = 0.0     # |social force agents->robot| integrated
+        self.of_on_robot = 0.0     # |obstacle force walls->robot| integrated
+        self.robot_swork = 0.0     # kept as alias = sf_on_robot (back-compat)
         self.PS_R = 1.2        # personal-space radius [m] (HuNavSim-style)
         # junction no-control zone: SFM never captures inside it and
         # never pushes a controlled pedestrian into it. Remote persons
@@ -118,7 +124,7 @@ class SocialForceLayer:
         self.ctl[pid] = {"pos": (x, y), "vel": (sp * ed[0], sp * ed[1]),
                          "vdes": vdes, "edir": ed,
                          "p0": (x, y), "delay": 0.0, "defl": 0.0,
-                         "ps": 0.0, "nr": False}
+                         "ps": 0.0, "swork": 0.0, "nr": False}
         self.capture_events += 1
 
     def _release(self, pid):
@@ -134,7 +140,8 @@ class SocialForceLayer:
             # near the robot are counted; static-bubble passers-by are
             # excluded so they do not dilute the means
             self._done.append({"delay": st["delay"], "defl": st["defl"],
-                               "ps": st["ps"]})
+                               "ps": st["ps"],
+                               "swork": st.get("swork", 0.0)})
         if not self._is_walking(pid):
             return                      # drop control; no remap
         try:
@@ -198,7 +205,8 @@ class SocialForceLayer:
                 st = self.ctl.pop(pid, None)
                 if st is not None and st.get("nr"):
                     self._done.append({"delay": st["delay"],
-                                       "defl": st["defl"], "ps": st["ps"]})
+                                       "defl": st["defl"], "ps": st["ps"],
+                                       "swork": st.get("swork", 0.0)})
                 continue
             px, py = self.ctl[pid]["pos"]
             if math.hypot(px - rx, py - ry) > RELEASE_R and \
@@ -239,8 +247,10 @@ class SocialForceLayer:
                 if st.get("nr"):
                     self._done.append({"delay": st["delay"],
                                        "defl": st["defl"],
-                                       "ps": st["ps"]})
+                                       "ps": st["ps"],
+                                       "swork": st.get("swork", 0.0)})
         # integrate every controlled pedestrian
+        _rob_fx = _rob_fy = 0.0     # net social force on the robot this step
         for pid, st in self.ctl.items():
             px, py = st["pos"]
             vx, vy = st["vel"]
@@ -340,6 +350,22 @@ class SocialForceLayer:
                     w = 1.0
                 fx += mag * nx_ * w
                 fy += mag * ny_ * w
+                # --- HuNavSim social work accounting -------------------
+                # pedestrian side: magnitude of the robot-induced social
+                # force actually applied to this pedestrian, integrated
+                # over time
+                st["swork"] += mag * w * dt
+                # robot side: reaction force (ped -> robot), anisotropy
+                # weighted by the robot's own heading
+                rvx, rvy = robot_v
+                rsp = math.hypot(rvx, rvy)
+                if rsp > 1e-6:
+                    cosr = (rvx * nx_ + rvy * ny_) / rsp
+                    wr = LAMBDA + (1 - LAMBDA) * (1 + cosr) / 2.0
+                else:
+                    wr = 1.0
+                _rob_fx -= mag * wr * nx_
+                _rob_fy -= mag * wr * ny_
             # integrate + clip
             vx += fx * dt
             vy += fy * dt
@@ -391,20 +417,41 @@ class SocialForceLayer:
             except t.exceptions.TraCIException:
                 pass
             self.controlled_steps += 1
+        _sf = math.hypot(_rob_fx, _rob_fy) * dt
+        self.sf_on_robot += _sf
+        self.robot_swork += _sf
+        # obstacle force on the robot: SFM wall repulsion from the walkable
+        # boundary (robot treated as an SFM particle for metric purposes)
+        if self.union is not None:
+            try:
+                from shapely.geometry import Point as _Pt
+                d_wall = self.union.exterior.distance(_Pt(rx, ry)) \
+                    if hasattr(self.union, "exterior") \
+                    else self.union.boundary.distance(_Pt(rx, ry))
+                self.of_on_robot += A_ROB * math.exp(
+                    (R_ROB - max(d_wall, 1e-3)) / B_ROB) * dt
+            except Exception:
+                pass
 
     # ------------------------------------------------------------------
     def ped_metrics(self):
         """Aggregate pedestrian-side metrics over all captured pedestrians
         (finished episodes + still-controlled at run end)."""
         allst = self._done + [{"delay": st["delay"], "defl": st["defl"],
-                               "ps": st["ps"]}
+                               "ps": st["ps"],
+                               "swork": st.get("swork", 0.0)}
                               for st in self.ctl.values() if st.get("nr")]
         n = len(allst)
         if n == 0:
             return {"ped_affected_n": 0, "ped_delay_s_mean": 0.0,
                     "ped_deflection_m_mean": 0.0,
                     "ped_deflection_m_max": 0.0,
-                    "ped_personal_space_s_total": 0.0}
+                    "ped_personal_space_s_total": 0.0,
+                    "social_force_on_agents": 0.0,
+                    "social_force_on_robot": round(self.sf_on_robot, 2),
+                    "obstacle_force_on_robot": round(self.of_on_robot, 2),
+                    "social_work": round(self.sf_on_robot
+                                         + self.of_on_robot, 2)}
         return {
             "ped_affected_n": n,
             "ped_delay_s_mean": round(sum(a["delay"] for a in allst) / n, 2),
@@ -414,4 +461,10 @@ class SocialForceLayer:
                 max(a["defl"] for a in allst), 3),
             "ped_personal_space_s_total": round(
                 sum(a["ps"] for a in allst), 1),
-        }
+            "social_force_on_agents": round(
+                sum(a.get("swork", 0.0) for a in allst), 2),
+            "social_force_on_robot": round(self.sf_on_robot, 2),
+            "obstacle_force_on_robot": round(self.of_on_robot, 2),
+            "social_work": round(self.sf_on_robot + self.of_on_robot
+                                 + sum(a.get("swork", 0.0) for a in allst),
+                                 2)}
