@@ -78,8 +78,13 @@ def _num(v):
     None (metric never observed), NaN/Infinity (json allows both) and the odd
     string; none of those may take down the aggregation of a 10k-run sweep.
     """
-    if v is None or isinstance(v, str):
+    if v is None:
         return None
+    # NOTE: do NOT short-circuit on str. The pre-change code did float(r[k]),
+    # which accepts a numeric string like "0.912"; rejecting those outright
+    # would drop real samples and, when every value in a cell is a string,
+    # make <k>_mean/<k>_std/<k>_n vanish entirely and KeyError a downstream
+    # reader. Let float() decide, and let non-numeric strings fall through.
     try:
         f = float(v)
     except (TypeError, ValueError):
@@ -184,6 +189,16 @@ def main():
     gps = args.global_planners
     if args.auto_route and gps == ["fixed"]:
         gps = ["dijkstra"]
+    routes = args.routes
+    if args.waypoints and len(routes) > 1:
+        # benchmark_runner ignores --route entirely when --waypoints is given
+        # (route_name becomes "custom"), so crossing several routes would
+        # enqueue byte-identical runs that all target the SAME run_dir. Under
+        # --jobs > 1 that is concurrent writers on one directory; even at
+        # --jobs 1 it is duplicated work whose last writer wins.
+        print(f"(--waypoints overrides --routes: collapsing "
+              f"{routes} to a single 'custom' route)")
+        routes = routes[:1]
     map_tasks = {}
     for mp in args.maps:
         tf = REPO / "configs" / f"tasks_{mp}.json"
@@ -196,11 +211,11 @@ def main():
             map_tasks[mp] = [None]
     combos = [(mp, rt, tk, gp, mode, algo, seed)
               for mp, rt, gp, mode, algo, seed
-              in itertools.product(args.maps, args.routes, gps, args.modes,
+              in itertools.product(args.maps, routes, gps, args.modes,
                                    args.algorithms, args.seeds)
               for tk in map_tasks[mp]
               if rt in map_routes[mp]]
-    skipped = (len(args.maps) * len(args.routes) * len(gps)
+    skipped = (len(args.maps) * len(routes) * len(gps)
                * len(args.modes) * len(args.algorithms)
                * len(args.seeds)) - len([c for c in combos
                                          if c[2] == map_tasks[c[0]][0]])
@@ -391,9 +406,14 @@ def main():
     # TASK or GLOBAL PLANNER were averaged into one cell -- e.g. every
     # task of map4_london under g-rrt and g-astar collapsed into a single
     # "map4_london/mixed/dwa" mean.
+    # Components are NORMALISED so that values meaning "absent" collapse to one
+    # representation before they are keyed. Without this, ("fixed", None) and
+    # (None, None) and ("fixed", "") are distinct cells that all render to the
+    # same summary string, and whichever is written last silently wins --
+    # discarding a whole cell rather than merging it.
     def _cell(r):
-        return (r["map"], r.get("route", "default"), r.get("task"),
-                r.get("global_planner", "fixed"), r["mode"], r["algorithm"])
+        return (r["map"], r.get("route") or "default", r.get("task") or None,
+                r.get("global_planner") or "fixed", r["mode"], r["algorithm"])
 
     # single pass: the old code re-filtered every row for every cell (O(cells
     # x runs) -- ~10.5k rows x ~1k cells on the full protocol)
@@ -402,14 +422,24 @@ def main():
         cells[_cell(r)].append(r)
 
     summaries = {}
+    _seen_tags = {}
     for key, sel in cells.items():
         mp, rt, tk, gp_, mode, algo = key
         tag = mp if rt == "default" else f"{mp}[{rt}]"
         if tk:
             tag += f"[{tk}]"
-        if gp_ and gp_ != "fixed":
+        if gp_ != "fixed":
             tag += f"[g:{gp_}]"
-        summaries[f"{tag}/{mode}/{algo}"] = agg(sel)
+        name = f"{tag}/{mode}/{algo}"
+        # the rendered name omits defaults, so two distinct cells could in
+        # principle collide (e.g. a map literally named "a[b]"). Never let one
+        # silently overwrite the other.
+        if name in _seen_tags and _seen_tags[name] != key:
+            print(f"   !! summary key collision on '{name}': "
+                  f"{_seen_tags[name]} vs {key}; disambiguating")
+            name = f"{name}#{abs(hash(key)) % 10000:04d}"
+        _seen_tags[name] = key
+        summaries[name] = agg(sel)
     (out_root / "batch_summary.json").write_text(
         json.dumps(summaries, indent=2, sort_keys=True))
     print(f"\nper-run rows -> {out_root/'summary_all.csv'}"

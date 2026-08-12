@@ -296,7 +296,14 @@ def get_live_obstacles(traci: Any, robot_id: str, state: RobotState, previous_po
         # hypot(dx, dy) >= max(|dx|, |dy|), so |dx| > rng or |dy| > rng
         # already proves the person is out of range -- identical outcome to
         # the hypot test, without the sqrt.  Survivors still take it.
-        if dx > rng or dx < -rng or dy > rng or dy < -rng:
+        #
+        # The identity holds only for non-NaN components: hypot(nan, 100) is
+        # nan and `nan > rng` is False, so the hypot test KEEPS such a person,
+        # while the box test would see the finite 100 and drop them.  Guard
+        # with a NaN check (x == x is False only for NaN) so the box reject is
+        # skipped and the hypot test below decides, exactly as before.
+        if dx == dx and dy == dy and (dx > rng or dx < -rng
+                                      or dy > rng or dy < -rng):
             continue
         if hypot(dx, dy) > rng:
             continue
