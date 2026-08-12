@@ -38,8 +38,29 @@ python sim/benchmark_runner.py --map map2_crossing --mode mixed \
 ```
 
 Expected final JSON: `"termination_reason": "collision"`,
-`"path_length_m": 102.59`. This exact number is the cross-machine
+`"path_length_m": 138.5`. This exact number is the cross-machine
 regression check.
+
+> **Re-baselined 2026-08-12** (was `102.59`). DWA was previously benchmarked
+> under the `DWAConfig` module defaults rather than the shared `PlannerConfig`
+> envelope, so it ran at `max_speed` 0.95 m/s while every other planner ran at
+> 1.00 m/s — a systematic handicap on the algorithm that is also the reference
+> level in the statistical models. The full envelope is now propagated; six
+> fields both changed value and are read by `dwa_control`:
+>
+> | field | was (DWAConfig) | now (PlannerConfig) |
+> |---|---|---|
+> | `max_speed` | 0.95 m/s | 1.00 m/s |
+> | `max_accel` | 0.80 m/s² | 0.50 m/s² |
+> | `max_yaw_rate` | 80 °/s | 120 °/s |
+> | `social_distance` | 0.80 m | 0.85 m |
+> | `sensor_range` | 12.0 m | 11.0 m |
+> | `goal_tolerance` | 0.25 m | 0.35 m |
+>
+> (`safe_distance` also moved 0.20→0.42 but is never read by DWA.)
+> Net effect on the reference run: `avg_speed_mps` 0.933→0.986. See
+> `docs/code_audit.md` §0. Results produced before this date are not
+> comparable for DWA.
 
 ## Reproduce one figure (end to end)
 
