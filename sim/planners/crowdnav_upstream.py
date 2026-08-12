@@ -386,7 +386,24 @@ class _CrowdNavUpstreamPlanner:
         return {}
 
     def reset(self) -> None:
+        """Clear everything that belongs to the finished leg/episode.
+
+        Clearing last_v alone is not enough: the one-step-lookahead env still
+        holds the PREVIOUS leg's self_state and human_states, and upstream's
+        policy keeps its action_values from the last predict(). Neither is
+        observable today, because compute_command always calls set_state()
+        before predict(), but leaving stale pose data on a reused planner is
+        exactly the kind of thing that becomes a silent cross-leg leak the
+        moment the call order changes.
+        """
         self.last_v = (0.0, 0.0)
+        env = getattr(self, "env", None)
+        if env is not None:
+            env.self_state = None
+            env.human_states = None
+        pol = getattr(self, "policy", None)
+        if pol is not None:
+            pol.action_values = None
 
     # -- benchmark entry point ---------------------------------------------
     def compute_command(self, state, goal, obstacles, sim_time):

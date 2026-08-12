@@ -1101,6 +1101,7 @@ def main():
     t = 0.0
     vx = vy = 0.0
     subscribed: set = set()        # persons with a live TraCI subscription
+    status_counts: dict = {}       # planner status string -> step count
     frozen_since = None            # stall watchdog (not counting light holds)
     path_len = 0.0
     min_ped = float("inf")
@@ -1245,6 +1246,16 @@ def main():
         except Exception as exc:      # planner crash -> stop episode cleanly
             reason = f"planner_error:{type(exc).__name__}"
             break
+        # Histogram the planner's own status string. Several planners spend a
+        # large share of an episode in a FALLBACK rather than in the algorithm
+        # being benchmarked -- the published CrowdNav wrappers return
+        # 'goal_direct' straight-line motion whenever no pedestrian is within
+        # sensor range (measured at 53% of an LSTM-RL episode on map2), and
+        # A*/Dijkstra/RRT have 'no_path' fallbacks. Without this, a results
+        # table cannot tell "algorithm X was better" from "algorithm X barely
+        # ran". Cheap: one dict update per step.
+        _st = str((_info or {}).get("status", "")) or "unknown"
+        status_counts[_st] = status_counts.get(_st, 0) + 1
         sp = math.hypot(cvx, cvy)
         cap = min(getattr(planner, "cfg", cfg).max_speed
                   if hasattr(planner, "cfg") else cfg.max_speed, HARD_SPEED_CAP)
@@ -1365,6 +1376,15 @@ def main():
         "min_pedestrian_distance_m": (round(min_ped, 3)
                                       if math.isfinite(min_ped) else None),
         "close_encounter_steps": close_steps,
+        "planner_status_counts": dict(sorted(status_counts.items())),
+        # share of control steps that ran the ACTUAL algorithm rather than a
+        # fallback. 1.0 means the planner was in charge the whole episode.
+        "planner_active_frac": (
+            round(sum(v for k, v in status_counts.items()
+                      if k not in ("goal_direct", "no_path", "at_goal",
+                                   "fallback", "unknown"))
+                  / max(sum(status_counts.values()), 1), 4)
+            if status_counts else None),
         "collision": reason == "collision",
         "time_waiting_at_light_s": round(wait_light, 1),
         "strict_sidewalk": strict, "walkable_clamped_steps": walk_clamped,
