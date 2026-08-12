@@ -55,6 +55,41 @@ DEFAULT_GLOBALS = ["dijkstra", "astar", "rrt"]
 DEFAULT_MODES = ["mixed"]
 DEFAULT_REACTIVE = ["sfm"]
 
+# Named algorithm sets. The algorithm axis grew from 7 to 18 when the published
+# implementations landed, so the full cross is 27,000 runs -- 2.6x the design
+# the README documents. These name the subsets that answer a specific question,
+# so choosing one is a sentence rather than a hand-typed list.
+PRESETS = {
+    # the design the README documents, for continuity with existing results
+    "readme": ["dwa", "astar", "dijkstra", "rrt", "orca", "mpc", "teb"],
+    # only algorithms backed by the ORIGINAL published implementation --
+    # the defensible headline table for a benchmark paper
+    "published": ["orca", "mpc_dompc", "teb_upstream", "sarl_upstream",
+                  "cadrl_upstream", "lstm_rl_upstream", "crowdnav_dsrnn",
+                  "crowdnav_attngraph"],
+    # each in-repo planner beside its published counterpart: answers
+    # "does the reimplementation behave like the algorithm it is named after?"
+    "paired": ["orca", "orca_heuristic", "mpc", "mpc_dompc",
+               "teb", "teb_upstream", "sarl", "sarl_upstream",
+               "cadrl", "cadrl_upstream", "lstm_rl", "lstm_rl_upstream"],
+    # no learned weights: reproducible from source alone
+    "classical": ["dwa", "astar", "dijkstra", "rrt", "orca", "orca_heuristic",
+                  "mpc", "mpc_dompc", "teb", "teb_upstream"],
+    # every registered algorithm (the default when no preset is given)
+    "all": None,
+}
+
+# Measured planner CPU per control step (ms, CPU, single thread). Used only to
+# warn that a uniform --minutes-per-run misrepresents a mixed set; it is NOT a
+# substitute for timing a real run. Absent entries are simply not counted.
+PLANNER_MS_PER_STEP = {
+    "orca": 0.04, "dwa": 0.44, "orca_heuristic": 1.34, "cadrl": 1.8,
+    "lstm_rl": 2.5, "sarl": 3.6, "astar": 8.9, "dijkstra": 9.0,
+    "crowdnav_dsrnn": 24.0, "rrt": 51.0, "crowdnav_attngraph": 70.0,
+    "sarl_upstream": 150.0, "cadrl_upstream": 150.0,
+    "lstm_rl_upstream": 150.0,
+}
+
 
 def parse_args():
     p = argparse.ArgumentParser(
@@ -69,8 +104,17 @@ def parse_args():
                    choices=["fixed", "dijkstra", "astar", "rrt"])
     p.add_argument("--modes", nargs="+", default=DEFAULT_MODES,
                    choices=["same", "opposite", "mixed", "static", "all"])
+    p.add_argument("--preset", choices=sorted(PRESETS),
+                   help="named algorithm set: "
+                        "readme (the 7 the README documents) | "
+                        "published (8, original published implementations) | "
+                        "paired (12, each in-repo planner beside its published "
+                        "counterpart) | "
+                        "classical (10, no learned weights) | "
+                        "all (every registered algorithm)")
     p.add_argument("--algorithms", nargs="+", default=None,
-                   help="default: every registered algorithm")
+                   help="explicit algorithm list; overrides --preset. "
+                        "Default: every registered algorithm")
     p.add_argument("--seeds", nargs="+", type=int, default=list(range(1, 11)))
     p.add_argument("--reactive-peds", nargs="+", default=DEFAULT_REACTIVE,
                    choices=["off", "sfm", "jupedsim", "pysf"],
@@ -121,9 +165,32 @@ def map_routes(map_name: str, requested) -> list:
     return [r for r in requested if r in have]
 
 
+_resolve_warned = False
+
+
+def resolve_algorithms(args) -> list:
+    """Explicit --algorithms wins; then --preset; then everything."""
+    global _resolve_warned
+    if args.algorithms:
+        if args.preset and not _resolve_warned:
+            print(f"note: --algorithms given, ignoring --preset {args.preset}")
+            _resolve_warned = True
+        return list(args.algorithms)
+    if args.preset and PRESETS[args.preset] is not None:
+        picked = list(PRESETS[args.preset])
+        # a typo in PRESETS would otherwise enqueue thousands of runs that all
+        # die in build_planner with "unknown algorithm"
+        unknown = [a for a in picked if a not in ALGORITHMS]
+        if unknown:
+            sys.exit(f"preset '{args.preset}' names unregistered "
+                     f"algorithms: {unknown}")
+        return picked
+    return list(ALGORITHMS)
+
+
 def enumerate_design(args) -> list:
     """Every cell of the full factorial design."""
-    algos = args.algorithms or list(ALGORITHMS)
+    algos = resolve_algorithms(args)
     cells = []
     for mp in args.maps:
         for rt in map_routes(mp, args.routes):
@@ -204,7 +271,7 @@ def audit(args, cells) -> int:
 def main() -> int:
     args = parse_args()
     cells = enumerate_design(args)
-    algos = args.algorithms or list(ALGORITHMS)
+    algos = resolve_algorithms(args)
 
     print(f"{'factor':24s}{'levels':>8s}")
     for name, lv in (("maps", len(args.maps)),
@@ -221,7 +288,35 @@ def main() -> int:
     print(f"  ~{cpu_days:.1f} CPU-days at {args.minutes_per_run:g} min/run"
           f"  ->  ~{cpu_days / max(args.jobs, 1):.1f} wall-days at "
           f"--jobs {args.jobs}")
-    print(f"  algorithms: {', '.join(algos)}")
+    print(f"  algorithms: {', '.join(algos)}"
+          + (f"   [preset: {args.preset}]" if args.preset and not args.algorithms
+             else ""))
+
+    # A uniform --minutes-per-run hides a 3000x spread in planner cost, so say
+    # so rather than letting the headline number be read as uniform.
+    steps = args.max_time / 0.5
+    known = {a: PLANNER_MS_PER_STEP[a] for a in algos
+             if a in PLANNER_MS_PER_STEP}
+    if known:
+        mins = {a: v * steps / 1000.0 / 60.0 for a, v in known.items()}
+        hi = sorted(mins.items(), key=lambda kv: -kv[1])
+        span = hi[0][1] / max(min(mins.values()), 1e-9)
+        print()
+        print(f"  planner CPU alone per run (measured ms/step x "
+              f"{steps:.0f} steps; SUMO is extra):")
+        for a, m in hi[:3]:
+            print(f"    {a:22s} {m:6.1f} min")
+        if len(hi) > 3:
+            print(f"    {hi[-1][0]:22s} {hi[-1][1]:6.1f} min   (cheapest)")
+        if span > 10:
+            print(f"    -> {span:.0f}x spread across this set, so the "
+                  f"{args.minutes_per_run:g} min/run figure above is an "
+                  f"average, not a per-cell cost.")
+        heavy = [a for a, m in mins.items() if m > args.minutes_per_run]
+        if heavy:
+            print(f"    -> planner time ALONE already exceeds "
+                  f"{args.minutes_per_run:g} min/run for: "
+                  f"{', '.join(sorted(heavy))}")
 
     if args.dry_run:
         return 0
