@@ -122,6 +122,12 @@ def parse_args():
                         "value, so this driver invokes it once per level")
     p.add_argument("--out-root", default="results")
     p.add_argument("--max-time", type=float, default=3000.0)
+    p.add_argument("--shard", default=None, metavar="K/N",
+                   help="run only shard K of N (0-based) of the design, for "
+                        "spreading one sweep across N machines. Forwarded to "
+                        "benchmark_batch. --verify-only still audits the FULL "
+                        "design unless --shard is also given, so the merged "
+                        "tree can be checked from any machine.")
     p.add_argument("--jobs", type=int, default=1)
     p.add_argument("--params-file", default=None)
     p.add_argument("--minutes-per-run", type=float, default=6.0)
@@ -217,6 +223,25 @@ def cell_dir(out_root: Path, c: dict, rp_root: bool = True) -> Path:
                               global_planner=c["global_planner"])
 
 
+def shard_cells(cells, shard):
+    """cells[K::N] -- the same deterministic stride benchmark_batch applies.
+
+    Stride rather than block on purpose: the design enumerates seeds fastest,
+    so consecutive cells share an algorithm. Blocking would hand one machine
+    every sarl_upstream cell (~12x the cost of an orca cell); striding gives
+    each machine the same mix.
+    """
+    if not shard:
+        return cells
+    try:
+        k, n = (int(x) for x in str(shard).split("/"))
+    except Exception:
+        sys.exit(f"--shard must look like K/N, got {shard!r}")
+    if n < 1 or not (0 <= k < n):
+        sys.exit(f"--shard K/N needs N >= 1 and 0 <= K < N, got {shard}")
+    return cells[k::n]
+
+
 def audit(args, cells) -> int:
     out_root = Path(args.out_root)
     missing, empty, present = [], [], []
@@ -283,7 +308,15 @@ def main() -> int:
                      ("crowd seeds", len(args.seeds)),
                      ("reactive-ped layers", len(args.reactive_peds))):
         print(f"{name:24s}{lv:>8d}")
-    cpu_days = len(cells) * args.minutes_per_run / 60 / 24
+    if args.shard:
+        mine = shard_cells(cells, args.shard)
+        print()
+        print(f"  SHARD {args.shard}: this machine runs {len(mine)} of "
+              f"{len(cells)} runs")
+        cells_for_cost = mine
+    else:
+        cells_for_cost = cells
+    cpu_days = len(cells_for_cost) * args.minutes_per_run / 60 / 24
     print(f"\n  TOTAL RUNS  {len(cells)}")
     print(f"  ~{cpu_days:.1f} CPU-days at {args.minutes_per_run:g} min/run"
           f"  ->  ~{cpu_days / max(args.jobs, 1):.1f} wall-days at "
@@ -321,14 +354,17 @@ def main() -> int:
     if args.dry_run:
         return 0
     if args.verify_only:
-        return audit(args, cells)
+        # With --shard, audit only this machine's share; without it, audit the
+        # whole design -- which is what you want on the merged tree.
+        return audit(args, shard_cells(cells, args.shard))
 
     # benchmark_batch crosses everything except reactive_peds, so one
     # invocation per level of that factor, into sibling roots.
     for rp in args.reactive_peds:
         root = Path(args.out_root) / f"peds_{rp}"
         root.mkdir(parents=True, exist_ok=True)
-        cmd = [sys.executable, str(ROOT / "benchmark_batch.py"),
+        cmd = [sys.executable, str(ROOT / "benchmark_batch.py")] + (
+               ["--shard", args.shard] if args.shard else []) + [
                "--maps", *args.maps,
                "--routes", *args.routes,
                "--global-planners", *args.global_planners,
@@ -354,7 +390,7 @@ def main() -> int:
             print(f"batch failed for reactive-peds={rp} (rc={rc})")
             return rc
 
-    return audit(args, cells)
+    return audit(args, shard_cells(cells, args.shard))
 
 
 if __name__ == "__main__":

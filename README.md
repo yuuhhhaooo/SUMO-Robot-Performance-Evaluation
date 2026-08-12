@@ -218,6 +218,50 @@ a SUMO process plus a Python planner competing for memory bandwidth.
 > latency on top. Everything else (SUMO, the classical planners, the shapely
 > geometry) is single-threaded CPU. **Buy cores and RAM, not GPU.**
 
+### Splitting the sweep across several machines
+
+`--shard K/N` runs shard `K` of `N`. Every machine enumerates the *same*
+deterministic design and takes `combos[K::N]`, so there is **no coordination,
+no shared state and no combo run twice**. Run the same command on each machine,
+changing only `K`:
+
+```bash
+# PC 1 of 3
+python sim/run_protocol.py --preset paired --shard 0/3 --jobs 22 --out-root //share/results
+# PC 2 of 3
+python sim/run_protocol.py --preset paired --shard 1/3 --jobs 22 --out-root //share/results
+# PC 3 of 3
+python sim/run_protocol.py --preset paired --shard 2/3 --jobs 22 --out-root //share/results
+```
+
+Then, from any one machine, audit the **merged** tree — omitting `--shard`
+audits the whole design:
+
+```bash
+python sim/run_protocol.py --preset paired --verify-only --out-root //share/results
+```
+
+Point every machine at one shared `--out-root`, or give each a local root and
+merge the trees afterwards (`robocopy` / `rsync`); run directories are disjoint
+by construction, so a merge cannot collide. Every machine needs the same
+install, including the RVO2 build.
+
+It strides rather than blocks deliberately: the design enumerates seeds
+fastest, so consecutive cells share an algorithm. Blocking would hand one
+machine every `sarl_upstream` cell — roughly 12× the cost of an `orca` cell —
+while another finished early. Verified on the real 18,000-run `paired` design:
+
+| N | shard sizes | `*_upstream` cells each | cost index |
+|---|---|---|---|
+| 2 | 9000 / 9000 | 3000 / 3000 | 347 / 347 |
+| 3 | 6000 / 6000 / 6000 | 1950 / 1950 / 2100 | 232 / 232 / 232 |
+
+so **3 PCs ≈ 8–12 wall-hours** for `paired` at `--jobs 22` each, against
+~1–1.5 wall-days on one. Verified end to end on a 24-cell design: the three
+shards are exactly disjoint, cover the design, each reports COMPLETE, the
+merged audit reports 24/24 — and deleting one machine's output makes the merged
+audit report `MISSING 2`, name the cell, and exit non-zero.
+
 Sanity-check the estimate on the target machine before committing days to it:
 
 ```bash

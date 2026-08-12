@@ -156,6 +156,15 @@ def main():
     p.add_argument("--gui", "--sumo-gui", dest="gui", action="store_true",
                    help="open sumo-gui for every run (only sensible for "
                         "small spot-check batches)")
+    p.add_argument("--shard", default=None, metavar="K/N",
+                   help="run only shard K of N (0-based), for spreading one "
+                        "sweep across N machines. The design is deterministic, "
+                        "so every machine enumerates the SAME ordered combo "
+                        "list and takes combos[K::N] -- no coordination, no "
+                        "shared state, and no combo run twice. Point every "
+                        "machine at the same --out-root (a share) or merge the "
+                        "trees afterwards; run directories are disjoint by "
+                        "construction.")
     p.add_argument("--jobs", "-j", type=int, default=1,
                    help="run this many runner subprocesses concurrently "
                         "(default 1 = the old strictly sequential "
@@ -220,6 +229,21 @@ def main():
                                    args.algorithms, args.seeds)
               for tk in map_tasks[mp]
               if rt in map_routes[mp]]
+    if args.shard:
+        try:
+            _k, _n = (int(x) for x in str(args.shard).split("/"))
+        except Exception:
+            sys.exit(f"--shard must look like K/N, got {args.shard!r}")
+        if _n < 1 or not (0 <= _k < _n):
+            sys.exit(f"--shard K/N needs N >= 1 and 0 <= K < N, got {args.shard}")
+        # Stride, not block: consecutive combos share an algorithm (the product
+        # varies seed fastest), so combos[K::N] hands every machine the same MIX
+        # of cheap and expensive planners. Blocking would give one machine all
+        # the sarl_upstream cells, which cost ~12x an orca cell.
+        _all = len(combos)
+        combos = combos[_k::_n]
+        print(f"shard {_k}/{_n}: {len(combos)} of {_all} combos on this machine")
+
     skipped = (len(args.maps) * len(routes) * len(gps)
                * len(args.modes) * len(args.algorithms)
                * len(args.seeds)) - len([c for c in combos
