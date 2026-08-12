@@ -44,6 +44,22 @@ COLLIDE_R = 0.42            # max(COLLIDE_FLOOR, r_robot + r_ped); recomputed
                             # per run from --robot-radius (see collide_r below)
 
 
+# Substrings marking a planner status as a FALLBACK rather than the algorithm
+# under test. Matched as substrings on purpose: planners name their fallbacks
+# after themselves ("cadrl_fallback", "mpc_fallback", "teb_fallback",
+# "lstm_rl_no_human"), so an exact-match list silently misses new ones -- it
+# already missed five of the eight in the tree, reporting planner_active_frac
+# 1.0 for planners that were in fallback.
+_FALLBACK_MARKERS = ("fallback", "no_path", "no_human", "goal_direct",
+                     "emergency", "at_goal", "unknown")
+
+
+def is_fallback_status(status: str) -> bool:
+    """True when this control step ran a fallback, not the algorithm itself."""
+    s = str(status).lower()
+    return any(m in s for m in _FALLBACK_MARKERS)
+
+
 def collision_radius(robot_radius: float) -> float:
     """Centre-distance below which a robot-pedestrian contact is a collision.
 
@@ -1381,8 +1397,7 @@ def main():
         # fallback. 1.0 means the planner was in charge the whole episode.
         "planner_active_frac": (
             round(sum(v for k, v in status_counts.items()
-                      if k not in ("goal_direct", "no_path", "at_goal",
-                                   "fallback", "unknown"))
+                      if not is_fallback_status(k))
                   / max(sum(status_counts.values()), 1), 4)
             if status_counts else None),
         "collision": reason == "collision",
