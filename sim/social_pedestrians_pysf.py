@@ -703,7 +703,15 @@ class PySocialForceLayer:
         self._sim.peds.ped_states = self._sim.peds.ped_states[-1:]
         self._sim.peds.group_states = self._sim.peds.group_states[-1:]
 
-        return [(out[i, 0], out[i, 1], out[i, 2], out[i, 3])
+        # Plain Python floats, not numpy scalars. np.float64 subclasses float
+        # so it survives json.dumps, but np.float32 -- which the torch backend
+        # produces -- does NOT, and the raw value propagates through the
+        # bookkeeping into ped_metrics() and makes the runner's
+        # json.dumps(metrics) raise "Object of type float32 is not JSON
+        # serializable" AFTER the whole episode has been simulated. Cast at the
+        # boundary in both backends so the failure cannot come back.
+        return [(float(out[i, 0]), float(out[i, 1]),
+                 float(out[i, 2]), float(out[i, 3]))
                 for i in range(n)]
 
     # ------------------------------------------------------- backend: torch
@@ -761,7 +769,15 @@ class PySocialForceLayer:
         if robot_row is not None:
             self._track_err.append(self._robot_perturbation(
                 out[robot_row, 0], out[robot_row, 1], rx, ry, robot_v, dt))
-        return [(out[i, 0], out[i, 1], out[i, 2], out[i, 3])
+        # Plain Python floats, not numpy scalars. np.float64 subclasses float
+        # so it survives json.dumps, but np.float32 -- which the torch backend
+        # produces -- does NOT, and the raw value propagates through the
+        # bookkeeping into ped_metrics() and makes the runner's
+        # json.dumps(metrics) raise "Object of type float32 is not JSON
+        # serializable" AFTER the whole episode has been simulated. Cast at the
+        # boundary in both backends so the failure cannot come back.
+        return [(float(out[i, 0]), float(out[i, 1]),
+                 float(out[i, 2]), float(out[i, 3]))
                 for i in range(n)]
 
     @staticmethod
