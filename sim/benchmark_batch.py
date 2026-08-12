@@ -7,6 +7,10 @@ python benchmark_batch.py --maps map2_crossing map3_grid \
 
 Seeds drive pedestrian density (flows sampled per seed inside the runner).
 Add --waypoints/--reverse to test other start/goal routes (forwarded).
+
+--jobs N runs N runner subprocesses at once (default 1 = sequential). Runs
+never share a directory or a SUMO port, so this is a pure wall-clock win:
+the full protocol is ~44 CPU-days, i.e. ~1.4 wall-days at --jobs 32.
 """
 from __future__ import annotations
 
@@ -17,6 +21,9 @@ import json
 import math
 import subprocess
 import sys
+import threading
+from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from statistics import mean, stdev
 
@@ -26,6 +33,58 @@ from benchmark_adapters import ALGORITHMS  # noqa: E402
 
 MAPS = ["map1_straight", "map2_crossing", "map3_grid", "map4_london"]
 MODES = ["same", "opposite", "mixed", "static", "all"]
+
+# metrics averaged into every summary cell
+AGG_KEYS = ("success", "collision", "sim_time_s", "path_length_m",
+            "avg_speed_mps", "min_pedestrian_distance_m",
+            "close_encounter_steps", "time_waiting_at_light_s")
+
+# live child processes, so Ctrl-C does not leave a swarm of sumo behind
+_CHILDREN: set[subprocess.Popen] = set()
+_CHILDREN_LOCK = threading.Lock()
+
+
+def _spawn(cmd):
+    """Run cmd to completion, return its exit code.
+
+    Equivalent to ``subprocess.run(cmd).returncode`` (same argv, cwd, env and
+    inherited stdio); written with an explicit Popen only so the handle can be
+    registered in _CHILDREN and killed on Ctrl-C.
+    """
+    with subprocess.Popen(cmd) as proc:
+        with _CHILDREN_LOCK:
+            _CHILDREN.add(proc)
+        try:
+            return proc.wait()
+        finally:
+            with _CHILDREN_LOCK:
+                _CHILDREN.discard(proc)
+
+
+def _kill_children():
+    with _CHILDREN_LOCK:
+        procs = list(_CHILDREN)
+    for proc in procs:
+        try:
+            proc.kill()
+        except Exception:
+            pass
+
+
+def _num(v):
+    """Coerce a metrics value to a finite float, or None if it cannot be.
+
+    Metrics files are written by a long simulation and legitimately contain
+    None (metric never observed), NaN/Infinity (json allows both) and the odd
+    string; none of those may take down the aggregation of a 10k-run sweep.
+    """
+    if v is None or isinstance(v, str):
+        return None
+    try:
+        f = float(v)
+    except (TypeError, ValueError):
+        return None
+    return f if math.isfinite(f) else None
 
 
 def main():
@@ -87,7 +146,20 @@ def main():
     p.add_argument("--gui", "--sumo-gui", dest="gui", action="store_true",
                    help="open sumo-gui for every run (only sensible for "
                         "small spot-check batches)")
+    p.add_argument("--jobs", "-j", type=int, default=1,
+                   help="run this many runner subprocesses concurrently "
+                        "(default 1 = the old strictly sequential "
+                        "behaviour). Runs write to disjoint directories, so "
+                        "N jobs cut wall-clock by ~N up to the core count. "
+                        "Console lines from different runs interleave.")
     args = p.parse_args()
+    if args.jobs < 1:
+        sys.exit("--jobs must be >= 1")
+    if args.gui and args.jobs > 1:
+        sys.exit("--gui with --jobs > 1 would open one sumo-gui window per "
+                 "concurrent run and every one of them blocks on a human; "
+                 "use --jobs 1 with --gui, or drop --gui to sweep in "
+                 "parallel.")
     if args.seeds is None:
         n = args.num_seeds if args.num_seeds is not None else 3
         args.seeds = list(range(args.start_seed, args.start_seed + n))
@@ -109,7 +181,6 @@ def main():
             map_routes[mp] = set(spec.get("routes", {})) | {"default"}
         except Exception:
             map_routes[mp] = {"default"}
-    rows = []
     gps = args.global_planners
     if args.auto_route and gps == ["fixed"]:
         gps = ["dijkstra"]
@@ -135,22 +206,25 @@ def main():
                                          if c[2] == map_tasks[c[0]][0]])
     if skipped:
         print(f"(skipping {skipped} combos: route not defined on that map)")
-    for i, (mp, rt, tk, gp, mode, algo, seed) in enumerate(combos, 1):
-        mlabel = mp if rt == "default" else f"{mp}__{rt}"
+
+    def _run_dir(mp, rt, tk, gp, mode, algo, seed):
+        # must mirror benchmark_runner.py's run_dir layout EXACTLY, otherwise
+        # the metrics file is looked up at a path the runner never wrote
+        rlabel = "custom" if args.waypoints else rt
+        mlabel = mp if rlabel == "default" else f"{mp}__{rlabel}"
         if tk:
             mlabel += f"__{tk}"
-        if gp not in ("fixed", "dijkstra"):
+        if gp != "fixed":
             mlabel += f"__g-{gp}"
-        run_dir = out_root / mlabel / mode / algo / f"seed_{seed}"
-        mfile = run_dir / "robot_metrics.json"
-        if args.skip_existing and mfile.exists():
-            rows.append(json.loads(mfile.read_text()))
-            continue
+        return out_root / mlabel / mode / algo / f"seed_{seed}"
+
+    def _label(mp, rt, tk, gp, mode, algo, seed):
         rtag = "" if rt == "default" else f" | {rt}"
         ttag = f" | {tk}" if tk else ""
         gtag = "" if gp == "fixed" else f" | g:{gp}"
-        print(f"[{i}/{len(combos)}] {mp}{rtag}{ttag}{gtag} | {mode} | "
-              f"{algo} | seed {seed}", flush=True)
+        return (f"{mp}{rtag}{ttag}{gtag} | {mode} | {algo} | seed {seed}")
+
+    def _cmd(mp, rt, tk, gp, mode, algo, seed):
         cmd = [sys.executable, str(ROOT / "benchmark_runner.py"),
                "--map", mp, "--mode", mode, "--algorithm", algo,
                "--seed", str(seed), "--out-root", str(out_root),
@@ -194,17 +268,97 @@ def main():
                           ("--veh-period-max", args.veh_period_max)):
             if val is not None:
                 cmd += [flag, str(val)]
-        res = subprocess.run(cmd)
-        if res.returncode != 0:
-            print(f"   !! runner failed ({res.returncode})")
-            if args.stop_on_error:
-                sys.exit(res.returncode)
+        return cmd
+
+    # Decide the work list up front, in the main thread and in combo order:
+    # --skip-existing then reads a stable snapshot of what is already on disk
+    # (every combo owns a disjoint run_dir, so no run can create another
+    # combo's metrics file -- the decision cannot race the workers).
+    # Building the commands here also means a bad --params-file aborts before
+    # the first run instead of thousands of runs in.
+    ntotal = len(combos)
+    work = []
+    for i, combo in enumerate(combos, 1):
+        mfile = _run_dir(*combo) / "robot_metrics.json"
+        if args.skip_existing and mfile.exists():
             continue
-        rows.append(json.loads(mfile.read_text()))
+        work.append((i, _label(*combo), _cmd(*combo), mfile))
+
+    stop = threading.Event()
+
+    def _do_run(i, label, cmd, mfile):
+        """Return 0 on success, a non-zero exit code on failure, None if the
+        run was skipped because a previous failure stopped the sweep."""
+        if stop.is_set():
+            return None
+        # self-describing: with --jobs > 1 these lines interleave
+        print(f"[{i}/{ntotal}] {label}", flush=True)
+        rc = _spawn(cmd)
+        if rc != 0:
+            print(f"[{i}/{ntotal}] !! runner failed ({rc}): {label}",
+                  flush=True)
+            return _fail(rc or 1)
+        # a runner can exit 0 without writing metrics (early-return paths);
+        # do not let that kill a multi-thousand-run sweep
+        if not mfile.exists():
+            print(f"[{i}/{ntotal}] !! runner exited 0 but wrote no metrics: "
+                  f"{mfile}", flush=True)
+            return _fail(1)
+        return 0
+
+    def _fail(rc):
+        # raise the stop flag HERE, not back in the main thread: a worker that
+        # has just finished a failing run would otherwise pick up the next
+        # queued run before the main thread woke up and cancelled it (at
+        # --jobs 1 that alone would launch one run more than the old
+        # sequential loop did)
+        if args.stop_on_error:
+            stop.set()
+        return rc
+
+    fail_code = 0
+    if work:
+        ex = ThreadPoolExecutor(max_workers=args.jobs)
+        futs = [ex.submit(_do_run, *w) for w in work]
+        try:
+            # with --jobs 1 the pool runs one task at a time in submission
+            # order, so completion order == the old sequential order
+            for fut in as_completed(futs):
+                rc = fut.result()
+                if rc:
+                    fail_code = fail_code or rc
+                    if args.stop_on_error:
+                        stop.set()          # workers not yet started bail out
+                        for f in futs:
+                            f.cancel()
+                        break
+        except KeyboardInterrupt:
+            stop.set()
+            for f in futs:
+                f.cancel()
+            _kill_children()
+            ex.shutdown(wait=True, cancel_futures=True)
+            print("\ninterrupted -- cancelled pending runs", flush=True)
+            sys.exit(130)
+        finally:
+            # waits for the runs still in flight: no orphaned children
+            ex.shutdown(wait=True, cancel_futures=True)
+        if fail_code and args.stop_on_error:
+            sys.exit(fail_code)
 
     # aggregate over EVERYTHING under out_root (works incrementally)
-    rows = [json.loads(f.read_text())
-            for f in out_root.glob("*/*/*/seed_*/robot_metrics.json")]
+    rows = ([json.loads(f.read_text())
+             for f in out_root.glob("*/*/*/seed_*/robot_metrics.json")]
+            if out_root.is_dir() else [])
+
+    if not rows and not out_root.is_dir():
+        # nothing ran and nothing was ever written there: creating the
+        # directory just to drop an empty summary in it is noise, and the
+        # old code died with FileNotFoundError instead
+        print(f"\nno runs and no results under {out_root} -- "
+              f"nothing to aggregate", flush=True)
+        return          # exit 0, exactly as the old code did when the
+        #                 directory happened to exist and held no rows
 
     # ---------------- aggregate: per-run CSV + per-combo summaries
     if rows:
@@ -220,26 +374,41 @@ def main():
 
     def agg(sel):
         num = {}
-        for k in ("success", "collision", "sim_time_s", "path_length_m",
-                  "avg_speed_mps", "min_pedestrian_distance_m",
-                  "close_encounter_steps", "time_waiting_at_light_s"):
-            vals = [float(r[k]) if not isinstance(r[k], bool) else float(r[k])
-                    for r in sel if k in r and r[k] is not None
-                    and math.isfinite(float(r[k]))]
+        for k in AGG_KEYS:
+            # _num() drops None / NaN / Infinity / non-numeric strings instead
+            # of raising, so one malformed metrics file cannot sink the whole
+            # summary; "<k>_n" says how many runs actually fed each mean
+            vals = [v for v in (_num(r.get(k)) for r in sel) if v is not None]
             if vals:
                 num[f"{k}_mean"] = round(mean(vals), 4)
                 num[f"{k}_std"] = round(stdev(vals), 4) if len(vals) > 1 else 0.0
-        num["n"] = len(sel)
+                num[f"{k}_n"] = len(vals)
+        num["n"] = len(sel)          # runs in the cell (unchanged meaning)
         return num
 
+    # The summary key MUST include every manipulated factor. It previously
+    # keyed on (map, route, mode, algorithm) only, so runs that differ in
+    # TASK or GLOBAL PLANNER were averaged into one cell -- e.g. every
+    # task of map4_london under g-rrt and g-astar collapsed into a single
+    # "map4_london/mixed/dwa" mean.
+    def _cell(r):
+        return (r["map"], r.get("route", "default"), r.get("task"),
+                r.get("global_planner", "fixed"), r["mode"], r["algorithm"])
+
+    # single pass: the old code re-filtered every row for every cell (O(cells
+    # x runs) -- ~10.5k rows x ~1k cells on the full protocol)
+    cells = defaultdict(list)
+    for r in rows:
+        cells[_cell(r)].append(r)
+
     summaries = {}
-    keyset = {(r["map"], r.get("route", "default"), r["mode"],
-               r["algorithm"]) for r in rows}
-    for mp, rt, mode, algo in keyset:
-        sel = [r for r in rows
-               if (r["map"], r.get("route", "default"), r["mode"],
-                   r["algorithm"]) == (mp, rt, mode, algo)]
+    for key, sel in cells.items():
+        mp, rt, tk, gp_, mode, algo = key
         tag = mp if rt == "default" else f"{mp}[{rt}]"
+        if tk:
+            tag += f"[{tk}]"
+        if gp_ and gp_ != "fixed":
+            tag += f"[g:{gp_}]"
         summaries[f"{tag}/{mode}/{algo}"] = agg(sel)
     (out_root / "batch_summary.json").write_text(
         json.dumps(summaries, indent=2, sort_keys=True))
