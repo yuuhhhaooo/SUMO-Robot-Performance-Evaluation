@@ -27,8 +27,7 @@ class NativeSignalGate:
         self.traci = traci_mod
         self.crossings = [c for c in spec.get("crossings", []) if c.get("tls")]
         self.tls_ids = sorted({c["tls"] for c in self.crossings})
-        self._logic = {t: self.traci.trafficlight.getAllProgramLogics(t)[0]
-                       for t in self.tls_ids}
+        self._logic = {t: self._active_logic(t) for t in self.tls_ids}
         # drop crossings that NEVER show green in their program (netconvert
         # artefacts at complex OSM junctions) -- holding for them would
         # deadlock; treat them as unsignalised instead
@@ -44,6 +43,45 @@ class NativeSignalGate:
         self._states = {}
         self._pub = []
 
+    @staticmethod
+    def _program_id(logic):
+        """Program name of a traci Logic object (API name differs by
+        SUMO version: ``programID`` on modern traci, ``subID`` on old)."""
+        pid = getattr(logic, "programID", None)
+        if pid is None:
+            pid = getattr(logic, "subID", None)
+        return pid
+
+    def _active_logic(self, tls_id):
+        """The logic of the program that is CURRENTLY loaded on this TLS.
+
+        getAllProgramLogics() returns every program defined for the junction;
+        index 0 is only the active one by coincidence.  Any TLS that carries
+        an extra program (e.g. an "off"/actuated variant, or a program set
+        via setProgram) would otherwise be walked with the wrong phase table
+        by time_to_ped_green(), and screened with the wrong phase states in
+        the never-green filter below.
+        """
+        logics = list(self.traci.trafficlight.getAllProgramLogics(tls_id))
+        if not logics:
+            raise RuntimeError(
+                f"native_signal_gate: TLS {tls_id} has no program logic")
+        try:
+            active = self.traci.trafficlight.getProgram(tls_id)
+        except Exception as exc:
+            print(f"native_signal_gate: cannot read active program of TLS "
+                  f"{tls_id} ({exc}); using program "
+                  f"'{self._program_id(logics[0])}' (index 0)")
+            return logics[0]
+        for lg in logics:
+            if self._program_id(lg) == active:
+                return lg
+        print(f"native_signal_gate: TLS {tls_id} reports active program "
+              f"'{active}' but getAllProgramLogics() only offers "
+              f"{[self._program_id(lg) for lg in logics]}; falling back to "
+              f"program '{self._program_id(logics[0])}' (index 0)")
+        return logics[0]
+
     def step(self, t=None):
         self._states = {tid: self.traci.trafficlight
                         .getRedYellowGreenState(tid) for tid in self.tls_ids}
@@ -57,7 +95,12 @@ class NativeSignalGate:
                               "strips": c["strips"]})
 
     def zone_states(self):
-        return self._pub
+        # Shallow copy: callers may not append to / reorder / clear the gate's
+        # own list.  The per-zone dicts are deliberately NOT copied -- they are
+        # rebuilt from scratch by every step() call, so they are per-step
+        # scratch objects, and copying them each call would add work on the
+        # hot path (this is called for every robot step).
+        return list(self._pub)
 
     def ped_state_at(self, x, y, radius=6.0):
         best, bd = None, radius
@@ -78,7 +121,11 @@ class NativeSignalGate:
         acc = max(0.0, self.traci.trafficlight.getNextSwitch(tls) - t)
         for k in range(1, 2 * len(lg.phases) + 1):
             ph = lg.phases[(pi + k) % len(lg.phases)]
-            if ph.state[li] in "Gg":
+            # same bounds guard as the never-green screen in __init__: a
+            # phase whose state string is shorter than linkIndex simply does
+            # not serve this crossing (netconvert emits ragged states at some
+            # OSM junctions) -- it must not raise IndexError here.
+            if li < len(ph.state) and ph.state[li] in "Gg":
                 return acc
             acc += ph.duration
         return acc
