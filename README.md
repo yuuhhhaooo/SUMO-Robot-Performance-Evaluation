@@ -45,22 +45,28 @@ regression check.
 > under the `DWAConfig` module defaults rather than the shared `PlannerConfig`
 > envelope, so it ran at `max_speed` 0.95 m/s while every other planner ran at
 > 1.00 m/s — a systematic handicap on the algorithm that is also the reference
-> level in the statistical models. The full envelope is now propagated; six
-> fields both changed value and are read by `dwa_control`:
+> level in the statistical models. The full envelope is now propagated. Seven
+> fields changed value; only the first three are read by `dwa_control` and
+> therefore move the benchmarked trajectory:
 >
-> | field | was (DWAConfig) | now (PlannerConfig) |
-> |---|---|---|
-> | `max_speed` | 0.95 m/s | 1.00 m/s |
-> | `max_accel` | 0.80 m/s² | 0.50 m/s² |
-> | `max_yaw_rate` | 80 °/s | 120 °/s |
-> | `social_distance` | 0.80 m | 0.85 m |
-> | `sensor_range` | 12.0 m | 11.0 m |
-> | `goal_tolerance` | 0.25 m | 0.35 m |
+> | field | was (DWAConfig) | now (PlannerConfig) | affects runs? |
+> |---|---|---|---|
+> | `max_speed` | 0.95 m/s | 1.00 m/s | **yes** |
+> | `max_accel` | 0.80 m/s² | 0.50 m/s² | **yes** |
+> | `max_yaw_rate` | 80 °/s | 120 °/s | **yes** |
+> | `safe_distance` | 0.20 m | 0.42 m | no |
+> | `social_distance` | 0.80 m | 0.85 m | no |
+> | `sensor_range` | 12.0 m | 11.0 m | no |
+> | `goal_tolerance` | 0.25 m | 0.35 m | no |
 >
-> (`safe_distance` also moved 0.20→0.42 but is never read by DWA.)
-> Net effect on the reference run: `avg_speed_mps` 0.933→0.986. See
-> `docs/code_audit.md` §0. Results produced before this date are not
-> comparable for DWA.
+> The last four are used only by the planner file's own standalone
+> run/metrics path, not by `dwa_control`; they are now consistent with the
+> other planners but inert in the benchmark. Note the acceleration limit moved
+> **down**: DWA loses an acceleration advantage at the same time as it gains
+> speed and yaw headroom. Net effect on the reference run: `avg_speed_mps`
+> 0.933→0.986, and on an isolated 60 m leg the goal is reached in 165 instead
+> of 183 steps. See `docs/code_audit.md` §0. Results produced before this date
+> are not comparable for DWA.
 
 ## Reproduce one figure (end to end)
 
