@@ -39,7 +39,22 @@ ROOT = Path(__file__).resolve().parent
 REPO = ROOT.parent
 sys.path.insert(0, str(ROOT))
 
-TUNABLE = ["dwa", "astar", "dijkstra", "rrt", "orca", "mpc", "teb"]
+# Tunable = whatever configs/tuning_spaces.json actually defines a space for.
+# Keeping a second hand-maintained list here let the two drift: the file gained
+# an 'orca_heuristic' space (added when the published RVO2 solver took over the
+# 'orca' id) that --algorithm then refused to accept.
+def _tunable_algorithms():
+    try:
+        import json as _json
+        spaces = _json.loads(
+            (Path(__file__).resolve().parent.parent / "configs"
+             / "tuning_spaces.json").read_text())
+        return sorted(spaces)
+    except Exception:                       # fall back to the historical list
+        return ["astar", "dijkstra", "dwa", "mpc", "orca", "rrt", "teb"]
+
+
+TUNABLE = _tunable_algorithms()
 
 
 RRT_JOINT_SPACE = [

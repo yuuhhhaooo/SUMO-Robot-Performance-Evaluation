@@ -145,8 +145,12 @@ def main():
     p.add_argument("--params-file", default=None,
                    help="tuned planner parameters JSON, forwarded to every "
                         "run (use per-algorithm batches: configs/<algo>.json)")
-    p.add_argument("--reactive-peds", choices=["off", "sfm"], default=None,
-                   help="forwarded to every run")
+    p.add_argument("--reactive-peds",
+                   choices=["off", "sfm", "jupedsim", "pysf"], default=None,
+                   help="forwarded to every run. MUST stay in step with "
+                        "benchmark_runner and run_protocol: run_protocol "
+                        "forwards this value straight through, so a level "
+                        "missing here kills the sweep at the subprocess.")
     p.add_argument("--delay", type=int, default=None,
                    help="sumo-gui delay in ms, forwarded with --gui")
     p.add_argument("--gui", "--sumo-gui", dest="gui", action="store_true",

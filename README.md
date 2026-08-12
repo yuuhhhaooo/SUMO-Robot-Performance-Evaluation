@@ -2,33 +2,79 @@
 
 A benchmark for comparing robot navigation algorithms on **sidewalks with
 signalised crossings**, on four controlled synthetic maps and one real urban
-map (UCL / Bloomsbury, imported from OpenStreetMap). Ten algorithms are
-evaluated as the **local-planning component** of a fixed global–local stack:
-DWA, A\*, Dijkstra, RRT (the last three as receding-horizon local variants),
-ORCA, MPC, TEB, SARL, CADRL, LSTM-RL.
+map (UCL / Bloomsbury, imported from OpenStreetMap). Algorithms are evaluated
+as the **local-planning component** of a fixed global–local stack.
+
+**18 local planners are registered**, in two groups. Which group an algorithm
+belongs to is a first-class fact about the result, not a footnote:
+
+| | id | backing |
+|---|---|---|
+| **Published implementations** | `orca` | RVO2, UNC GAMMA (van den Berg et al., ISRR 2009) via Python-RVO2 |
+| | `mpc_dompc` | do-mpc 5.1.1 on CasADi 3.7.2 with Ipopt |
+| | `teb_upstream` | teb_local_planner 0.9.1 (Rösmann et al.) via pybind11 |
+| | `sarl_upstream` `cadrl_upstream` `lstm_rl_upstream` | CrowdNav (Chen et al., ICRA 2019), upstream networks + this repo's checkpoints |
+| | `crowdnav_dsrnn` | CrowdNav\_DSRNN (Liu et al., ICRA 2021) + its published checkpoint |
+| | `crowdnav_attngraph` | CrowdNav\_Prediction\_AttnGraph (Liu et al., ICRA 2023) + GST predictor (Huang et al., RA-L 2022) |
+| **In-repo implementations** | `dwa` `astar` `dijkstra` `rrt` `mpc` `teb` | the author's own code (A\*/Dijkstra/RRT as receding-horizon local variants) |
+| | `orca_heuristic` | the author's former `orca` — see the note below |
+| | `sarl` `cadrl` `lstm_rl` | the author's CrowdNav adaptations |
+
+`sim/benchmark_adapters.py::PUBLISHED_IMPL` is the authoritative citation list.
+
+> **`orca` changed meaning.** An audit found the previous in-repo ORCA contains
+> no velocity-obstacle half-planes, no linear program and no reciprocity
+> factor — it is a reciprocal-force heuristic rather than ORCA. `orca` is now
+> the published RVO2 solver; the original is preserved and runnable as
+> `orca_heuristic` so both can be reported. **Any result labelled `orca` from
+> before this change is `orca_heuristic`.**
 
 Repository layout:
 
 ```
-sim/        simulation code: runner, batch driver, map builders, demand,
-            signal gate, planner adapters, planners/ (+ pretrained models)
-analysis/   plotting / analysis (kept separate from simulation code)
-maps/       map1_straight … map4_london (synthetic), map5_ucl (OSM import)
-configs/    fixed seed lists (evaluation + reserved tuning seeds)
-examples/   minimal hand-written OSM extract for testing the import pipeline
-docs/       usage reference and map/route preview figures
-results/    generated outputs (git-ignored; layout documented inside)
+sim/            runner, batch driver, protocol driver, map builders, demand,
+                signal gate, planner adapters, planners/ (+ pretrained models)
+sim/third_party/ vendored upstream sources, each with LICENSE, COMMIT and
+                PATCHES.md: crowdnav/, crowdnav_dsrnn/, crowdnav_attngraph/,
+                pyteb/, plus build_rvo2.py
+analysis/       plotting / analysis (kept separate from simulation code)
+maps/           map1_straight … map4_london (synthetic), map5_ucl (OSM import)
+configs/        seed lists, Option-B task lists, tuning spaces + tuned params
+docs/           code_audit.md and map/route preview figures
+results/        generated outputs (git-ignored; layout defined by
+                sim/run_layout.py, the single source of truth)
 ```
 
 ## Install
 
 ```bash
-pip install -r requirements.txt          # pinned; includes SUMO via pip
-# or: docker build -t swbench . 
+pip install -r requirements.txt          # pinned; includes SUMO and JuPedSim
+# or: docker build -t swbench .
 ```
 
 A standalone SUMO **1.27.1** installation (with `SUMO_HOME` set) can replace
 the pip SUMO. All commands below are run from the repository root.
+
+**Three components are not covered by `requirements.txt`.** Skip a step and the
+matching algorithm fails at import — loudly, never silently:
+
+```bash
+# 1. ORCA. RVO2 is a compiled C++ extension and is NOT on PyPI.
+pip install cython cmake
+python sim/third_party/build_rvo2.py      # prints the RVO2_PATH to export
+#    Windows: the build destination must be a SHORT path (MSBuild's
+#    FileTracker fails past MAX_PATH); the script's default already is.
+
+# 2. mpc_dompc
+pip install do-mpc==5.1.1 casadi==3.7.2
+
+# 3. --reactive-peds pysf
+pip install pysocialforce==1.1.2 socialforce==0.2.3
+```
+
+`teb_upstream` uses prebuilt bindings in `sim/third_party/pyteb/prebuilt/`
+(CPython 3.12 and 3.13, Windows x64). On any other platform or Python version,
+build from `sim/third_party/pyteb/` — see its `PATCHES.md`.
 
 ## Smoke test (bit-reproducible reference run)
 
@@ -93,24 +139,95 @@ metric bars) and `results/plots/overlay_seed1_map2_crossing_mixed.png`
 Fixed seed list: `configs/seeds.json` (evaluation seeds 1–50; seeds
 1000–1002 are reserved for parameter tuning and never used in evaluation).
 
+Use **`sim/run_protocol.py`**. It is the only entry point that runs the
+complete factorial *and then proves the tree is complete* — `benchmark_batch.py`
+crosses every factor except `--reactive-peds`, and never checks afterwards that
+the runs it was asked for actually exist. On a sweep this size a cell can vanish
+because a runner crashed or a resume skipped it, and silence looks exactly like
+success.
+
 ```bash
-# PowerShell:  --seeds $(Get-Content configs/seeds_eval.txt)
-# bash:        --seeds $(cat configs/seeds_eval.txt)
-python sim/benchmark_batch.py \
-    --maps map1_straight map2_crossing map3_grid map4_london map5_ucl \
-    --routes default path2 \
-    --global-planners dijkstra astar rrt \
-    --modes same opposite mixed static all \
-    --algorithms dwa orca mpc teb sarl cadrl lstm_rl \
-    --seeds $(cat configs/seeds_eval.txt) \
-    --max-time 3000 --veh-period 5 --reactive-peds sfm
-python analysis/benchmark_plots.py --results results
+# 1. What will this cost? Enumerate the design; run nothing.
+python sim/run_protocol.py --dry-run --preset paired --jobs 24
+
+# 2. Run it. --skip-existing is ON by default, so this is resumable.
+python sim/run_protocol.py --preset paired --jobs 24 --out-root results
+
+# 3. Prove every cell exists. Exits NON-ZERO and names what is missing.
+python sim/run_protocol.py --verify-only --preset paired --out-root results
+
+# 4. Analyse.
+python analysis/benchmark_plots.py --results results/peds_sfm
+python analysis/stats_models.py   --results results/peds_sfm
 ```
 
-`--skip-existing` resumes an interrupted sweep without recomputation.
-Per-run raw logs (`robot_trace.csv`, `robot_metrics.json`,
-`scenario.json`, including every sampled demand parameter) are written for
-every cell; see `results/README.md` for the layout.
+`--preset` names the algorithm set, so the choice is a word rather than an
+18-item list:
+
+| preset | planners | runs | the question it answers |
+|---|---|---|---|
+| `readme` | 7 | 10,500 | continuity with the original documented design |
+| `published` | 8 | 12,000 | the defensible headline table |
+| `classical` | 10 | 15,000 | no learned weights; reproducible from source alone |
+| `paired` | 12 | 18,000 | does each reimplementation behave like the algorithm it is named after? |
+| `all` | 18 | 27,000 | everything registered (the default) |
+
+Run counts are 5 maps × 10 tasks × 3 global planners × 10 seeds × 1 mode ×
+1 pedestrian layer. Crossing `--reactive-peds off sfm jupedsim pysf` multiplies
+by four; each level is written to a sibling `results/peds_<level>/` root.
+
+`--algorithms` still overrides `--preset`. `--skip-existing` resumes without
+recomputation; Ctrl-C kills child SUMO processes rather than orphaning them.
+Per-run raw logs (`robot_trace.csv`, `robot_metrics.json`, `scenario.json`,
+including every sampled demand parameter) are written for every cell; the
+directory layout is defined once in `sim/run_layout.py`.
+
+### How long it takes
+
+Measured per-run wall time on this repo's reference machine (**Intel Core
+Ultra 7 155H**, 22 threads, mobile), one run at `--max-time 300` scaled to the
+protocol's 3000 s episodes, `--reactive-peds sfm`:
+
+| planner | min/run | | planner | min/run |
+|---|---|---|---|---|
+| `orca` (RVO2) | 0.48 | | `sarl` | 0.94 |
+| `orca_heuristic` | 0.62 | | `lstm_rl` | 1.00 |
+| `teb` | 0.72 | | `cadrl` | 1.35 |
+| `mpc` | 0.87 | | `mpc_dompc` | 2.98 |
+| `teb_upstream` | 0.97 | | `lstm_rl_upstream` | 4.10 |
+| `crowdnav_dsrnn` | 3.0 | | `cadrl_upstream` | 4.20 |
+| `crowdnav_attngraph` | 7.1 | | `sarl_upstream` | 5.88 |
+
+`paired` mean **2.0 min/run**; a real protocol cell (map5_ucl + task + global
+planner) costs a further **1.25–1.5×** over the light map2 cell these were
+measured on. So budget ≈ **2.7 min/run**, i.e. **~34 CPU-days for the 18,000-run
+`paired` sweep**, ~2 wall-days at `--jobs 16` on that machine.
+
+**On a desktop Core i9 (24 cores): roughly 1–1.5 wall-days** for `paired` at
+`--jobs 22`, and **~1.5–2.5 wall-days** for the 27,000-run `all` preset. That
+assumes ~1.3–1.5× the per-core throughput of the mobile part and no thermal
+throttling; expect sublinear scaling past ~16 concurrent runs, since each run is
+a SUMO process plus a Python planner competing for memory bandwidth.
+
+> **A 5090 will not help, and `--device cuda` may make it slower.** The learning
+> planners are latency-bound, not FLOP-bound: upstream CrowdNav evaluates 81
+> *batch-of-1* forward passes per control step over at most 5 humans. Measured
+> here, giving one planner more CPU threads makes it **worse** — 105.9 ms/step
+> at 1 thread vs 128.7 ms at 8 — which is the signature of dispatch overhead
+> dominating. Moving hundreds of tiny ops per step onto a GPU adds kernel-launch
+> latency on top. Everything else (SUMO, the classical planners, the shapely
+> geometry) is single-threaded CPU. **Buy cores and RAM, not GPU.**
+
+Sanity-check the estimate on the target machine before committing days to it:
+
+```bash
+python sim/run_protocol.py --preset paired --maps map2_crossing --tasks none \
+    --global-planners fixed --seeds 1 2 --max-time 60 --jobs 8 \
+    --out-root /tmp/validate
+```
+
+That is 24 runs and finishes in well under a minute; it exercises all 12 paired
+planners end to end and ends with the coverage audit.
 
 ## Task sampling (Option B protocol, supervisor decision 2026-08-09)
 
@@ -141,7 +258,10 @@ algorithm).
 
 Full design size: `python analysis/factor_table.py --maps map1_straight
 map2_crossing map3_grid map4_london map5_ucl --tasks 10 --seeds 10
---globals 3 --locals 7 --modes 1` -> 10,500 runs.
+--globals 3 --locals 7 --modes 1` -> 10,500 runs. That is the ORIGINAL
+7-planner design (`--preset readme`). With all 18 registered planners the
+full cross is 27,000 runs; `python sim/run_protocol.py --dry-run` prints
+the size and cost of whichever preset you choose.
 
 ## Equal-budget parameter tuning (supervisor protocol)
 
@@ -229,9 +349,18 @@ trained weights: retrain-or-drop decision).
 python analysis/stats_models.py --results results
 ```
 
-Writes `results/stats/`: binomial GLMM for success (odds ratios + 95% CIs
-against a reference algorithm, variance components for seed / map / task),
-linear mixed models for time and path length on successful runs, a failure
+`--unit` defaults to `both`, so this writes **`results/stats/`** (local
+algorithm as the unit) **and `results/stats_combo/`** (global+local combination
+as the unit); `analysis/benchmark_plots.py` likewise writes `plots/` and
+`plots_combo/`. Contents: a **variational-Bayes** binomial mixed GLM for
+success (`BinomialBayesMixedGLM.fit_vb`, so the reported intervals are
+posterior mean ± 1.96·posterior SD — credible intervals, not frequentist CIs —
+and variance components are `exp(posterior mean of log-sd)`), with crossed
+variance components for seed / map / task; linear mixed models on successful
+runs for time and path length, and additionally for
+`min_pedestrian_distance_m`, `ped_delay_s_mean`, `ped_deflection_m_mean`,
+`ped_personal_space_s_total`, `social_work`, `social_force_on_agents` and
+`social_force_on_robot`; a failure
 taxonomy table + figure (goal / collision / max_time / stalled /
 global_plan_failed), and a seed-bootstrap ranking-stability table + figure
 (rank 95% intervals and P(top-1) -- the quantitative basis of the
@@ -321,7 +450,8 @@ effects from synthetic data.
   (workspace RRT, corridor-informed sampling, up to three deterministic
   restarts, ~30-130 s planning per run) is part of the experimental unit.
   `fixed` replays a map's stored waypoints verbatim and preserves
-  bit-compatibility with legacy runs (map2 reference: 102.59 m).
+  bit-compatibility with legacy runs (map2 reference: 138.5 m; see the
+  re-baseline note above).
 * **Robot body (`--robot-radius`, `--robot-height`).** The robot is a 2-D disc.
   `--robot-radius` (default 0.25 m, the historical value) drives the collision
   threshold `max(0.42, r_robot + r_ped)`, the JuPedSim agent radius under
@@ -351,6 +481,20 @@ effects from synthetic data.
   one, so JuPedSim also nudges the robot; the residual is reported per run as
   `jps_robot_track_err_{mean,p95,max}_m` (measured 0.013 / 0.020 / 0.025 m —
   negligible, but recorded rather than assumed).
+* **Pedestrian reactivity (`--reactive-peds pysf`).** The PUBLISHED Social
+  Force Model, as a fourth level of the same factor: PySocialForce 1.1.2
+  (default backend) and socialforce 0.2.3, both installed from PyPI unmodified,
+  with the same capture/release bubble as `sfm` and `jupedsim`. Worth knowing
+  before comparing it with `sfm`: the in-repo layer's docstring says its
+  parameters "follow PySocialForce", and that holds for exactly ONE of the four
+  constants it names — `TAU` 0.5 s matches; `A_PED` 4.5, `B_PED` 0.35 and
+  `LAMBDA` 0.30 have no counterpart in either published package, and far-field
+  robot repulsion differs by ~18× at 2 m. Caveat for robot-size studies: in
+  `robot_as="agent"` mode the robot's RADIUS does not affect the force, because
+  neither published package supports per-agent radii in its pedestrian
+  interaction term (measured: radius 0.20 vs 0.60 changes trajectories by
+  0.000 m). Use `robot_as="obstacle"`, or the `jupedsim` layer, where agent
+  radius is genuinely part of the model.
 * **Pedestrian reactivity (`--reactive-peds sfm`).** SUMO keeps macroscopic
   demand and long-range walking; inside an interaction bubble around the
   robot (capture 12 m / release 18 m) pedestrians are driven by a Social
@@ -378,18 +522,57 @@ effects from synthetic data.
   applies on sidewalk segments and crossings, with striping retained in
   the junction core (stress-tested across all five pedestrian modes). Default is `off` (bit-compatible legacy);
   the main protocol runs with `sfm`.
-* Robot–pedestrian collision: centre distance < 0.42 m (3 s spawn grace).
+* Robot–pedestrian collision: centre distance < `max(0.42, r_robot + 0.15)`,
+  i.e. 0.42 m at the default `--robot-radius 0.25` and wider for a larger
+  robot (3 s spawn grace).
   Failure taxonomy recorded per run: `collision`, `max_time`, `stalled`,
   `goal`.
 
 ## Provenance
 
-Planner implementations (`sim/planners/`) are the author's own code and are
-used unmodified. Map construction and demand use the official SUMO toolchain
-(netconvert, randomTrips). The benchmark harness (map pipeline, signal
-gate, runner, batch driver, analysis) was developed with AI assistance
-(Anthropic Claude) under the author's direction; see the university's
-academic-integrity guidance for the corresponding declaration.
+`sim/planners/` holds two different kinds of code, and the distinction matters
+for the academic-integrity declaration:
+
+* **The author's own implementations**, used unmodified: `dwa`, `astar`,
+  `dijkstra`, `rrt`, `mpc`, `teb`, `orca_heuristic`, and the CrowdNav
+  adaptations `sarl`, `cadrl`, `lstm_rl`.
+* **Third-party published implementations**, used as dependencies or vendored
+  verbatim, with the benchmark supplying only a thin adapter to the planner
+  interface. `sim/benchmark_adapters.py::PUBLISHED_IMPL` is the authoritative
+  citation list:
+
+  | source | licence | how it is used |
+  |---|---|---|
+  | RVO2 / Python-RVO2 (van den Berg et al., ISRR 2009) | Apache-2.0 | built by `sim/third_party/build_rvo2.py`; drives `orca` |
+  | do-mpc 5.1.1 + CasADi 3.7.2 + Ipopt | LGPL-3.0 / EPL-2.0 | pip dependencies; drive `mpc_dompc` |
+  | teb_local_planner 0.9.1 (Rösmann et al.) | BSD-3-Clause | published binary via new pybind11 glue in `sim/third_party/pyteb/`; drives `teb_upstream` |
+  | CrowdNav (Chen et al., ICRA 2019) | MIT | vendored at `sim/third_party/crowdnav/` |
+  | CrowdNav\_DSRNN (Liu et al., ICRA 2021) | MIT | vendored at `sim/third_party/crowdnav_dsrnn/` |
+  | CrowdNav\_Prediction\_AttnGraph (Liu et al., ICRA 2023) + GST predictor (Huang et al., RA-L 2022) | MIT | vendored at `sim/third_party/crowdnav_attngraph/` |
+  | JuPedSim 1.4.2 | LGPL-3.0 | pip dependency; `--reactive-peds jupedsim` |
+  | PySocialForce 1.1.2 / socialforce 0.2.3 | MIT | pip dependencies; `--reactive-peds pysf` |
+
+  Every vendored tree carries its upstream `LICENSE`, a `COMMIT` file pinning
+  the exact revision (and checkpoint SHA-256 where weights are included), and a
+  `PATCHES.md`. Patches are mechanical only — import guards for packages that
+  no longer install on current Python, and build-system fixes for modern CMake
+  and MSVC. **No algorithm, constant, network definition or config value was
+  changed in any vendored source**; `diff -r` against a fresh clone at the
+  pinned commit is byte-identical apart from the documented files.
+
+  Learning-based planners run on **published pretrained checkpoints**, not
+  retrained weights. The three CrowdNav checkpoints shipped with this
+  repository load into the unmodified upstream networks with
+  `load_state_dict(strict=True)`; DS-RNN and CrowdNav++ use the checkpoints
+  their own repositories publish.
+
+Map construction and demand use the official SUMO toolchain (netconvert,
+randomTrips). The benchmark harness (map pipeline, signal gate, runner, batch
+driver, protocol driver, analysis) and the third-party adapter layer were
+developed with AI assistance (Anthropic Claude) under the author's direction;
+see the university's academic-integrity guidance for the corresponding
+declaration. `docs/code_audit.md` records the audit that produced the current
+state, including which defects were found and what remains open.
 
 On thesis submission, archive this repository together with the `results/`
 directory on Zenodo and cite the DOI.
