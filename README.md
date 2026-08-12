@@ -254,6 +254,62 @@ effects from synthetic data.
 
 ## Design notes and known limitations
 
+* **Sidewalk containment is NOT uniform across planners — declare this.** The
+  in-repo learning planners and the published ones differ by more than
+  "reimplementation vs. upstream": one group knows the sidewalk exists and the
+  other does not.
+
+  The in-repo SARL scores every candidate action with a band-containment term
+  ([`sarl_sumo_robot_unified.py:435`](sim/planners/sarl_sumo_robot_unified.py#L435),
+  commented "SUMO adapter addition: prevent the model from leaving the
+  sidewalk"): a candidate whose predicted pose leaves
+  `[sidewalk_x_min, x_max] × [y_min, y_max]` returns `-0.25` immediately — the
+  *same magnitude as the collision penalty* — so leaving the band is scored as
+  badly as hitting a pedestrian, and the policy actively steers away from the
+  kerb.
+
+  Every published planner has no such term. Upstream CrowdNav's
+  `MultiHumanRL.compute_reward`
+  ([`multi_human_rl.py:65`](sim/third_party/crowdnav/crowd_nav/policy/multi_human_rl.py#L65))
+  scores collision, goal-reaching and discomfort distance only; grepping
+  `crowd_nav/` and `crowd_sim/envs/utils/` for *sidewalk*, *band*, *wall*,
+  *kerb* or *curb* returns nothing at all. The same is true of DS-RNN and
+  CrowdNav++ — all three upstream arenas are open space with no static
+  geometry. Nothing was added to their observations to fake a kerb, because
+  that would be inventing an input the networks never saw in training.
+
+  Three consequences for reading the results table:
+
+  1. `sarl` vs `sarl_upstream` is **not** a clean like-for-like comparison of
+     the same algorithm. They differ in the reward used for action selection.
+  2. For the published planners, band-violation and `walkable_clamped_steps`
+     measure **the runner clamping the robot**, not the planner avoiding a
+     kerb. Read them as "how often the policy tried to leave the sidewalk".
+  3. It is the main reason the published learning planners drift laterally on
+     a long straight leg. That is mitigated — not removed — by the carrot local
+     goal and O(2) action averaging described in
+     [`docs/code_audit.md`](docs/code_audit.md); see
+     `crowdnav_dsrnn_planner.py` for the measurements.
+
+  The classical planners sit in between: DWA, MPC and TEB carry their own
+  explicit band constraints, whereas `orca` (published RVO2) is given the band
+  as RVO2 line obstacles, which *is* part of that published model.
+
+* **Fallback coverage (`planner_active_frac`).** Some planners spend a large
+  share of an episode in a fallback rather than in the algorithm under test,
+  so every run records a `planner_status_counts` histogram and
+  `planner_active_frac`, the fraction of control steps that ran the actual
+  algorithm. The published CrowdNav wrappers return straight-line
+  `goal_direct` motion whenever no pedestrian is inside `--sensor-range`,
+  because upstream's value networks take a `(batch, #humans, 13)` tensor and
+  cannot be called with zero humans. Measured on
+  `map2_crossing/mixed/seed 1`: `sarl_upstream` 0.983, `cadrl_upstream` 0.950,
+  **`lstm_rl_upstream` 0.467** — over half that episode was not CrowdNav.
+  Removing the range filter is not a fix and is much worse: upstream trains in
+  a ±6 m arena, and a pedestrian 200 m away swings the commanded direction by
+  up to 135°. **Any comparison across learning planners should report, or
+  condition on, `planner_active_frac`.**
+
 * **Evaluation unit (combination design, supervisor decision 2026-08-07).**
   Every experiment runs a complete global-local stack. The global-planning
   factor (`--global-planner`) has levels **dijkstra / astar / rrt**, all
