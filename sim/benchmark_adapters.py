@@ -21,15 +21,30 @@ if str(PLANNER_DIR) not in sys.path:
 
 from sidewalk_robot_common import PlannerConfig, RobotState, Obstacle  # noqa: E402
 
-ALGORITHMS = ["dwa", "astar", "dijkstra", "rrt", "orca", "mpc", "teb",
-              "sarl", "cadrl", "lstm_rl"]
+ALGORITHMS = ["dwa", "astar", "dijkstra", "rrt", "orca", "orca_heuristic",
+              "mpc", "teb", "sarl", "cadrl", "lstm_rl"]
 LEARNING = {"sarl", "cadrl", "lstm_rl"}
+
+# Algorithms backed by the ORIGINAL PUBLISHED implementation rather than an
+# in-repo reimplementation. Recorded per run so the results table can say which
+# is which, and cited in the paper.
+PUBLISHED_IMPL = {
+    "orca": "RVO2 (UNC GAMMA; van den Berg et al., ISRR 2009) "
+            "via Python-RVO2 bindings",
+}
 
 _CLASSICAL = {
     "astar": ("astar_sidewalk_robot_random_stop_collision", "AStarPlanner"),
     "dijkstra": ("dijkstra_sidewalk_robot_random_stop_collision", "DijkstraPlanner"),
     "rrt": ("rrt_sidewalk_robot_random_stop_collision", "RRTPlanner"),
-    "orca": ("orca_sidewalk_robot_random_stop_collision", "ORCAStylePlanner"),
+    # 'orca' is the published RVO2 solver. The previous in-repo planner is kept
+    # as 'orca_heuristic': an audit found it has no velocity-obstacle
+    # half-planes, no linear program and no reciprocity factor, so it is a
+    # reciprocal-force heuristic rather than ORCA. Both are runnable so the
+    # difference can be reported rather than hidden.
+    "orca": ("orca_rvo2_planner", "ORCARVO2Planner"),
+    "orca_heuristic": ("orca_sidewalk_robot_random_stop_collision",
+                       "ORCAStylePlanner"),
     "mpc": ("mpc_sidewalk_robot_random_stop_collision", "MPCPlanner"),
     "teb": ("teb_sidewalk_robot_random_stop_collision", "SimplifiedTEBPlanner"),
 }

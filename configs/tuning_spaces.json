@@ -1,201 +1,229 @@
 {
- "dwa": [
-  {
-   "name": "predict_time",
-   "low": 1.2,
-   "high": 4.0
-  },
-  {
-   "name": "goal_cost_gain",
-   "low": 0.5,
-   "high": 4.0,
-   "log": true
-  },
-  {
-   "name": "speed_cost_gain",
-   "low": 0.1,
-   "high": 2.0,
-   "log": true
-  },
-  {
-   "name": "obstacle_cost_gain",
-   "low": 0.2,
-   "high": 3.0,
-   "log": true
-  },
-  {
-   "name": "centerline_cost_gain",
-   "low": 0.02,
-   "high": 0.5,
-   "log": true
-  },
-  {
-   "name": "social_distance",
-   "low": 0.4,
-   "high": 1.5
-  }
- ],
- "orca": [
-  {
-   "name": "time_horizon",
-   "low": 1.0,
-   "high": 6.0
-  },
-  {
-   "name": "centerline_gain",
-   "low": 0.01,
-   "high": 0.3,
-   "log": true
-  },
-  {
-   "name": "safe_distance",
-   "low": 0.2,
-   "high": 0.6
-  }
- ],
- "mpc": [
-  {
-   "name": "horizon",
-   "low": 5,
-   "high": 16,
-   "int": true
-  },
-  {
-   "name": "w_terminal_goal",
-   "low": 2.0,
-   "high": 25.0,
-   "log": true
-  },
-  {
-   "name": "w_obstacle",
-   "low": 2.0,
-   "high": 25.0,
-   "log": true
-  },
-  {
-   "name": "w_social",
-   "low": 0.2,
-   "high": 3.0,
-   "log": true
-  },
-  {
-   "name": "w_speed_ref",
-   "low": 0.1,
-   "high": 1.5,
-   "log": true
-  },
-  {
-   "name": "margin",
-   "low": 0.03,
-   "high": 0.2
-  }
- ],
- "teb": [
-  {
-   "name": "horizon",
-   "low": 6,
-   "high": 18,
-   "int": true
-  },
-  {
-   "name": "lookahead_distance",
-   "low": 5.0,
-   "high": 16.0
-  },
-  {
-   "name": "w_obstacle",
-   "low": 0.5,
-   "high": 8.0,
-   "log": true
-  },
-  {
-   "name": "w_social",
-   "low": 0.1,
-   "high": 2.0,
-   "log": true
-  },
-  {
-   "name": "w_smooth",
-   "low": 2.0,
-   "high": 20.0,
-   "log": true
-  },
-  {
-   "name": "margin",
-   "low": 0.03,
-   "high": 0.2
-  }
- ],
- "astar": [
-  {
-   "name": "x_res",
-   "low": 0.5,
-   "high": 2.0
-  },
-  {
-   "name": "y_res",
-   "low": 0.15,
-   "high": 0.6
-  },
-  {
-   "name": "replan_interval",
-   "low": 0.5,
-   "high": 3.0
-  },
-  {
-   "name": "social_distance",
-   "low": 0.4,
-   "high": 1.5
-  }
- ],
- "dijkstra": [
-  {
-   "name": "x_res",
-   "low": 0.5,
-   "high": 2.0
-  },
-  {
-   "name": "y_res",
-   "low": 0.15,
-   "high": 0.6
-  },
-  {
-   "name": "replan_interval",
-   "low": 0.5,
-   "high": 3.0
-  },
-  {
-   "name": "social_distance",
-   "low": 0.4,
-   "high": 1.5
-  }
- ],
- "rrt": [
-  {
-   "name": "step_size",
-   "low": 1.0,
-   "high": 5.0
-  },
-  {
-   "name": "goal_sample_rate",
-   "low": 0.05,
-   "high": 0.4
-  },
-  {
-   "name": "max_iter",
-   "low": 300,
-   "high": 1500,
-   "int": true
-  },
-  {
-   "name": "goal_connect_dist",
-   "low": 2.0,
-   "high": 6.0
-  },
-  {
-   "name": "replan_interval",
-   "low": 0.5,
-   "high": 3.0
-  }
- ]
+  "dwa": [
+    {
+      "name": "predict_time",
+      "low": 1.2,
+      "high": 4.0
+    },
+    {
+      "name": "goal_cost_gain",
+      "low": 0.5,
+      "high": 4.0,
+      "log": true
+    },
+    {
+      "name": "speed_cost_gain",
+      "low": 0.1,
+      "high": 2.0,
+      "log": true
+    },
+    {
+      "name": "obstacle_cost_gain",
+      "low": 0.2,
+      "high": 3.0,
+      "log": true
+    },
+    {
+      "name": "centerline_cost_gain",
+      "low": 0.02,
+      "high": 0.5,
+      "log": true
+    },
+    {
+      "name": "social_distance",
+      "low": 0.4,
+      "high": 1.5
+    }
+  ],
+  "orca": [
+    {
+      "name": "time_horizon",
+      "low": 1.0,
+      "high": 10.0
+    },
+    {
+      "name": "time_horizon_obst",
+      "low": 0.5,
+      "high": 5.0
+    },
+    {
+      "name": "neighbor_dist",
+      "low": 3.0,
+      "high": 15.0
+    },
+    {
+      "name": "max_neighbors",
+      "low": 3,
+      "high": 20,
+      "step": 1
+    },
+    {
+      "name": "safety_space",
+      "low": 0.0,
+      "high": 0.35
+    }
+  ],
+  "mpc": [
+    {
+      "name": "horizon",
+      "low": 5,
+      "high": 16,
+      "int": true
+    },
+    {
+      "name": "w_terminal_goal",
+      "low": 2.0,
+      "high": 25.0,
+      "log": true
+    },
+    {
+      "name": "w_obstacle",
+      "low": 2.0,
+      "high": 25.0,
+      "log": true
+    },
+    {
+      "name": "w_social",
+      "low": 0.2,
+      "high": 3.0,
+      "log": true
+    },
+    {
+      "name": "w_speed_ref",
+      "low": 0.1,
+      "high": 1.5,
+      "log": true
+    },
+    {
+      "name": "margin",
+      "low": 0.03,
+      "high": 0.2
+    }
+  ],
+  "teb": [
+    {
+      "name": "horizon",
+      "low": 6,
+      "high": 18,
+      "int": true
+    },
+    {
+      "name": "lookahead_distance",
+      "low": 5.0,
+      "high": 16.0
+    },
+    {
+      "name": "w_obstacle",
+      "low": 0.5,
+      "high": 8.0,
+      "log": true
+    },
+    {
+      "name": "w_social",
+      "low": 0.1,
+      "high": 2.0,
+      "log": true
+    },
+    {
+      "name": "w_smooth",
+      "low": 2.0,
+      "high": 20.0,
+      "log": true
+    },
+    {
+      "name": "margin",
+      "low": 0.03,
+      "high": 0.2
+    }
+  ],
+  "astar": [
+    {
+      "name": "x_res",
+      "low": 0.5,
+      "high": 2.0
+    },
+    {
+      "name": "y_res",
+      "low": 0.15,
+      "high": 0.6
+    },
+    {
+      "name": "replan_interval",
+      "low": 0.5,
+      "high": 3.0
+    },
+    {
+      "name": "social_distance",
+      "low": 0.4,
+      "high": 1.5
+    }
+  ],
+  "dijkstra": [
+    {
+      "name": "x_res",
+      "low": 0.5,
+      "high": 2.0
+    },
+    {
+      "name": "y_res",
+      "low": 0.15,
+      "high": 0.6
+    },
+    {
+      "name": "replan_interval",
+      "low": 0.5,
+      "high": 3.0
+    },
+    {
+      "name": "social_distance",
+      "low": 0.4,
+      "high": 1.5
+    }
+  ],
+  "rrt": [
+    {
+      "name": "step_size",
+      "low": 1.0,
+      "high": 5.0
+    },
+    {
+      "name": "goal_sample_rate",
+      "low": 0.05,
+      "high": 0.4
+    },
+    {
+      "name": "max_iter",
+      "low": 300,
+      "high": 1500,
+      "int": true
+    },
+    {
+      "name": "goal_connect_dist",
+      "low": 2.0,
+      "high": 6.0
+    },
+    {
+      "name": "replan_interval",
+      "low": 0.5,
+      "high": 3.0
+    }
+  ],
+  "orca_heuristic": [
+    {
+      "name": "time_horizon",
+      "low": 1.0,
+      "high": 6.0
+    },
+    {
+      "name": "centerline_gain",
+      "low": 0.01,
+      "high": 0.3,
+      "log": true
+    },
+    {
+      "name": "safe_distance",
+      "low": 0.2,
+      "high": 0.6
+    }
+  ]
 }
