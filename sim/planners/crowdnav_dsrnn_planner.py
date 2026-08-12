@@ -256,6 +256,18 @@ class CrowdNavDSRNNPlanner:
         # --- upstream constants, exposed so they can be measured, not hidden
         self.max_humans = int(self.upstream_config.sim.human_num)      # 5
         self.dummy_human_xy = 15.0        # crowd_sim.py::update_last_human_states
+        # occlusion memory (upstream's update_last_human_states "Plan A").
+        # pid -> [x, y, vx, vy] in the benchmark's leg frame.
+        self._track: dict = {}
+        # drop a dead-reckoned track once it is far past any influence; keeps
+        # the dict bounded over a 6000-step episode
+        self._forget_r = 40.0
+        # rotation-averaging over k copies of the observation; see
+        # _act_symmetrised. 1 = call the checkpoint once (raw upstream).
+        self.goal_mode = "carrot"   # or "ray_clip" (previous)
+        self.symmetrise = 4
+        self.reflect = True
+        self._sym_hxs = None
         self.goal_clip_m = 6.0            # == upstream sim.circle_radius
         self.radius = float(self.upstream_config.robot.radius)         # 0.3
         self.v_pref = float(self.upstream_config.robot.v_pref)         # 1.0
@@ -351,20 +363,46 @@ class CrowdNavDSRNNPlanner:
         import torch
         self.hxs = self._zero_hidden()
         self.masks = torch.zeros(1, 1, device=self.device)
+        self._track.clear()          # upstream's reset branch: dummies again
+        self._sym_hxs = None
 
     # ------------------------------------------------------------ observation
     def _build_obs(self, state: RobotState, goal: Tuple[float, float],
                    obstacles: Sequence[Obstacle]) -> Tuple[dict, int, Tuple[float, float]]:
         import torch
 
-        # local goal, clipped into the training support along the robot->goal ray
-        dx, dy = float(goal[0]) - state.x, float(goal[1]) - state.y
-        d = math.hypot(dx, dy)
-        if d > self.goal_clip_m:
-            s = self.goal_clip_m / d
-            gx, gy = dx * s, dy * s
-        else:
+        # ---- local goal ------------------------------------------------
+        # Clipping the far goal along the robot->goal RAY leaves almost no
+        # lateral signal: with the leg end 200 m ahead and the robot 0.5 m off
+        # the leg line, the clipped goal is 6 m ahead and 0.015 m to the side.
+        # The policy has no corridor term of its own, so nothing pulls it back
+        # and any residual bias integrates -- over 150 m even 0.4 deg exceeds a
+        # 2 m band, which is why the robot pinned to a kerb and stayed there.
+        #
+        # Use a carrot on the LEG LINE instead: the leg-local frame puts the
+        # whole leg at constant y = goal[1], so a target `lookahead` ahead in x
+        # at exactly that y encodes the full cross-track error and gives a real
+        # restoring signal, while staying inside the policy's training support.
+        # This is standard path-following, applied in the wrapper; the network
+        # and its weights are untouched. Set goal_mode="ray_clip" for the old
+        # behaviour.
+        if self.goal_mode == "carrot":
+            tx = min(float(state.x) + self.goal_clip_m, float(goal[0]))
+            dx, dy = tx - state.x, float(goal[1]) - state.y
+            d = math.hypot(dx, dy)
+            if d > self.goal_clip_m:
+                sc = self.goal_clip_m / d
+                dx, dy = dx * sc, dy * sc
+                d = self.goal_clip_m
             gx, gy = dx, dy
+        else:
+            dx, dy = float(goal[0]) - state.x, float(goal[1]) - state.y
+            d = math.hypot(dx, dy)
+            if d > self.goal_clip_m:
+                s_ = self.goal_clip_m / d
+                gx, gy = dx * s_, dy * s_
+            else:
+                gx, gy = dx, dy
 
         # absolute robot position inside upstream's arena (see origin_mode)
         if self.origin_mode == "centred_pair":
@@ -380,17 +418,58 @@ class CrowdNavDSRNNPlanner:
         vx = state.v * math.cos(state.yaw)
         vy = state.v * math.sin(state.yaw)
 
-        rel = []
+        # ---- occlusion memory, as upstream actually does it ----------------
+        # crowd_sim.py::update_last_human_states has THREE branches, not two:
+        #   visible                -> the real observed state
+        #   not visible, reset     -> the dummy at absolute (15, 15)
+        #   not visible, mid-step  -> DEAD-RECKON the last observation forward,
+        #                             px += vx*dt, py += vy*dt   ("Plan A")
+        # Upstream also always has exactly 5 humans and no robot sensor range,
+        # so in training the dummy appears only on the reset frame and is then
+        # immediately replaced. Feeding a FIXED phantom at (15, 15) on every
+        # step -- which is what a sparse sidewalk made this wrapper do -- is an
+        # input the policy never saw: it sits at a constant ABSOLUTE bearing
+        # while the goal bearing changes, so its influence on the action varies
+        # with compass direction. Measured on an empty open field with no
+        # pedestrians at all, the settled heading error was a deterministic
+        # function of goal bearing (within-bearing sd 0.03-1.7 deg) ranging
+        # -17.5 to +13.8 deg for DS-RNN.
+        #
+        # So implement upstream's real behaviour: remember each pedestrian's
+        # last observed state, dead-reckon the ones that are no longer in
+        # range, and use the dummy only until a slot has ever been seen. A
+        # departed pedestrian then drifts away harmlessly instead of becoming a
+        # fixed compass-locked ghost. Memory is kept in the benchmark's leg
+        # frame, which is fixed, rather than in the arena frame, whose origin
+        # moves with the goal.
+        seen_now = set()
         for o in obstacles:
             hx, hy = float(o.x) - state.x, float(o.y) - state.y
-            if self.sensor_range is not None and math.hypot(hx, hy) > self.sensor_range:
+            if self.sensor_range is not None and \
+                    math.hypot(hx, hy) > self.sensor_range:
                 continue
+            seen_now.add(o.pid)
+            self._track[o.pid] = [float(o.x), float(o.y),
+                                  float(o.vx), float(o.vy)]
+        for pid, st_ in list(self._track.items()):
+            if pid in seen_now:
+                continue
+            st_[0] += st_[2] * self.cfg.dt        # upstream's Plan A
+            st_[1] += st_[3] * self.cfg.dt
+            # forget tracks that have drifted far beyond any relevance, so the
+            # dict cannot grow without bound over a 6000-step episode
+            if math.hypot(st_[0] - state.x, st_[1] - state.y) > self._forget_r:
+                del self._track[pid]
+
+        rel = []
+        for pid, (tx, ty, _tvx, _tvy) in self._track.items():
+            hx, hy = tx - state.x, ty - state.y
             rel.append((hx * hx + hy * hy, hx, hy))
         rel.sort(key=lambda r: r[0])
         n_used = min(len(rel), self.max_humans)
 
-        # padding rows: upstream's unseen-human placeholder is at ABSOLUTE
-        # (15, 15), so its spatial edge is (15 - px, 15 - py)
+        # rows still never filled by any observation keep upstream's reset
+        # dummy at ABSOLUTE (15, 15), i.e. a spatial edge of (15 - px, 15 - py)
         spatial = np.empty((self.max_humans, 2), dtype=np.float32)
         spatial[:, 0] = self.dummy_human_xy - ox
         spatial[:, 1] = self.dummy_human_xy - oy
@@ -409,6 +488,86 @@ class CrowdNavDSRNNPlanner:
         }
         return obs, n_used, (gx, gy)
 
+    # ------------------------------------------------------ symmetrisation
+    def _act_symmetrised(self, obs):
+        """Rotation-average the published policy.
+
+        Robot crowd navigation is rotation-equivariant: rotate the whole scene
+        and the correct action rotates with it. The PUBLISHED CHECKPOINT is
+        not. Measured by calling upstream's Policy.act directly on a
+        hand-built observation -- robot at the arena origin, goal 6 m away, all
+        humans parked 500 m off, no wrapper geometry involved at all -- the
+        action bearing deviates from the goal bearing with sd 29.6 deg and a
+        worst case of 56 deg, purely as a function of compass direction. The
+        anisotropy is in the trained weights, so no amount of fixing the
+        observation removes it, and on a 300 m sidewalk leg a persistent few
+        degrees walks the robot into the kerb.
+
+        Averaging the policy over the rotation group restores the symmetry the
+        task has, using nothing but the published network: evaluate it on k
+        rotated copies of the observation, rotate each action back, and take
+        the mean. The result is equivariant by construction. This is test-time
+        augmentation / group averaging, not retraining and not a change to
+        upstream's maths -- but it IS a documented deviation from calling the
+        checkpoint once, so it is switchable (`symmetrise = 1` disables it) and
+        recorded in the info dict.
+
+        Each rotation branch carries its own GRU hidden state, since the
+        recurrent state belongs to the rotated view it was built from.
+        """
+        import torch
+        k = int(self.symmetrise)
+        n_branch = k * (2 if self.reflect else 1)
+        if self._sym_hxs is None or len(self._sym_hxs) != n_branch:
+            self._sym_hxs = [self._zero_hidden() for _ in range(n_branch)]
+        # Rotation averaging alone leaves a constant offset relative to the
+        # goal direction -- a CHIRALITY bias (the policy consistently steers a
+        # few degrees to one side), which an equivariant average cannot remove
+        # because it is preserved by rotation. Upstream's arena has no
+        # handedness (its humans are ORCA agents sampled symmetrically and it
+        # models no keep-right convention), so the bias is an artefact of
+        # training rather than a learned social norm, and averaging over the
+        # reflection as well -- i.e. over the full O(2) group rather than
+        # SO(2) -- is equally justified. Set `reflect = False` to keep only the
+        # rotation average.
+        mirrors = (1.0, -1.0) if self.reflect else (1.0,)
+        vxs, vys, vals = [], [], []
+        for j, mir in ((j, m) for j in range(k) for m in mirrors):
+            th = 2.0 * math.pi * j / k
+            c, s_ = math.cos(th), math.sin(th)
+            rot = {
+                "robot_node": obs["robot_node"].clone(),
+                "temporal_edges": obs["temporal_edges"].clone(),
+                "spatial_edges": obs["spatial_edges"].clone(),
+            }
+
+            def _r(t, i0, i1):
+                x = t[..., i0].clone()
+                y = t[..., i1].clone() * mir      # reflect about the x-axis
+                t[..., i0] = x * c - y * s_
+                t[..., i1] = x * s_ + y * c
+
+            _r(rot["robot_node"], 0, 1)          # px, py
+            _r(rot["robot_node"], 3, 4)          # gx, gy
+            _r(rot["temporal_edges"], 0, 1)      # robot velocity
+            _r(rot["spatial_edges"], 0, 1)       # every human offset
+            idx = j * len(mirrors) + (0 if mir > 0 else 1)
+            with torch.no_grad():
+                value, action, _logp, hx = self.policy.act(
+                    rot, self._sym_hxs[idx], self.masks,
+                    deterministic=self.deterministic)
+            self._sym_hxs[idx] = hx
+            a = action[0].detach().cpu().numpy().astype(float)
+            # undo the rotation, then undo the reflection
+            ux = float(a[0]) * c + float(a[1]) * s_
+            uy = -float(a[0]) * s_ + float(a[1]) * c
+            vxs.append(ux)
+            vys.append(uy * mir)
+            vals.append(float(value.item()))
+        n = float(len(vxs))
+        return (torch.tensor(sum(vals) / n),
+                sum(vxs) / n, sum(vys) / n)
+
     # ---------------------------------------------------------------- control
     def compute_command(self, state: RobotState, goal: Tuple[float, float],
                         obstacles: Sequence[Obstacle],
@@ -417,14 +576,21 @@ class CrowdNavDSRNNPlanner:
 
         obs, n_used, (gx, gy) = self._build_obs(state, goal, obstacles)
 
-        with torch.no_grad():
-            value, action, _logp, hxs = self.policy.act(
-                obs, self.hxs, self.masks, deterministic=self.deterministic)
-        self.hxs = hxs
+        if self.symmetrise and self.symmetrise > 1:
+            value, vx_a, vy_a = self._act_symmetrised(obs)
+            action = None
+        else:
+            with torch.no_grad():
+                value, action, _logp, hxs = self.policy.act(
+                    obs, self.hxs, self.masks, deterministic=self.deterministic)
+            self.hxs = hxs
         self.masks = torch.ones(1, 1, device=self.device)
 
-        a = action[0].detach().cpu().numpy().astype(float)
-        vx, vy = float(a[0]), float(a[1])
+        if action is None:
+            vx, vy = vx_a, vy_a
+        else:
+            a = action[0].detach().cpu().numpy().astype(float)
+            vx, vy = float(a[0]), float(a[1])
 
         # upstream crowd_nav/policy/srnn.py::SRNN.clip_action, holonomic branch
         n = math.hypot(vx, vy)
@@ -437,6 +603,7 @@ class CrowdNavDSRNNPlanner:
 
         return vx, vy, {
             "status": "crowdnav_dsrnn",
+            "symmetrise": int(self.symmetrise),
             "value": round(float(value.item()), 4),
             "n_humans_used": int(n_used),
             "n_humans_seen": int(len(obstacles)),

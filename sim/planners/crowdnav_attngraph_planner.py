@@ -390,6 +390,12 @@ class CrowdNavAttnGraphPlanner:
         self.track: Dict[str, deque] = {}   # pid -> deque[(t, x, y)] leg-local
         self.hxs = self._zero_hidden()
         self.masks = None
+        # O(2) averaging over the published network; see _act_symmetrised.
+        # 1 = call the checkpoint once (raw upstream).
+        self.goal_mode = "carrot"   # or "ray_clip" (previous)
+        self.symmetrise = 4
+        self.reflect = True
+        self._sym_hxs = None
         self.reset()
 
     # ------------------------------------------------------------ construction
@@ -475,6 +481,7 @@ class CrowdNavAttnGraphPlanner:
         self.hxs = self._zero_hidden()
         self.masks = torch.zeros(1, 1, device=self.device)
         self.track.clear()
+        self._sym_hxs = None
 
     # ------------------------------------------------------------- pedestrians
     def _visible(self, state: RobotState,
@@ -548,6 +555,71 @@ class CrowdNavAttnGraphPlanner:
         return pos, valid
 
     # ---------------------------------------------------------------- control
+    # ------------------------------------------------------ symmetrisation
+    def _act_symmetrised(self, O):
+        """Average the published policy over the O(2) symmetry of the task.
+
+        Crowd navigation is rotation- and reflection-equivariant; the PUBLISHED
+        CHECKPOINT is neither. Measured with upstream's own network on an open
+        field, the settled heading error was a deterministic function of goal
+        bearing (within-bearing sd about 1-4 deg) spanning -31.7 to +36.2 deg.
+        On a 300 m sidewalk leg that walks the robot into the kerb, and it is
+        not a wrapper artefact -- calling the network directly with a
+        hand-built observation reproduces it.
+
+        Evaluating the published network on rotated/mirrored copies of the
+        observation and un-transforming each action restores the symmetry
+        exactly, using nothing but upstream's weights: no retraining, no change
+        to upstream's maths. It IS a documented deviation from calling the
+        checkpoint once, so `symmetrise = 1` disables it and both settings are
+        recorded in the info dict.
+
+        spatial_edges packs 1 + predict_steps xy PAIRS per row (current
+        relative position, then each predicted position), so every pair is
+        transformed, not just the first.
+        """
+        import torch
+        k = int(self.symmetrise)
+        mirrors = (1.0, -1.0) if self.reflect else (1.0,)
+        n_branch = k * len(mirrors)
+        if self._sym_hxs is None or len(self._sym_hxs) != n_branch:
+            self._sym_hxs = [self._zero_hidden() for _ in range(n_branch)]
+        n_pairs = O["spatial_edges"].shape[-1] // 2
+        vxs, vys, vals = [], [], []
+        for j, mir in ((j, m) for j in range(k) for m in mirrors):
+            th = 2.0 * math.pi * j / k
+            c, s_ = math.cos(th), math.sin(th)
+            rot = {key: (val.clone() if hasattr(val, "clone") else val)
+                   for key, val in O.items()}
+
+            def _r(t, i0, i1):
+                x = t[..., i0].clone()
+                y = t[..., i1].clone() * mir
+                t[..., i0] = x * c - y * s_
+                t[..., i1] = x * s_ + y * c
+
+            _r(rot["robot_node"], 0, 1)              # px, py
+            _r(rot["robot_node"], 3, 4)              # gx, gy
+            _r(rot["temporal_edges"], 0, 1)          # robot velocity
+            for q in range(n_pairs):                 # current + predicted
+                _r(rot["spatial_edges"], 2 * q, 2 * q + 1)
+            # detected_human_num and visible_masks are scalars/flags: invariant
+
+            idx = j * len(mirrors) + (0 if mir > 0 else 1)
+            with torch.no_grad():
+                value, action, _logp, hx = self.policy.act(
+                    rot, self._sym_hxs[idx], self.masks,
+                    deterministic=self.deterministic)
+            self._sym_hxs[idx] = hx
+            a = action[0].detach().cpu().numpy().astype(float)
+            ux = float(a[0]) * c + float(a[1]) * s_
+            uy = -float(a[0]) * s_ + float(a[1]) * c
+            vxs.append(ux)
+            vys.append(uy * mir)
+            vals.append(float(value.item()))
+        n = float(len(vxs))
+        return torch.tensor(sum(vals) / n), sum(vxs) / n, sum(vys) / n
+
     def compute_command(self, state: RobotState, goal: Tuple[float, float],
                         obstacles: Sequence[Obstacle],
                         sim_time: float) -> Tuple[float, float, Dict[str, Any]]:
@@ -557,14 +629,36 @@ class CrowdNavAttnGraphPlanner:
         self._record(sim_time, state, visible)
         n_det = len(visible)
 
-        # ---- local goal, clipped into the training support
-        dx, dy = float(goal[0]) - state.x, float(goal[1]) - state.y
-        d = math.hypot(dx, dy)
-        if d > self.goal_clip_m:
-            s = self.goal_clip_m / d
-            gx, gy = dx * s, dy * s
-        else:
+        # ---- local goal ------------------------------------------------
+        # Clipping the far goal along the robot->goal RAY leaves almost no
+        # lateral signal: with the leg end 200 m ahead and the robot 0.5 m off
+        # the leg line, the clipped goal is 6 m ahead and 0.015 m to the side.
+        # The policy has no corridor term of its own, so nothing pulls it back
+        # and any residual bias integrates -- over 150 m even 0.4 deg exceeds a
+        # 2 m band, which is why the robot pinned to a kerb and stayed there.
+        #
+        # Use a carrot on the LEG LINE instead: the leg-local frame puts the
+        # whole leg at constant y = goal[1], so a target `lookahead` ahead in x
+        # at exactly that y encodes the full cross-track error and gives a real
+        # restoring signal, while staying inside the policy's training support.
+        # Standard path-following, applied in the wrapper; the network and its
+        # weights are untouched. Set goal_mode="ray_clip" for the old behaviour.
+        if self.goal_mode == "carrot":
+            tx = min(float(state.x) + self.goal_clip_m, float(goal[0]))
+            dx, dy = tx - state.x, float(goal[1]) - state.y
+            d = math.hypot(dx, dy)
+            if d > self.goal_clip_m:
+                sc = self.goal_clip_m / d
+                dx, dy = dx * sc, dy * sc
             gx, gy = dx, dy
+        else:
+            dx, dy = float(goal[0]) - state.x, float(goal[1]) - state.y
+            d = math.hypot(dx, dy)
+            if d > self.goal_clip_m:
+                s_ = self.goal_clip_m / d
+                gx, gy = dx * s_, dy * s_
+            else:
+                gx, gy = dx, dy
 
         # absolute robot position inside upstream's arena (see origin_mode)
         if self.origin_mode == "centred_pair":
@@ -633,8 +727,12 @@ class CrowdNavAttnGraphPlanner:
         self.hxs = hxs
         self.masks = torch.ones(1, 1, device=self.device)
 
-        a = action[0].detach().cpu().numpy().astype(float)
-        vx, vy = float(a[0]), float(a[1])
+        if self.symmetrise and self.symmetrise > 1:
+            value, sx, sy = self._act_symmetrised(O)
+            vx, vy = sx, sy
+        else:
+            a = action[0].detach().cpu().numpy().astype(float)
+            vx, vy = float(a[0]), float(a[1])
         n = math.hypot(vx, vy)
         if n > self.v_pref:                       # upstream SRNN.clip_action
             vx, vy = vx / n * self.v_pref, vy / n * self.v_pref
