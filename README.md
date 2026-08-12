@@ -260,6 +260,35 @@ effects from synthetic data.
   restarts, ~30-130 s planning per run) is part of the experimental unit.
   `fixed` replays a map's stored waypoints verbatim and preserves
   bit-compatibility with legacy runs (map2 reference: 102.59 m).
+* **Robot body (`--robot-radius`, `--robot-height`).** The robot is a 2-D disc.
+  `--robot-radius` (default 0.25 m, the historical value) drives the collision
+  threshold `max(0.42, r_robot + r_ped)`, the JuPedSim agent radius under
+  `--robot-in-jps`, and the GUI marker; it is recorded per run as
+  `robot_radius_m` / `collision_radius_m`. `--robot-height` is recorded but does
+  not enter the 2-D dynamics. A sidewalk delivery robot is closer to 0.30–0.35 m
+  radius than the default. Measured effect on map2/mixed/orca/seed 1 with
+  `--reactive-peds jupedsim --robot-in-jps`: minimum pedestrian distance rises
+  0.89 → 0.91 → 0.94 → 1.55 → 1.75 m for radii 0.20 / 0.25 / 0.35 / 0.50 / 0.70 m.
+* **Pedestrian reactivity (`--reactive-peds jupedsim`).** Pedestrians inside the
+  same interaction bubble are driven by **JuPedSim 1.4.2** (Jülich Pedestrian
+  Simulator) instead of the in-repo SFM, selectable model via `--jps-model`
+  (`collision_free_speed` — the one SUMO documents as extensively tested —
+  `social_force`, `anticipation_velocity`). Capture/release geometry is
+  identical to the `sfm` layer, so the two are levels of one factor rather than
+  two different experiments. JuPedSim runs at its own 0.01 s timestep (50
+  iterations per 0.5 s SUMO step); measured cost is ~12 s per 6000-step episode
+  at 10 agents in the bubble and ~41 s at 30.
+  Two API constraints are handled explicitly: the accessible area must be a
+  single *connected* polygon (the walkable union is joined with the route
+  corridor and the component containing the route is kept — `jps_area_kept_frac`
+  records the fraction retained), and every steering target must lie inside it.
+  **`--robot-in-jps` is opt-in** and injects the robot as a JuPedSim agent so
+  pedestrians see and deflect around it. It is off by default, preserving the
+  fairness rule that the robot does all the avoiding. The direct steering stage
+  bypasses JuPedSim's strategic and tactical levels but *not* its operational
+  one, so JuPedSim also nudges the robot; the residual is reported per run as
+  `jps_robot_track_err_{mean,p95,max}_m` (measured 0.013 / 0.020 / 0.025 m —
+  negligible, but recorded rather than assumed).
 * **Pedestrian reactivity (`--reactive-peds sfm`).** SUMO keeps macroscopic
   demand and long-range walking; inside an interaction bubble around the
   robot (capture 12 m / release 18 m) pedestrians are driven by a Social

@@ -37,7 +37,22 @@ from benchmark_adapters import build_planner, leg_config, RobotState, Obstacle  
 from native_signal_gate import NativeSignalGate  # noqa: E402
 
 SPAWN_GRACE = 3.0
-COLLIDE_R = 0.42            # max(0.42, 0.25 + 0.15)
+PEDESTRIAN_R = 0.15         # SUMO DEFAULT_PEDTYPE half-width [m]
+COLLIDE_FLOOR = 0.42        # protocol floor, kept for bit-compatibility
+COLLIDE_R = 0.42            # max(COLLIDE_FLOOR, r_robot + r_ped); recomputed
+                            # per run from --robot-radius (see collide_r below)
+
+
+def collision_radius(robot_radius: float) -> float:
+    """Centre-distance below which a robot-pedestrian contact is a collision.
+
+    The historical constant 0.42 is max(0.42, 0.25 + 0.15), so the shipped
+    default --robot-radius 0.25 reproduces it exactly. A larger robot widens
+    the threshold, which is the point of making the radius a real parameter.
+    """
+    return max(COLLIDE_FLOOR, float(robot_radius) + PEDESTRIAN_R)
+
+
 SOCIAL_R = 0.85
 HARD_SPEED_CAP = 1.6
 
@@ -98,7 +113,33 @@ def parse_args():
     p.add_argument("--params-file", default=None,
                    help="JSON of tuned planner parameters (from tune.py); "
                         "applied to every per-leg planner instance")
-    p.add_argument("--reactive-peds", choices=["off", "sfm"],
+    p.add_argument("--robot-radius", type=float, default=0.25,
+                   help="physical robot radius [m]. Drives the collision "
+                        "threshold (max(0.42, r_robot + r_ped)), the planners' "
+                        "clearance, the JuPedSim agent radius under "
+                        "--robot-in-jps, and the GUI marker. Default 0.25 is "
+                        "the historical value; a sidewalk delivery robot is "
+                        "closer to 0.30-0.35.")
+    p.add_argument("--robot-height", type=float, default=1.0,
+                   help="physical robot height [m]. Recorded in the metrics "
+                        "and used for the GUI marker; the dynamics are 2-D, "
+                        "so height does not enter the collision test.")
+    p.add_argument("--jps-model", default="collision_free_speed",
+                   choices=["collision_free_speed", "social_force",
+                            "anticipation_velocity"],
+                   help="JuPedSim operational model (--reactive-peds "
+                        "jupedsim). collision_free_speed is the one SUMO "
+                        "documents as extensively tested.")
+    p.add_argument("--robot-in-jps", action="store_true",
+                   help="inject the robot into JuPedSim as a direct-steered "
+                        "agent so pedestrians SEE and react to it, with its "
+                        "real radius. Off by default, which preserves the "
+                        "fairness rule that the robot does all the avoiding. "
+                        "NOTE: a direct steering stage bypasses JuPedSim's "
+                        "strategic/tactical levels but NOT its operational "
+                        "one, so JuPedSim also nudges the robot; the residual "
+                        "is reported as jps_robot_track_err_*.")
+    p.add_argument("--reactive-peds", choices=["off", "sfm", "jupedsim"],
                    default="off",
                    help="reactive pedestrian layer: sfm = pedestrians in an "
                         "interaction bubble around the robot are driven by "
@@ -1003,6 +1044,10 @@ def main():
     except Exception:
         pass
     x, y = wps[0]
+    collide_r = collision_radius(args.robot_radius)
+    if abs(collide_r - COLLIDE_R) > 1e-9:
+        print(f"robot radius {args.robot_radius:.3f} m -> collision "
+              f"threshold {collide_r:.3f} m (default {COLLIDE_R:.2f})")
 
     def nearest_sidewalk_edge(px, py):
         best, bd = None, 1e18
@@ -1021,10 +1066,12 @@ def main():
                              .getTime())
             traci.person.appendWalkingStage("robot0", [e], arrivalPos=1.0)
             traci.person.setColor("robot0", (255, 40, 40, 255))
-            traci.person.setWidth("robot0", 0.7)
+            traci.person.setWidth("robot0", 2.0 * args.robot_radius)
         else:
             traci.poi.add("robot0", x, y, (255, 40, 40, 255),
-                          poiType="robot", layer=40, width=0.9, height=0.9)
+                          poiType="robot", layer=40,
+                          width=2.0 * args.robot_radius,
+                          height=2.0 * args.robot_radius)
 
     spawn_robot()
 
@@ -1073,17 +1120,31 @@ def main():
     held_prev = False
     rows = []
     sfm = None
-    if args.reactive_peds == "sfm" and args.mode == "static":
-        print("reactive-peds: static mode has no walking pedestrians to "
-              "capture -- SFM layer idle by construction")
-    elif args.reactive_peds == "sfm":
-        from social_pedestrians import SocialForceLayer
+    if args.reactive_peds != "off" and args.mode == "static":
+        print(f"reactive-peds: static mode has no walking pedestrians to "
+              f"capture -- {args.reactive_peds} layer idle by construction")
+    elif args.reactive_peds != "off":
         su, sp_ = walk_union, walk_prep
         if su is None:
             su, sp_ = load_walkable(map_dir / f"{args.map}.net.xml", wps,
                                     buffer_m=30.0)
-        sfm = SocialForceLayer(traci, su, sp_,
-                               net_file=map_dir / f"{args.map}.net.xml")
+        if args.reactive_peds == "sfm":
+            from social_pedestrians import SocialForceLayer
+            sfm = SocialForceLayer(traci, su, sp_,
+                                   net_file=map_dir / f"{args.map}.net.xml")
+        else:
+            from jupedsim_pedestrians import JuPedSimLayer
+            try:
+                sfm = JuPedSimLayer(
+                    traci, su, sp_,
+                    net_file=map_dir / f"{args.map}.net.xml",
+                    route_pts=wps, model=args.jps_model,
+                    robot_radius=args.robot_radius,
+                    robot_in_jps=args.robot_in_jps,
+                    seed=args.seed)
+            except ImportError as exc:
+                sys.exit(f"--reactive-peds jupedsim needs the jupedsim "
+                         f"package: pip install jupedsim==1.4.2  ({exc})")
 
     success = False
     reason = "max_time"
@@ -1159,7 +1220,7 @@ def main():
         min_ped = min(min_ped, step_min)
         if step_min < SOCIAL_R:
             close_steps += 1
-        if step_min < COLLIDE_R and t > SPAWN_GRACE:
+        if step_min < collide_r and t > SPAWN_GRACE:
             reason = "collision"
             break
 
@@ -1287,6 +1348,9 @@ def main():
         "global_rrt_params": (dict(GLOBAL_RRT_PARAMS) if gp == "rrt"
                               else None),
         "reactive_peds": args.reactive_peds,
+        "robot_radius_m": args.robot_radius,
+        "robot_height_m": args.robot_height,
+        "collision_radius_m": round(collide_r, 3),
         "params_file": (args.params_file or None),
         "sfm_controlled_steps": (sfm.controlled_steps if sfm else 0),
         "sfm_capture_events": (sfm.capture_events if sfm else 0),

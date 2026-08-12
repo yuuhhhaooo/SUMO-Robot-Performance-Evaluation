@@ -16,3 +16,8 @@ pandas==3.0.2
 statsmodels==0.14.6
 # Learning-based planners (SARL / CADRL / LSTM-RL); CPU build is sufficient
 torch==2.13.0
+# Reactive pedestrians: --reactive-peds jupedsim (Juelich Pedestrian
+# Simulator). Only jupedsim's core is needed; its optional extras pull in
+# PySide6 + VTK for the visualiser, so install with --no-deps if you want to
+# keep the environment small (shapely and numpy above already satisfy it).
+jupedsim==1.4.2

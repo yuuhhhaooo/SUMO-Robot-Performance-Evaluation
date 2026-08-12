@@ -27,6 +27,20 @@ striping control) once beyond RELEASE_R.
 from __future__ import annotations
 
 import math
+import zlib
+
+
+def _stable_hash(pid: str) -> int:
+    """Process-stable substitute for hash() on a pedestrian id.
+
+    Python salts str.__hash__ per process (PYTHONHASHSEED), so seeding any
+    behaviour from hash(pid) makes the run irreproducible: the same code with
+    the same --seed produced different pedestrian trajectories and different
+    ped_* metrics on consecutive runs, which silently invalidated the
+    seed-matched paired comparisons the protocol depends on. crc32 is stable
+    across processes, machines and Python versions.
+    """
+    return zlib.crc32(pid.encode("utf-8"))
 
 
 # ---- SFM parameters (PySocialForce circular-specification defaults) ----
@@ -279,7 +293,7 @@ class SocialForceLayer:
                     side = mem[2]          # sticky: no per-step flapping
                 else:
                     if abs(lat) < 0.05:
-                        side = 1.0 if (hash(pid) & 1) else -1.0
+                        side = 1.0 if (_stable_hash(pid) & 1) else -1.0
                     else:
                         side = -1.0 if lat > 0 else 1.0
                     # walkable-aware: if the bypass point on the chosen
@@ -305,7 +319,7 @@ class SocialForceLayer:
                 # at p0 along edir), with a small fixed per-ped random
                 # offset so re-merged walkers spread naturally instead of
                 # forming a single file
-                jx = ((hash(pid) % 1000) / 1000.0 - 0.5) * 0.4
+                jx = ((_stable_hash(pid) % 1000) / 1000.0 - 0.5) * 0.4
                 lat0 = ((px - st["p0"][0]) * (-ey)
                         + (py - st["p0"][1]) * ex) - jx
                 if abs(lat0) > 0.25:
