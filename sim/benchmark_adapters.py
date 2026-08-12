@@ -377,7 +377,36 @@ def build_planner(algorithm: str, cfg: PlannerConfig, seed: int,
                                           device=device)
 
         def _retarget_pub(pl):
+            # Rebinding cfg is NOT enough. These planners derive state from cfg
+            # in __init__ -- the upstream policy's time_step, v_pref, the
+            # DISCRETE ACTION SPACE built from v_pref, and both radii -- and a
+            # cached instance would otherwise keep the FIRST leg's values for
+            # the whole run. map5_ucl routes have 18+ legs, so a silent leak
+            # here would affect every OSM result. Same reasoning, and the same
+            # shape, as _retarget_cadrl below.
+            #
+            # With today's leg_config only the sidewalk geometry varies between
+            # legs, so none of these actually change and the cache happens to
+            # be safe -- but it is safe by accident, and one per-leg dt or
+            # speed limit would break it silently. Recompute them explicitly.
             pl.cfg = cfg                # geometry of the NEW leg
+            mod = importlib.import_module(mod_name)
+            v_pref_const = getattr(mod, "UPSTREAM_V_PREF", None)
+            if v_pref_const is not None and hasattr(pl, "v_pref") and \
+                    hasattr(getattr(pl, "policy", None), "build_action_space"):
+                # the three upstream-CrowdNav planners
+                pl.policy.time_step = float(cfg.dt)
+                v_pref = float(min(v_pref_const, cfg.max_speed))
+                if v_pref != pl.v_pref:
+                    pl.v_pref = v_pref
+                    pl.policy.build_action_space(v_pref)
+                pl.robot_radius = float(cfg.robot_radius)
+                pl.human_radius = float(cfg.pedestrian_radius)
+            # DS-RNN / AttnGraph deliberately feed upstream's CONSTANTS
+            # (radius 0.3, v_pref 1.0) rather than cfg's values -- the networks
+            # only ever saw those two numbers in those slots -- and read
+            # cfg.dt / cfg.max_speed at call time, so rebinding cfg is all they
+            # need. Do not "helpfully" overwrite those constants here.
             if hasattr(pl, "reset"):
                 pl.reset()
             _reset_episode_state(pl)
