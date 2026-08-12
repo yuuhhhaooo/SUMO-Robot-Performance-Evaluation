@@ -140,7 +140,8 @@ def parse_args():
                         "strategic/tactical levels but NOT its operational "
                         "one, so JuPedSim also nudges the robot; the residual "
                         "is reported as jps_robot_track_err_*.")
-    p.add_argument("--reactive-peds", choices=["off", "sfm", "jupedsim"],
+    p.add_argument("--reactive-peds",
+                   choices=["off", "sfm", "jupedsim", "pysf"],
                    default="off",
                    help="reactive pedestrian layer: sfm = pedestrians in an "
                         "interaction bubble around the robot are driven by "
@@ -1119,6 +1120,20 @@ def main():
             from social_pedestrians import SocialForceLayer
             sfm = SocialForceLayer(traci, su, sp_,
                                    net_file=map_dir / f"{args.map}.net.xml")
+        elif args.reactive_peds == "pysf":
+            # published Social Force Model: pysocialforce / socialforce,
+            # installed from PyPI unmodified
+            from social_pedestrians_pysf import PySocialForceLayer
+            try:
+                sfm = PySocialForceLayer(
+                    traci, su, sp_,
+                    net_file=map_dir / f"{args.map}.net.xml",
+                    route_pts=wps, robot_radius=args.robot_radius,
+                    robot_in_layer=args.robot_in_jps, seed=args.seed)
+            except ImportError as exc:
+                sys.exit(f"--reactive-peds pysf needs the published social "
+                         f"force packages: pip install pysocialforce "
+                         f"socialforce  ({exc})")
         else:
             from jupedsim_pedestrians import JuPedSimLayer
             try:

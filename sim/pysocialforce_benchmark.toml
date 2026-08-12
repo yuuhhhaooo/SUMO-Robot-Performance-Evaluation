@@ -1,0 +1,112 @@
+# Configuration handed to the PUBLISHED PySocialForce package (1.1.2,
+# github.com/yuxiang-gao/PySocialForce) by sim/social_pedestrians_pysf.py.
+#
+# This file is the library's OWN documented configuration mechanism
+# (`pysocialforce.Simulator(..., config_file=...)`). No library source is
+# patched. Every force parameter below is REPRODUCED VERBATIM from the
+# package default (pysocialforce/utils/config.py :: DefaultConfig.CONFIG,
+# identical to pysocialforce/config/default.toml) so that a reviewer can
+# diff this file against upstream and see exactly what was changed.
+#
+# ONLY THREE VALUES DIFFER FROM UPSTREAM, all of them integration/plumbing
+# settings, none of them force parameters:
+#
+#   step_width      1.0  -> 0.05   integration timestep [s].
+#                                  Upstream's 1.0 s (and the in-repo
+#                                  hand-rolled layer's 0.5 s) are >= the
+#                                  relaxation time tau = 0.5 s, which
+#                                  collapses the relaxation dynamics. The
+#                                  layer runs 10 sub-steps of 0.05 s per
+#                                  0.5 s SUMO step, so dt << tau.
+#   resolution      10   -> 4      obstacle polyline sampling [points/m].
+#                                  Purely a discretisation of the sidewalk
+#                                  boundary handed to ObstacleForce. 4/m is
+#                                  ~2.5x cheaper than upstream and still fine
+#                                  next to the wall force's sigma = 0.2 m.
+#                                  social_pedestrians_pysf.py READS this value
+#                                  back out of this file and resamples the
+#                                  sidewalk boundary at 1/resolution, because
+#                                  EnvState produces a malformed (0,)-shaped
+#                                  array for any segment shorter than
+#                                  1/resolution. Change it here and the layer
+#                                  follows automatically.
+#   enable_group    true -> false  SUMO gives us no group membership, so
+#                                  every captured pedestrian is a singleton.
+#                                  Leaving it on would add three group
+#                                  forces that are identically zero.
+#
+# LIBRARY QUIRK, important when editing this file. pysocialforce 1.1.2 reads
+# step_width / tau / agent_radius / max_speed_multiplier / resolution from the
+# ROOT of the config dict, not from [scene]:
+#     Simulator.__init__:  EnvState(obstacles, self.config("resolution", 10.0))
+#     PedState.__init__:   config("step_width", 0.4), config("tau", 0.5), ...
+# where `config` is the FULL config, and Config.__call__ is a flat
+# dict.get(). The upstream default.toml puts them under [scene], so those
+# five entries are dead there and the hardcoded fallbacks win. They are
+# therefore given at the ROOT below (authoritative) and repeated under
+# [scene] for documentation. Only [scene].enable_group is genuinely read
+# from [scene] (via Simulator.scene_config).
+
+title = "SUMO sidewalk-robot benchmark -- reactive pedestrian layer"
+
+# --- root-level: the values pysocialforce actually reads (see note above)
+step_width = 0.05
+tau = 0.5
+agent_radius = 0.35
+max_speed_multiplier = 1.3
+resolution = 4
+
+[scene]
+enable_group = false
+# repeated for readability; not read by pysocialforce 1.1.2 (see header)
+agent_radius = 0.35
+step_width = 0.05
+max_speed_multiplier = 1.3
+tau = 0.5
+resolution = 4
+
+# --- force parameters: UPSTREAM DEFAULTS, UNCHANGED -----------------------
+[goal_attractive_force]
+factor = 1
+
+[ped_repulsive_force]
+factor = 1.5
+v0 = 2.1
+sigma = 0.3
+fov_phi = 100.0
+fov_factor = 0.5
+
+[space_repulsive_force]
+factor = 1
+u0 = 10
+r = 0.2
+
+[group_coherence_force]
+factor = 3.0
+
+[group_repulsive_force]
+factor = 1.0
+threshold = 0.55
+
+[group_gaze_force]
+factor = 4.0
+fov_phi = 90.0
+
+[desired_force]
+factor = 1.0
+relaxation_time = 0.5
+goal_threshold = 0.2
+
+[social_force]
+factor = 5.1
+lambda_importance = 2.0
+gamma = 0.35
+n = 2
+n_prime = 3
+
+[obstacle_force]
+factor = 10.0
+sigma = 0.2
+threshold = 3.0
+
+[along_wall_force]
