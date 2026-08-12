@@ -14,6 +14,7 @@ import argparse
 import sys
 import csv
 import json
+import math
 from collections import defaultdict
 from pathlib import Path
 
@@ -163,7 +164,6 @@ def leg_crossing_spans(leg, spec):
 def strip_axes(fig_title, legs, spec):
     """One horizontal strip subplot per leg: x along, y across the band."""
     n = len(legs)
-    heights = [1.0] * n
     fig, axes = plt.subplots(n, 1, figsize=(13, 1.9 * n + 1.6),
                              squeeze=False)
     axes = [a[0] for a in axes]
@@ -293,10 +293,15 @@ def _route_point(sv, W, S, T):
     return base, n
 
 
-def envelope_figure(spec, items, algo, mp, mode, color, dpi, out_png):
+def envelope_figure(spec, items, algo, mp, mode, color, dpi, out_png,
+                    traces=None):
     """Median lateral path + 10-90% envelope across seeds, drawn in world
     coordinates around the planned route. Answers WHERE trajectories
-    diverge instead of overplotting every run."""
+    diverge instead of overplotting every run.
+
+    ``traces`` is an optional list of already-parsed ``(xs, ys)`` tuples,
+    parallel to ``items``; pass it when the caller has read the same
+    robot_trace.csv files already, so they are not parsed twice."""
     import numpy as np
     import matplotlib.pyplot as plt
     wps = items[0][1].get("waypoints")
@@ -305,8 +310,11 @@ def envelope_figure(spec, items, algo, mp, mode, color, dpi, out_png):
     W, S, T, L = _route_arrays(wps)
     grid = np.linspace(0.0, S[-1], 140)
     D = np.full((len(items), len(grid)), np.nan)
-    for k, (_seed, _m, d) in enumerate(items):
-        xs, ys = read_trace(d / "robot_trace.csv")
+    for k, (_seed, _metrics, d) in enumerate(items):
+        if traces is not None:
+            xs, ys = traces[k]
+        else:
+            xs, ys = read_trace(d / "robot_trace.csv")
         if len(xs) < 3:
             continue
         sv, dv = _project_traj(np.asarray(xs), np.asarray(ys), W, S, T, L)
@@ -331,31 +339,36 @@ def envelope_figure(spec, items, algo, mp, mode, color, dpi, out_png):
     vy0, vy1 = allp[:, 1].min() - 5, allp[:, 1].max() + 5
     fig_h = max(2.8, min(9.0, 13.0 * (vy1 - vy0) / (vx1 - vx0) + 1.2))
     fig, ax = plt.subplots(figsize=(13.0, max(fig_h, 4.0)))
-    draw_map(ax, spec)
-    ax.set_xlim(vx0, vx1)
-    ax.set_ylim(vy0, vy1)
-    ax.set_aspect("auto")   # vertical exaggeration for the thin band
-    ax.plot(*np.asarray(
-        LineString(wps).simplify(0.3).coords).T,
-        color="0.35", lw=1.0, ls="--", zorder=6, label="planned route")
-    lo = base + nvec * q10[:, None]
-    hi = base + nvec * q90[:, None]
-    band = np.vstack([lo[keep], hi[keep][::-1]])
-    ax.fill(band[:, 0], band[:, 1], color=color, alpha=0.25, zorder=6,
-            label="10-90% envelope")
-    mid = base + nvec * med[:, None]
-    mline = np.asarray(LineString(mid[keep]).simplify(0.15).coords)
-    ax.plot(mline[:, 0], mline[:, 1], color=color, lw=2.2, zorder=8,
-            label="median path")
-    succ = sum(1 for _, m, _ in items if m.get("success"))
-    ax.set_title(f"{algo.upper()} on {mp} | mode={mode} | median + "
-                 f"10-90% envelope over {len(items)} seeds "
-                 f"({succ} success, y stretched)")
-    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.18),
-              ncol=3, fontsize=8)
-    fig.tight_layout()
-    fig.savefig(out_png, dpi=dpi, bbox_inches="tight")
-    plt.close(fig)
+    # everything past this point must not leak the figure: main() catches
+    # exceptions from this function and falls back to an overlay, so an
+    # un-closed figure here would accumulate for the whole run.
+    try:
+        draw_map(ax, spec)
+        ax.set_xlim(vx0, vx1)
+        ax.set_ylim(vy0, vy1)
+        ax.set_aspect("auto")   # vertical exaggeration for the thin band
+        ax.plot(*np.asarray(
+            LineString(wps).simplify(0.3).coords).T,
+            color="0.35", lw=1.0, ls="--", zorder=6, label="planned route")
+        lo = base + nvec * q10[:, None]
+        hi = base + nvec * q90[:, None]
+        band = np.vstack([lo[keep], hi[keep][::-1]])
+        ax.fill(band[:, 0], band[:, 1], color=color, alpha=0.25, zorder=6,
+                label="10-90% envelope")
+        mid = base + nvec * med[:, None]
+        mline = np.asarray(LineString(mid[keep]).simplify(0.15).coords)
+        ax.plot(mline[:, 0], mline[:, 1], color=color, lw=2.2, zorder=8,
+                label="median path")
+        succ = sum(1 for _, m, _ in items if m.get("success"))
+        ax.set_title(f"{algo.upper()} on {mp} | mode={mode} | median + "
+                     f"10-90% envelope over {len(items)} seeds "
+                     f"({succ} success, y stretched)")
+        ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.18),
+                  ncol=3, fontsize=8)
+        fig.tight_layout()
+        fig.savefig(out_png, dpi=dpi, bbox_inches="tight")
+    finally:
+        plt.close(fig)
     return True
 
 
@@ -482,6 +495,38 @@ def main():
         title = (f"{algo.upper()} on {mp} | mode={mode} | "
                  f"{succ}/{len(items)} success across seeds "
                  f"(x collision, o goal, s timeout)")
+        if len(items) >= 3:
+            # supervisor protocol: with many seeds, do NOT overplot
+            # polylines -- the median + quantile envelope IS the figure.
+            # This test used to sit AFTER the per-seed figure was built and
+            # laid out (tight_layout is the expensive part), only to throw
+            # that figure away; >=3 seeds is the normal case, so the whole
+            # per-seed figure was wasted on nearly every group.  The traces
+            # are parsed once here and handed to both consumers below.
+            traces = [read_trace(d / "robot_trace.csv")
+                      for _sd, _m2, d in items]
+            try:
+                ok = envelope_figure(spec, items, algo, mp, mode, base,
+                                     args.dpi,
+                                     plots / f"envelope_{algo}_{mp}_"
+                                             f"{mode}.png",
+                                     traces=traces)
+            except Exception as exc:
+                ok = False
+                print(f"envelope {algo}/{mp}/{mode} skipped: {exc}")
+            if not ok:      # coverage too thin -> fall back to overlay
+                fig2, ax2 = plt.subplots(figsize=fig_size(spec))
+                draw_map(ax2, spec)
+                for (xs2, ys2) in traces:
+                    ax2.plot(xs2, ys2, color=base, lw=1.1, alpha=0.6,
+                             zorder=7)
+                ax2.set_title(f"{algo.upper()} on {mp} | {mode} | "
+                              f"{len(items)} seeds (envelope coverage "
+                              f"too thin; overlay fallback)")
+                fig2.savefig(plots / f"paths_{algo}_{mp}_{mode}.png",
+                             dpi=args.dpi, bbox_inches="tight")
+                plt.close(fig2)
+            continue
         if args.full_map:
             fig, ax = plt.subplots(figsize=fig_size(spec))
             draw_map(ax, spec)
@@ -512,35 +557,9 @@ def main():
                        ncol=min(8, len(items)), fontsize=8,
                        bbox_to_anchor=(0.5, -0.015))
         fig.tight_layout()
-        if len(items) >= 3:
-            # supervisor protocol: with many seeds, do NOT overplot
-            # polylines -- the median + quantile envelope IS the figure
-            plt.close(fig)
-            try:
-                ok = envelope_figure(spec, items, algo, mp, mode, base,
-                                     args.dpi,
-                                     plots / f"envelope_{algo}_{mp}_"
-                                             f"{mode}.png")
-            except Exception as exc:
-                ok = False
-                print(f"envelope {algo}/{mp}/{mode} skipped: {exc}")
-            if not ok:      # coverage too thin -> fall back to overlay
-                fig2, ax2 = plt.subplots(figsize=fig_size(spec))
-                draw_map(ax2, spec)
-                for _sd, m2, d2 in items:
-                    xs2, ys2 = read_trace(d2 / "robot_trace.csv")
-                    ax2.plot(xs2, ys2, color=base, lw=1.1, alpha=0.6,
-                             zorder=7)
-                ax2.set_title(f"{algo.upper()} on {mp} | {mode} | "
-                              f"{len(items)} seeds (envelope coverage "
-                              f"too thin; overlay fallback)")
-                fig2.savefig(plots / f"paths_{algo}_{mp}_{mode}.png",
-                             dpi=args.dpi, bbox_inches="tight")
-                plt.close(fig2)
-        else:
-            fig.savefig(plots / f"paths_{algo}_{mp}_{mode}.png",
-                        dpi=args.dpi, bbox_inches="tight")
-            plt.close(fig)
+        fig.savefig(plots / f"paths_{algo}_{mp}_{mode}.png",
+                    dpi=args.dpi, bbox_inches="tight")
+        plt.close(fig)
 
     # ---- 3) metric bar charts per (map, mode) ----------------------------
     by_mm = defaultdict(lambda: defaultdict(list))
@@ -552,20 +571,35 @@ def main():
         for ax, (key, label, is_rate) in zip(axes.flat, METRIC_DEFS):
             vals, errs = [], []
             for a in algos:
-                xs = [float(bool(m[key])) if is_rate else float(m[key])
-                      for m in algod[a] if key in m]
+                xs = []
+                for m in algod[a]:
+                    if key not in m:
+                        continue
+                    v = m[key]
+                    if is_rate:
+                        xs.append(float(bool(v)))
+                        continue
+                    # min_pedestrian_distance_m has no value when the run
+                    # never saw a pedestrian: the runner writes null (older
+                    # runs wrote inf).  Either one has to be dropped, not
+                    # averaged -- float(None) raises and inf poisons the mean.
+                    if v is None:
+                        continue
+                    v = float(v)
+                    if not math.isfinite(v):
+                        continue
+                    xs.append(v)
                 vals.append(sum(xs) / len(xs) if xs else 0.0)
                 n = len(xs)
                 if n < 2:
                     errs.append(0.0)
                 elif is_rate:
                     # Wilson 95% CI half-width for a proportion
-                    import math as _m
                     z = 1.96
                     ph = vals[-1]
                     den = 1 + z * z / n
-                    half = (z * _m.sqrt(ph * (1 - ph) / n
-                                        + z * z / (4 * n * n))) / den
+                    half = (z * math.sqrt(ph * (1 - ph) / n
+                                          + z * z / (4 * n * n))) / den
                     errs.append(half)
                 else:
                     mu = vals[-1]
@@ -693,7 +727,6 @@ def main():
     for i, a in enumerate(algos):
         xs = [j + i * width for j in range(len(maps))]
         ys, es = [], []
-        import math as _m
         for mp in maps:
             v = by_map[mp].get(a, [])
             if not v:
@@ -704,8 +737,8 @@ def main():
             ph = sum(v) / n
             z = 1.96
             den = 1 + z * z / n
-            half = (z * _m.sqrt(ph * (1 - ph) / n
-                                + z * z / (4 * n * n))) / den
+            half = (z * math.sqrt(ph * (1 - ph) / n
+                                  + z * z / (4 * n * n))) / den
             ys.append(ph)
             es.append(half)
         ax.bar(xs, ys, width=width, color=unit_color(a), label=a,

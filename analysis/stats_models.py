@@ -80,7 +80,26 @@ def load_rows(results: Path) -> pd.DataFrame:
     return df
 
 
+def _effective_reference(d: pd.DataFrame, reference: str) -> str:
+    """Return a reference level that is actually PRESENT in this subset.
+
+    fit_lmm restricts to successful runs and to finite endog values, which
+    can leave the requested reference algorithm with zero observations.
+    Forcing it as the baseline anyway makes patsy emit a baseline level with
+    no data: the design matrix becomes rank-deficient and every reported
+    contrast is taken against an empty cell.
+    """
+    present = set(d["algorithm"].astype(str))
+    if reference in present:
+        return reference
+    fallback = d["algorithm"].astype(str).value_counts().idxmax()
+    print(f"note: reference '{reference}' has no rows in this subset "
+          f"({sorted(present)}); using '{fallback}' as reference instead")
+    return fallback
+
+
 def _fixed_formula(df: pd.DataFrame, reference: str) -> str:
+    reference = _effective_reference(df, reference)
     df["algorithm"] = pd.Categorical(
         df["algorithm"],
         categories=[reference] + sorted(set(df["algorithm"]) - {reference}))
@@ -223,6 +242,9 @@ def fit_lmm(df, endog, reference, out, subset_success=False):
                          if subset_success else "")
                       + " - need >=8 rows and >=2 algorithms; "
                         "run more seeds/maps")
+    # the reference must exist AFTER the success/finite subsetting above,
+    # otherwise the Treatment() fallbacks below reference an absent level
+    reference = _effective_reference(d, reference)
     fixed_full = _fixed_formula(d, reference)
     vc = {}
     if d["cell_map"].nunique() > 1:
@@ -295,7 +317,13 @@ def fit_lmm(df, endog, reference, out, subset_success=False):
 
 def failure_taxonomy(df, out):
     REASONS = ["goal", "collision", "max_time", "stalled",
-               "global_plan_failed"]
+               "global_plan_failed", "planner_error"]
+    df = df.copy()
+    # the runner emits "planner_error:<ExcType>"; collapse the exception type
+    # so these runs land in a real taxonomy category instead of a long tail
+    # that the stacked bar silently omits (percentages then miss those runs)
+    df["termination_reason"] = (df["termination_reason"].astype(str)
+                                .str.split(":").str[0])
     tab = (df.groupby(["algorithm", "termination_reason"]).size()
              .unstack(fill_value=0))
     for r in REASONS:                       # full taxonomy, zero-filled
@@ -311,14 +339,19 @@ def failure_taxonomy(df, out):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    reasons = ["goal", "collision", "max_time", "stalled",
-               "global_plan_failed"]
+    # plot EVERY reason present, not a hard-coded five: an unlisted category
+    # made the bars silently sum to less than 100% of runs
+    reasons = REASONS + [c for c in tab.columns
+                         if c != "n" and not c.endswith("_pct")
+                         and c not in REASONS]
+    reasons = [r for r in reasons if r in tab.columns]
     algos = tab.index.tolist()
     fig, ax = plt.subplots(figsize=(9, 4.5))
     bottom = np.zeros(len(algos))
     colors = {"goal": "#2e7d32", "collision": "#c62828",
               "max_time": "#f9a825", "stalled": "#6a1b9a",
-              "global_plan_failed": "#455a64"}
+              "global_plan_failed": "#455a64",
+              "planner_error": "#00838f"}
     for r in reasons:
         vals = (tab[r] / tab["n"] * 100.0).values
         ax.bar(algos, vals, bottom=bottom, label=r,
@@ -342,24 +375,32 @@ def ranking_stability(df, out, B=2000, rng_seed=0):
     per = df.pivot_table(index="seed", columns="algorithm",
                          values="success", aggfunc="mean")
     per = per.reindex(seeds)
-    ranks = np.zeros((B, len(algos)), dtype=int)
+    from scipy.stats import rankdata
+    ranks = np.zeros((B, len(algos)), dtype=float)
     top1 = np.zeros(len(algos))
     for b in range(B):
         take = rng.choice(len(seeds), size=len(seeds), replace=True)
-        m = per.iloc[take].mean(axis=0).reindex(algos).values
-        order = (-m).argsort(kind="stable")
-        rk = np.empty(len(algos), dtype=int)
-        rk[order] = np.arange(1, len(algos) + 1)
-        ranks[b] = rk
-        top1[order[0]] += 1
+        m = per.iloc[take].mean(axis=0).reindex(algos).values.astype(float)
+        # an algorithm absent from this resample ranks last, not first
+        m = np.where(np.isnan(m), -np.inf, m)
+        # AVERAGE ranks, and top-1 credit SHARED among ties. Exact ties are
+        # common here (whole resamples where several algorithms score 0.0 or
+        # 1.0). A stable argsort broke those ties by array position -- i.e.
+        # alphabetically -- which fabricated a definitive winner with
+        # P(top-1)=1.0 and zero-width rank CIs, the exact statistic this
+        # table exists to report honestly.
+        ranks[b] = rankdata(-m, method="average")
+        best = np.flatnonzero(m == m.max())
+        top1[best] += 1.0 / len(best)
     rows = []
     for i, a in enumerate(algos):
         rows.append({
             "algorithm": a,
             "mean_success": round(float(per[a].mean()), 3),
-            "rank_median": int(np.median(ranks[:, i])),
-            "rank_ci_lo": int(np.percentile(ranks[:, i], 2.5)),
-            "rank_ci_hi": int(np.percentile(ranks[:, i], 97.5)),
+            # float: average ranks are fractional when algorithms tie
+            "rank_median": round(float(np.median(ranks[:, i])), 2),
+            "rank_ci_lo": round(float(np.percentile(ranks[:, i], 2.5)), 2),
+            "rank_ci_hi": round(float(np.percentile(ranks[:, i], 97.5)), 2),
             "P_top1": round(float(top1[i] / B), 3),
         })
     res = pd.DataFrame(rows).sort_values("rank_median")
