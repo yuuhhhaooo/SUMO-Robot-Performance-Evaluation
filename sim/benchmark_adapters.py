@@ -21,9 +21,18 @@ if str(PLANNER_DIR) not in sys.path:
 
 from sidewalk_robot_common import PlannerConfig, RobotState, Obstacle  # noqa: E402
 
-ALGORITHMS = ["dwa", "astar", "dijkstra", "rrt", "orca", "orca_heuristic",
-              "mpc", "teb", "sarl", "cadrl", "lstm_rl"]
-LEARNING = {"sarl", "cadrl", "lstm_rl"}
+ALGORITHMS = [
+    # in-repo planners (the author's own implementations)
+    "dwa", "astar", "dijkstra", "rrt", "orca_heuristic", "mpc", "teb",
+    "sarl", "cadrl", "lstm_rl",
+    # published implementations (see PUBLISHED_IMPL)
+    "orca", "mpc_dompc", "teb_upstream",
+    "sarl_upstream", "cadrl_upstream", "lstm_rl_upstream",
+    "crowdnav_dsrnn", "crowdnav_attngraph",
+]
+LEARNING = {"sarl", "cadrl", "lstm_rl",
+            "sarl_upstream", "cadrl_upstream", "lstm_rl_upstream",
+            "crowdnav_dsrnn", "crowdnav_attngraph"}
 
 # Algorithms backed by the ORIGINAL PUBLISHED implementation rather than an
 # in-repo reimplementation. Recorded per run so the results table can say which
@@ -31,6 +40,21 @@ LEARNING = {"sarl", "cadrl", "lstm_rl"}
 PUBLISHED_IMPL = {
     "orca": "RVO2 (UNC GAMMA; van den Berg et al., ISRR 2009) "
             "via Python-RVO2 bindings",
+    "mpc_dompc": "do-mpc 5.1.1 on CasADi 3.7.2 with Ipopt "
+                 "(Lucia/Fiedler; Andersson et al.)",
+    "teb_upstream": "teb_local_planner 0.9.1 (Roesmann et al.), the "
+                    "published C++ library via pybind11 glue",
+    "sarl_upstream": "CrowdNav (Chen et al., ICRA 2019), upstream network "
+                     "+ the repo's shipped checkpoint",
+    "cadrl_upstream": "CrowdNav (Chen et al., ICRA 2019), upstream network "
+                      "+ the repo's shipped checkpoint",
+    "lstm_rl_upstream": "CrowdNav (Chen et al., ICRA 2019), upstream network "
+                        "+ the repo's shipped checkpoint",
+    "crowdnav_dsrnn": "CrowdNav_DSRNN (Liu et al., ICRA 2021), upstream "
+                      "network + published checkpoint",
+    "crowdnav_attngraph": "CrowdNav_Prediction_AttnGraph (Liu et al., ICRA "
+                          "2023) + GST predictor (Huang et al., RA-L 2022), "
+                          "upstream networks + published checkpoints",
 }
 
 _CLASSICAL = {
@@ -47,6 +71,25 @@ _CLASSICAL = {
                        "ORCAStylePlanner"),
     "mpc": ("mpc_sidewalk_robot_random_stop_collision", "MPCPlanner"),
     "teb": ("teb_sidewalk_robot_random_stop_collision", "SimplifiedTEBPlanner"),
+    # published solvers, same (cfg, seed) constructor
+    "mpc_dompc": ("mpc_dompc_planner", "DoMPCPlanner"),
+    "teb_upstream": ("teb_upstream_planner", "UpstreamTEBPlanner"),
+}
+
+# Learning planners backed by upstream networks + published checkpoints.
+# All take (cfg, seed, model_path=None, device="cpu").
+_LEARNED_PUBLISHED = {
+    "sarl_upstream": ("crowdnav_upstream", "UpstreamSARLPlanner",
+                      "sarl_rl_model.pth"),
+    "cadrl_upstream": ("crowdnav_upstream", "UpstreamCADRLPlanner",
+                       "cadrl_rl_model.pth"),
+    "lstm_rl_upstream": ("crowdnav_upstream", "UpstreamLstmRLPlanner",
+                         "lstm_rl_model.pth"),
+    # these two vendor their OWN published checkpoints, so model_path stays
+    # None and the adapter resolves it inside sim/third_party/
+    "crowdnav_dsrnn": ("crowdnav_dsrnn_planner", "CrowdNavDSRNNPlanner", None),
+    "crowdnav_attngraph": ("crowdnav_attngraph_planner",
+                           "CrowdNavAttnGraphPlanner", None),
 }
 
 _SARL_CACHE: dict = {}
@@ -320,6 +363,27 @@ def build_planner(algorithm: str, cfg: PlannerConfig, seed: int,
         if unm:
             print(f"params: unmatched keys {unm}")
         return pl
+    if algorithm in _LEARNED_PUBLISHED:
+        # Upstream networks driven by published checkpoints. Cached like the
+        # in-repo learning planners so a leg switch does not re-read the .pth
+        # and rebuild the network; each class exposes reset() for per-episode
+        # state, and re-targeting is just rebinding cfg.
+        mod_name, cls_name, ckpt = _LEARNED_PUBLISHED[algorithm]
+        model_path = (model_dir / ckpt) if ckpt else None
+
+        def _build_pub():
+            mod = importlib.import_module(mod_name)
+            return getattr(mod, cls_name)(cfg, seed, model_path=model_path,
+                                          device=device)
+
+        def _retarget_pub(pl):
+            pl.cfg = cfg                # geometry of the NEW leg
+            if hasattr(pl, "reset"):
+                pl.reset()
+            _reset_episode_state(pl)
+
+        return _cached_learned((algorithm, str(model_path), device),
+                               _build_pub, _retarget_pub)
     if algorithm == "sarl":
         return SARLAdapter(cfg, seed, model_dir / "sarl_rl_model.pth", device)
     if algorithm == "cadrl":

@@ -1,0 +1,34 @@
+upstream:   https://github.com/Shuijing725/CrowdNav_Prediction_AttnGraph
+branch:     main
+commit:     390773137be04ed14e27620dc5fd7c5e1a5b1f62
+commit date: 2024-12-09 20:06:18 -0600
+vendored:   2026-08-12
+license:    MIT (see LICENSE, Copyright (c) 2023 Shuijing Liu)
+            gst_updated/ carries its own LICENSE (Gumbel Social Transformer,
+            Huang et al.) -- see gst_updated/LICENSE.
+
+paper:      Shuijing Liu, Peixin Chang, Zhe Huang, Neeloy Chakraborty,
+            Kaiwen Hong, Weihang Liang, D. Livingston McPherson, Junyi Geng,
+            Katherine Driggs-Campbell,
+            "Intention Aware Robot Crowd Navigation with Attention-Based
+            Interaction Graph", ICRA 2023.
+            https://arxiv.org/abs/2203.01821
+
+predictor:  Zhe Huang, Ruohua Li, Kazuki Shin, Katherine Driggs-Campbell,
+            "Learning Sparse Interaction Graphs of Partially Detected
+            Pedestrians for Trajectory Prediction", RA-L 2022.  (GST)
+
+pretrained weights shipped by upstream IN THE REPO and vendored here verbatim
+(sha256, bytes):
+
+  trained_models/GST_predictor_non_rand/checkpoints/41200.pt  policy, non-randomised humans
+    b829fbf511efcc95ff745e9ff9daa6c0ad5aacdf45f599127aec9990e3c52236  10027147
+  trained_models/GST_predictor_rand/checkpoints/41665.pt      policy, randomised humans
+    a60bdd3b8ca84457497365133b9055c80d55b11c5a3bc76b28e38d4200cfd8ce  10027146
+  gst_updated/results/100-...-seed_1000/sj/checkpoint/epoch_100.pt       GST predictor (pairs with non_rand)
+    177b45cf913b55f1f30f75d3eb743722fc3dc653337225191d4e567ab90b444a    827916
+  gst_updated/results/100-...-seed_1000_rand/sj/checkpoint/epoch_100.pt  GST predictor (pairs with rand)
+    0f176bd724fdd3b16faeff02efdba43321e3a00719b277f05683711ad42657f2    827916
+
+The policy/predictor pairing is upstream's, stated in
+gst_updated/results/README.md.

@@ -1,0 +1,23 @@
+upstream:   https://github.com/Shuijing725/CrowdNav_DSRNN
+branch:     main
+commit:     91fb53c0f81964bbce8dd47960419fa8ab2fa810
+commit date: 2025-01-27 12:22:14 -0600
+vendored:   2026-08-12
+license:    MIT (see LICENSE, Copyright (c) 2021 Shuijing725)
+
+paper:      Shuijing Liu, Peixin Chang, Weihang Liang, Neeloy Chakraborty,
+            Katherine Driggs-Campbell,
+            "Decentralized Structural-RNN for Robot Crowd Navigation with
+            Deep Reinforcement Learning", ICRA 2021.
+            https://arxiv.org/abs/2011.04820
+
+pretrained weights shipped by upstream IN THE REPO and vendored here verbatim
+(sha256, bytes):
+
+  data/example_model/checkpoints/27776.pt            holonomic kinematics
+    09eb9965e60159a0f1ab00ecfd420b31fa512fa12953678b796e5448b6bb3499  3904861
+  data/example_model_unicycle/checkpoints/55554.pt   unicycle kinematics
+    e8b5ee59e289ebe87d98314ff701fe3893882b7e133a64ba5b68d1631a49120f  3904861
+
+The benchmark adapter uses the holonomic one, because the benchmark's planner
+interface returns (vx, vy).
