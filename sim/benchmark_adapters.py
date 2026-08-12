@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import math
 import sys
+from dataclasses import fields as dataclass_fields
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -35,14 +36,119 @@ _CLASSICAL = {
 
 _SARL_CACHE: dict = {}
 
+# cadrl / lstm_rl are rebuilt by build_planner on EVERY leg switch, and each
+# rebuild re-reads a .pth checkpoint and re-creates the torch network.  Both
+# planners are pure functions of (state, goal, obstacles) -- they write nothing
+# to self outside __init__, and the LSTM-RL value net re-zeros (h0, c0) inside
+# every forward() -- so the network can be reused across legs exactly like
+# SARL's, as long as everything the constructor derived from cfg is recomputed
+# for the new leg.  Keyed like _SARL_CACHE, plus the algorithm name.
+# Value: (planner, frozenset of the attribute names it had when it was built).
+_LEARNED_CACHE: dict = {}
+
+
+# The leg goal sits at local x == leg_len. Every classical planner rejects
+# candidate points within a small margin of sidewalk_x_max (in_sidewalk uses
+# 0.02-0.04, MPC's terminal constraint uses 0.06), so a box ending exactly at
+# the goal makes the goal itself an INFEASIBLE point: RRT can never connect
+# its tree, A*/Dijkstra can never expand the goal cell, and MPC can never
+# satisfy its terminal constraint -- all three then fall back to centreline
+# following regardless of their parameters. Extend the box past the goal so
+# the goal is strictly interior for every planner's margin.
+LEG_GOAL_MARGIN = 0.5
+
 
 def leg_config(leg_len: float, band_w: float, dt: float, max_time: float) -> PlannerConfig:
     return PlannerConfig(
         dt=dt, max_time=max_time,
-        sidewalk_x_min=0.0, sidewalk_x_max=max(leg_len, 1.0),
+        sidewalk_x_min=0.0,
+        sidewalk_x_max=max(leg_len, 1.0) + LEG_GOAL_MARGIN,
         sidewalk_y_min=0.0, sidewalk_y_max=band_w,
         sidewalk_center_y=band_w / 2.0,
     )
+
+
+# --------------------------------------------------------------------------
+# PlannerConfig -> DWAConfig propagation.
+#
+# DWAConfig is a standalone dataclass inside the DWA planner file and carries
+# its OWN defaults (max_speed 0.95 m/s, max_accel 0.80 m/s^2, max_yaw_rate
+# 80 deg/s, safe_distance 0.20 m, social_distance 0.80 m, sensor_range 12 m,
+# goal_tolerance 0.25 m).  Only dt / max_time / the five sidewalk-geometry
+# fields used to be copied here, so DWA -- the statistical reference algorithm
+# -- was benchmarked under a different robot envelope than the six planners
+# that read PlannerConfig directly.  Every quantity that exists in BOTH
+# dataclasses is now propagated.
+#
+# Fields below carry the same quantity, unit and meaning under the same name
+# in both dataclasses; the list is explicit so a reader sees exactly what the
+# adapter sets, and _dwa_config_kwargs() asserts every one of them still
+# resolves.
+_DWA_SHARED_FIELDS = (
+    # robot / controller limits
+    "max_speed", "min_speed", "max_accel", "max_yaw_rate", "dt",
+    # geometry and safety distances
+    "robot_radius", "pedestrian_radius", "safe_distance", "social_distance",
+    "sensor_range", "goal_tolerance",
+    # sidewalk / leg band
+    "sidewalk_x_min", "sidewalk_x_max", "sidewalk_y_min", "sidewalk_y_max",
+    "sidewalk_center_y",
+    # episode budget
+    "max_time",
+)
+
+# PlannerConfig field -> DWAConfig field for quantities that mean the same but
+# are named differently.  Empty today: DWAConfig happens to reuse every name.
+# Add an entry (with a comment naming the quantity) instead of letting a field
+# fall through to _PLANNER_ONLY_FIELDS.
+_DWA_RENAMED_FIELDS: dict[str, str] = {}
+
+# PlannerConfig fields that deliberately have NO DWAConfig counterpart.  Empty
+# today.  Anything not covered by the three collections raises, so a field
+# added to PlannerConfig later cannot be silently dropped again.
+_PLANNER_ONLY_FIELDS: frozenset[str] = frozenset()
+
+# DWAConfig fields intentionally left at their DWAConfig default, because they
+# are DWA *search* parameters rather than robot limits and have no
+# PlannerConfig counterpart: max_delta_yaw_rate (yaw acceleration),
+# v_resolution, yaw_rate_resolution, predict_time, goal_cost_gain,
+# speed_cost_gain, obstacle_cost_gain, centerline_cost_gain, yaw_rate_cost_gain.
+
+
+def _dwa_config_kwargs(cfg: PlannerConfig, dwa_config_cls) -> dict:
+    """Resolve the PlannerConfig -> DWAConfig field mapping generically.
+
+    Walks the PlannerConfig dataclass so a future field cannot be dropped
+    unnoticed: it is copied when DWAConfig has a matching field, and raises
+    otherwise unless it is declared in _PLANNER_ONLY_FIELDS.
+    """
+    dwa_names = {f.name for f in dataclass_fields(dwa_config_cls)}
+    kwargs: dict = {}
+    undeclared: list[str] = []
+    for f in dataclass_fields(cfg):
+        target = _DWA_RENAMED_FIELDS.get(f.name, f.name)
+        if target in dwa_names:
+            kwargs[target] = getattr(cfg, f.name)
+        elif f.name not in _PLANNER_ONLY_FIELDS:
+            undeclared.append(f.name)
+    if undeclared:
+        raise RuntimeError(
+            "benchmark_adapters: PlannerConfig field(s) "
+            f"{undeclared} have no DWAConfig counterpart. Add them to "
+            "_DWA_RENAMED_FIELDS (same quantity, other name) or to "
+            "_PLANNER_ONLY_FIELDS (no DWA equivalent) so the choice is explicit."
+        )
+    expected = {_DWA_RENAMED_FIELDS.get(n, n) for n in _DWA_SHARED_FIELDS}
+    lost = sorted(expected - set(kwargs))
+    if lost:
+        raise RuntimeError(
+            f"benchmark_adapters: expected DWAConfig field(s) {lost} to be set "
+            "from PlannerConfig but they no longer resolve."
+        )
+    new = sorted(set(kwargs) - expected)
+    if new:
+        print(f"DWAAdapter: also propagating new shared config field(s) {new}")
+    return kwargs
 
 
 class DWAAdapter:
@@ -51,12 +157,8 @@ class DWAAdapter:
     def __init__(self, cfg: PlannerConfig, seed: int):
         import importlib
         self.mod = importlib.import_module("dwa_sidewalk_robot_random_stop_collision")
-        self.cfg = self.mod.DWAConfig(
-            dt=cfg.dt, max_time=cfg.max_time,
-            sidewalk_x_min=cfg.sidewalk_x_min, sidewalk_x_max=cfg.sidewalk_x_max,
-            sidewalk_y_min=cfg.sidewalk_y_min, sidewalk_y_max=cfg.sidewalk_y_max,
-            sidewalk_center_y=cfg.sidewalk_center_y,
-        )
+        # Run DWA under the SAME robot envelope as every other planner.
+        self.cfg = self.mod.DWAConfig(**_dwa_config_kwargs(cfg, self.mod.DWAConfig))
         self.yaw = 0.0
         self.v = 0.0
         self.w = 0.0
@@ -143,6 +245,48 @@ def apply_params(planner, params):
     return unmatched
 
 
+def _cached_learned(key, build, retarget):
+    """Return a cached learning planner, re-targeted to the current leg.
+
+    `build()` constructs a fresh one; `retarget(planner)` rebinds everything
+    the constructor derives from cfg/seed and resets any per-episode state.
+    If the planner grew attributes since it was built -- i.e. it started
+    keeping rollout state that a fresh instance would not have -- the cache
+    entry is thrown away and a new planner is built, so reuse can never
+    silently carry state from the previous leg.
+    """
+    hit = _LEARNED_CACHE.get(key)
+    if hit is not None:
+        planner, born_with = hit
+        if frozenset(vars(planner)) == born_with:
+            retarget(planner)
+            return planner
+        print(f"planner cache: {key[0]} grew per-episode state "
+              f"{sorted(set(vars(planner)) - set(born_with))}; rebuilding "
+              f"instead of reusing")
+        _LEARNED_CACHE.pop(key, None)
+    planner = build()
+    _LEARNED_CACHE[key] = (planner, frozenset(vars(planner)))
+    return planner
+
+
+def _reset_episode_state(planner):
+    """Drop anything that must not survive a leg switch.
+
+    Today both cached planners are stateless between compute_command calls
+    (the LSTM-RL net builds fresh zero (h0, c0) tensors on every forward), so
+    this only clears the conventional hidden-state attribute names should a
+    future revision of those files introduce one; _cached_learned's attribute
+    snapshot catches the case where a brand-new attribute appears.
+    """
+    if hasattr(planner, "reset") and callable(planner.reset):
+        planner.reset()
+    for name in ("hidden", "hidden_state", "_hidden", "lstm_hidden",
+                 "lstm_state", "rnn_state"):
+        if hasattr(planner, name):
+            setattr(planner, name, None)
+
+
 def build_planner(algorithm: str, cfg: PlannerConfig, seed: int,
                   model_dir: Path, device: str = "cpu", params=None):
     """Instantiate one planner for the current leg (planner files unchanged)."""
@@ -164,18 +308,54 @@ def build_planner(algorithm: str, cfg: PlannerConfig, seed: int,
     if algorithm == "sarl":
         return SARLAdapter(cfg, seed, model_dir / "sarl_rl_model.pth", device)
     if algorithm == "cadrl":
-        mod = importlib.import_module("cadrl_sidewalk_robot_random_stop_collision")
+        model_path = model_dir / "cadrl_rl_model.pth"
         ns = SimpleNamespace(
-            model_path=str(model_dir / "cadrl_rl_model.pth"), gpu=(device != "cpu"),
+            model_path=str(model_path), gpu=(device != "cpu"),
             cadrl_gamma=0.9, cadrl_speed_samples=5, cadrl_rotation_samples=16,
             cadrl_max_humans=5, cadrl_v_pref=None, cadrl_sidewalk_penalty=1.0,
             cadrl_centerline_penalty=0.02, cadrl_goal_lookahead=6.0,
             cadrl_progress_bonus=0.20)
-        return mod.CADRLPlanner(cfg, seed, ns)
+
+        def _build_cadrl():
+            mod = importlib.import_module(
+                "cadrl_sidewalk_robot_random_stop_collision")
+            return mod.CADRLPlanner(cfg, seed, ns)
+
+        def _retarget_cadrl(pl):
+            pl.cfg = cfg                # geometry of the NEW leg
+            pl.seed = seed
+            # CADRLPlanner.__init__: v_pref = cadrl_v_pref or cfg.max_speed,
+            # and the discrete action space is derived from v_pref.
+            v_pref = (float(ns.cadrl_v_pref) if ns.cadrl_v_pref is not None
+                      else cfg.max_speed)
+            if v_pref != pl.v_pref:
+                pl.v_pref = v_pref
+                pl.action_space = pl.build_action_space(v_pref)
+            _reset_episode_state(pl)
+
+        return _cached_learned(("cadrl", str(model_path), device),
+                               _build_cadrl, _retarget_cadrl)
     if algorithm == "lstm_rl":
         import torch
-        mod = importlib.import_module("lstm_rl_sidewalk_robot_random_stop_collision")
-        return mod.LstmRLPlanner(cfg, seed,
-                                 model_path=model_dir / "lstm_rl_model.pth",
-                                 device=torch.device(device))
+        model_path = model_dir / "lstm_rl_model.pth"
+
+        def _build_lstm():
+            mod = importlib.import_module(
+                "lstm_rl_sidewalk_robot_random_stop_collision")
+            return mod.LstmRLPlanner(cfg, seed, model_path=model_path,
+                                     device=torch.device(device))
+
+        def _retarget_lstm(pl):
+            pl.cfg = cfg                # geometry of the NEW leg
+            pl.seed = seed
+            # LstmRLPlanner.__init__: v_pref = min(<default 1.00>,
+            # cfg.max_speed), and the action space is derived from it.
+            v_pref = min(1.00, cfg.max_speed)
+            if v_pref != pl.v_pref:
+                pl.v_pref = v_pref
+                pl.action_space = pl._build_action_space()
+            _reset_episode_state(pl)
+
+        return _cached_learned(("lstm_rl", str(model_path), device),
+                               _build_lstm, _retarget_lstm)
     raise SystemExit(f"unknown algorithm '{algorithm}'")
