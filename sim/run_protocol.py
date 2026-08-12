@@ -73,7 +73,7 @@ def parse_args():
                    help="default: every registered algorithm")
     p.add_argument("--seeds", nargs="+", type=int, default=list(range(1, 11)))
     p.add_argument("--reactive-peds", nargs="+", default=DEFAULT_REACTIVE,
-                   choices=["off", "sfm", "jupedsim"],
+                   choices=["off", "sfm", "jupedsim", "pysf"],
                    help="crossed as a factor; benchmark_batch takes only one "
                         "value, so this driver invokes it once per level")
     p.add_argument("--out-root", default="results")
