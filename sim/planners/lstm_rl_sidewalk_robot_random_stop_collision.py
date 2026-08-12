@@ -168,6 +168,12 @@ class LstmRLPlanner:
         self.centerline_penalty = centerline_penalty
         self.sidewalk_penalty = sidewalk_penalty
         self.device = device
+        # The candidate-action batch is a stack of tiny GEMMs on <=30-row
+        # tensors; a wide intra-op thread pool is pure oversubscription here.
+        try:
+            torch.set_num_threads(1)
+        except Exception:  # pragma: no cover - some builds forbid late changes
+            pass
 
         self.model = LstmRLValueNetwork().to(device)
         state_dict = safe_load_state_dict(model_path, device)
@@ -351,6 +357,7 @@ class LstmRLPlanner:
 
         return reward + math.pow(self.gamma, self.cfg.dt * self.v_pref) * value
 
+    @torch.no_grad()
     def compute_command(
         self,
         state: RobotState,
@@ -368,13 +375,83 @@ class LstmRLPlanner:
             vx, vy = self._goal_action(state.x, state.y, local_goal)
             return vx, vy, {"status": "lstm_rl_no_human", "cost": 0.0}
 
+        dt = self.cfg.dt
+        actions = self.action_space
+        num_actions = len(actions)
+
+        # The one-step human prediction does not depend on the candidate action,
+        # so it is hoisted out of the action loop.
+        next_obstacles = [
+            Obstacle(pid=o.pid, x=o.x + o.vx * dt, y=o.y + o.vy * dt, vx=o.vx, vy=o.vy)
+            for o in obstacles
+        ]
+        old_goal_dist = math.hypot(local_goal[0] - state.x, local_goal[1] - state.y)
+
+        next_x = np.empty(num_actions, dtype=np.float64)
+        next_y = np.empty(num_actions, dtype=np.float64)
+        rewards: List[float] = []
+        for index, (vx, vy) in enumerate(actions):
+            nx = state.x + vx * dt
+            ny = state.y + vy * dt
+            next_x[index] = nx
+            next_y[index] = ny
+            rewards.append(
+                self._reward(nx, ny, local_goal, next_obstacles, old_goal_dist)
+            )
+
+        obs_x = np.fromiter((o.x for o in next_obstacles), dtype=np.float64, count=len(next_obstacles))
+        obs_y = np.fromiter((o.y for o in next_obstacles), dtype=np.float64, count=len(next_obstacles))
+        obs_vx = np.fromiter((o.vx for o in next_obstacles), dtype=np.float64, count=len(next_obstacles))
+        obs_vy = np.fromiter((o.vy for o in next_obstacles), dtype=np.float64, count=len(next_obstacles))
+
+        # LSTM-RL orders humans by DECREASING distance to the *predicted* robot
+        # pose, which is action dependent -- so the sort cannot be hoisted, only
+        # vectorised. A stable argsort on the negated distance reproduces
+        # ``sorted(..., reverse=True)`` including its tie ordering.
+        distances = np.hypot(
+            obs_x[None, :] - next_x[:, None], obs_y[None, :] - next_y[:, None]
+        )
+        order = np.argsort(-distances, axis=1, kind="stable")[:, : self.max_humans]
+        num_rows = order.shape[1]
+
+        robot_block = np.empty((num_actions, 9), dtype=np.float64)
+        robot_block[:, 0] = next_x
+        robot_block[:, 1] = next_y
+        robot_block[:, 2] = [vx for vx, _ in actions]
+        robot_block[:, 3] = [vy for _, vy in actions]
+        robot_block[:, 4] = self.cfg.robot_radius
+        robot_block[:, 5] = local_goal[0]
+        robot_block[:, 6] = local_goal[1]
+        robot_block[:, 7] = self.v_pref
+        robot_block[:, 8] = 0.0
+
+        raw_np = np.empty((num_actions, num_rows, 14), dtype=np.float32)
+        raw_np[:, :, :9] = robot_block[:, None, :]
+        raw_np[:, :, 9] = obs_x[order]
+        raw_np[:, :, 10] = obs_y[order]
+        raw_np[:, :, 11] = obs_vx[order]
+        raw_np[:, :, 12] = obs_vy[order]
+        raw_np[:, :, 13] = self.cfg.pedestrian_radius
+
+        raw = torch.as_tensor(
+            raw_np.reshape(num_actions * num_rows, 14),
+            dtype=torch.float32,
+            device=self.device,
+        )
+        # The rotation is row-independent, so it runs on the flat stack; the
+        # (num_actions, num_rows, 13) shape is restored so the LSTM still folds
+        # over the humans of ONE candidate scene per batch element.
+        rotated = self._rotate_raw_to_13d(raw).reshape(num_actions, num_rows, 13)
+        net_values = self.model(rotated).reshape(num_actions).detach().cpu().numpy()
+
+        discount = math.pow(self.gamma, self.cfg.dt * self.v_pref)
         best_action: Optional[Tuple[float, float]] = None
         best_value = float("-inf")
-        for action in self.action_space:
-            value = self._evaluate_action(state, local_goal, obstacles, action)
+        for index in range(num_actions):
+            value = rewards[index] + discount * float(net_values[index])
             if value > best_value:
                 best_value = value
-                best_action = action
+                best_action = actions[index]
 
         if best_action is None:
             best_action = self._goal_action(state.x, state.y, local_goal)

@@ -270,20 +270,41 @@ def generate_random_demand(base_rou: Path, out_rou: Path, args: argparse.Namespa
 def get_live_obstacles(traci: Any, robot_id: str, state: RobotState, previous_positions: Dict[str, Tuple[float, float]], cfg: PlannerConfig) -> List[Obstacle]:
     obstacles: List[Obstacle] = []
     current_positions: Dict[str, Tuple[float, float]] = {}
+    # NOTE: the position of EVERY person still has to be fetched, even for
+    # people far outside sensor_range: previous_positions is rebuilt from
+    # current_positions at the end of this call and is what the NEXT step uses
+    # to finite-difference velocities.  Dropping far-away people from that
+    # snapshot would make everyone who walks into range appear with vx=vy=0 for
+    # one step, i.e. a behaviour change.  What is reordered here is the filter
+    # itself: an axis-aligned box reject (two compares) runs before the sqrt.
+    get_position = traci.person.getPosition
+    sx, sy = state.x, state.y
+    rng = cfg.sensor_range
+    dt_s = max(cfg.dt, 1e-9)
+    hypot = math.hypot
+    prev_get = previous_positions.get
     for pid in traci.person.getIDList():
         if pid == robot_id:
             continue
         try:
-            x, y = traci.person.getPosition(pid)
+            x, y = get_position(pid)
         except Exception:
             continue
         current_positions[pid] = (x, y)
-        if math.hypot(x - state.x, y - state.y) > cfg.sensor_range:
+        dx = x - sx
+        dy = y - sy
+        # hypot(dx, dy) >= max(|dx|, |dy|), so |dx| > rng or |dy| > rng
+        # already proves the person is out of range -- identical outcome to
+        # the hypot test, without the sqrt.  Survivors still take it.
+        if dx > rng or dx < -rng or dy > rng or dy < -rng:
             continue
-        if pid in previous_positions:
-            px, py = previous_positions[pid]
-            vx = (x - px) / max(cfg.dt, 1e-9)
-            vy = (y - py) / max(cfg.dt, 1e-9)
+        if hypot(dx, dy) > rng:
+            continue
+        prev = prev_get(pid)
+        if prev is not None:
+            px, py = prev
+            vx = (x - px) / dt_s
+            vy = (y - py) / dt_s
         else:
             vx = vy = 0.0
         obstacles.append(Obstacle(pid=pid, x=x, y=y, vx=vx, vy=vy))

@@ -106,7 +106,12 @@ def motion(state: RobotState, v: float, w: float, dt: float) -> RobotState:
     return RobotState(x=x, y=y, yaw=yaw, v=v, w=w)
 
 
-def in_sidewalk(x: float, y: float, cfg: DWAConfig, margin: float = 0.02) -> bool:
+# Keep-out margin from the sidewalk border used by the hard feasibility test.
+# dwa_control()'s vectorised band test uses the same constant.
+SIDEWALK_MARGIN = 0.02
+
+
+def in_sidewalk(x: float, y: float, cfg: DWAConfig, margin: float = SIDEWALK_MARGIN) -> bool:
     return (
         cfg.sidewalk_x_min + margin <= x <= cfg.sidewalk_x_max - margin
         and cfg.sidewalk_y_min + margin <= y <= cfg.sidewalk_y_max - margin
@@ -152,6 +157,92 @@ def predict_trajectory(state: RobotState, v: float, w: float, cfg: DWAConfig) ->
     return np.array(traj, dtype=float)
 
 
+# --------------------------------------------------------------------------
+# Vectorised DWA internals.
+#
+# dwa_control() below evaluates the whole (v, w) candidate set with numpy
+# broadcasting instead of one Python loop per candidate.  It is a pure speed
+# change: every cost definition, every threshold and the tie-breaking order
+# are bit-for-bit the ones of the scalar reference implementation above
+# (predict_trajectory / calc_obstacle_cost / in_sidewalk), which are kept
+# unchanged so the two can be diffed against each other.
+#
+# The arithmetic is written to reproduce the scalar operation order exactly:
+#   * the yaw is integrated step by step (angle_wrap is not associative),
+#   * x/y accumulate as x_{k} = x_{k-1} + (v * cos(yaw_k)) * dt,
+#   * np.cos/np.sin/np.mod agree with math.cos/math.sin/% bit-for-bit,
+#   * np.hypot does NOT always agree with math.hypot (~1 ulp on ~17% of
+#     inputs), so the two distances that actually enter a comparison - the
+#     goal distance and the minimum obstacle distance - are finished with
+#     math.hypot on the reduced (one value per candidate) arrays.  np.hypot
+#     is only used to *locate* the closest obstacle sample, which is safe
+#     because it is monotone in the true distance.
+# --------------------------------------------------------------------------
+
+_HORIZON_STEPS_CACHE: Dict[Tuple[float, float], int] = {}
+
+
+def _horizon_steps(cfg: DWAConfig) -> int:
+    """Number of rows predict_trajectory() produces, with its exact float loop."""
+    key = (cfg.predict_time, cfg.dt)
+    n = _HORIZON_STEPS_CACHE.get(key)
+    if n is None:
+        n = 0
+        t = 0.0
+        while t <= cfg.predict_time + 1e-9:
+            n += 1
+            t += cfg.dt
+        _HORIZON_STEPS_CACHE[key] = n
+    return n
+
+
+def _rollout(state: RobotState, v_values: np.ndarray, w_values: np.ndarray, cfg: DWAConfig):
+    """Integrate the unicycle for every (v, w) candidate at once.
+
+    Returns (xs, ys, yaws) with shapes (n_v, n_w, T), (n_v, n_w, T), (1, n_w, T);
+    yaw does not depend on v, so it is kept at width 1 and broadcast.
+    Row k equals row k of predict_trajectory(state, v, w, cfg).
+    """
+    n_v = int(v_values.size)
+    n_w = int(w_values.size)
+    steps = _horizon_steps(cfg)
+    dt = cfg.dt
+    two_pi = 2.0 * math.pi
+
+    v_col = v_values.reshape(n_v, 1)
+    w_row = w_values.reshape(1, n_w)
+
+    xs = np.empty((n_v, n_w, steps), dtype=float)
+    ys = np.empty((n_v, n_w, steps), dtype=float)
+    yaws = np.empty((1, n_w, steps), dtype=float)
+
+    yaw = np.full((1, n_w), float(state.yaw), dtype=float)
+    x = np.full((n_v, n_w), float(state.x), dtype=float)
+    y = np.full((n_v, n_w), float(state.y), dtype=float)
+
+    for k in range(steps):
+        # angle_wrap(yaw + w * dt), same operand order as motion()
+        yaw = (yaw + w_row * dt + math.pi) % two_pi - math.pi
+        x = x + (v_col * np.cos(yaw)) * dt
+        y = y + (v_col * np.sin(yaw)) * dt
+        xs[:, :, k] = x
+        ys[:, :, k] = y
+        yaws[0, :, k] = yaw[0]
+    return xs, ys, yaws
+
+
+def _exact_hypot(dx: np.ndarray, dy: np.ndarray, sel: np.ndarray, size: int) -> np.ndarray:
+    """math.hypot on the selected entries of two flat arrays; inf elsewhere."""
+    out = np.full(size, float("inf"), dtype=float)
+    if sel.size:
+        out[sel] = np.fromiter(
+            map(math.hypot, dx[sel].tolist(), dy[sel].tolist()),
+            dtype=float,
+            count=int(sel.size),
+        )
+    return out
+
+
 def calc_obstacle_cost(traj: np.ndarray, obstacles: Sequence[Obstacle], cfg: DWAConfig) -> Tuple[float, float]:
     """Return obstacle cost and minimum clearance over the predicted trajectory.
 
@@ -179,7 +270,7 @@ def dwa_control(state: RobotState, goal: Tuple[float, float], obstacles: Sequenc
     dw = calc_dynamic_window(state, cfg)
     best_cost = float("inf")
     best_u = (0.0, 0.0)
-    best_traj = predict_trajectory(state, 0.0, 0.0, cfg)
+    best_traj: Optional[np.ndarray] = None
     best_info = {
         "goal_cost": float("inf"),
         "speed_cost": float("inf"),
@@ -194,40 +285,124 @@ def dwa_control(state: RobotState, goal: Tuple[float, float], obstacles: Sequenc
     v_values = np.arange(dw[0], dw[1] + cfg.v_resolution * 0.5, cfg.v_resolution)
     w_values = np.arange(dw[2], dw[3] + cfg.yaw_rate_resolution * 0.5, cfg.yaw_rate_resolution)
 
-    for v in v_values:
-        for w in w_values:
-            traj = predict_trajectory(state, float(v), float(w), cfg)
+    n_v = int(v_values.size)
+    n_w = int(w_values.size)
+    if n_v and n_w:
+        n_cand = n_v * n_w
+        xs, ys, yaws = _rollout(state, v_values, w_values, cfg)
 
-            # Hard sidewalk constraint: all predicted states must stay inside the sidewalk.
-            if any(not in_sidewalk(px, py, cfg) for px, py in traj[:, :2]):
-                continue
+        # Hard sidewalk constraint: all predicted states must stay inside the
+        # sidewalk. Same margin and same inclusive bounds as in_sidewalk().
+        margin = SIDEWALK_MARGIN
+        feasible = np.all(
+            (xs >= cfg.sidewalk_x_min + margin)
+            & (xs <= cfg.sidewalk_x_max - margin)
+            & (ys >= cfg.sidewalk_y_min + margin)
+            & (ys <= cfg.sidewalk_y_max - margin),
+            axis=2,
+        ).reshape(n_cand)
 
-            dx = goal[0] - traj[-1, 0]
-            dy = goal[1] - traj[-1, 1]
-            goal_cost = cfg.goal_cost_gain * math.hypot(dx, dy)
-            speed_cost = cfg.speed_cost_gain * (cfg.max_speed - traj[-1, 3])
-            obs_cost_raw, min_pred_clearance = calc_obstacle_cost(traj, obstacles, cfg)
-            if math.isinf(obs_cost_raw):
-                continue
-            obstacle_cost = cfg.obstacle_cost_gain * obs_cost_raw
-            centerline_cost = cfg.centerline_cost_gain * float(np.mean((traj[:, 1] - cfg.sidewalk_center_y) ** 2))
-            yaw_rate_cost = cfg.yaw_rate_cost_gain * abs(float(w))
+        # Obstacle clearance: min over (horizon rows x obstacles), exactly the
+        # reduction calc_obstacle_cost() performs.  Its early return on the
+        # first negative clearance only skips the candidate, so the reduced
+        # minimum carries the same information.  Like the scalar version, this
+        # is only evaluated for candidates that passed the sidewalk test.
+        n_obs = len(obstacles)
+        min_clearance = np.full(n_cand, float("inf"), dtype=float)
+        if n_obs:
+            obs_x = np.array([o.x for o in obstacles], dtype=float)
+            obs_y = np.array([o.y for o in obstacles], dtype=float)
+            if n_obs > 4:
+                # Every predicted sample is at most reach = max|v| * steps * dt
+                # away from the current position (each step moves exactly
+                # |v|*dt).  So for the closest obstacle d_near, no sample can be
+                # farther than d_near + reach, while an obstacle at d_i is never
+                # closer than d_i - reach.  Obstacles with d_i > d_near + 2*reach
+                # can therefore never attain the minimum and dropping them cannot
+                # change it.  The slack absorbs rounding in the bound itself.
+                d_now = np.hypot(obs_x - state.x, obs_y - state.y)
+                reach = float(np.max(np.abs(v_values))) * xs.shape[2] * cfg.dt
+                keep = d_now <= (float(d_now.min()) + 2.0 * reach + 1e-6)
+                if not keep.all():
+                    obs_x = obs_x[keep]
+                    obs_y = obs_y[keep]
+                    n_obs = int(obs_x.size)
+            sel = np.flatnonzero(feasible)
+            if sel.size:
+                px = xs.reshape(n_cand, -1)[sel]
+                py = ys.reshape(n_cand, -1)[sel]
+                d_ox = px[:, :, None] - obs_x
+                d_oy = py[:, :, None] - obs_y
+                # Locating the nearest sample with the squared distance is safe:
+                # rounding is monotone, so the argmin is a true nearest sample
+                # and math.hypot() on it reproduces the scalar minimum.
+                np.multiply(d_ox, d_ox, out=d_ox)
+                np.multiply(d_oy, d_oy, out=d_oy)
+                d_ox += d_oy
+                del d_oy
+                nearest = np.argmin(d_ox.reshape(sel.size, -1), axis=1)
+                del d_ox
+                row, col = np.divmod(nearest, n_obs)
+                take = np.arange(sel.size)
+                min_clearance[sel] = np.fromiter(
+                    map(math.hypot,
+                        (px[take, row] - obs_x[col]).tolist(),
+                        (py[take, row] - obs_y[col]).tolist()),
+                    dtype=float, count=int(sel.size),
+                )
+            min_clearance -= cfg.robot_radius + cfg.pedestrian_radius
+            # A small epsilon avoids exploding cost for almost touching states.
+            obstacle_cost = cfg.obstacle_cost_gain * (1.0 / np.maximum(min_clearance, 1e-3))
+            feasible &= ~(min_clearance < 0.0)
+        else:
+            obstacle_cost = np.full(n_cand, cfg.obstacle_cost_gain * 0.0, dtype=float)
 
-            total_cost = goal_cost + speed_cost + obstacle_cost + centerline_cost + yaw_rate_cost
+        sel = np.flatnonzero(feasible)
+        goal_cost = cfg.goal_cost_gain * _exact_hypot(
+            (goal[0] - xs[:, :, -1]).reshape(n_cand),
+            (goal[1] - ys[:, :, -1]).reshape(n_cand),
+            sel,
+            n_cand,
+        )
+        speed_cost = np.broadcast_to(
+            cfg.speed_cost_gain * (cfg.max_speed - v_values.reshape(n_v, 1)), (n_v, n_w)
+        ).reshape(n_cand)
+        centerline_cost = cfg.centerline_cost_gain * np.mean(
+            (ys - cfg.sidewalk_center_y) ** 2, axis=2
+        ).reshape(n_cand)
+        yaw_rate_cost = np.broadcast_to(
+            cfg.yaw_rate_cost_gain * np.abs(w_values.reshape(1, n_w)), (n_v, n_w)
+        ).reshape(n_cand)
 
-            if total_cost < best_cost:
-                best_cost = total_cost
-                best_u = (float(v), float(w))
-                best_traj = traj
-                best_info = {
-                    "goal_cost": goal_cost,
-                    "speed_cost": speed_cost,
-                    "obstacle_cost": obstacle_cost,
-                    "centerline_cost": centerline_cost,
-                    "yaw_rate_cost": yaw_rate_cost,
-                    "min_pred_clearance": min_pred_clearance,
-                    "total_cost": total_cost,
-                }
+        total_cost = goal_cost + speed_cost + obstacle_cost + centerline_cost + yaw_rate_cost
+        total_cost = np.where(feasible, total_cost, float("inf"))
+
+        # The scalar version scans v-major / w-minor and keeps the FIRST strict
+        # minimum; the candidate axes are laid out (n_v, n_w) and flattened in
+        # C order, and np.argmin returns the first occurrence, so ties resolve
+        # to the same candidate.
+        best = int(np.argmin(total_cost))
+        best_cost = float(total_cost[best])
+        if math.isfinite(best_cost):
+            i_v, i_w = divmod(best, n_w)
+            v_best = float(v_values[i_v])
+            w_best = float(w_values[i_w])
+            best_u = (v_best, w_best)
+            best_traj = np.empty((xs.shape[2], 5), dtype=float)
+            best_traj[:, 0] = xs[i_v, i_w]
+            best_traj[:, 1] = ys[i_v, i_w]
+            best_traj[:, 2] = yaws[0, i_w]
+            best_traj[:, 3] = v_best
+            best_traj[:, 4] = w_best
+            best_info = {
+                "goal_cost": float(goal_cost[best]),
+                "speed_cost": float(speed_cost[best]),
+                "obstacle_cost": float(obstacle_cost[best]),
+                "centerline_cost": float(centerline_cost[best]),
+                "yaw_rate_cost": float(yaw_rate_cost[best]),
+                "min_pred_clearance": float(min_clearance[best]),
+                "total_cost": best_cost,
+            }
 
     # No feasible trajectory: brake and keep heading.
     if math.isinf(best_cost):

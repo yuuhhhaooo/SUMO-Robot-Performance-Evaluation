@@ -63,6 +63,12 @@ class CADRLPlanner:
         self.cfg = cfg
         self.seed = seed
         self.device = torch.device("cuda:0" if torch.cuda.is_available() and getattr(args, "gpu", False) else "cpu")
+        # 81 candidate actions x <=5 humans is a stack of tiny GEMMs; a wide
+        # intra-op thread pool costs more in synchronisation than it saves.
+        try:
+            torch.set_num_threads(1)
+        except Exception:  # pragma: no cover - some builds forbid late changes
+            pass
 
         model_path = Path(args.model_path)
         if not model_path.is_absolute():
@@ -131,13 +137,18 @@ class CADRLPlanner:
         step_x = state.x + math.copysign(self.goal_lookahead, dx)
         return (step_x, final_goal[1])
 
-    def compute_reward(self, state: RobotState, next_self: Tuple[float, float, float, float, float], humans: Sequence[Obstacle], value_goal: Tuple[float, float], final_goal: Tuple[float, float]) -> float:
+    def compute_reward(self, state: RobotState, next_self: Tuple[float, float, float, float, float], humans: Sequence[Obstacle], value_goal: Tuple[float, float], final_goal: Tuple[float, float], next_human_xy: Sequence[Tuple[float, float]] | None = None) -> float:
         px, py, _, _, _ = next_self
         dmin = float("inf")
         collision = False
-        for human in humans:
-            hx = human.x + human.vx * self.cfg.dt
-            hy = human.y + human.vy * self.cfg.dt
+        # ``next_human_xy`` is the action-independent one-step human prediction,
+        # optionally precomputed once by the caller instead of per action.
+        if next_human_xy is None:
+            next_human_xy = [
+                (human.x + human.vx * self.cfg.dt, human.y + human.vy * self.cfg.dt)
+                for human in humans
+            ]
+        for hx, hy in next_human_xy:
             dist = math.hypot(px - hx, py - hy) - self.cfg.robot_radius - self.cfg.pedestrian_radius
             if dist < 0.0:
                 collision = True
@@ -223,14 +234,60 @@ class CADRLPlanner:
         best_action = (0.0, 0.0)
         best_info: Dict[str, float | str | int] = {"status": "cadrl", "num_humans": len(humans)}
 
-        for vx, vy in self.action_space:
+        actions = self.action_space
+        num_actions = len(actions)
+
+        # The one-step human prediction does not depend on the candidate action,
+        # so it is computed once instead of 81 times.
+        next_humans = [self.propagate_human(human) for human in humans]
+        next_human_xy = [(row[0], row[1]) for row in next_humans]
+        num_rows = len(next_humans) if next_humans else 1
+
+        # Only the 9 robot columns vary with the action; build the whole
+        # (num_actions, num_rows, 14) block at once.
+        robot_block = np.empty((num_actions, 9), dtype=np.float64)
+        next_selves: List[Tuple[float, float, float, float, float]] = []
+        for index, (vx, vy) in enumerate(actions):
             next_self = self.propagate_robot(state, vx, vy)
-            next_states = self.batch_next_states(next_self, humans, value_goal)
-            rotated = self.rotate_batch(next_states)
-            values = self.model(rotated).reshape(-1)
-            min_value = float(torch.min(values).item())
-            reward = self.compute_reward(state, next_self, humans, value_goal, goal)
-            total_value = reward + (self.gamma ** (self.cfg.dt * max(self.v_pref, 1e-6))) * min_value
+            next_selves.append(next_self)
+            sx, sy, svx, svy, theta = next_self
+            robot_block[index] = (
+                sx, sy, svx, svy, self.cfg.robot_radius,
+                value_goal[0], value_goal[1], self.v_pref, theta,
+            )
+
+        raw_np = np.empty((num_actions, num_rows, 14), dtype=np.float32)
+        raw_np[:, :, :9] = robot_block[:, None, :]
+        if next_humans:
+            raw_np[:, :, 9:] = np.asarray(next_humans, dtype=np.float64)[None, :, :]
+        else:
+            # The placeholder human is pinned to the propagated robot pose, so
+            # unlike a real human it *is* action dependent.
+            raw_np[:, 0, 9] = robot_block[:, 0] + 100.0
+            raw_np[:, 0, 10] = robot_block[:, 1] + 100.0
+            raw_np[:, 0, 11] = 0.0
+            raw_np[:, 0, 12] = 0.0
+            raw_np[:, 0, 13] = self.cfg.pedestrian_radius
+
+        next_states = torch.as_tensor(
+            raw_np.reshape(num_actions * num_rows, 14),
+            dtype=torch.float32,
+            device=self.device,
+        )
+        rotated = self.rotate_batch(next_states)
+        # CADRL scores every (action, human) pair independently and takes the
+        # pessimistic min over humans, so the flat stack can stay flat.
+        values = self.model(rotated).reshape(num_actions, num_rows)
+        min_values = torch.min(values, dim=1).values.detach().cpu().numpy()
+
+        discount = self.gamma ** (self.cfg.dt * max(self.v_pref, 1e-6))
+        for index, (vx, vy) in enumerate(actions):
+            next_self = next_selves[index]
+            min_value = float(min_values[index])
+            reward = self.compute_reward(
+                state, next_self, humans, value_goal, goal, next_human_xy
+            )
+            total_value = reward + discount * min_value
 
             if total_value > best_value:
                 best_value = total_value

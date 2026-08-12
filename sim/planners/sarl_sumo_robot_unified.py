@@ -190,6 +190,10 @@ class SarlValueNetwork(nn.Module):
         self.attention = mlp(200, [100, 100, 1])
         self.mlp3 = mlp(56, [150, 100, 100, 1])
         self.attention_weights: Optional[np.ndarray] = None
+        # Full per-scene attention matrix of the most recent forward pass,
+        # shape (batch, humans). With a batched candidate-action forward the
+        # caller must index the row of the action it finally selects.
+        self.attention_weights_all: Optional[np.ndarray] = None
 
     def forward(self, state: torch.Tensor) -> torch.Tensor:
         # state: (batch, number_of_humans, 13)
@@ -218,7 +222,8 @@ class SarlValueNetwork(nn.Module):
         weights = scores_exp / torch.clamp(
             torch.sum(scores_exp, dim=1, keepdim=True), min=1e-12
         )
-        self.attention_weights = weights[0].detach().cpu().numpy()
+        self.attention_weights_all = weights.detach().cpu().numpy()
+        self.attention_weights = self.attention_weights_all[0]
 
         features = mlp2_output.reshape(size[0], size[1], -1)
         weighted_feature = torch.sum(weights.unsqueeze(2) * features, dim=1)
@@ -304,6 +309,12 @@ class SarlPolicy:
     ) -> None:
         self.cfg = cfg
         self.device = device
+        # The candidate-action batch is 81 tiny GEMMs on <=30-row tensors; a large
+        # intra-op thread pool is pure oversubscription overhead here.
+        try:
+            torch.set_num_threads(1)
+        except Exception:  # pragma: no cover - some builds forbid late changes
+            pass
         self.model = SarlValueNetwork().to(device)
         state_dict = safe_load_state_dict(model_path, device)
         validate_model_shapes(state_dict)
@@ -480,30 +491,63 @@ class SarlPolicy:
         best_value = float("-inf")
         best_attention: Optional[np.ndarray] = None
 
+        # The one-step human prediction does not depend on the candidate action,
+        # so it is hoisted out of the action loop and evaluated exactly once.
+        next_humans = [self._propagate_human(human) for human in human_states]
+        num_humans = len(next_humans)
+        actions = self.action_space
+        num_actions = len(actions)
+
         with torch.no_grad():
-            for action in self.action_space:
+            # Assemble every candidate scene in one (num_actions, num_humans, 14)
+            # block. Only the 9 robot columns vary with the action.
+            robot_block = np.empty((num_actions, 9), dtype=np.float64)
+            rewards: List[float] = []
+            for index, action in enumerate(actions):
                 next_robot = self._propagate_robot(robot, action)
-                next_humans = [self._propagate_human(human) for human in human_states]
-                reward = self._reward(next_robot, next_humans)
+                rewards.append(self._reward(next_robot, next_humans))
+                robot_block[index] = next_robot.as_tuple()
 
-                raw_rows = [
-                    next_robot.as_tuple() + human.as_tuple() for human in next_humans
-                ]
-                raw = torch.tensor(raw_rows, dtype=torch.float32, device=self.device)
-                rotated = self._rotate(raw).unsqueeze(0)
-                next_value = float(self.model(rotated).item())
-                value = reward + math.pow(
-                    self.cfg.gamma, self.cfg.dt * robot.v_pref
-                ) * next_value
+            human_block = np.asarray(
+                [human.as_tuple() for human in next_humans], dtype=np.float64
+            )
 
-                if value > best_value:
-                    best_value = value
-                    best_action = action
-                    if self.model.attention_weights is not None:
-                        best_attention = self.model.attention_weights.copy()
+            raw_np = np.empty((num_actions, num_humans, 14), dtype=np.float32)
+            raw_np[:, :, :9] = robot_block[:, None, :]
+            raw_np[:, :, 9:] = human_block[None, :, :]
+
+            raw = torch.as_tensor(
+                raw_np.reshape(num_actions * num_humans, 14),
+                dtype=torch.float32,
+                device=self.device,
+            )
+            # The rotation is row-independent, so it may be applied to the flat
+            # stack; the (num_actions, num_humans, 13) shape is restored before
+            # the forward pass so the attention softmax stays PER CANDIDATE SCENE.
+            rotated = self._rotate(raw).reshape(num_actions, num_humans, 13)
+            next_values = (
+                self.model(rotated).reshape(num_actions).detach().cpu().numpy()
+            )
+            # One forward pass writes one (num_actions, num_humans) weight matrix;
+            # the row belonging to the selected action is picked below.
+            all_attention = self.model.attention_weights_all
+
+        discount = math.pow(self.cfg.gamma, self.cfg.dt * robot.v_pref)
+        best_index = -1
+        for index in range(num_actions):
+            value = rewards[index] + discount * float(next_values[index])
+            if value > best_value:
+                best_value = value
+                best_action = actions[index]
+                best_index = index
 
         if best_action is None:
             raise RuntimeError("SARL failed to select an action.")
+
+        if all_attention is not None and best_index >= 0:
+            best_attention = all_attention[best_index].copy()
+            # Keep the public attribute consistent with the action actually taken.
+            self.model.attention_weights = best_attention
 
         attended_id = ""
         attended_weight = 0.0
