@@ -35,6 +35,7 @@ sys.path.insert(0, str(ROOT))
 
 from benchmark_adapters import build_planner, leg_config, RobotState, Obstacle  # noqa: E402
 from native_signal_gate import NativeSignalGate  # noqa: E402
+import run_layout  # noqa: E402
 
 SPAWN_GRACE = 3.0
 PEDESTRIAN_R = 0.15         # SUMO DEFAULT_PEDTYPE half-width [m]
@@ -894,17 +895,9 @@ def main():
     if plan_failed is not None:
         route_name = ("custom" if args.waypoints else
                       (args.route or "default"))
-        map_label = (args.map if route_name == "default"
-                     else f"{args.map}__{route_name}")
-        if task_id:
-            map_label += f"__{task_id}"
-        # every non-default global-planner level gets its own directory.
-        # 'dijkstra' must NOT share the bare label with 'fixed': a sweep
-        # crossing both levels silently overwrote one with the other.
-        if gp != "fixed":
-            map_label += f"__g-{gp}"
-        run_dir = (Path(args.out_root) / map_label / args.mode
-                   / args.algorithm / f"seed_{args.seed}")
+        run_dir = run_layout.run_dir(
+            args.out_root, args.map, args.mode, args.algorithm, args.seed,
+            route=route_name, task=task_id, global_planner=gp)
         run_dir.mkdir(parents=True, exist_ok=True)
         # NOTE: SUMO was never started on this path, so there is no SFM layer
         # to query -- the sfm_* fields are emitted as their "layer idle"
@@ -942,20 +935,9 @@ def main():
 
     route_name = ("custom" if args.waypoints else
                   (args.route or "default"))
-    map_label = (args.map if route_name == "default"
-                 else f"{args.map}__{route_name}")
-    if task_id:
-        map_label += f"__{task_id}"
-    # every non-default global-planner level gets its own directory. This MUST
-    # match the plan-failure path above and benchmark_batch's _run_dir: while
-    # 'dijkstra' shared the bare label with 'fixed', a sweep crossing both
-    # levels wrote them to one directory (silently losing the 'fixed' run) and
-    # the batch then reported "runner exited 0 but wrote no metrics" for every
-    # dijkstra cell -- 3,500 of them on the full protocol design.
-    if gp != "fixed":
-        map_label += f"__g-{gp}"
-    run_dir = (Path(args.out_root) / map_label / args.mode / args.algorithm
-               / f"seed_{args.seed}")
+    run_dir = run_layout.run_dir(
+        args.out_root, args.map, args.mode, args.algorithm, args.seed,
+        route=route_name, task=task_id, global_planner=gp)
     run_dir.mkdir(parents=True, exist_ok=True)
 
     rng = random.Random(args.seed)
@@ -1123,7 +1105,6 @@ def main():
     min_ped = float("inf")
     close_steps = 0
     wait_light = 0.0
-    held_prev = False
     rows = []
     sfm = None
     if args.reactive_peds != "off" and args.mode == "static":
@@ -1271,7 +1252,6 @@ def main():
                     wvx, wvy = wvx / spd * max_sp, wvy / spd * max_sp
             if held:
                 wait_light += dt
-        held_prev = held
 
         # --- integrate the POI robot in leg-local coordinates
         plx, ply = frame.to_local(x, y)

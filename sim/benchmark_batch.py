@@ -29,6 +29,7 @@ from statistics import mean, stdev
 
 ROOT = Path(__file__).resolve().parent      # sim/
 REPO = ROOT.parent
+import run_layout  # noqa: E402
 from benchmark_adapters import ALGORITHMS  # noqa: E402
 
 MAPS = ["map1_straight", "map2_crossing", "map3_grid", "map4_london"]
@@ -223,15 +224,11 @@ def main():
         print(f"(skipping {skipped} combos: route not defined on that map)")
 
     def _run_dir(mp, rt, tk, gp, mode, algo, seed):
-        # must mirror benchmark_runner.py's run_dir layout EXACTLY, otherwise
-        # the metrics file is looked up at a path the runner never wrote
-        rlabel = "custom" if args.waypoints else rt
-        mlabel = mp if rlabel == "default" else f"{mp}__{rlabel}"
-        if tk:
-            mlabel += f"__{tk}"
-        if gp != "fixed":
-            mlabel += f"__g-{gp}"
-        return out_root / mlabel / mode / algo / f"seed_{seed}"
+        # single source of truth, shared with benchmark_runner (see run_layout)
+        return run_layout.run_dir(
+            out_root, mp, mode, algo, seed,
+            route=run_layout.route_label(rt, args.waypoints),
+            task=tk, global_planner=gp)
 
     def _label(mp, rt, tk, gp, mode, algo, seed):
         rtag = "" if rt == "default" else f" | {rt}"
