@@ -171,16 +171,23 @@ def random_trips(net: Path, out_rou: Path, ped_period: float,
     parts = []
     if ped_period > 0:
         ped = out_rou.with_suffix(".ped.rou.xml")
+        ped_val = Path(str(ped) + ".val.rou.xml")   # per-run: kills the
+        # Windows race on randomTrips' default CWD-shared routes.rou.xml
         run([sys.executable, str(rt), "-n", str(net), "-o", str(ped),
+             "-r", str(ped_val),
              "--pedestrians", "--period", str(ped_period), "--seed", str(seed),
              "--begin", "0", "--end", str(end), "--max-distance", "800",
              "--validate"])
+        ped_val.unlink(missing_ok=True)
         parts.append(ped)
     if veh_period > 0:
         veh = out_rou.with_suffix(".veh.rou.xml")
+        veh_val = Path(str(veh) + ".val.rou.xml")   # per-run, same reason
         run([sys.executable, str(rt), "-n", str(net), "-o", str(veh),
+             "-r", str(veh_val),
              "--period", str(veh_period), "--seed", str(seed + 7),
              "--begin", "0", "--end", str(end), "--validate"])
+        veh_val.unlink(missing_ok=True)
         parts.append(veh)
     # merge into ONE file SORTED BY DEPART TIME -- sumo streams route files
     # in order and silently discards entries whose depart lies in the past,
