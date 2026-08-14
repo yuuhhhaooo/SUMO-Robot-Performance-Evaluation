@@ -1,0 +1,32 @@
+{
+  "algorithm": "orca",
+  "global_only": true,
+  "tune_globals": [
+    "rrt"
+  ],
+  "tune_mode": "all",
+  "reactive_peds": "sfm",
+  "jps_model": null,
+  "episodes_mode": "tasks",
+  "maps": [
+    "map3_grid",
+    "map4_london"
+  ],
+  "seeds": [
+    1000,
+    1001,
+    1002
+  ],
+  "n_trials": 50,
+  "max_time": 600.0,
+  "interleave_maps": false,
+  "episode_jobs": 1,
+  "best_score": 0.9118472222222223,
+  "episode_stats": {
+    "success": 119,
+    "planner_fail": 105,
+    "infra_fail": 0,
+    "timeout": 0
+  },
+  "date": "2026-08-13T18:06:13+00:00"
+}

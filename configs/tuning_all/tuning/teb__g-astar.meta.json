@@ -1,0 +1,32 @@
+{
+  "algorithm": "teb",
+  "global_only": false,
+  "tune_globals": [
+    "astar"
+  ],
+  "tune_mode": "all",
+  "reactive_peds": "sfm",
+  "jps_model": null,
+  "episodes_mode": "tasks",
+  "maps": [
+    "map3_grid",
+    "map4_london"
+  ],
+  "seeds": [
+    1000,
+    1001,
+    1002
+  ],
+  "n_trials": 50,
+  "max_time": 600.0,
+  "interleave_maps": false,
+  "episode_jobs": 1,
+  "best_score": 0.6056111111111111,
+  "episode_stats": {
+    "success": 66,
+    "planner_fail": 126,
+    "infra_fail": 0,
+    "timeout": 0
+  },
+  "date": "2026-08-14T01:36:36+00:00"
+}
