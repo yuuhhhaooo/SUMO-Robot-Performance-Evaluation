@@ -108,6 +108,10 @@ def main():
                    help="run seeds start-seed .. start-seed+num-seeds-1")
     p.add_argument("--out-root", default="results")
     p.add_argument("--max-time", type=float, default=900.0)
+    p.add_argument("--robot-in-jps", action="store_true",
+                   help="make the robot VISIBLE to the published "
+                        "pedestrian layers (passed through to "
+                        "benchmark_runner; ignored by off/sfm)")
     p.add_argument("--flow-min", type=float, default=80.0)
     p.add_argument("--flow-max", type=float, default=350.0)
     p.add_argument("--crossing-flow-min", type=float, default=60.0)
@@ -300,6 +304,9 @@ def main():
                     cmd += ["--global-rrt-params", str(sib)]
         if args.reactive_peds:
             cmd += ["--reactive-peds", args.reactive_peds]
+            if args.robot_in_jps and args.reactive_peds in ("jupedsim",
+                                                            "pysf"):
+                cmd.append("--robot-in-jps")
         for flag, val in (("--ped-period", args.ped_period),
                           ("--ped-period-min", args.ped_period_min),
                           ("--ped-period-max", args.ped_period_max),

@@ -93,7 +93,8 @@ def _bump(*keys):
 def run_episode(algo, params_file, mp, seed, max_time,
                 reactive="sfm", gp="fixed", task=None, task_file=None,
                 grrt_file=None, mode="mixed",
-                jps_model="collision_free_speed", timeout_s=None):
+                jps_model="collision_free_speed", timeout_s=None,
+                robot_in_jps=False):
     out = Path(tempfile.mkdtemp())
     cmd = [sys.executable, str(ROOT / "benchmark_runner.py"),
            "--map", mp, "--mode", mode, "--algorithm", algo,
@@ -102,6 +103,10 @@ def run_episode(algo, params_file, mp, seed, max_time,
            "--reactive-peds", reactive]
     if reactive == "jupedsim":
         cmd += ["--jps-model", jps_model]
+    if robot_in_jps and reactive in ("jupedsim", "pysf"):
+        # ONE runner flag governs robot visibility in BOTH published
+        # layers (the sfm layer is always robot-reactive by design)
+        cmd += ["--robot-in-jps"]
     if gp != "fixed":
         cmd += ["--global-planner", gp]
     if task:
@@ -246,6 +251,11 @@ def main():
                          "dependency makes every episode score 0 -- the "
                          "all-zero guard below then refuses to freeze "
                          "parameters")
+    ap.add_argument("--robot-in-jps", action="store_true",
+                    help="make the robot VISIBLE to the published "
+                         "pedestrian layers (jupedsim AND pysf; passed "
+                         "through to benchmark_runner). Tune under the "
+                         "same visibility the evaluation will use.")
     ap.add_argument("--jps-model", default="collision_free_speed",
                     choices=["collision_free_speed", "social_force",
                              "anticipation_velocity"],
@@ -369,7 +379,8 @@ def main():
                         args.max_time, args.reactive_peds, e[4],
                         e[2], e[3], gf if e[4] == "rrt" else None,
                         args.tune_mode, jps_model=args.jps_model,
-                        timeout_s=args.episode_timeout),
+                        timeout_s=args.episode_timeout,
+                        robot_in_jps=args.robot_in_jps),
                     episodes))
             trial.report(sum(scores) / len(scores), len(episodes) - 1)
             return sum(scores) / len(scores)
@@ -380,7 +391,8 @@ def main():
                                       gf if gp == "rrt" else None,
                                       args.tune_mode,
                                       jps_model=args.jps_model,
-                                      timeout_s=args.episode_timeout))
+                                      timeout_s=args.episode_timeout,
+                                      robot_in_jps=args.robot_in_jps))
             trial.report(sum(scores) / len(scores), i)
             if trial.should_prune():
                 raise optuna.TrialPruned()
@@ -442,6 +454,7 @@ def main():
         "algorithm": args.algorithm, "global_only": args.global_only,
         "tune_globals": args.tune_globals, "tune_mode": args.tune_mode,
         "reactive_peds": args.reactive_peds,
+        "robot_in_jps": args.robot_in_jps,
         "jps_model": (args.jps_model
                       if args.reactive_peds == "jupedsim" else None),
         "episodes_mode": args.episodes_mode,

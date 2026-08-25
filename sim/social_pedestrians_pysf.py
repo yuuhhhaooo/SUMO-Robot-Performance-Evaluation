@@ -341,6 +341,22 @@ class PySocialForceLayer:
         self._done = []
         self.ctl = {}            # sumo pid -> bookkeeping dict
         self._order = []         # stable row order in the model state array
+        # junction no-control zone, REUSED from the SFM layer (see
+        # social_pedestrians.build_junction_zone) -- same rationale as in
+        # jupedsim_pedestrians: never write a remote person onto junction
+        # internals.
+        self.zone = self.zprep = None
+        if net_file is not None:
+            try:
+                from social_pedestrians import build_junction_zone
+                self.zone, self.zprep = build_junction_zone(net_file)
+            except Exception as _ze:
+                self.zone = self.zprep = None
+                import sys as _sys
+                print("pysf layer: junction-zone build FAILED "
+                      f"({type(_ze).__name__}: {_ze}) -- running WITHOUT "
+                      "the junction guard; long episodes may crash SUMO",
+                      file=_sys.stderr)
         # HuNavSim social-work accumulators, taken from the library's own
         # force terms (pysocialforce backend only)
         self.sf_on_robot = 0.0
@@ -445,6 +461,15 @@ class PySocialForceLayer:
             pass
         return fallback
 
+    def _in_zone(self, x, y):
+        if self.zprep is None:
+            return False
+        P = getattr(self, "_Point", None)
+        if P is None:
+            from shapely.geometry import Point as P
+            self._Point = P
+        return self.zprep.covers(P(x, y))
+
     def _on_internal(self, pid):
         """Junction cores are excluded, exactly as in the two sibling layers:
         remapping a person onto a junction-internal lane can corrupt SUMO's
@@ -530,7 +555,8 @@ class PySocialForceLayer:
             st = self.ctl[pid]
             gone = pid not in alive
             far = math.hypot(st["pos"][0] - rx, st["pos"][1] - ry) > RELEASE_R
-            if gone or far or not self._is_walking(pid):
+            if gone or not self._is_walking(pid) \
+                    or (far and not self._on_internal(pid)):
                 self._release(pid)
 
         # --- capture: walking pedestrians inside the bubble
@@ -543,7 +569,8 @@ class PySocialForceLayer:
                 continue
             if math.hypot(px - rx, py - ry) >= CAPTURE_R:
                 continue
-            if self._on_internal(pid) or not self._inside((px, py)):
+            if self._on_internal(pid) or not self._inside((px, py)) \
+                    or self._in_zone(px, py):
                 continue
             if not self._is_walking(pid):
                 continue
@@ -578,6 +605,12 @@ class PySocialForceLayer:
                 continue
             nx, ny, vx, vy = new[i]
             nx, ny = self._clamp((nx, ny), st["pos"])
+            if self._in_zone(nx, ny):
+                # junction no-control zone (SFM parity): hold at the
+                # boundary with damped velocity -- exactly the sfm layer's
+                # behaviour; never map a remote person onto internals
+                nx, ny = st["pos"]
+                vx, vy = vx * 0.2, vy * 0.2
             ex, ey = st["edir"]
             sx0, sy0 = st["start"]
             dr = math.hypot(nx - rx, ny - ry)

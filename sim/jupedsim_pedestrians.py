@@ -87,6 +87,23 @@ class JuPedSimLayer:
         self.ctl = {}                 # sumo pid -> bookkeeping dict
         self._jps_of = {}             # sumo pid -> jupedsim agent id
         self._robot_agent = None
+        # junction no-control zone, REUSED from the SFM layer (see
+        # social_pedestrians.build_junction_zone): never steer or write a
+        # controlled pedestrian into junction internals -- doing so can
+        # crash SUMO's person state machine (the sfm layer documents and
+        # guards this; this layer previously did not).
+        self.zone = self.zprep = None
+        if net_file is not None:
+            try:
+                from social_pedestrians import build_junction_zone
+                self.zone, self.zprep = build_junction_zone(net_file)
+            except Exception as _ze:
+                self.zone = self.zprep = None
+                import sys as _sys
+                print("jupedsim layer: junction-zone build FAILED "
+                      f"({type(_ze).__name__}: {_ze}) -- running WITHOUT "
+                      "the junction guard; long episodes may crash SUMO",
+                      file=_sys.stderr)
 
         if model not in _MODELS:
             raise ValueError(f"unknown jupedsim model '{model}'; "
@@ -154,6 +171,22 @@ class JuPedSimLayer:
         except TypeError:                    # older builds name it v0
             return cls(v0=float(speed), **kw)
 
+    def _in_zone(self, x, y):
+        if self.zprep is None:
+            return False
+        P = getattr(self, "_Point", None)
+        if P is None:
+            from shapely.geometry import Point as P
+            self._Point = P
+        return self.zprep.covers(P(x, y))
+
+    def _is_walking(self, pid):
+        try:
+            stg = self.traci.person.getStage(pid, 0)
+            return getattr(stg, "type", 2) == 2      # 2 = walking
+        except self.traci.exceptions.TraCIException:
+            return False
+
     def _on_internal(self, pid):
         """Junction cores are excluded, exactly as in the SFM layer: remapping
         a person onto a junction-internal lane can corrupt SUMO's person state
@@ -188,7 +221,8 @@ class JuPedSimLayer:
             st = self.ctl[pid]
             gone = pid not in alive
             far = math.hypot(st["pos"][0] - rx, st["pos"][1] - ry) > RELEASE_R
-            if gone or far:
+            if gone or not self._is_walking(pid) \
+                    or (far and not self._on_internal(pid)):
                 self._release(pid)
 
         # --- capture: walking pedestrians inside the bubble
@@ -201,7 +235,9 @@ class JuPedSimLayer:
                 continue
             if math.hypot(px - rx, py - ry) >= CAPTURE_R:
                 continue
-            if self._on_internal(pid) or not self._inside((px, py)):
+            if self._on_internal(pid) or not self._inside((px, py)) \
+                    or self._in_zone(px, py) \
+                    or not self._is_walking(pid):
                 continue
             self._capture(pid, (px, py))
 
@@ -223,8 +259,11 @@ class JuPedSimLayer:
                 continue
             ex, ey = st["edir"]
             px, py = a.position
-            a.target = self._clamp((px + ex * TARGET_LOOKAHEAD,
-                                    py + ey * TARGET_LOOKAHEAD))
+            tgt = self._clamp((px + ex * TARGET_LOOKAHEAD,
+                               py + ey * TARGET_LOOKAHEAD))
+            if self._in_zone(*tgt) or self._in_zone(px, py):
+                tgt = (px, py)   # hold at the junction boundary (SFM parity)
+            a.target = tgt
 
         # --- advance JuPedSim over one SUMO step
         try:
@@ -259,6 +298,12 @@ class JuPedSimLayer:
                 self._release(pid)
                 continue
             ox, oy = st["pos"]
+            if self._in_zone(nx, ny):
+                # junction no-control zone (SFM parity): hold at the
+                # boundary -- never map a remote person onto junction
+                # internals; the agent's target is pinned above so it
+                # stops here too
+                nx, ny = ox, oy
             moved = math.hypot(nx - ox, ny - oy)
             st["pos"] = (nx, ny)
             # delay = time not spent making progress at the desired speed

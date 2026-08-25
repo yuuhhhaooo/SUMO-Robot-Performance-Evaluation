@@ -60,6 +60,40 @@ STATIC_RELEASE_R = 4.5 # (striping walks through statics; SFM does not)
 VMAX_FACTOR = 1.3      # speed clip relative to desired speed
 
 
+def build_junction_zone(net_file):
+    """Junction no-control zone from the net's walkingarea lanes.
+
+    Extracted verbatim from SocialForceLayer._build_zone so the jupedsim
+    and pysf layers can REUSE the exact battle-tested geometry instead of
+    re-implementing it. Returns (zone, prepared_zone) or (None, None)."""
+    import xml.etree.ElementTree as ET
+    from shapely.geometry import LineString, Point
+    from shapely.ops import unary_union
+    from shapely.prepared import prep
+    polys = []
+    for _ev, el in ET.iterparse(str(net_file)):
+        if el.tag == "edge":
+            func = el.get("function", "")
+            if func == "walkingarea":   # crossings stay controllable
+                for lane in el.iter("lane"):
+                    shp = lane.get("shape")
+                    if not shp:
+                        continue
+                    P = [tuple(map(float, q.split(",")))
+                         for q in shp.split()]
+                    w = float(lane.get("width", "3.0"))
+                    if len(P) >= 2:
+                        polys.append(
+                            LineString(P).buffer(w / 2 + 0.6))
+                    elif P:
+                        polys.append(Point(P[0]).buffer(w / 2 + 0.6))
+            el.clear()
+    if polys:
+        zone = unary_union(polys)
+        return zone, prep(zone)
+    return None, None
+
+
 class SocialForceLayer:
     def __init__(self, traci_mod, walk_union=None, walk_prep=None,
                  net_file=None):
@@ -95,31 +129,7 @@ class SocialForceLayer:
                 self.zone = self.zprep = None
 
     def _build_zone(self, net_file):
-        import xml.etree.ElementTree as ET
-        from shapely.geometry import LineString, Point
-        from shapely.ops import unary_union
-        from shapely.prepared import prep
-        polys = []
-        for _ev, el in ET.iterparse(str(net_file)):
-            if el.tag == "edge":
-                func = el.get("function", "")
-                if func == "walkingarea":   # crossings stay controllable
-                    for lane in el.iter("lane"):
-                        shp = lane.get("shape")
-                        if not shp:
-                            continue
-                        P = [tuple(map(float, q.split(",")))
-                             for q in shp.split()]
-                        w = float(lane.get("width", "3.0"))
-                        if len(P) >= 2:
-                            polys.append(
-                                LineString(P).buffer(w / 2 + 0.6))
-                        elif P:
-                            polys.append(Point(P[0]).buffer(w / 2 + 0.6))
-                el.clear()
-        if polys:
-            self.zone = unary_union(polys)
-            self.zprep = prep(self.zone)
+        self.zone, self.zprep = build_junction_zone(net_file)
 
 
     # ------------------------------------------------------------------

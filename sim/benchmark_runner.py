@@ -208,7 +208,7 @@ def in_rect(x, y, r, eps=0.0):
 
 
 def observe_persons(traci, tc, subscribed, rx, ry, sensor_range, frame,
-                    obstacle_cls, robot_id="robot0"):
+                    obstacle_cls, robot_id="robot0", seen_all=None):
     """One-round-trip pedestrian observation.
 
     Returns (obstacles_in_leg_local_frame, min_distance_to_any_person).
@@ -229,6 +229,10 @@ def observe_persons(traci, tc, subscribed, rx, ry, sensor_range, frame,
     `subscribed` is mutated in place and must persist across steps.
     """
     ped_ids = traci.person.getIDList()
+    if seen_all is not None:
+        # cumulative DISTINCT persons that entered this episode; unlike
+        # `subscribed` this set is never pruned when a person departs
+        seen_all.update(p for p in ped_ids if p != robot_id)
     for pid in ped_ids:
         if pid not in subscribed:
             traci.person.subscribe(
@@ -553,7 +557,7 @@ def auto_route(net_file, pts, eps=0.6, return_edges=False,
                                    "crossing": func == "crossing"})
         edge.clear()
     if not pieces:
-        sys.exit("--auto-route: no walkable geometry found")
+        raise GlobalPlanFailure("--auto-route: no walkable geometry found")
 
     # graph: nodes = piece endpoints (+ virtual start/goal); edges = pieces,
     # walkingarea cliques, and near-touch endpoint pairs
@@ -693,7 +697,7 @@ def auto_route(net_file, pts, eps=0.6, return_edges=False,
                     prev[m] = (n, pp, meta)
                     heapq.heappush(pq, (nd + _h(m), m))
         if vb not in prev and va != vb:
-            sys.exit(f"--auto-route: no walkable path {a} -> {b}")
+            raise GlobalPlanFailure(f"--auto-route: no walkable path {a} -> {b}")
         chain = []
         n = vb
         while n != va:
@@ -874,6 +878,13 @@ def main():
         GLOBAL_RRT_PARAMS.update(
             json.loads(Path(args.global_rrt_params).read_text()))
         print(f"global-rrt params overridden: {GLOBAL_RRT_PARAMS}")
+    import os as _os_env
+    _mi_env = _os_env.environ.get("RRT_MAX_ITERS")
+    if _mi_env:
+        # _grow() lets this env var override max_iters at use time; fold
+        # it into GLOBAL_RRT_PARAMS so the RECORDED value == the USED one
+        GLOBAL_RRT_PARAMS["max_iters"] = int(_mi_env)
+        print(f"RRT_MAX_ITERS env override active: max_iters={_mi_env}")
     task_id = None
     if args.task:
         tfile = (Path(args.task_file) if args.task_file
@@ -925,6 +936,12 @@ def main():
             "global_rrt_params": (dict(GLOBAL_RRT_PARAMS) if gp == "rrt"
                                   else None),
             "reactive_peds": args.reactive_peds,
+            "jps_model": (args.jps_model
+                          if args.reactive_peds == "jupedsim" else None),
+            "robot_in_jps": (args.robot_in_jps
+                             if args.reactive_peds in ("jupedsim",
+                                                       "pysf")
+                             else None),
             "params_file": (args.params_file or None),
             "sfm_controlled_steps": 0,
             "sfm_capture_events": 0,
@@ -938,7 +955,7 @@ def main():
             # null, not inf: json.dumps(inf) emits bare `Infinity`, which is
             # not valid JSON and breaks strict parsers downstream
             "min_pedestrian_distance_m": None,
-            "avg_speed_mps": 0.0, "num_legs": 0,
+            "avg_speed_mps": 0.0, "num_legs": 0, "persons_seen": 0,
             "waypoints": [list(w) for w in wps],
         }
         (run_dir / "robot_metrics.json").write_text(
@@ -998,9 +1015,10 @@ def main():
         except SystemExit:
             raise
         except Exception as exc:
-            print(f"mode demand generation failed ({exc}); "
-                  f"falling back to the shipped base demand")
-            rou = (map_dir / f"{args.map}_base.rou.xml").resolve()
+            sys.exit(f"mode demand generation failed ({exc}); refusing to "
+                     f"fall back to the shipped base demand -- that run "
+                     f"would have a DIFFERENT crowd and silently break "
+                     f"seed-matched pairing")
     else:
         rou = (run_dir / "demand.rou.xml").resolve()
     if mode_demand and not args.demand:
@@ -1025,9 +1043,16 @@ def main():
            "--quit-on-end"]
     if args.gui:
         cmd += ["--start", "--delay", str(args.delay)]
+    cmd += ["--ignore-route-errors"]  # demote per-person route errors (e.g.
+    # a reactive-layer release that SUMO cannot continue) from fatal quit to a
+    # warning; strict no-op for runs that never hit such an error
     old_cwd = os.getcwd()
     os.chdir(map_dir)
     traci.start(cmd)
+    try:
+        _sumo_version = traci.getVersion()[1]
+    except Exception:
+        _sumo_version = None
 
     gate = NativeSignalGate(spec, traci)
     # defensive, gate-version-independent: drop crossings whose program NEVER
@@ -1117,6 +1142,7 @@ def main():
     t = 0.0
     vx = vy = 0.0
     subscribed: set = set()        # persons with a live TraCI subscription
+    seen_all: set = set()          # every distinct person that EVER appeared
     status_counts: dict = {}       # planner status string -> step count
     frozen_since = None            # stall watchdog (not counting light holds)
     path_len = 0.0
@@ -1226,7 +1252,11 @@ def main():
                     pass
 
     while t < args.max_time:
-        traci.simulationStep()
+        try:
+            traci.simulationStep()
+        except traci.exceptions.FatalTraCIError:
+            reason = "sumo_crash"      # simulator process died mid-step;
+            break                      # record the episode instead of crashing
         if not _statics_scattered:
             _scatter_statics()
             _statics_scattered = True
@@ -1235,7 +1265,8 @@ def main():
 
         # --- observe pedestrians (world) -> obstacles (leg-local)
         obstacles, step_min = observe_persons(
-            traci, tc, subscribed, x, y, args.sensor_range, frame, Obstacle)
+            traci, tc, subscribed, x, y, args.sensor_range, frame, Obstacle,
+            seen_all=seen_all)
         min_ped = min(min_ped, step_min)
         if step_min < SOCIAL_R:
             close_steps += 1
@@ -1376,6 +1407,11 @@ def main():
         "global_rrt_params": (dict(GLOBAL_RRT_PARAMS) if gp == "rrt"
                               else None),
         "reactive_peds": args.reactive_peds,
+        "jps_model": (args.jps_model
+                      if args.reactive_peds == "jupedsim" else None),
+        "robot_in_jps": (args.robot_in_jps
+                         if args.reactive_peds in ("jupedsim", "pysf")
+                         else None),
         "robot_radius_m": args.robot_radius,
         "robot_height_m": args.robot_height,
         "collision_radius_m": round(collide_r, 3),
@@ -1405,6 +1441,7 @@ def main():
         "strict_sidewalk": strict, "walkable_clamped_steps": walk_clamped,
         "robot_as_person": bool(args.robot_as_person),
         "num_legs": len(legs), "waypoints": wps, "goal_tol": args.goal_tol,
+        "persons_seen": len(seen_all),
     }
     (run_dir / "robot_metrics.json").write_text(json.dumps(metrics, indent=2))
     (run_dir / "scenario.json").write_text(json.dumps({
@@ -1417,7 +1454,11 @@ def main():
         "crossing_flow": round(crossing_flow, 2),
         "flow_range": [args.flow_min, args.flow_max],
         "speed_range": [args.speed_min, args.speed_max],
-        "veh_scale": args.veh_scale, "route_file": str(rou)}, indent=2))
+        "veh_scale": args.veh_scale, "route_file": str(rou),
+        "max_time": args.max_time,
+        "demand_end_s": (args.max_time + 100.0
+                         if not mode_demand and not args.demand else None),
+        "sumo_version": _sumo_version}, indent=2))
     if not args.keep_demand and not args.demand and \
             rou.parent == run_dir:
         for pth in (rou, rou.with_suffix(".scenario.json")):

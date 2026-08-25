@@ -122,6 +122,12 @@ def parse_args():
                         "value, so this driver invokes it once per level")
     p.add_argument("--out-root", default="results")
     p.add_argument("--max-time", type=float, default=3000.0)
+    p.add_argument("--robot-in-jps", action="store_true",
+                   help="make the robot VISIBLE to the published "
+                        "pedestrian layers (jupedsim and pysf; ignored "
+                        "by off/sfm). Passed through to every runner "
+                        "invocation and recorded per run in "
+                        "robot_metrics.json as robot_in_jps.")
     p.add_argument("--shard", default=None, metavar="K/N",
                    help="run only shard K of N (0-based) of the design, for "
                         "spreading one sweep across N machines. Forwarded to "
@@ -384,6 +390,8 @@ def main() -> int:
             cmd.append("--stop-on-error")
         if args.params_file:
             cmd += ["--params-file", args.params_file]
+        if args.robot_in_jps and rp in ("jupedsim", "pysf"):
+            cmd.append("--robot-in-jps")
         print(f"\n=== reactive-peds {rp} -> {root} ===", flush=True)
         rc = subprocess.run(cmd).returncode
         if rc != 0 and args.stop_on_error:
