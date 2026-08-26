@@ -1,0 +1,2 @@
+map,task,global_planner,algorithm,mode,seed,termination_reason
+map5_ucl,t10,rrt,crowdnav_attngraph,all,1,sumo_crash

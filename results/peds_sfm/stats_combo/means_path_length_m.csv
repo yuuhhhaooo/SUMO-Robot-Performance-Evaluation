@@ -1,0 +1,55 @@
+algorithm,algorithm_name,n,mean,ci_lo,ci_hi
+dijkstra+teb,Dijkstra + TEB,291,256.938,237.613,276.263
+astar+teb,A* + TEB,286,257.526,237.91,277.141
+astar+rrt,A* + RRT,258,262.496,242.454,282.539
+dijkstra+rrt,Dijkstra + RRT,251,262.628,242.045,283.211
+dijkstra+dijkstra,Dijkstra + Dijkstra,312,272.264,253.063,291.466
+astar+crowdnav_dsrnn,A* + CrowdNav DS-RNN,333,272.499,254.655,290.342
+dijkstra+crowdnav_dsrnn,Dijkstra + CrowdNav DS-RNN,326,272.612,254.423,290.8
+astar+dijkstra,A* + Dijkstra,325,274.923,256.425,293.421
+dijkstra+dwa,Dijkstra + DWA,365,275.33,256.556,294.104
+astar+dwa,A* + DWA,373,276.231,257.822,294.641
+dijkstra+astar,Dijkstra + A*,299,276.236,255.87,296.603
+dijkstra+lstm_rl_upstream,Dijkstra + LSTM-RL (upstream),338,276.649,258.51,294.788
+astar+mpc_dompc,A* + MPC (do-mpc),399,276.804,259.877,293.731
+dijkstra+mpc_dompc,Dijkstra + MPC (do-mpc),398,276.878,259.899,293.856
+astar+lstm_rl_upstream,A* + LSTM-RL (upstream),341,276.883,258.883,294.884
+astar+astar,A* + A*,309,277.511,257.79,297.231
+dijkstra+mpc,Dijkstra + MPC,399,279.841,260.943,298.74
+astar+mpc,A* + MPC,403,280.655,261.916,299.394
+dijkstra+cadrl,Dijkstra + CADRL,370,287.449,267.216,307.682
+dijkstra+teb_upstream,Dijkstra + TEB (upstream),399,287.904,269.616,306.193
+astar+teb_upstream,A* + TEB (upstream),406,288.633,270.639,306.627
+astar+orca,A* + ORCA (RVO2),338,289.2,268.616,309.784
+astar+cadrl,A* + CADRL,378,289.274,269.451,309.096
+dijkstra+orca,Dijkstra + ORCA (RVO2),325,290.147,268.793,311.502
+astar+cadrl_upstream,A* + CADRL (upstream),216,292.693,265.836,319.55
+dijkstra+cadrl_upstream,Dijkstra + CADRL (upstream),218,293.056,266.412,319.699
+astar+orca_heuristic,A* + ORCA (heuristic),338,294.135,273.632,314.638
+dijkstra+orca_heuristic,Dijkstra + ORCA (heuristic),333,294.978,274.216,315.74
+rrt+cadrl_upstream,RRT + CADRL (upstream),149,295.607,263.146,328.069
+rrt+astar,RRT + A*,282,306.076,278.187,333.965
+rrt+dijkstra,RRT + Dijkstra,288,307.224,279.55,334.898
+astar+sarl_upstream,A* + SARL (upstream),378,310.14,288.956,331.324
+dijkstra+sarl_upstream,Dijkstra + SARL (upstream),369,311.659,290.019,333.3
+rrt+sarl,RRT + SARL,299,314.475,290.989,337.961
+rrt+teb,RRT + TEB,160,316.34,276.81,355.869
+rrt+orca,RRT + ORCA (RVO2),308,316.376,289.412,343.34
+rrt+mpc,RRT + MPC,376,316.798,293.658,339.938
+astar+sarl,A* + SARL,300,320.33,296.196,344.465
+dijkstra+sarl,Dijkstra + SARL,301,321.028,297.015,345.041
+rrt+dwa,RRT + DWA,330,322.389,295.797,348.98
+rrt+lstm_rl_upstream,RRT + LSTM-RL (upstream),273,323.892,293.461,354.323
+rrt+cadrl,RRT + CADRL,355,327.267,301.307,353.227
+astar+lstm_rl,A* + LSTM-RL,346,327.607,304.649,350.566
+dijkstra+lstm_rl,Dijkstra + LSTM-RL,342,328.628,305.438,351.817
+rrt+crowdnav_dsrnn,RRT + CrowdNav DS-RNN,320,332.919,303.623,362.216
+rrt+orca_heuristic,RRT + ORCA (heuristic),365,338.77,311.99,365.549
+rrt+mpc_dompc,RRT + MPC (do-mpc),373,339.77,313.232,366.308
+rrt+rrt,RRT + RRT,149,339.844,294.347,385.34
+rrt+sarl_upstream,RRT + SARL (upstream),339,344.367,312.916,375.819
+dijkstra+crowdnav_attngraph,Dijkstra + CrowdNav AttnGraph,173,354.565,320.842,388.289
+astar+crowdnav_attngraph,A* + CrowdNav AttnGraph,171,355.418,321.114,389.723
+rrt+teb_upstream,RRT + TEB (upstream),236,357.77,319.648,395.893
+rrt+crowdnav_attngraph,RRT + CrowdNav AttnGraph,272,378.248,344.848,411.648
+rrt+lstm_rl,RRT + LSTM-RL,327,379.806,349.715,409.897

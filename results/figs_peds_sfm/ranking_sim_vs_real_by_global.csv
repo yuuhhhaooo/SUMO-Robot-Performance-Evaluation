@@ -1,0 +1,55 @@
+global_planner,algorithm,algorithm_name,sim_n,sim_success,sim_rank,real_n,real_success,real_rank,rank_shift
+astar,mpc,MPC,400,0.85,1,100,0.63,8,-7
+astar,mpc_dompc,MPC (do-mpc),400,0.8375,2,100,0.64,7,-5
+astar,teb_upstream,TEB (upstream),400,0.8225,3,100,0.77,3,0
+astar,cadrl,CADRL,400,0.79,4,100,0.62,9,-5
+astar,dwa,DWA,400,0.78,5,100,0.61,10,-5
+astar,sarl_upstream,SARL (upstream),400,0.745,6,100,0.8,1,5
+astar,lstm_rl,LSTM-RL,400,0.69,7,100,0.7,4,3
+astar,lstm_rl_upstream,LSTM-RL (upstream),400,0.685,8,100,0.67,6,2
+astar,crowdnav_dsrnn,CrowdNav DS-RNN,400,0.6825,9,100,0.6,12,-3
+astar,orca,ORCA (RVO2),400,0.675,10,100,0.68,5,5
+astar,dijkstra,Dijkstra,400,0.6625,11,100,0.6,13,-2
+astar,orca_heuristic,ORCA (heuristic),400,0.6475,12,100,0.79,2,10
+astar,astar,A*,400,0.6225,13,100,0.6,11,2
+astar,sarl,SARL,400,0.62,14,100,0.52,14,0
+astar,teb,TEB,400,0.615,15,100,0.4,17,-2
+astar,rrt,RRT,400,0.53,16,100,0.46,16,0
+astar,cadrl_upstream,CADRL (upstream),400,0.4675,17,100,0.29,18,-1
+astar,crowdnav_attngraph,CrowdNav AttnGraph,400,0.3,18,100,0.51,15,3
+dijkstra,mpc,MPC,400,0.84,1,100,0.63,8,-7
+dijkstra,mpc_dompc,MPC (do-mpc),400,0.835,2,100,0.64,7,-5
+dijkstra,teb_upstream,TEB (upstream),400,0.805,3,100,0.77,3,0
+dijkstra,cadrl,CADRL,400,0.77,4,100,0.62,9,-5
+dijkstra,dwa,DWA,400,0.76,5,100,0.61,10,-5
+dijkstra,sarl_upstream,SARL (upstream),400,0.7225,6,100,0.8,1,5
+dijkstra,lstm_rl,LSTM-RL,400,0.68,7,100,0.7,4,3
+dijkstra,lstm_rl_upstream,LSTM-RL (upstream),400,0.6775,8,100,0.67,6,2
+dijkstra,crowdnav_dsrnn,CrowdNav DS-RNN,400,0.665,9,100,0.6,12,-3
+dijkstra,orca,ORCA (RVO2),400,0.6425,10,100,0.68,5,5
+dijkstra,orca_heuristic,ORCA (heuristic),400,0.635,11,100,0.79,2,9
+dijkstra,dijkstra,Dijkstra,400,0.63,12,100,0.6,13,-1
+dijkstra,teb,TEB,400,0.6275,13,100,0.4,17,-4
+dijkstra,sarl,SARL,400,0.6225,14,100,0.52,14,0
+dijkstra,astar,A*,400,0.5975,15,100,0.6,11,4
+dijkstra,rrt,RRT,400,0.5125,16,100,0.46,16,0
+dijkstra,cadrl_upstream,CADRL (upstream),400,0.4725,17,100,0.29,18,-1
+dijkstra,crowdnav_attngraph,CrowdNav AttnGraph,400,0.305,18,100,0.51,15,3
+rrt,mpc,MPC,400,0.7825,1,100,0.63,5,-4
+rrt,mpc_dompc,MPC (do-mpc),400,0.7675,2,99,0.6667,2,0
+rrt,orca_heuristic,ORCA (heuristic),400,0.74,3,98,0.7041,1,2
+rrt,cadrl,CADRL,400,0.735,4,98,0.6224,6,-2
+rrt,sarl_upstream,SARL (upstream),400,0.69,5,99,0.6364,4,1
+rrt,dwa,DWA,400,0.6825,6,98,0.5816,10,-4
+rrt,sarl,SARL,400,0.68,7,100,0.27,17,-10
+rrt,lstm_rl,LSTM-RL,400,0.665,8,98,0.6224,7,1
+rrt,crowdnav_dsrnn,CrowdNav DS-RNN,400,0.65,9,100,0.6,8,1
+rrt,orca,ORCA (RVO2),400,0.6225,10,99,0.596,9,1
+rrt,dijkstra,Dijkstra,400,0.6175,11,100,0.41,13,-2
+rrt,astar,A*,400,0.6075,12,100,0.39,15,-3
+rrt,lstm_rl_upstream,LSTM-RL (upstream),400,0.55,13,100,0.53,12,1
+rrt,crowdnav_attngraph,CrowdNav AttnGraph,400,0.5225,14,99,0.6364,3,11
+rrt,teb_upstream,TEB (upstream),400,0.4525,15,100,0.55,11,4
+rrt,cadrl_upstream,CADRL (upstream),400,0.3325,16,100,0.16,18,-2
+rrt,teb,TEB,400,0.3,17,100,0.4,14,3
+rrt,rrt,RRT,400,0.2875,18,100,0.34,16,2

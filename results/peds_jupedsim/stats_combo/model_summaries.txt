@@ -1,0 +1,403 @@
+unit = combo
+n runs = 26992; units = ['astar+astar', 'astar+cadrl', 'astar+cadrl_upstream', 'astar+crowdnav_attngraph', 'astar+crowdnav_dsrnn', 'astar+dijkstra', 'astar+dwa', 'astar+lstm_rl', 'astar+lstm_rl_upstream', 'astar+mpc', 'astar+mpc_dompc', 'astar+orca', 'astar+orca_heuristic', 'astar+rrt', 'astar+sarl', 'astar+sarl_upstream', 'astar+teb', 'astar+teb_upstream', 'dijkstra+astar', 'dijkstra+cadrl', 'dijkstra+cadrl_upstream', 'dijkstra+crowdnav_attngraph', 'dijkstra+crowdnav_dsrnn', 'dijkstra+dijkstra', 'dijkstra+dwa', 'dijkstra+lstm_rl', 'dijkstra+lstm_rl_upstream', 'dijkstra+mpc', 'dijkstra+mpc_dompc', 'dijkstra+orca', 'dijkstra+orca_heuristic', 'dijkstra+rrt', 'dijkstra+sarl', 'dijkstra+sarl_upstream', 'dijkstra+teb', 'dijkstra+teb_upstream', 'rrt+astar', 'rrt+cadrl', 'rrt+cadrl_upstream', 'rrt+crowdnav_attngraph', 'rrt+crowdnav_dsrnn', 'rrt+dijkstra', 'rrt+dwa', 'rrt+lstm_rl', 'rrt+lstm_rl_upstream', 'rrt+mpc', 'rrt+mpc_dompc', 'rrt+orca', 'rrt+orca_heuristic', 'rrt+rrt', 'rrt+sarl', 'rrt+sarl_upstream', 'rrt+teb', 'rrt+teb_upstream']
+maps = ['map1_straight', 'map2_crossing', 'map3_grid', 'map4_london', 'map5_ucl']; modes = ['all']; seeds = 10
+infrastructure episodes excluded = 8 (see excluded_infrastructure.csv)
+reference algorithm = astar+dwa
+
+== Success rates (Wilson 95% CI) ==
+                       unit                     unit_name   n  success_rate  wilson_lo  wilson_hi
+       astar+orca_heuristic         A* + ORCA (heuristic) 500        0.8040     0.7669     0.8364
+                  astar+mpc                      A* + MPC 500        0.7740     0.7353     0.8085
+    dijkstra+orca_heuristic   Dijkstra + ORCA (heuristic) 500        0.7720     0.7332     0.8066
+              rrt+mpc_dompc            RRT + MPC (do-mpc) 500        0.7580     0.7186     0.7935
+            astar+mpc_dompc             A* + MPC (do-mpc) 500        0.7520     0.7123     0.7878
+               dijkstra+mpc                Dijkstra + MPC 500        0.7520     0.7123     0.7878
+                    rrt+mpc                     RRT + MPC 498        0.7510     0.7112     0.7870
+        astar+sarl_upstream          A* + SARL (upstream) 500        0.7500     0.7102     0.7860
+         dijkstra+mpc_dompc       Dijkstra + MPC (do-mpc) 500        0.7500     0.7102     0.7860
+         rrt+orca_heuristic        RRT + ORCA (heuristic) 500        0.7300     0.6894     0.7671
+     dijkstra+sarl_upstream    Dijkstra + SARL (upstream) 500        0.7300     0.6894     0.7671
+                astar+cadrl                    A* + CADRL 500        0.7100     0.6687     0.7481
+         astar+teb_upstream           A* + TEB (upstream) 500        0.7100     0.6687     0.7481
+                  astar+dwa                      A* + DWA 500        0.7060     0.6646     0.7442
+             dijkstra+cadrl              Dijkstra + CADRL 500        0.7040     0.6626     0.7423
+              astar+lstm_rl                  A* + LSTM-RL 500        0.7020     0.6605     0.7404
+               dijkstra+dwa                Dijkstra + DWA 500        0.6920     0.6502     0.7309
+           dijkstra+lstm_rl            Dijkstra + LSTM-RL 500        0.6900     0.6481     0.7290
+      dijkstra+teb_upstream     Dijkstra + TEB (upstream) 500        0.6900     0.6481     0.7290
+                  rrt+cadrl                   RRT + CADRL 500        0.6840     0.6420     0.7232
+                 astar+sarl                     A* + SARL 499        0.6613     0.6187     0.7015
+              dijkstra+sarl               Dijkstra + SARL 499        0.6533     0.6105     0.6937
+          rrt+sarl_upstream         RRT + SARL (upstream) 500        0.6460     0.6031     0.6867
+     astar+lstm_rl_upstream       A* + LSTM-RL (upstream) 500        0.6460     0.6031     0.6867
+  dijkstra+lstm_rl_upstream Dijkstra + LSTM-RL (upstream) 500        0.6300     0.5868     0.6712
+       astar+crowdnav_dsrnn          A* + CrowdNav DS-RNN 500        0.6260     0.5828     0.6673
+                 astar+orca              A* + ORCA (RVO2) 500        0.6240     0.5807     0.6654
+                   rrt+sarl                    RRT + SARL 499        0.6172     0.5738     0.6588
+                rrt+lstm_rl                 RRT + LSTM-RL 499        0.6152     0.5718     0.6569
+    dijkstra+crowdnav_dsrnn    Dijkstra + CrowdNav DS-RNN 500        0.6140     0.5706     0.6556
+                    rrt+dwa                     RRT + DWA 500        0.6100     0.5666     0.6518
+                   rrt+orca             RRT + ORCA (RVO2) 500        0.6040     0.5605     0.6459
+              dijkstra+orca        Dijkstra + ORCA (RVO2) 500        0.6000     0.5565     0.6420
+         rrt+crowdnav_dsrnn         RRT + CrowdNav DS-RNN 500        0.5860     0.5423     0.6284
+                astar+astar                       A* + A* 500        0.5340     0.4902     0.5773
+             dijkstra+astar                 Dijkstra + A* 500        0.5260     0.4822     0.5694
+       rrt+lstm_rl_upstream      RRT + LSTM-RL (upstream) 500        0.5100     0.4663     0.5536
+                  astar+rrt                      A* + RRT 500        0.4480     0.4050     0.4918
+                  astar+teb                      A* + TEB 500        0.4440     0.4010     0.4878
+     rrt+crowdnav_attngraph      RRT + CrowdNav AttnGraph 498        0.4398     0.3968     0.4837
+               dijkstra+teb                Dijkstra + TEB 500        0.4360     0.3932     0.4798
+             astar+dijkstra                 A* + Dijkstra 500        0.4340     0.3912     0.4778
+          dijkstra+dijkstra           Dijkstra + Dijkstra 500        0.4320     0.3893     0.4758
+               dijkstra+rrt                Dijkstra + RRT 500        0.4300     0.3873     0.4738
+                  rrt+astar                      RRT + A* 500        0.4280     0.3853     0.4718
+           rrt+teb_upstream          RRT + TEB (upstream) 500        0.3960     0.3541     0.4395
+dijkstra+crowdnav_attngraph Dijkstra + CrowdNav AttnGraph 500        0.3800     0.3385     0.4233
+   astar+crowdnav_attngraph       A* + CrowdNav AttnGraph 500        0.3780     0.3366     0.4213
+    dijkstra+cadrl_upstream   Dijkstra + CADRL (upstream) 500        0.3780     0.3366     0.4213
+                    rrt+teb                     RRT + TEB 500        0.3740     0.3327     0.4172
+       astar+cadrl_upstream         A* + CADRL (upstream) 500        0.3720     0.3308     0.4152
+               rrt+dijkstra                RRT + Dijkstra 500        0.3580     0.3172     0.4010
+         rrt+cadrl_upstream        RRT + CADRL (upstream) 500        0.2420     0.2065     0.2814
+                    rrt+rrt                     RRT + RRT 500        0.2040     0.1710     0.2415
+
+== Binomial GLMM (success) ==
+                                       term  log_odds  ci_lo  ci_hi  odds_ratio  or_ci_lo  or_ci_hi
+                                  Intercept     0.955  0.927  0.982       2.598     2.528     2.671
+                C(algorithm)[T.astar+astar]    -0.797 -0.988 -0.605       0.451     0.372     0.546
+                C(algorithm)[T.astar+cadrl]     0.108 -0.100  0.316       1.114     0.904     1.371
+       C(algorithm)[T.astar+cadrl_upstream]    -1.588 -1.784 -1.391       0.204     0.168     0.249
+   C(algorithm)[T.astar+crowdnav_attngraph]    -1.557 -1.753 -1.361       0.211     0.173     0.256
+       C(algorithm)[T.astar+crowdnav_dsrnn]    -0.342 -0.539 -0.146       0.710     0.583     0.864
+             C(algorithm)[T.astar+dijkstra]    -1.279 -1.472 -1.087       0.278     0.229     0.337
+              C(algorithm)[T.astar+lstm_rl]     0.062 -0.144  0.269       1.064     0.866     1.309
+     C(algorithm)[T.astar+lstm_rl_upstream]    -0.240 -0.438 -0.041       0.787     0.645     0.960
+                  C(algorithm)[T.astar+mpc]     0.498  0.274  0.721       1.645     1.315     2.057
+            C(algorithm)[T.astar+mpc_dompc]     0.357  0.140  0.574       1.429     1.150     1.776
+                 C(algorithm)[T.astar+orca]    -0.353 -0.549 -0.156       0.703     0.577     0.856
+       C(algorithm)[T.astar+orca_heuristic]     0.704  0.470  0.938       2.022     1.600     2.555
+                  C(algorithm)[T.astar+rrt]    -1.211 -1.403 -1.019       0.298     0.246     0.361
+                 C(algorithm)[T.astar+sarl]    -0.161 -0.362  0.039       0.851     0.696     1.040
+        C(algorithm)[T.astar+sarl_upstream]     0.345  0.128  0.561       1.411     1.136     1.753
+                  C(algorithm)[T.astar+teb]    -1.231 -1.423 -1.038       0.292     0.241     0.354
+         C(algorithm)[T.astar+teb_upstream]     0.108 -0.100  0.316       1.114     0.904     1.371
+             C(algorithm)[T.dijkstra+astar]    -0.835 -1.027 -0.644       0.434     0.358     0.525
+             C(algorithm)[T.dijkstra+cadrl]     0.074 -0.133  0.281       1.076     0.875     1.324
+    C(algorithm)[T.dijkstra+cadrl_upstream]    -1.557 -1.753 -1.361       0.211     0.173     0.256
+C(algorithm)[T.dijkstra+crowdnav_attngraph]    -1.547 -1.743 -1.351       0.213     0.175     0.259
+    C(algorithm)[T.dijkstra+crowdnav_dsrnn]    -0.403 -0.599 -0.208       0.668     0.549     0.813
+          C(algorithm)[T.dijkstra+dijkstra]    -1.289 -1.482 -1.096       0.276     0.227     0.334
+               C(algorithm)[T.dijkstra+dwa]     0.007 -0.198  0.212       1.007     0.820     1.236
+           C(algorithm)[T.dijkstra+lstm_rl]    -0.004 -0.209  0.200       0.996     0.811     1.222
+  C(algorithm)[T.dijkstra+lstm_rl_upstream]    -0.322 -0.519 -0.125       0.725     0.595     0.883
+               C(algorithm)[T.dijkstra+mpc]     0.357  0.140  0.574       1.429     1.150     1.776
+         C(algorithm)[T.dijkstra+mpc_dompc]     0.345  0.128  0.561       1.411     1.136     1.753
+              C(algorithm)[T.dijkstra+orca]    -0.473 -0.668 -0.279       0.623     0.513     0.757
+    C(algorithm)[T.dijkstra+orca_heuristic]     0.484  0.262  0.707       1.623     1.299     2.029
+               C(algorithm)[T.dijkstra+rrt]    -1.299 -1.492 -1.106       0.273     0.225     0.331
+              C(algorithm)[T.dijkstra+sarl]    -0.204 -0.404 -0.004       0.816     0.668     0.996
+     C(algorithm)[T.dijkstra+sarl_upstream]     0.224  0.012  0.436       1.251     1.012     1.546
+               C(algorithm)[T.dijkstra+teb]    -1.270 -1.462 -1.077       0.281     0.232     0.341
+      C(algorithm)[T.dijkstra+teb_upstream]    -0.004 -0.209  0.200       0.996     0.811     1.222
+                  C(algorithm)[T.rrt+astar]    -1.309 -1.502 -1.116       0.270     0.223     0.328
+                  C(algorithm)[T.rrt+cadrl]    -0.037 -0.241  0.166       0.963     0.786     1.181
+         C(algorithm)[T.rrt+cadrl_upstream]    -2.312 -2.530 -2.093       0.099     0.080     0.123
+     C(algorithm)[T.rrt+crowdnav_attngraph]    -1.256 -1.449 -1.064       0.285     0.235     0.345
+         C(algorithm)[T.rrt+crowdnav_dsrnn]    -0.543 -0.737 -0.349       0.581     0.479     0.705
+               C(algorithm)[T.rrt+dijkstra]    -1.659 -1.858 -1.461       0.190     0.156     0.232
+                    C(algorithm)[T.rrt+dwa]    -0.423 -0.619 -0.228       0.655     0.539     0.796
+                C(algorithm)[T.rrt+lstm_rl]    -0.399 -0.595 -0.203       0.671     0.552     0.816
+       C(algorithm)[T.rrt+lstm_rl_upstream]    -0.912 -1.103 -0.721       0.402     0.332     0.486
+                    C(algorithm)[T.rrt+mpc]     0.345  0.127  0.562       1.412     1.136     1.755
+              C(algorithm)[T.rrt+mpc_dompc]     0.395  0.176  0.613       1.484     1.192     1.847
+                   C(algorithm)[T.rrt+orca]    -0.453 -0.648 -0.259       0.635     0.523     0.772
+         C(algorithm)[T.rrt+orca_heuristic]     0.224  0.012  0.436       1.251     1.012     1.546
+                    C(algorithm)[T.rrt+rrt]    -2.562 -2.793 -2.332       0.077     0.061     0.097
+                   C(algorithm)[T.rrt+sarl]    -0.387 -0.584 -0.191       0.679     0.558     0.826
+          C(algorithm)[T.rrt+sarl_upstream]    -0.240 -0.438 -0.041       0.787     0.645     0.960
+                    C(algorithm)[T.rrt+teb]    -1.578 -1.774 -1.381       0.206     0.170     0.251
+           C(algorithm)[T.rrt+teb_upstream]    -1.467 -1.662 -1.272       0.231     0.190     0.280
+            standardize(task_path_length_m)    -0.273 -0.301 -0.246       0.761     0.740     0.782
+                  standardize(task_n_turns)    -0.055 -0.081 -0.028       0.947     0.922     0.973
+     standardize(task_min_sidewalk_width_m)     0.138  0.112  0.163       1.147     1.118     1.178
+   standardize(task_n_signalised_junctions)    -0.324 -0.352 -0.295       0.724     0.703     0.744
+               standardize(demand_total_ph)    -0.215 -0.242 -0.188       0.806     0.785     0.828
+variance components (posterior sd):
+component  sd_posterior_mean
+     seed              0.296
+      map              0.372
+     task              0.315
+
+== LMM sim_time_s (successful runs) ==
+[LMM on log1p (pre-specified scale for right-skewed outcome; read coefficients multiplicatively) [reference=astar+dwa]]
+                                           Coef. Std.Err.       z  P>|z|  [0.025  0.975]
+Intercept                                  5.667    0.133  42.451  0.000   5.406   5.929
+C(algorithm)[T.astar+astar]               -0.041    0.018  -2.272  0.023  -0.077  -0.006
+C(algorithm)[T.astar+cadrl]               -0.032    0.017  -1.890  0.059  -0.065   0.001
+C(algorithm)[T.astar+cadrl_upstream]       0.465    0.020  23.008  0.000   0.426   0.505
+C(algorithm)[T.astar+crowdnav_attngraph]   0.521    0.020  25.907  0.000   0.482   0.561
+...                                          ...      ...     ...    ...     ...     ...
+standardize(task_n_signalised_junctions)   0.036    0.005   7.468  0.000   0.027   0.046
+standardize(demand_total_ph)              -0.043    0.014  -3.022  0.003  -0.070  -0.015
+map Var                                    0.070    0.220                               
+seed Var                                   0.000    0.001                               
+task Var                                   0.037    0.078                               
+
+[62 rows x 6 columns]
+
+== LMM path_length_m (successful runs) ==
+[LMM on log1p (pre-specified scale for right-skewed outcome; read coefficients multiplicatively) [reference=astar+dwa]]
+                                           Coef. Std.Err.       z  P>|z|  [0.025  0.975]
+Intercept                                  5.528    0.138  39.955  0.000   5.257   5.799
+C(algorithm)[T.astar+astar]                0.001    0.013   0.087  0.931  -0.024   0.026
+C(algorithm)[T.astar+cadrl]                0.007    0.012   0.614  0.539  -0.016   0.030
+C(algorithm)[T.astar+cadrl_upstream]       0.153    0.014  10.734  0.000   0.125   0.181
+C(algorithm)[T.astar+crowdnav_attngraph]   0.152    0.014  10.705  0.000   0.124   0.179
+...                                          ...      ...     ...    ...     ...     ...
+standardize(task_n_signalised_junctions)  -0.012    0.003  -3.553  0.000  -0.019  -0.005
+standardize(demand_total_ph)              -0.003    0.008  -0.333  0.739  -0.019   0.013
+map Var                                    0.071    0.363                               
+seed Var                                   0.000    0.000                               
+task Var                                   0.049    0.225                               
+
+[62 rows x 6 columns]
+
+== LMM min_pedestrian_distance_m ==
+[LMM [reference=astar+dwa]]
+                                           Coef. Std.Err.       z  P>|z|  [0.025  0.975]
+Intercept                                  0.527    0.046  11.480  0.000   0.437   0.617
+C(algorithm)[T.astar+astar]               -0.098    0.024  -3.986  0.000  -0.146  -0.050
+C(algorithm)[T.astar+cadrl]                0.054    0.024   2.221  0.026   0.006   0.102
+C(algorithm)[T.astar+cadrl_upstream]      -0.012    0.024  -0.485  0.628  -0.060   0.036
+C(algorithm)[T.astar+crowdnav_attngraph]  -0.013    0.024  -0.551  0.581  -0.061   0.034
+...                                          ...      ...     ...    ...     ...     ...
+standardize(task_n_signalised_junctions)  -0.010    0.006  -1.551  0.121  -0.022   0.003
+standardize(demand_total_ph)              -0.005    0.020  -0.257  0.797  -0.045   0.034
+map Var                                    0.008    0.018                               
+seed Var                                   0.001    0.002                               
+task Var                                   0.001    0.001                               
+
+[62 rows x 6 columns]
+
+== LMM ped_delay_s_mean ==
+[LMM on log1p (pre-specified scale for right-skewed outcome; read coefficients multiplicatively) [reference=astar+dwa]]
+                                           Coef. Std.Err.       z  P>|z|  [0.025  0.975]
+Intercept                                  1.513    0.306   4.941  0.000   0.913   2.114
+C(algorithm)[T.astar+astar]               -0.209    0.081  -2.572  0.010  -0.368  -0.050
+C(algorithm)[T.astar+cadrl]               -0.044    0.081  -0.544  0.586  -0.204   0.115
+C(algorithm)[T.astar+cadrl_upstream]       0.638    0.081   7.853  0.000   0.479   0.797
+C(algorithm)[T.astar+crowdnav_attngraph]   1.859    0.081  22.871  0.000   1.699   2.018
+...                                          ...      ...     ...    ...     ...     ...
+standardize(task_n_signalised_junctions)  -0.064    0.021  -3.113  0.002  -0.105  -0.024
+standardize(demand_total_ph)               0.099    0.063   1.574  0.116  -0.024   0.222
+map Var                                    0.413    0.229                               
+seed Var                                   0.016    0.006                               
+task Var                                   0.062    0.023                               
+
+[62 rows x 6 columns]
+
+== LMM ped_deflection_m_mean ==
+[LMM on log1p (pre-specified scale for right-skewed outcome; read coefficients multiplicatively) [reference=astar+dwa]]
+                                           Coef. Std.Err.       z  P>|z|  [0.025  0.975]
+Intercept                                  0.211    0.066   3.220  0.001   0.083   0.340
+C(algorithm)[T.astar+astar]                0.007    0.019   0.359  0.719  -0.030   0.044
+C(algorithm)[T.astar+cadrl]               -0.041    0.019  -2.176  0.030  -0.078  -0.004
+C(algorithm)[T.astar+cadrl_upstream]       0.130    0.019   6.880  0.000   0.093   0.167
+C(algorithm)[T.astar+crowdnav_attngraph]   0.341    0.019  18.045  0.000   0.304   0.378
+...                                          ...      ...     ...    ...     ...     ...
+standardize(task_n_signalised_junctions)   0.020    0.005   4.221  0.000   0.011   0.030
+standardize(demand_total_ph)               0.040    0.014   2.873  0.004   0.013   0.068
+map Var                                    0.019    0.047                               
+seed Var                                   0.000    0.001                               
+task Var                                   0.002    0.004                               
+
+[62 rows x 6 columns]
+
+== LMM ped_personal_space_s_total ==
+[LMM on log1p (pre-specified scale for right-skewed outcome; read coefficients multiplicatively) [reference=astar+dwa]]
+                                           Coef. Std.Err.       z  P>|z|  [0.025  0.975]
+Intercept                                  2.073    0.182  11.397  0.000   1.717   2.430
+C(algorithm)[T.astar+astar]               -0.136    0.082  -1.656  0.098  -0.296   0.025
+C(algorithm)[T.astar+cadrl]               -0.184    0.082  -2.251  0.024  -0.345  -0.024
+C(algorithm)[T.astar+cadrl_upstream]       0.834    0.082  10.191  0.000   0.673   0.994
+C(algorithm)[T.astar+crowdnav_attngraph]   2.711    0.082  33.134  0.000   2.550   2.871
+...                                          ...      ...     ...    ...     ...     ...
+standardize(task_n_signalised_junctions)  -0.082    0.021  -3.899  0.000  -0.123  -0.041
+standardize(demand_total_ph)               0.278    0.062   4.491  0.000   0.156   0.399
+map Var                                    0.063    0.040                               
+seed Var                                   0.019    0.007                               
+task Var                                   0.152    0.056                               
+
+[62 rows x 6 columns]
+
+== Failure taxonomy (% of runs) ==
+termination_reason           goal  collision  max_time  stalled  global_plan_failed  planner_error    n  goal_pct  collision_pct  max_time_pct  stalled_pct  global_plan_failed_pct  planner_error_pct
+algorithm                                                                                                                                                                                             
+rrt+rrt                       102        371         8        0                  19              0  500      20.4           74.2           1.6          0.0                     3.8                0.0
+rrt+cadrl_upstream            121        321        27        8                  23              0  500      24.2           64.2           5.4          1.6                     4.6                0.0
+rrt+dijkstra                  179        292         0        0                  29              0  500      35.8           58.4           0.0          0.0                     5.8                0.0
+astar+cadrl_upstream          186        290         8       16                   0              0  500      37.2           58.0           1.6          3.2                     0.0                0.0
+rrt+teb                       187        273         4        0                  36              0  500      37.4           54.6           0.8          0.0                     7.2                0.0
+astar+crowdnav_attngraph      189        207       102        2                   0              0  500      37.8           41.4          20.4          0.4                     0.0                0.0
+dijkstra+cadrl_upstream       189        287         8       16                   0              0  500      37.8           57.4           1.6          3.2                     0.0                0.0
+dijkstra+crowdnav_attngraph   190        202       106        2                   0              0  500      38.0           40.4          21.2          0.4                     0.0                0.0
+rrt+teb_upstream              198        281         0        0                  21              0  500      39.6           56.2           0.0          0.0                     4.2                0.0
+rrt+astar                     214        240         0        0                  46              0  500      42.8           48.0           0.0          0.0                     9.2                0.0
+dijkstra+rrt                  215        277         8        0                   0              0  500      43.0           55.4           1.6          0.0                     0.0                0.0
+dijkstra+dijkstra             216        284         0        0                   0              0  500      43.2           56.8           0.0          0.0                     0.0                0.0
+astar+dijkstra                217        283         0        0                   0              0  500      43.4           56.6           0.0          0.0                     0.0                0.0
+dijkstra+teb                  218        271        11        0                   0              0  500      43.6           54.2           2.2          0.0                     0.0                0.0
+rrt+crowdnav_attngraph        219        181        64        3                  31              0  498      44.0           36.3          12.9          0.6                     6.2                0.0
+astar+teb                     222        267        11        0                   0              0  500      44.4           53.4           2.2          0.0                     0.0                0.0
+astar+rrt                     224        268         8        0                   0              0  500      44.8           53.6           1.6          0.0                     0.0                0.0
+rrt+lstm_rl_upstream          255        217         0        0                  28              0  500      51.0           43.4           0.0          0.0                     5.6                0.0
+dijkstra+astar                263        237         0        0                   0              0  500      52.6           47.4           0.0          0.0                     0.0                0.0
+astar+astar                   267        233         0        0                   0              0  500      53.4           46.6           0.0          0.0                     0.0                0.0
+rrt+crowdnav_dsrnn            293        184         1        0                  22              0  500      58.6           36.8           0.2          0.0                     4.4                0.0
+dijkstra+orca                 300        189         0       11                   0              0  500      60.0           37.8           0.0          2.2                     0.0                0.0
+rrt+orca                      302        162         0       13                  23              0  500      60.4           32.4           0.0          2.6                     4.6                0.0
+rrt+dwa                       305        144         0       26                  25              0  500      61.0           28.8           0.0          5.2                     5.0                0.0
+dijkstra+crowdnav_dsrnn       307        193         0        0                   0              0  500      61.4           38.6           0.0          0.0                     0.0                0.0
+rrt+lstm_rl                   307        157         2        2                  31              0  499      61.5           31.5           0.4          0.4                     6.2                0.0
+rrt+sarl                      308        121        33       12                  25              0  499      61.7           24.2           6.6          2.4                     5.0                0.0
+astar+orca                    312        177         0       11                   0              0  500      62.4           35.4           0.0          2.2                     0.0                0.0
+astar+crowdnav_dsrnn          313        187         0        0                   0              0  500      62.6           37.4           0.0          0.0                     0.0                0.0
+dijkstra+lstm_rl_upstream     315        185         0        0                   0              0  500      63.0           37.0           0.0          0.0                     0.0                0.0
+astar+lstm_rl_upstream        323        177         0        0                   0              0  500      64.6           35.4           0.0          0.0                     0.0                0.0
+rrt+sarl_upstream             323        144         4        0                  29              0  500      64.6           28.8           0.8          0.0                     5.8                0.0
+dijkstra+sarl                 326        121        21       31                   0              0  499      65.3           24.2           4.2          6.2                     0.0                0.0
+astar+sarl                    330        116        20       33                   0              0  499      66.1           23.2           4.0          6.6                     0.0                0.0
+rrt+cadrl                     342        124         7        5                  22              0  500      68.4           24.8           1.4          1.0                     4.4                0.0
+dijkstra+teb_upstream         345        155         0        0                   0              0  500      69.0           31.0           0.0          0.0                     0.0                0.0
+dijkstra+lstm_rl              345        155         0        0                   0              0  500      69.0           31.0           0.0          0.0                     0.0                0.0
+dijkstra+dwa                  346        137         0       17                   0              0  500      69.2           27.4           0.0          3.4                     0.0                0.0
+astar+lstm_rl                 351        149         0        0                   0              0  500      70.2           29.8           0.0          0.0                     0.0                0.0
+dijkstra+cadrl                352        129        10        9                   0              0  500      70.4           25.8           2.0          1.8                     0.0                0.0
+astar+dwa                     353        128         0       19                   0              0  500      70.6           25.6           0.0          3.8                     0.0                0.0
+astar+cadrl                   355        126        10        9                   0              0  500      71.0           25.2           2.0          1.8                     0.0                0.0
+astar+teb_upstream            355        145         0        0                   0              0  500      71.0           29.0           0.0          0.0                     0.0                0.0
+dijkstra+sarl_upstream        365        134         1        0                   0              0  500      73.0           26.8           0.2          0.0                     0.0                0.0
+rrt+orca_heuristic            365         62         0       57                  16              0  500      73.0           12.4           0.0         11.4                     3.2                0.0
+dijkstra+mpc_dompc            375        121         4        0                   0              0  500      75.0           24.2           0.8          0.0                     0.0                0.0
+astar+sarl_upstream           375        124         1        0                   0              0  500      75.0           24.8           0.2          0.0                     0.0                0.0
+rrt+mpc                       374        101         3        0                  20              0  498      75.1           20.3           0.6          0.0                     4.0                0.0
+astar+mpc_dompc               376        120         4        0                   0              0  500      75.2           24.0           0.8          0.0                     0.0                0.0
+dijkstra+mpc                  376        112        12        0                   0              0  500      75.2           22.4           2.4          0.0                     0.0                0.0
+rrt+mpc_dompc                 379         99         2        0                  20              0  500      75.8           19.8           0.4          0.0                     4.0                0.0
+dijkstra+orca_heuristic       386         95         0       19                   0              0  500      77.2           19.0           0.0          3.8                     0.0                0.0
+astar+mpc                     387        101        12        0                   0              0  500      77.4           20.2           2.4          0.0                     0.0                0.0
+astar+orca_heuristic          402         78         0       20                   0              0  500      80.4           15.6           0.0          4.0                     0.0                0.0
+
+== Failure rates by category (Wilson 95% CI) ==
+                       unit                     unit_name   n  goal_n  goal_rate  goal_lo  goal_hi  collision_n  collision_rate  collision_lo  collision_hi  timeout_n  timeout_rate  timeout_lo  timeout_hi  stuck_n  stuck_rate  stuck_lo  stuck_hi  no_n  no_rate  no_lo  no_hi  other_n  other_rate  other_lo  other_hi
+                    rrt+rrt                     RRT + RRT 500     102     0.2040   0.1710   0.2415          371          0.7420        0.7019        0.7784          8        0.0160      0.0081      0.0313        0      0.0000    0.0000    0.0076    19   0.0380 0.0245 0.0586        0         0.0       0.0    0.0076
+         rrt+cadrl_upstream        RRT + CADRL (upstream) 500     121     0.2420   0.2065   0.2814          321          0.6420        0.5990        0.6828         27        0.0540      0.0374      0.0774        8      0.0160    0.0081    0.0313    23   0.0460 0.0308 0.0681        0         0.0       0.0    0.0076
+               rrt+dijkstra                RRT + Dijkstra 500     179     0.3580   0.3172   0.4010          292          0.5840        0.5403        0.6264          0        0.0000      0.0000      0.0076        0      0.0000    0.0000    0.0076    29   0.0580 0.0407 0.0821        0         0.0       0.0    0.0076
+       astar+cadrl_upstream         A* + CADRL (upstream) 500     186     0.3720   0.3308   0.4152          290          0.5800        0.5363        0.6225          8        0.0160      0.0081      0.0313       16      0.0320    0.0198    0.0513     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+                    rrt+teb                     RRT + TEB 500     187     0.3740   0.3327   0.4172          273          0.5460        0.5022        0.5891          4        0.0080      0.0031      0.0204        0      0.0000    0.0000    0.0076    36   0.0720 0.0525 0.0981        0         0.0       0.0    0.0076
+   astar+crowdnav_attngraph       A* + CrowdNav AttnGraph 500     189     0.3780   0.3366   0.4213          207          0.4140        0.3716        0.4577        102        0.2040      0.1710      0.2415        2      0.0040    0.0011    0.0145     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+    dijkstra+cadrl_upstream   Dijkstra + CADRL (upstream) 500     189     0.3780   0.3366   0.4213          287          0.5740        0.5303        0.6166          8        0.0160      0.0081      0.0313       16      0.0320    0.0198    0.0513     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+dijkstra+crowdnav_attngraph Dijkstra + CrowdNav AttnGraph 500     190     0.3800   0.3385   0.4233          202          0.4040        0.3619        0.4476        106        0.2120      0.1784      0.2500        2      0.0040    0.0011    0.0145     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+           rrt+teb_upstream          RRT + TEB (upstream) 500     198     0.3960   0.3541   0.4395          281          0.5620        0.5182        0.6049          0        0.0000      0.0000      0.0076        0      0.0000    0.0000    0.0076    21   0.0420 0.0276 0.0634        0         0.0       0.0    0.0076
+                  rrt+astar                      RRT + A* 500     214     0.4280   0.3853   0.4718          240          0.4800        0.4365        0.5238          0        0.0000      0.0000      0.0076        0      0.0000    0.0000    0.0076    46   0.0920 0.0697 0.1205        0         0.0       0.0    0.0076
+               dijkstra+rrt                Dijkstra + RRT 500     215     0.4300   0.3873   0.4738          277          0.5540        0.5102        0.5970          8        0.0160      0.0081      0.0313        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+          dijkstra+dijkstra           Dijkstra + Dijkstra 500     216     0.4320   0.3893   0.4758          284          0.5680        0.5242        0.6107          0        0.0000      0.0000      0.0076        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+             astar+dijkstra                 A* + Dijkstra 500     217     0.4340   0.3912   0.4778          283          0.5660        0.5222        0.6088          0        0.0000      0.0000      0.0076        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+               dijkstra+teb                Dijkstra + TEB 500     218     0.4360   0.3932   0.4798          271          0.5420        0.4982        0.5852         11        0.0220      0.0123      0.0390        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+     rrt+crowdnav_attngraph      RRT + CrowdNav AttnGraph 498     219     0.4398   0.3968   0.4837          181          0.3635        0.3224        0.4066         64        0.1285      0.1019      0.1608        3      0.0060    0.0021    0.0176    31   0.0622 0.0442 0.0870        0         0.0       0.0    0.0077
+                  astar+teb                      A* + TEB 500     222     0.4440   0.4010   0.4878          267          0.5340        0.4902        0.5773         11        0.0220      0.0123      0.0390        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+                  astar+rrt                      A* + RRT 500     224     0.4480   0.4050   0.4918          268          0.5360        0.4922        0.5793          8        0.0160      0.0081      0.0313        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+       rrt+lstm_rl_upstream      RRT + LSTM-RL (upstream) 500     255     0.5100   0.4663   0.5536          217          0.4340        0.3912        0.4778          0        0.0000      0.0000      0.0076        0      0.0000    0.0000    0.0076    28   0.0560 0.0390 0.0797        0         0.0       0.0    0.0076
+             dijkstra+astar                 Dijkstra + A* 500     263     0.5260   0.4822   0.5694          237          0.4740        0.4306        0.5178          0        0.0000      0.0000      0.0076        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+                astar+astar                       A* + A* 500     267     0.5340   0.4902   0.5773          233          0.4660        0.4227        0.5098          0        0.0000      0.0000      0.0076        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+         rrt+crowdnav_dsrnn         RRT + CrowdNav DS-RNN 500     293     0.5860   0.5423   0.6284          184          0.3680        0.3269        0.4111          1        0.0020      0.0004      0.0112        0      0.0000    0.0000    0.0076    22   0.0440 0.0292 0.0657        0         0.0       0.0    0.0076
+              dijkstra+orca        Dijkstra + ORCA (RVO2) 500     300     0.6000   0.5565   0.6420          189          0.3780        0.3366        0.4213          0        0.0000      0.0000      0.0076       11      0.0220    0.0123    0.0390     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+                   rrt+orca             RRT + ORCA (RVO2) 500     302     0.6040   0.5605   0.6459          162          0.3240        0.2845        0.3662          0        0.0000      0.0000      0.0076       13      0.0260    0.0153    0.0440    23   0.0460 0.0308 0.0681        0         0.0       0.0    0.0076
+                    rrt+dwa                     RRT + DWA 500     305     0.6100   0.5666   0.6518          144          0.2880        0.2500        0.3292          0        0.0000      0.0000      0.0076       26      0.0520    0.0357    0.0751    25   0.0500 0.0341 0.0728        0         0.0       0.0    0.0076
+    dijkstra+crowdnav_dsrnn    Dijkstra + CrowdNav DS-RNN 500     307     0.6140   0.5706   0.6556          193          0.3860        0.3444        0.4294          0        0.0000      0.0000      0.0076        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+                rrt+lstm_rl                 RRT + LSTM-RL 499     307     0.6152   0.5718   0.6569          157          0.3146        0.2754        0.3567          2        0.0040      0.0011      0.0145        2      0.0040    0.0011    0.0145    31   0.0621 0.0441 0.0868        0         0.0       0.0    0.0076
+                   rrt+sarl                    RRT + SARL 499     308     0.6172   0.5738   0.6588          121          0.2425        0.2069        0.2820         33        0.0661      0.0475      0.0914       12      0.0240    0.0138    0.0416    25   0.0501 0.0342 0.0729        0         0.0       0.0    0.0076
+                 astar+orca              A* + ORCA (RVO2) 500     312     0.6240   0.5807   0.6654          177          0.3540        0.3133        0.3969          0        0.0000      0.0000      0.0076       11      0.0220    0.0123    0.0390     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+       astar+crowdnav_dsrnn          A* + CrowdNav DS-RNN 500     313     0.6260   0.5828   0.6673          187          0.3740        0.3327        0.4172          0        0.0000      0.0000      0.0076        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+  dijkstra+lstm_rl_upstream Dijkstra + LSTM-RL (upstream) 500     315     0.6300   0.5868   0.6712          185          0.3700        0.3288        0.4132          0        0.0000      0.0000      0.0076        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+     astar+lstm_rl_upstream       A* + LSTM-RL (upstream) 500     323     0.6460   0.6031   0.6867          177          0.3540        0.3133        0.3969          0        0.0000      0.0000      0.0076        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+          rrt+sarl_upstream         RRT + SARL (upstream) 500     323     0.6460   0.6031   0.6867          144          0.2880        0.2500        0.3292          4        0.0080      0.0031      0.0204        0      0.0000    0.0000    0.0076    29   0.0580 0.0407 0.0821        0         0.0       0.0    0.0076
+              dijkstra+sarl               Dijkstra + SARL 499     326     0.6533   0.6105   0.6937          121          0.2425        0.2069        0.2820         21        0.0421      0.0277      0.0635       31      0.0621    0.0441    0.0868     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+                 astar+sarl                     A* + SARL 499     330     0.6613   0.6187   0.7015          116          0.2325        0.1975        0.2715         20        0.0401      0.0261      0.0611       33      0.0661    0.0475    0.0914     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+                  rrt+cadrl                   RRT + CADRL 500     342     0.6840   0.6420   0.7232          124          0.2480        0.2122        0.2877          7        0.0140      0.0068      0.0286        5      0.0100    0.0043    0.0232    22   0.0440 0.0292 0.0657        0         0.0       0.0    0.0076
+      dijkstra+teb_upstream     Dijkstra + TEB (upstream) 500     345     0.6900   0.6481   0.7290          155          0.3100        0.2710        0.3519          0        0.0000      0.0000      0.0076        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+           dijkstra+lstm_rl            Dijkstra + LSTM-RL 500     345     0.6900   0.6481   0.7290          155          0.3100        0.2710        0.3519          0        0.0000      0.0000      0.0076        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+               dijkstra+dwa                Dijkstra + DWA 500     346     0.6920   0.6502   0.7309          137          0.2740        0.2367        0.3147          0        0.0000      0.0000      0.0076       17      0.0340    0.0213    0.0538     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+              astar+lstm_rl                  A* + LSTM-RL 500     351     0.7020   0.6605   0.7404          149          0.2980        0.2596        0.3395          0        0.0000      0.0000      0.0076        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+             dijkstra+cadrl              Dijkstra + CADRL 500     352     0.7040   0.6626   0.7423          129          0.2580        0.2216        0.2981         10        0.0200      0.0109      0.0364        9      0.0180    0.0095    0.0339     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+                  astar+dwa                      A* + DWA 500     353     0.7060   0.6646   0.7442          128          0.2560        0.2197        0.2960          0        0.0000      0.0000      0.0076       19      0.0380    0.0245    0.0586     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+                astar+cadrl                    A* + CADRL 500     355     0.7100   0.6687   0.7481          126          0.2520        0.2159        0.2918         10        0.0200      0.0109      0.0364        9      0.0180    0.0095    0.0339     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+         astar+teb_upstream           A* + TEB (upstream) 500     355     0.7100   0.6687   0.7481          145          0.2900        0.2519        0.3313          0        0.0000      0.0000      0.0076        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+     dijkstra+sarl_upstream    Dijkstra + SARL (upstream) 500     365     0.7300   0.6894   0.7671          134          0.2680        0.2311        0.3085          1        0.0020      0.0004      0.0112        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+         rrt+orca_heuristic        RRT + ORCA (heuristic) 500     365     0.7300   0.6894   0.7671           62          0.1240        0.0979        0.1558          0        0.0000      0.0000      0.0076       57      0.1140    0.0890    0.1448    16   0.0320 0.0198 0.0513        0         0.0       0.0    0.0076
+         dijkstra+mpc_dompc       Dijkstra + MPC (do-mpc) 500     375     0.7500   0.7102   0.7860          121          0.2420        0.2065        0.2814          4        0.0080      0.0031      0.0204        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+        astar+sarl_upstream          A* + SARL (upstream) 500     375     0.7500   0.7102   0.7860          124          0.2480        0.2122        0.2877          1        0.0020      0.0004      0.0112        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+                    rrt+mpc                     RRT + MPC 498     374     0.7510   0.7112   0.7870          101          0.2028        0.1698        0.2403          3        0.0060      0.0021      0.0176        0      0.0000    0.0000    0.0077    20   0.0402 0.0261 0.0612        0         0.0       0.0    0.0077
+            astar+mpc_dompc             A* + MPC (do-mpc) 500     376     0.7520   0.7123   0.7878          120          0.2400        0.2046        0.2793          4        0.0080      0.0031      0.0204        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+               dijkstra+mpc                Dijkstra + MPC 500     376     0.7520   0.7123   0.7878          112          0.2240        0.1896        0.2626         12        0.0240      0.0138      0.0415        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+              rrt+mpc_dompc            RRT + MPC (do-mpc) 500     379     0.7580   0.7186   0.7935           99          0.1980        0.1654        0.2352          2        0.0040      0.0011      0.0145        0      0.0000    0.0000    0.0076    20   0.0400 0.0260 0.0610        0         0.0       0.0    0.0076
+    dijkstra+orca_heuristic   Dijkstra + ORCA (heuristic) 500     386     0.7720   0.7332   0.8066           95          0.1900        0.1580        0.2267          0        0.0000      0.0000      0.0076       19      0.0380    0.0245    0.0586     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+                  astar+mpc                      A* + MPC 500     387     0.7740   0.7353   0.8085          101          0.2020        0.1691        0.2394         12        0.0240      0.0138      0.0415        0      0.0000    0.0000    0.0076     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+       astar+orca_heuristic         A* + ORCA (heuristic) 500     402     0.8040   0.7669   0.8364           78          0.1560        0.1268        0.1904          0        0.0000      0.0000      0.0076       20      0.0400    0.0260    0.0610     0   0.0000 0.0000 0.0076        0         0.0       0.0    0.0076
+
+== Ranking stability (bootstrap over seeds) ==
+                  algorithm  mean_success  rank_median  rank_ci_lo  rank_ci_hi  P_top1
+       astar+orca_heuristic         0.804          1.0        1.00        2.51   0.901
+                  astar+mpc         0.774          3.0        2.00        6.00   0.018
+    dijkstra+orca_heuristic         0.772          3.0        2.00        9.00   0.000
+              rrt+mpc_dompc         0.758          5.5        1.00       12.00   0.035
+               dijkstra+mpc         0.752          7.0        4.00       11.00   0.000
+         dijkstra+mpc_dompc         0.750          7.0        3.00       11.50   0.002
+        astar+sarl_upstream         0.750          7.0        1.99       14.00   0.023
+            astar+mpc_dompc         0.752          7.0        3.50       11.00   0.000
+                    rrt+mpc         0.751          7.0        2.00       12.00   0.021
+     dijkstra+sarl_upstream         0.730         10.0        4.00       18.00   0.000
+         rrt+orca_heuristic         0.730         10.5        3.00       19.00   0.000
+         astar+teb_upstream         0.710         13.5        9.00       19.00   0.000
+                astar+cadrl         0.710         14.0        9.00       18.01   0.000
+                  astar+dwa         0.706         14.5       10.00       19.00   0.000
+              astar+lstm_rl         0.702         15.0        9.00       22.00   0.000
+             dijkstra+cadrl         0.704         15.0       11.00       19.00   0.000
+               dijkstra+dwa         0.692         18.0       13.00       22.00   0.000
+           dijkstra+lstm_rl         0.690         18.0       11.00       24.00   0.000
+      dijkstra+teb_upstream         0.690         18.0       11.49       21.00   0.000
+                  rrt+cadrl         0.684         18.5       12.00       23.00   0.000
+                 astar+sarl         0.661         21.0       18.00       25.00   0.000
+              dijkstra+sarl         0.653         22.5       19.00       27.00   0.000
+     astar+lstm_rl_upstream         0.646         23.0       18.00       29.00   0.000
+          rrt+sarl_upstream         0.646         23.5       20.00       28.00   0.000
+  dijkstra+lstm_rl_upstream         0.630         26.0       22.00       32.00   0.000
+       astar+crowdnav_dsrnn         0.626         27.0       21.00       32.00   0.000
+                 astar+orca         0.624         27.0       22.00       31.00   0.000
+    dijkstra+crowdnav_dsrnn         0.614         29.0       24.00       34.00   0.000
+                   rrt+sarl         0.617         29.0       23.00       33.00   0.000
+                rrt+lstm_rl         0.616         29.0       23.00       34.00   0.000
+                    rrt+dwa         0.610         30.0       26.00       32.51   0.000
+                   rrt+orca         0.604         31.5       25.00       34.00   0.000
+              dijkstra+orca         0.600         32.0       27.00       34.00   0.000
+         rrt+crowdnav_dsrnn         0.586         34.0       29.00       34.00   0.000
+                astar+astar         0.534         35.0       35.00       37.00   0.000
+             dijkstra+astar         0.526         36.0       35.00       37.00   0.000
+       rrt+lstm_rl_upstream         0.510         37.0       35.00       40.00   0.000
+                  astar+rrt         0.448         40.0       37.00       44.00   0.000
+                  astar+teb         0.444         40.0       38.00       44.00   0.000
+     rrt+crowdnav_attngraph         0.440         41.0       38.00       47.00   0.000
+          dijkstra+dijkstra         0.432         42.0       38.00       48.50   0.000
+             astar+dijkstra         0.434         42.0       38.00       48.50   0.000
+               dijkstra+teb         0.436         42.0       38.00       47.00   0.000
+                  rrt+astar         0.428         43.0       38.99       45.00   0.000
+               dijkstra+rrt         0.430         43.0       39.00       47.50   0.000
+           rrt+teb_upstream         0.396         46.0       44.00       50.00   0.000
+dijkstra+crowdnav_attngraph         0.380         48.0       45.00       52.00   0.000
+   astar+crowdnav_attngraph         0.378         49.0       44.50       52.00   0.000
+                    rrt+teb         0.374         49.0       44.00       52.00   0.000
+    dijkstra+cadrl_upstream         0.378         49.0       44.00       52.00   0.000
+       astar+cadrl_upstream         0.372         50.0       46.00       52.00   0.000
+               rrt+dijkstra         0.358         52.0       46.50       52.00   0.000
+         rrt+cadrl_upstream         0.242         53.0       53.00       53.00   0.000
+                    rrt+rrt         0.204         54.0       54.00       54.00   0.000

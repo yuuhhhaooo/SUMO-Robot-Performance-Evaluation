@@ -1,0 +1,7 @@
+layer_a,layer_b,ranking,n,kendall_tau_b
+sfm,pysf,synthetic_pooled,54,0.172
+sfm,pysf,real_map,54,0.255
+sfm,jupedsim,synthetic_pooled,54,0.712
+sfm,jupedsim,real_map,54,0.726
+pysf,jupedsim,synthetic_pooled,54,0.337
+pysf,jupedsim,real_map,54,0.34

@@ -1,0 +1,55 @@
+combination,global_planner,local_planner,combination_name,sim_n,sim_success,sim_rank,real_n,real_success,real_rank,rank_shift
+astar+sarl_upstream,astar,sarl_upstream,A* + SARL (upstream),400,0.785,1,100,0.72,3,-2
+dijkstra+sarl_upstream,dijkstra,sarl_upstream,Dijkstra + SARL (upstream),400,0.7725,2,100,0.72,4,-2
+astar+sarl,astar,sarl,A* + SARL,400,0.75,3,100,0.46,15,-12
+dijkstra+sarl,dijkstra,sarl,Dijkstra + SARL,400,0.7475,4,100,0.46,16,-12
+astar+orca_heuristic,astar,orca_heuristic,A* + ORCA (heuristic),400,0.7175,5,100,0.75,1,4
+dijkstra+orca_heuristic,dijkstra,orca_heuristic,Dijkstra + ORCA (heuristic),400,0.705,6,100,0.75,2,4
+rrt+sarl_upstream,rrt,sarl_upstream,RRT + SARL (upstream),400,0.6525,7,100,0.44,17,-10
+rrt+orca_heuristic,rrt,orca_heuristic,RRT + ORCA (heuristic),400,0.645,8,100,0.69,5,3
+rrt+sarl,rrt,sarl,RRT + SARL,400,0.5925,9,100,0.22,33,-24
+astar+lstm_rl,astar,lstm_rl,A* + LSTM-RL,400,0.5725,10,100,0.51,9,1
+astar+cadrl,astar,cadrl,A* + CADRL,400,0.55,11,100,0.38,21,-10
+dijkstra+cadrl,dijkstra,cadrl,Dijkstra + CADRL,400,0.5425,12,100,0.38,22,-10
+dijkstra+lstm_rl,dijkstra,lstm_rl,Dijkstra + LSTM-RL,400,0.5425,13,100,0.51,10,3
+rrt+crowdnav_attngraph,rrt,crowdnav_attngraph,RRT + CrowdNav AttnGraph,400,0.54,14,99,0.5253,8,6
+rrt+dwa,rrt,dwa,RRT + DWA,400,0.5225,15,100,0.34,26,-11
+astar+lstm_rl_upstream,astar,lstm_rl_upstream,A* + LSTM-RL (upstream),400,0.4925,16,100,0.34,24,-8
+dijkstra+lstm_rl_upstream,dijkstra,lstm_rl_upstream,Dijkstra + LSTM-RL (upstream),400,0.49,17,100,0.34,25,-8
+astar+dwa,astar,dwa,A* + DWA,400,0.4825,18,100,0.48,13,5
+dijkstra+dwa,dijkstra,dwa,Dijkstra + DWA,400,0.4725,19,100,0.48,14,5
+astar+crowdnav_dsrnn,astar,crowdnav_dsrnn,A* + CrowdNav DS-RNN,400,0.46,20,100,0.49,11,9
+dijkstra+crowdnav_dsrnn,dijkstra,crowdnav_dsrnn,Dijkstra + CrowdNav DS-RNN,400,0.45,21,100,0.49,12,9
+rrt+crowdnav_dsrnn,rrt,crowdnav_dsrnn,RRT + CrowdNav DS-RNN,400,0.44,22,100,0.43,18,4
+rrt+lstm_rl,rrt,lstm_rl,RRT + LSTM-RL,400,0.44,23,100,0.43,19,4
+dijkstra+crowdnav_attngraph,dijkstra,crowdnav_attngraph,Dijkstra + CrowdNav AttnGraph,400,0.4375,24,100,0.66,7,17
+astar+crowdnav_attngraph,astar,crowdnav_attngraph,A* + CrowdNav AttnGraph,400,0.4325,25,100,0.66,6,19
+astar+cadrl_upstream,astar,cadrl_upstream,A* + CADRL (upstream),400,0.43,26,100,0.21,34,-8
+dijkstra+cadrl_upstream,dijkstra,cadrl_upstream,Dijkstra + CADRL (upstream),400,0.4125,27,100,0.21,35,-8
+rrt+cadrl,rrt,cadrl,RRT + CADRL,400,0.3975,28,100,0.36,23,5
+rrt+lstm_rl_upstream,rrt,lstm_rl_upstream,RRT + LSTM-RL (upstream),400,0.3375,29,100,0.42,20,9
+rrt+mpc,rrt,mpc,RRT + MPC,400,0.32,30,100,0.29,28,2
+astar+mpc,astar,mpc,A* + MPC,400,0.31,31,100,0.23,31,0
+rrt+mpc_dompc,rrt,mpc_dompc,RRT + MPC (do-mpc),400,0.3075,32,100,0.31,27,5
+rrt+orca,rrt,orca,RRT + ORCA (RVO2),400,0.3075,33,100,0.25,30,3
+astar+astar,astar,astar,A* + A*,400,0.305,34,100,0.13,41,-7
+dijkstra+mpc,dijkstra,mpc,Dijkstra + MPC,400,0.305,35,100,0.23,32,3
+dijkstra+astar,dijkstra,astar,Dijkstra + A*,400,0.2925,36,100,0.13,43,-7
+dijkstra+dijkstra,dijkstra,dijkstra,Dijkstra + Dijkstra,400,0.2925,37,100,0.13,44,-7
+astar+dijkstra,astar,dijkstra,A* + Dijkstra,400,0.2625,38,100,0.13,42,-4
+rrt+dijkstra,rrt,dijkstra,RRT + Dijkstra,400,0.235,39,100,0.27,29,10
+rrt+cadrl_upstream,rrt,cadrl_upstream,RRT + CADRL (upstream),400,0.2325,40,100,0.14,40,0
+astar+mpc_dompc,astar,mpc_dompc,A* + MPC (do-mpc),400,0.2225,41,100,0.11,45,-4
+dijkstra+mpc_dompc,dijkstra,mpc_dompc,Dijkstra + MPC (do-mpc),400,0.22,42,100,0.11,46,-4
+rrt+teb_upstream,rrt,teb_upstream,RRT + TEB (upstream),400,0.19,43,100,0.15,37,6
+dijkstra+orca,dijkstra,orca,Dijkstra + ORCA (RVO2),400,0.1875,44,100,0.14,39,5
+astar+orca,astar,orca,A* + ORCA (RVO2),400,0.185,45,100,0.14,38,7
+rrt+astar,rrt,astar,RRT + A*,400,0.1175,46,100,0.15,36,10
+rrt+rrt,rrt,rrt,RRT + RRT,400,0.075,47,100,0.06,47,0
+astar+teb_upstream,astar,teb_upstream,A* + TEB (upstream),400,0.07,48,100,0.05,48,0
+dijkstra+teb_upstream,dijkstra,teb_upstream,Dijkstra + TEB (upstream),400,0.065,49,100,0.05,49,0
+rrt+teb,rrt,teb,RRT + TEB,400,0.055,50,100,0.04,50,0
+astar+rrt,astar,rrt,A* + RRT,400,0.0425,51,100,0.0,51,0
+dijkstra+rrt,dijkstra,rrt,Dijkstra + RRT,400,0.04,52,100,0.0,53,-1
+astar+teb,astar,teb,A* + TEB,400,0.0275,53,100,0.0,52,1
+dijkstra+teb,dijkstra,teb,Dijkstra + TEB,400,0.0275,54,100,0.0,54,0
