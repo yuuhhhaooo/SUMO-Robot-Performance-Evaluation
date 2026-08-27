@@ -69,10 +69,15 @@ def do_export(results: Path):
           f"covariates={covs}, extras={extras}")
 
 
-def do_compare(results: Path):
+def do_compare(results: Path, spec: str = "crossed"):
+    """spec='crossed' compares against the crossed glmmTMB fit;
+    spec='nested' against the map-nested task fit. The VB side is
+    whatever stats_models.py last wrote (nested since item 6)."""
     out = results / "stats_combo"
     vb = pd.read_csv(out / "success_glmm_odds_ratios.csv")
-    tmb = pd.read_csv(out / "glmmtmb_fixed_effects.csv")
+    tmb_file = ("glmmtmb_fixed_effects.csv" if spec == "crossed"
+                else "glmmtmb_fixed_effects_nestedtask.csv")
+    tmb = pd.read_csv(out / tmb_file)
     # term name harmonisation: statsmodels "C(algorithm)[T.astar+orca]"
     # vs R "algorithmastar+orca"; "standardize(x)" vs "scale_x"
     def key(t):
@@ -102,11 +107,15 @@ def do_compare(results: Path):
     mad = float(np.mean(np.abs(algo["log_odds"] - algo["estimate"])))
     se_ratio = float(np.median(algo["vb_sd"] / algo["se"]))
     cols = ["k", "log_odds", "vb_sd", "estimate", "se"]
-    merged[cols].to_csv(out / "glmmtmb_vs_vb_sfm.csv", index=False)
+    csv_suffix = "" if spec == "crossed" else "_nested"
+    merged[cols].to_csv(out / f"glmmtmb_vs_vb_sfm{csv_suffix}.csv",
+                        index=False)
     vcp = pd.read_csv(out / "success_glmm_variance_components.csv")
-    tvc = pd.read_csv(out / "glmmtmb_variance_components.csv")
+    tvc_file = ("glmmtmb_variance_components.csv" if spec == "crossed"
+                else "glmmtmb_variance_components_nestedtask.csv")
+    tvc = pd.read_csv(out / tvc_file)
     lines = [
-        f"VB (paper) vs glmmTMB refit, sfm success model, "
+        f"VB (paper) vs glmmTMB refit ({spec} spec), sfm success model, "
         f"{len(algo)} combination fixed effects",
         f"corr(log-odds) = {r:.4f}",
         f"mean |log-odds diff| = {mad:.3f}",
@@ -119,8 +128,9 @@ def do_compare(results: Path):
         tvc.to_string(index=False),
     ]
     text = "\n".join(lines)
-    (out / "glmmtmb_agreement_summary.txt").write_text(text,
-                                                      encoding="utf-8")
+    suffix = "" if spec == "crossed" else "_nested"
+    (out / f"glmmtmb_agreement_summary{suffix}.txt").write_text(
+        text, encoding="utf-8")
     print(text)
 
 
@@ -128,11 +138,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("step", choices=["export", "compare"])
     ap.add_argument("--results", default="results_sfm/peds_sfm")
+    ap.add_argument("--spec", choices=["crossed", "nested"],
+                    default="crossed")
     args = ap.parse_args()
     if args.step == "export":
         do_export(Path(args.results))
     else:
-        do_compare(Path(args.results))
+        do_compare(Path(args.results), args.spec)
 
 
 if __name__ == "__main__":

@@ -63,221 +63,221 @@ dijkstra+crowdnav_attngraph Dijkstra + CrowdNav AttnGraph 500        0.4820     
 
 == Binomial GLMM (success) ==
                                        term  log_odds  ci_lo  ci_hi  odds_ratio  or_ci_lo  or_ci_hi
-                                  Intercept    -0.167 -0.196 -0.138       0.846     0.822     0.871
-                C(algorithm)[T.astar+astar]    -0.965 -1.172 -0.757       0.381     0.310     0.469
-                C(algorithm)[T.astar+cadrl]     0.240  0.053  0.427       1.271     1.054     1.533
-       C(algorithm)[T.astar+cadrl_upstream]    -0.366 -0.557 -0.175       0.694     0.573     0.840
-   C(algorithm)[T.astar+crowdnav_attngraph]     0.065 -0.122  0.252       1.067     0.885     1.287
-       C(algorithm)[T.astar+crowdnav_dsrnn]     0.010 -0.178  0.197       1.010     0.837     1.218
-             C(algorithm)[T.astar+dijkstra]    -1.165 -1.381 -0.949       0.312     0.251     0.387
-              C(algorithm)[T.astar+lstm_rl]     0.444  0.255  0.632       1.559     1.291     1.882
-     C(algorithm)[T.astar+lstm_rl_upstream]    -0.009 -0.196  0.179       0.991     0.822     1.196
-                  C(algorithm)[T.astar+mpc]    -0.832 -1.035 -0.629       0.435     0.355     0.533
-            C(algorithm)[T.astar+mpc_dompc]    -1.397 -1.625 -1.170       0.247     0.197     0.310
-                 C(algorithm)[T.astar+orca]    -1.569 -1.807 -1.331       0.208     0.164     0.264
-       C(algorithm)[T.astar+orca_heuristic]     1.271  1.063  1.478       3.563     2.895     4.384
-                  C(algorithm)[T.astar+rrt]    -3.437 -3.909 -2.964       0.032     0.020     0.052
-                 C(algorithm)[T.astar+sarl]     1.095  0.893  1.296       2.989     2.444     3.655
-        C(algorithm)[T.astar+sarl_upstream]     1.558  1.338  1.777       4.748     3.811     5.914
-                  C(algorithm)[T.astar+teb]    -3.870 -4.440 -3.300       0.021     0.012     0.037
-         C(algorithm)[T.astar+teb_upstream]    -2.735 -3.089 -2.382       0.065     0.046     0.092
-             C(algorithm)[T.dijkstra+astar]    -1.022 -1.231 -0.812       0.360     0.292     0.444
-             C(algorithm)[T.dijkstra+cadrl]     0.212  0.025  0.399       1.236     1.026     1.491
-    C(algorithm)[T.dijkstra+cadrl_upstream]    -0.434 -0.626 -0.241       0.648     0.535     0.786
-C(algorithm)[T.dijkstra+crowdnav_attngraph]     0.083 -0.104  0.271       1.087     0.902     1.311
-    C(algorithm)[T.dijkstra+crowdnav_dsrnn]    -0.027 -0.215  0.160       0.973     0.807     1.174
-          C(algorithm)[T.dijkstra+dijkstra]    -1.022 -1.231 -0.812       0.360     0.292     0.444
-               C(algorithm)[T.dijkstra+dwa]     0.047 -0.141  0.234       1.048     0.869     1.263
-           C(algorithm)[T.dijkstra+lstm_rl]     0.332  0.145  0.520       1.394     1.156     1.682
-  C(algorithm)[T.dijkstra+lstm_rl_upstream]    -0.018 -0.205  0.169       0.982     0.814     1.185
-               C(algorithm)[T.dijkstra+mpc]    -0.854 -1.057 -0.650       0.426     0.348     0.522
-         C(algorithm)[T.dijkstra+mpc_dompc]    -1.411 -1.640 -1.183       0.244     0.194     0.306
-              C(algorithm)[T.dijkstra+orca]    -1.554 -1.791 -1.317       0.211     0.167     0.268
-    C(algorithm)[T.dijkstra+orca_heuristic]     1.214  1.009  1.420       3.368     2.743     4.136
-               C(algorithm)[T.dijkstra+rrt]    -3.498 -3.983 -3.013       0.030     0.019     0.049
-              C(algorithm)[T.dijkstra+sarl]     1.084  0.883  1.285       2.957     2.418     3.615
-     C(algorithm)[T.dijkstra+sarl_upstream]     1.495  1.278  1.712       4.459     3.590     5.538
-               C(algorithm)[T.dijkstra+teb]    -3.870 -4.440 -3.300       0.021     0.012     0.037
-      C(algorithm)[T.dijkstra+teb_upstream]    -2.804 -3.167 -2.440       0.061     0.042     0.087
-                  C(algorithm)[T.rrt+astar]    -2.011 -2.283 -1.739       0.134     0.102     0.176
-                  C(algorithm)[T.rrt+cadrl]    -0.347 -0.537 -0.156       0.707     0.584     0.856
-         C(algorithm)[T.rrt+cadrl_upstream]    -1.304 -1.527 -1.081       0.271     0.217     0.339
-     C(algorithm)[T.rrt+crowdnav_attngraph]     0.336  0.148  0.524       1.399     1.159     1.688
-         C(algorithm)[T.rrt+crowdnav_dsrnn]    -0.120 -0.308  0.068       0.887     0.735     1.070
-               C(algorithm)[T.rrt+dijkstra]    -1.128 -1.342 -0.914       0.324     0.261     0.401
-                    C(algorithm)[T.rrt+dwa]     0.102 -0.085  0.289       1.107     0.918     1.335
-                C(algorithm)[T.rrt+lstm_rl]    -0.120 -0.308  0.068       0.887     0.735     1.070
-       C(algorithm)[T.rrt+lstm_rl_upstream]    -0.522 -0.716 -0.328       0.593     0.489     0.721
-                    C(algorithm)[T.rrt+mpc]    -0.726 -0.925 -0.526       0.484     0.397     0.591
-              C(algorithm)[T.rrt+mpc_dompc]    -0.757 -0.957 -0.557       0.469     0.384     0.573
-                   C(algorithm)[T.rrt+orca]    -0.821 -1.023 -0.619       0.440     0.359     0.539
-         C(algorithm)[T.rrt+orca_heuristic]     0.898  0.702  1.094       2.454     2.017     2.985
-                    C(algorithm)[T.rrt+rrt]    -2.639 -2.980 -2.299       0.071     0.051     0.100
-                   C(algorithm)[T.rrt+sarl]     0.249  0.062  0.436       1.283     1.064     1.547
-          C(algorithm)[T.rrt+sarl_upstream]     0.681  0.489  0.872       1.975     1.631     2.392
-                    C(algorithm)[T.rrt+teb]    -2.993 -3.386 -2.601       0.050     0.034     0.074
-           C(algorithm)[T.rrt+teb_upstream]    -1.525 -1.760 -1.289       0.218     0.172     0.275
-            standardize(task_path_length_m)    -0.048 -0.079 -0.017       0.953     0.924     0.983
-                  standardize(task_n_turns)    -0.014 -0.045  0.016       0.986     0.956     1.016
-     standardize(task_min_sidewalk_width_m)     0.056  0.029  0.084       1.058     1.029     1.087
-   standardize(task_n_signalised_junctions)    -0.288 -0.319 -0.257       0.749     0.727     0.773
-               standardize(demand_total_ph)     0.198  0.168  0.228       1.219     1.183     1.256
+                                  Intercept    -0.172 -0.202 -0.143       0.842     0.817     0.867
+                C(algorithm)[T.astar+astar]    -0.983 -1.192 -0.773       0.374     0.304     0.462
+                C(algorithm)[T.astar+cadrl]     0.246  0.057  0.434       1.278     1.058     1.544
+       C(algorithm)[T.astar+cadrl_upstream]    -0.371 -0.564 -0.178       0.690     0.569     0.837
+   C(algorithm)[T.astar+crowdnav_attngraph]     0.068 -0.121  0.256       1.070     0.886     1.292
+       C(algorithm)[T.astar+crowdnav_dsrnn]     0.011 -0.178  0.200       1.011     0.837     1.222
+             C(algorithm)[T.astar+dijkstra]    -1.187 -1.405 -0.969       0.305     0.245     0.380
+              C(algorithm)[T.astar+lstm_rl]     0.453  0.263  0.643       1.573     1.301     1.902
+     C(algorithm)[T.astar+lstm_rl_upstream]    -0.008 -0.197  0.182       0.993     0.822     1.199
+                  C(algorithm)[T.astar+mpc]    -0.847 -1.052 -0.642       0.429     0.349     0.526
+            C(algorithm)[T.astar+mpc_dompc]    -1.425 -1.655 -1.195       0.241     0.191     0.303
+                 C(algorithm)[T.astar+orca]    -1.600 -1.841 -1.359       0.202     0.159     0.257
+       C(algorithm)[T.astar+orca_heuristic]     1.293  1.084  1.502       3.643     2.956     4.491
+                  C(algorithm)[T.astar+rrt]    -3.495 -3.969 -3.020       0.030     0.019     0.049
+                 C(algorithm)[T.astar+sarl]     1.114  0.911  1.317       3.048     2.488     3.733
+        C(algorithm)[T.astar+sarl_upstream]     1.585  1.363  1.806       4.879     3.909     6.089
+                  C(algorithm)[T.astar+teb]    -3.931 -4.502 -3.359       0.020     0.011     0.035
+         C(algorithm)[T.astar+teb_upstream]    -2.786 -3.143 -2.430       0.062     0.043     0.088
+             C(algorithm)[T.dijkstra+astar]    -1.041 -1.253 -0.829       0.353     0.286     0.436
+             C(algorithm)[T.dijkstra+cadrl]     0.217  0.029  0.406       1.243     1.029     1.501
+    C(algorithm)[T.dijkstra+cadrl_upstream]    -0.440 -0.635 -0.246       0.644     0.530     0.782
+C(algorithm)[T.dijkstra+crowdnav_attngraph]     0.086 -0.102  0.275       1.090     0.903     1.317
+    C(algorithm)[T.dijkstra+crowdnav_dsrnn]    -0.026 -0.216  0.163       0.974     0.806     1.177
+          C(algorithm)[T.dijkstra+dijkstra]    -1.041 -1.253 -0.829       0.353     0.286     0.436
+               C(algorithm)[T.dijkstra+dwa]     0.049 -0.140  0.238       1.050     0.869     1.268
+           C(algorithm)[T.dijkstra+lstm_rl]     0.339  0.150  0.529       1.404     1.162     1.697
+  C(algorithm)[T.dijkstra+lstm_rl_upstream]    -0.017 -0.206  0.172       0.983     0.814     1.188
+               C(algorithm)[T.dijkstra+mpc]    -0.869 -1.075 -0.664       0.419     0.341     0.515
+         C(algorithm)[T.dijkstra+mpc_dompc]    -1.439 -1.670 -1.208       0.237     0.188     0.299
+              C(algorithm)[T.dijkstra+orca]    -1.585 -1.824 -1.345       0.205     0.161     0.261
+    C(algorithm)[T.dijkstra+orca_heuristic]     1.236  1.029  1.443       3.442     2.798     4.233
+               C(algorithm)[T.dijkstra+rrt]    -3.557 -4.044 -3.070       0.029     0.018     0.046
+              C(algorithm)[T.dijkstra+sarl]     1.104  0.901  1.306       3.015     2.462     3.692
+     C(algorithm)[T.dijkstra+sarl_upstream]     1.521  1.303  1.740       4.578     3.679     5.696
+               C(algorithm)[T.dijkstra+teb]    -3.931 -4.502 -3.359       0.020     0.011     0.035
+      C(algorithm)[T.dijkstra+teb_upstream]    -2.856 -3.222 -2.490       0.058     0.040     0.083
+                  C(algorithm)[T.rrt+astar]    -2.050 -2.325 -1.776       0.129     0.098     0.169
+                  C(algorithm)[T.rrt+cadrl]    -0.352 -0.544 -0.159       0.704     0.580     0.853
+         C(algorithm)[T.rrt+cadrl_upstream]    -1.329 -1.554 -1.104       0.265     0.211     0.332
+     C(algorithm)[T.rrt+crowdnav_attngraph]     0.344  0.154  0.533       1.410     1.167     1.704
+         C(algorithm)[T.rrt+crowdnav_dsrnn]    -0.121 -0.311  0.069       0.886     0.733     1.071
+               C(algorithm)[T.rrt+dijkstra]    -1.150 -1.366 -0.933       0.317     0.255     0.393
+                    C(algorithm)[T.rrt+dwa]     0.105 -0.084  0.294       1.111     0.920     1.342
+                C(algorithm)[T.rrt+lstm_rl]    -0.121 -0.311  0.069       0.886     0.733     1.071
+       C(algorithm)[T.rrt+lstm_rl_upstream]    -0.531 -0.727 -0.334       0.588     0.483     0.716
+                    C(algorithm)[T.rrt+mpc]    -0.738 -0.940 -0.537       0.478     0.391     0.585
+              C(algorithm)[T.rrt+mpc_dompc]    -0.771 -0.973 -0.568       0.463     0.378     0.567
+                   C(algorithm)[T.rrt+orca]    -0.836 -1.040 -0.631       0.433     0.353     0.532
+         C(algorithm)[T.rrt+orca_heuristic]     0.914  0.717  1.112       2.495     2.047     3.039
+                    C(algorithm)[T.rrt+rrt]    -2.689 -3.032 -2.346       0.068     0.048     0.096
+                   C(algorithm)[T.rrt+sarl]     0.255  0.066  0.444       1.290     1.068     1.559
+          C(algorithm)[T.rrt+sarl_upstream]     0.694  0.501  0.887       2.001     1.650     2.427
+                    C(algorithm)[T.rrt+teb]    -3.047 -3.442 -2.653       0.047     0.032     0.070
+           C(algorithm)[T.rrt+teb_upstream]    -1.555 -1.792 -1.317       0.211     0.167     0.268
+            standardize(task_path_length_m)    -0.319 -0.349 -0.288       0.727     0.705     0.750
+                  standardize(task_n_turns)     0.002 -0.028  0.032       1.002     0.972     1.032
+     standardize(task_min_sidewalk_width_m)     0.013 -0.015  0.040       1.013     0.985     1.041
+   standardize(task_n_signalised_junctions)    -0.517 -0.549 -0.486       0.596     0.577     0.615
+               standardize(demand_total_ph)     0.036  0.005  0.066       1.036     1.005     1.068
 variance components (posterior sd):
-component  sd_posterior_mean
-     seed              0.354
-      map              0.519
-     task              0.498
+component  sd_posterior_mean  sd_ci_lo  sd_ci_hi
+     seed              0.340     0.216     0.534
+      map              0.056     0.024     0.132
+     task              0.535     0.439     0.650
 
 == LMM sim_time_s (successful runs) ==
 [LMM on log1p (pre-specified scale for right-skewed outcome; read coefficients multiplicatively) [reference=astar+dwa]]
-                                           Coef. Std.Err.       z  P>|z|  [0.025  0.975]
-Intercept                                  5.696    0.133  42.960  0.000   5.436   5.956
-C(algorithm)[T.astar+astar]               -0.067    0.030  -2.204  0.027  -0.126  -0.007
-C(algorithm)[T.astar+cadrl]               -0.052    0.025  -2.059  0.040  -0.102  -0.003
-C(algorithm)[T.astar+cadrl_upstream]       0.448    0.027  16.426  0.000   0.394   0.501
-C(algorithm)[T.astar+crowdnav_attngraph]   0.513    0.026  19.910  0.000   0.463   0.564
-...                                          ...      ...     ...    ...     ...     ...
-standardize(task_n_signalised_junctions)   0.014    0.008   1.850  0.064  -0.001   0.029
-standardize(demand_total_ph)              -0.024    0.022  -1.106  0.269  -0.067   0.019
-map Var                                    0.068    0.170                               
-seed Var                                   0.000    0.001                               
-task Var                                   0.037    0.062                               
+                                           Coef. Std.Err.  ...  [0.025  0.975]
+Intercept                                  5.655    0.060  ...   5.537   5.772
+C(algorithm)[T.astar+astar]               -0.070    0.028  ...  -0.125  -0.016
+C(algorithm)[T.astar+cadrl]               -0.058    0.023  ...  -0.103  -0.013
+C(algorithm)[T.astar+cadrl_upstream]       0.457    0.025  ...   0.408   0.506
+C(algorithm)[T.astar+crowdnav_attngraph]   0.515    0.024  ...   0.469   0.561
+...                                          ...      ...  ...     ...     ...
+standardize(task_n_signalised_junctions)   0.054    0.054  ...  -0.053   0.161
+standardize(demand_total_ph)              -0.019    0.021  ...  -0.061   0.023
+map Var                                    0.011    0.073  ...                
+seed Var                                   0.000    0.001  ...                
+task Var                                   0.038    0.033  ...                
 
 [62 rows x 6 columns]
 
 == LMM path_length_m (successful runs) ==
 [LMM on log1p (pre-specified scale for right-skewed outcome; read coefficients multiplicatively) [reference=astar+dwa]]
-                                           Coef. Std.Err.       z  P>|z|  [0.025  0.975]
-Intercept                                  5.518    0.133  41.357  0.000   5.257   5.780
-C(algorithm)[T.astar+astar]                0.003    0.018   0.154  0.877  -0.033   0.038
-C(algorithm)[T.astar+cadrl]                0.016    0.015   1.057  0.290  -0.014   0.046
-C(algorithm)[T.astar+cadrl_upstream]       0.129    0.016   7.908  0.000   0.097   0.161
-C(algorithm)[T.astar+crowdnav_attngraph]   0.174    0.015  11.322  0.000   0.144   0.204
-...                                          ...      ...     ...    ...     ...     ...
-standardize(task_n_signalised_junctions)  -0.020    0.005  -4.415  0.000  -0.029  -0.011
-standardize(demand_total_ph)               0.008    0.014   0.605  0.545  -0.019   0.036
-map Var                                    0.069    0.318                               
-seed Var                                   0.000    0.001                               
-task Var                                   0.039    0.131                               
+                                           Coef. Std.Err.  ...  [0.025 0.975]
+Intercept                                  5.482    0.055  ...   5.375  5.590
+C(algorithm)[T.astar+astar]               -0.001    0.013  ...  -0.027  0.025
+C(algorithm)[T.astar+cadrl]                0.011    0.011  ...  -0.011  0.033
+C(algorithm)[T.astar+cadrl_upstream]       0.134    0.012  ...   0.110  0.158
+C(algorithm)[T.astar+crowdnav_attngraph]   0.173    0.011  ...   0.151  0.196
+...                                          ...      ...  ...     ...    ...
+standardize(task_n_signalised_junctions)  -0.010    0.013  ...  -0.035  0.015
+standardize(demand_total_ph)               0.015    0.008  ...   0.001  0.030
+map Var                                    0.012           ...               
+seed Var                                   0.000    0.000  ...               
+task Var                                   0.029    0.045  ...               
 
 [62 rows x 6 columns]
 
 == LMM min_pedestrian_distance_m ==
 [LMM [reference=astar+dwa]]
-                                           Coef. Std.Err.       z  P>|z|  [0.025  0.975]
-Intercept                                  0.552    0.091   6.039  0.000   0.373   0.732
-C(algorithm)[T.astar+astar]               -0.170    0.024  -6.961  0.000  -0.217  -0.122
-C(algorithm)[T.astar+cadrl]               -0.049    0.024  -1.999  0.046  -0.097  -0.001
-C(algorithm)[T.astar+cadrl_upstream]      -0.081    0.024  -3.304  0.001  -0.128  -0.033
-C(algorithm)[T.astar+crowdnav_attngraph]   0.052    0.024   2.113  0.035   0.004   0.099
-...                                          ...      ...     ...    ...     ...     ...
-standardize(task_n_signalised_junctions)   0.000    0.006   0.002  0.999  -0.012   0.012
-standardize(demand_total_ph)              -0.006    0.019  -0.303  0.762  -0.042   0.031
-map Var                                    0.031                                        
-seed Var                                   0.009                                        
-task Var                                   0.009                                        
+                                           Coef. Std.Err.  ...  [0.025  0.975]
+Intercept                                  0.552    0.033  ...   0.488   0.617
+C(algorithm)[T.astar+astar]               -0.170    0.024  ...  -0.217  -0.122
+C(algorithm)[T.astar+cadrl]               -0.049    0.024  ...  -0.096  -0.001
+C(algorithm)[T.astar+cadrl_upstream]      -0.081    0.024  ...  -0.128  -0.033
+C(algorithm)[T.astar+crowdnav_attngraph]   0.052    0.024  ...   0.004   0.099
+...                                          ...      ...  ...     ...     ...
+standardize(task_n_signalised_junctions)  -0.005    0.014  ...  -0.034   0.023
+standardize(demand_total_ph)              -0.024    0.017  ...  -0.058   0.009
+map Var                                    0.003    0.010  ...                
+seed Var                                   0.001    0.001  ...                
+task Var                                   0.002    0.001  ...                
 
 [62 rows x 6 columns]
 
 == LMM ped_delay_s_mean ==
 [LMM on log1p (pre-specified scale for right-skewed outcome; read coefficients multiplicatively) [reference=astar+dwa]]
-                                           Coef. Std.Err.       z  P>|z|  [0.025  0.975]
-Intercept                                  0.898    0.205   4.380  0.000   0.496   1.300
-C(algorithm)[T.astar+astar]               -0.228    0.048  -4.703  0.000  -0.323  -0.133
-C(algorithm)[T.astar+cadrl]               -0.008    0.048  -0.162  0.871  -0.103   0.087
-C(algorithm)[T.astar+cadrl_upstream]       0.217    0.048   4.487  0.000   0.122   0.312
-C(algorithm)[T.astar+crowdnav_attngraph]   1.025    0.048  21.172  0.000   0.930   1.120
-...                                          ...      ...     ...    ...     ...     ...
-standardize(task_n_signalised_junctions)  -0.046    0.012  -3.731  0.000  -0.070  -0.022
-standardize(demand_total_ph)              -0.029    0.037  -0.779  0.436  -0.102   0.044
-map Var                                    0.161    0.294                               
-seed Var                                   0.048                                        
-task Var                                   0.038                                        
+                                           Coef. Std.Err.  ...  [0.025  0.975]
+Intercept                                  0.895    0.130  ...   0.641   1.150
+C(algorithm)[T.astar+astar]               -0.228    0.048  ...  -0.321  -0.135
+C(algorithm)[T.astar+cadrl]               -0.008    0.048  ...  -0.101   0.085
+C(algorithm)[T.astar+cadrl_upstream]       0.217    0.048  ...   0.124   0.310
+C(algorithm)[T.astar+crowdnav_attngraph]   1.025    0.048  ...   0.932   1.118
+...                                          ...      ...  ...     ...     ...
+standardize(task_n_signalised_junctions)  -0.056    0.059  ...  -0.172   0.061
+standardize(demand_total_ph)              -0.016    0.036  ...  -0.086   0.054
+map Var                                    0.072    0.076  ...                
+seed Var                                   0.005    0.003  ...                
+task Var                                   0.041    0.012  ...                
 
 [62 rows x 6 columns]
 
 == LMM ped_deflection_m_mean ==
 [LMM on log1p (pre-specified scale for right-skewed outcome; read coefficients multiplicatively) [reference=astar+dwa]]
-                                           Coef. Std.Err.       z  P>|z|  [0.025  0.975]
-Intercept                                  0.586    0.018  32.634  0.000   0.551   0.621
-C(algorithm)[T.astar+astar]               -0.053    0.012  -4.283  0.000  -0.077  -0.029
-C(algorithm)[T.astar+cadrl]               -0.006    0.012  -0.516  0.606  -0.031   0.018
-C(algorithm)[T.astar+cadrl_upstream]       0.071    0.012   5.744  0.000   0.047   0.095
-C(algorithm)[T.astar+crowdnav_attngraph]   0.218    0.012  17.642  0.000   0.194   0.242
-...                                          ...      ...     ...    ...     ...     ...
-standardize(task_n_signalised_junctions)  -0.008    0.003  -2.707  0.007  -0.014  -0.002
-standardize(demand_total_ph)               0.014    0.008   1.755  0.079  -0.002   0.030
-map Var                                    0.001    0.003                               
-seed Var                                   0.000    0.000                               
-task Var                                   0.001    0.001                               
+                                           Coef. Std.Err.  ...  [0.025  0.975]
+Intercept                                  0.586    0.015  ...   0.556   0.615
+C(algorithm)[T.astar+astar]               -0.053    0.012  ...  -0.077  -0.029
+C(algorithm)[T.astar+cadrl]               -0.006    0.012  ...  -0.030   0.018
+C(algorithm)[T.astar+cadrl_upstream]       0.071    0.012  ...   0.047   0.095
+C(algorithm)[T.astar+crowdnav_attngraph]   0.218    0.012  ...   0.194   0.242
+...                                          ...      ...  ...     ...     ...
+standardize(task_n_signalised_junctions)  -0.017    0.009  ...  -0.035   0.002
+standardize(demand_total_ph)               0.018    0.008  ...   0.003   0.034
+map Var                                    0.001    0.003  ...                
+seed Var                                   0.000    0.000  ...                
+task Var                                   0.001    0.001  ...                
 
 [62 rows x 6 columns]
 
 == LMM ped_personal_space_s_total ==
 [LMM on log1p (pre-specified scale for right-skewed outcome; read coefficients multiplicatively) [reference=astar+dwa]]
-                                           Coef. Std.Err.       z  P>|z|  [0.025  0.975]
-Intercept                                  2.210    0.333   6.631  0.000   1.557   2.863
-C(algorithm)[T.astar+astar]               -0.567    0.078  -7.284  0.000  -0.720  -0.414
-C(algorithm)[T.astar+cadrl]               -0.091    0.078  -1.164  0.244  -0.243   0.062
-C(algorithm)[T.astar+cadrl_upstream]       0.876    0.078  11.253  0.000   0.723   1.028
-C(algorithm)[T.astar+crowdnav_attngraph]   2.617    0.078  33.624  0.000   2.465   2.770
-...                                          ...      ...     ...    ...     ...     ...
-standardize(task_n_signalised_junctions)  -0.069    0.020  -3.495  0.000  -0.108  -0.030
-standardize(demand_total_ph)               0.044    0.060   0.725  0.468  -0.074   0.161
-map Var                                    0.461                                        
-seed Var                                   0.012    0.003                               
-task Var                                   0.146    0.075                               
+                                           Coef. Std.Err.  ...  [0.025  0.975]
+Intercept                                  2.197    0.344  ...   1.523   2.871
+C(algorithm)[T.astar+astar]               -0.567    0.077  ...  -0.717  -0.416
+C(algorithm)[T.astar+cadrl]               -0.091    0.077  ...  -0.241   0.060
+C(algorithm)[T.astar+cadrl_upstream]       0.876    0.077  ...   0.725   1.026
+C(algorithm)[T.astar+crowdnav_attngraph]   2.617    0.077  ...   2.467   2.768
+...                                          ...      ...  ...     ...     ...
+standardize(task_n_signalised_junctions)  -0.148    0.105  ...  -0.354   0.058
+standardize(demand_total_ph)               0.026    0.060  ...  -0.091   0.144
+map Var                                    0.554           ...                
+seed Var                                   0.023    0.012  ...                
+task Var                                   0.119    0.023  ...                
 
 [62 rows x 6 columns]
 
 == LMM social_work ==
 [LMM on log1p (pre-specified scale for right-skewed outcome; read coefficients multiplicatively) [reference=astar+dwa]]
-                                           Coef. Std.Err.        z  P>|z|  [0.025  0.975]
-Intercept                                  5.975    0.138   43.199  0.000   5.704   6.246
-C(algorithm)[T.astar+astar]               -1.573    0.119  -13.244  0.000  -1.805  -1.340
-C(algorithm)[T.astar+cadrl]               -0.226    0.119   -1.902  0.057  -0.459   0.007
-C(algorithm)[T.astar+cadrl_upstream]       1.386    0.119   11.672  0.000   1.153   1.619
-C(algorithm)[T.astar+crowdnav_attngraph]   3.826    0.119   32.204  0.000   3.593   4.059
-...                                          ...      ...      ...    ...     ...     ...
-standardize(task_n_signalised_junctions)   0.028    0.027    1.039  0.299  -0.025   0.082
-standardize(demand_total_ph)               0.166    0.041    4.028  0.000   0.085   0.246
-map Var                                    0.004    0.002                                
-seed Var                                   0.006    0.002                                
-task Var                                   0.107    0.028                                
+                                           Coef. Std.Err.  ...  [0.025  0.975]
+Intercept                                  5.975    0.108  ...   5.764   6.186
+C(algorithm)[T.astar+astar]               -1.573    0.117  ...  -1.802  -1.343
+C(algorithm)[T.astar+cadrl]               -0.226    0.117  ...  -0.456   0.003
+C(algorithm)[T.astar+cadrl_upstream]       1.386    0.117  ...   1.157   1.615
+C(algorithm)[T.astar+crowdnav_attngraph]   3.826    0.117  ...   3.597   4.055
+...                                          ...      ...  ...     ...     ...
+standardize(task_n_signalised_junctions)   0.149    0.091  ...  -0.030   0.327
+standardize(demand_total_ph)               0.069    0.077  ...  -0.082   0.220
+map Var                                    0.000           ...                
+seed Var                                   0.008    0.003  ...                
+task Var                                   0.198    0.023  ...                
 
 [62 rows x 6 columns]
 
 == LMM social_force_on_agents ==
 [LMM on log1p (pre-specified scale for right-skewed outcome; read coefficients multiplicatively) [reference=astar+dwa]]
-                                           Coef. Std.Err.       z  P>|z|  [0.025  0.975]
-Intercept                                  4.066    0.534   7.613  0.000   3.019   5.113
-C(algorithm)[T.astar+astar]               -1.067    0.136  -7.838  0.000  -1.333  -0.800
-C(algorithm)[T.astar+cadrl]               -0.092    0.136  -0.679  0.497  -0.359   0.175
-C(algorithm)[T.astar+cadrl_upstream]       1.546    0.136  11.358  0.000   1.279   1.812
-C(algorithm)[T.astar+crowdnav_attngraph]   4.486    0.136  32.951  0.000   4.220   4.753
-...                                          ...      ...     ...    ...     ...     ...
-standardize(task_n_signalised_junctions)  -0.044    0.034  -1.289  0.198  -0.112   0.023
-standardize(demand_total_ph)              -0.210    0.098  -2.148  0.032  -0.401  -0.018
-map Var                                    1.181                                        
-seed Var                                   0.248                                        
-task Var                                   0.150    0.022                               
+                                           Coef. Std.Err.  ...  [0.025  0.975]
+Intercept                                  4.060    0.310  ...   3.452   4.668
+C(algorithm)[T.astar+astar]               -1.067    0.133  ...  -1.328  -0.805
+C(algorithm)[T.astar+cadrl]               -0.093    0.134  ...  -0.355   0.168
+C(algorithm)[T.astar+cadrl_upstream]       1.546    0.133  ...   1.284   1.807
+C(algorithm)[T.astar+crowdnav_attngraph]   4.486    0.134  ...   4.225   4.748
+...                                          ...      ...  ...     ...     ...
+standardize(task_n_signalised_junctions)   0.103    0.303  ...  -0.490   0.696
+standardize(demand_total_ph)              -0.135    0.115  ...  -0.360   0.090
+map Var                                    0.366    0.297  ...                
+seed Var                                   0.064    0.015  ...                
+task Var                                   0.376    0.044  ...                
 
 [62 rows x 6 columns]
 
 == LMM social_force_on_robot ==
 [LMM on log1p (pre-specified scale for right-skewed outcome; read coefficients multiplicatively) [reference=astar+dwa]]
-                                           Coef. Std.Err.        z  P>|z|  [0.025  0.975]
-Intercept                                  2.578    0.140   18.380  0.000   2.303   2.853
-C(algorithm)[T.astar+astar]               -0.797    0.075  -10.692  0.000  -0.943  -0.651
-C(algorithm)[T.astar+cadrl]               -0.360    0.075   -4.829  0.000  -0.506  -0.214
-C(algorithm)[T.astar+cadrl_upstream]       0.793    0.075   10.639  0.000   0.647   0.939
-C(algorithm)[T.astar+crowdnav_attngraph]   2.421    0.075   32.467  0.000   2.274   2.567
-...                                          ...      ...      ...    ...     ...     ...
-standardize(task_n_signalised_junctions)  -0.114    0.018   -6.214  0.000  -0.149  -0.078
-standardize(demand_total_ph)               0.075    0.052    1.432  0.152  -0.028   0.178
-map Var                                    0.016    0.014                                
-seed Var                                   0.014    0.006                                
-task Var                                   0.122    0.049                                
+                                           Coef. Std.Err.  ...  [0.025  0.975]
+Intercept                                  2.575    0.096  ...   2.387   2.763
+C(algorithm)[T.astar+astar]               -0.797    0.073  ...  -0.940  -0.653
+C(algorithm)[T.astar+cadrl]               -0.361    0.073  ...  -0.505  -0.217
+C(algorithm)[T.astar+cadrl_upstream]       0.793    0.073  ...   0.649   0.936
+C(algorithm)[T.astar+crowdnav_attngraph]   2.421    0.073  ...   2.277   2.564
+...                                          ...      ...  ...     ...     ...
+standardize(task_n_signalised_junctions)  -0.005    0.078  ...  -0.158   0.149
+standardize(demand_total_ph)               0.042    0.054  ...  -0.063   0.147
+map Var                                    0.005           ...                
+seed Var                                   0.018    0.009  ...                
+task Var                                   0.189    0.057  ...                
 
 [62 rows x 6 columns]
 

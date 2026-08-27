@@ -517,13 +517,19 @@ def _fixed_formula(df: pd.DataFrame, reference: str) -> str:
 def fit_success_glmm(df, reference, out, dpi=200):
     from statsmodels.genmod.bayes_mixed_glm import BinomialBayesMixedGLM
     fixed = _fixed_formula(df, reference)
+    # task is NESTED in map (supervisor item 6): t04 on map1 and t04 on
+    # map5 are different routes that merely share a label, so the task
+    # random intercepts are per (map, task) pair -- 50 levels, not 10.
+    # The component keeps the name "task" for the bands and tables.
+    df["map_task"] = (df["cell_map"].astype(str) + ":"
+                      + df["task"].astype(str))
     vc = {}
     if df["seed"].nunique() > 1:
         vc["seed"] = "0 + C(seed)"
     if df["cell_map"].nunique() > 1:
         vc["map"] = "0 + C(cell_map)"
-    if df["task"].nunique() > 1:
-        vc["task"] = "0 + C(task)"
+    if df["map_task"].nunique() > 1:
+        vc["task"] = "0 + C(map_task)"
     model = BinomialBayesMixedGLM.from_formula(
         f"success ~ {fixed}", vc, df)
     fit = model.fit_vb()
@@ -547,6 +553,12 @@ def fit_success_glmm(df, reference, out, dpi=200):
         # vcp_mean is the posterior mean of LOG-sd -> report sd = exp(.)
         "sd_posterior_mean": [round(float(np.exp(x)), 3)
                               for x in fit.vcp_mean],
+        # supervisor item 6: report the uncertainty of the variance
+        # components too (95% interval from the posterior of log-sd)
+        "sd_ci_lo": [round(float(np.exp(m - 1.96 * sd)), 3)
+                     for m, sd in zip(fit.vcp_mean, fit.vcp_sd)],
+        "sd_ci_hi": [round(float(np.exp(m + 1.96 * sd)), 3)
+                     for m, sd in zip(fit.vcp_mean, fit.vcp_sd)],
     })
     vcp.to_csv(out / "success_glmm_variance_components.csv", index=False)
     # RQ2 overlays for the forest: +/-1 SD of the seed and task variance
@@ -730,13 +742,15 @@ def fit_lmm(df, endog, reference, out, subset_success=False, dpi=200):
     # map 1.363 / seed 1.309 / task 0.030 against a truth of a +2 map shift
     # plus a seed effect, where the nested form reported no seed at all and an
     # inflated map variance of 2.189.
+    # task nested in map, as in the GLMM (supervisor item 6)
+    d["map_task"] = (d["cell_map"].astype(str) + ":" + d["task"].astype(str))
     vc = {}
     if d["seed"].nunique() > 1:
         vc["seed"] = "0 + C(seed)"
     if d["cell_map"].nunique() > 1:
         vc["map"] = "0 + C(cell_map)"
-    if d["task"].nunique() > 1:
-        vc["task"] = "0 + C(task)"
+    if d["map_task"].nunique() > 1:
+        vc["task"] = "0 + C(map_task)"
     groups = pd.Series(["all"] * len(d), index=d.index)
 
     can_log = bool((d[endog] >= 0).all())   # log1p only for nonneg endogs
