@@ -103,15 +103,25 @@ def do_compare(results: Path):
     se_ratio = float(np.median(algo["vb_sd"] / algo["se"]))
     cols = ["k", "log_odds", "vb_sd", "estimate", "se"]
     merged[cols].to_csv(out / "glmmtmb_vs_vb_sfm.csv", index=False)
-    print(f"fixed effects (53 combos): corr(log-odds) = {r:.4f}, "
-          f"mean |diff| = {mad:.3f}")
-    print(f"median SD ratio VB/glmmTMB = {se_ratio:.3f} "
-          f"(< 1 means VB understates uncertainty)")
     vcp = pd.read_csv(out / "success_glmm_variance_components.csv")
     tvc = pd.read_csv(out / "glmmtmb_variance_components.csv")
-    print("variance-component SDs (VB vs glmmTMB):")
-    print(vcp.to_string(index=False))
-    print(tvc.to_string(index=False))
+    lines = [
+        f"VB (paper) vs glmmTMB refit, sfm success model, "
+        f"{len(algo)} combination fixed effects",
+        f"corr(log-odds) = {r:.4f}",
+        f"mean |log-odds diff| = {mad:.3f}",
+        f"median SD ratio VB/glmmTMB = {se_ratio:.3f} "
+        f"(< 1 means VB understates uncertainty)",
+        "",
+        "variance-component SDs, VB (paper):",
+        vcp.to_string(index=False),
+        "variance-component SDs, glmmTMB:",
+        tvc.to_string(index=False),
+    ]
+    text = "\n".join(lines)
+    (out / "glmmtmb_agreement_summary.txt").write_text(text,
+                                                      encoding="utf-8")
+    print(text)
 
 
 def main():
