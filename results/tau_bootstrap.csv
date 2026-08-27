@@ -1,0 +1,16 @@
+comparison,statistic,point,median,ci_lo,ci_hi
+sfm sim vs real,tau,0.496,0.425,0.34,0.501
+sfm sim vs real,top10,0.2,0.2,0.1,0.4
+sfm sim vs real,rbo,0.257,0.248,0.175,0.309
+pysf sim vs real,tau,0.711,0.701,0.646,0.743
+pysf sim vs real,top10,0.6,0.5,0.5,0.7
+pysf sim vs real,rbo,0.492,0.485,0.397,0.726
+jupedsim sim vs real,tau,0.529,0.521,0.468,0.567
+jupedsim sim vs real,top10,0.5,0.5,0.2,0.7
+jupedsim sim vs real,rbo,0.53,0.399,0.271,0.581
+sfm vs pysf (synthetic),tau,0.172,0.14,0.079,0.187
+sfm vs pysf (real),tau,0.255,0.264,0.182,0.351
+sfm vs jupedsim (synthetic),tau,0.712,0.678,0.628,0.715
+sfm vs jupedsim (real),tau,0.726,0.651,0.538,0.737
+pysf vs jupedsim (synthetic),tau,0.337,0.327,0.272,0.382
+pysf vs jupedsim (real),tau,0.34,0.336,0.273,0.403
