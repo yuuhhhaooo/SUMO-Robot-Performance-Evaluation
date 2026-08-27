@@ -1,19 +1,19 @@
 algorithm,algorithm_name,sim_n,sim_success,sim_rank,real_n,real_success,real_rank,rank_shift
 sarl_upstream,SARL (upstream),1200,0.7367,1,300,0.6267,2,-1
-sarl,SARL,1200,0.6967,2,300,0.38,7,-5
-orca_heuristic,ORCA (heuristic),1200,0.6892,3,300,0.73,1,2
-lstm_rl,LSTM-RL,1200,0.5183,4,300,0.4833,4,0
-cadrl,CADRL,1200,0.4967,5,300,0.3733,8,-3
-dwa,DWA,1200,0.4925,6,300,0.4333,6,0
+sarl,SARL (ours),1200,0.6967,2,300,0.38,7,-5
+orca_heuristic,"ORCA (heuristic, ours)",1200,0.6892,3,300,0.73,1,2
+lstm_rl,LSTM-RL (ours),1200,0.5183,4,300,0.4833,4,0
+cadrl,CADRL (ours),1200,0.4967,5,300,0.3733,8,-3
+dwa,DWA (ours),1200,0.4925,6,300,0.4333,6,0
 crowdnav_attngraph,CrowdNav AttnGraph,1200,0.47,7,299,0.6154,3,4
 crowdnav_dsrnn,CrowdNav DS-RNN,1200,0.45,8,300,0.47,5,3
 lstm_rl_upstream,LSTM-RL (upstream),1200,0.44,9,300,0.3667,9,0
 cadrl_upstream,CADRL (upstream),1200,0.3583,10,300,0.1867,11,-1
-mpc,MPC,1200,0.3117,11,300,0.25,10,1
+mpc,MPC (ours),1200,0.3117,11,300,0.25,10,1
 dijkstra,Dijkstra,1200,0.2633,12,300,0.1767,12,0
 mpc_dompc,MPC (do-mpc),1200,0.25,13,300,0.1767,13,0
 astar,A*,1200,0.2383,14,300,0.1367,15,-1
 orca,ORCA (RVO2),1200,0.2267,15,300,0.1767,14,1
 teb_upstream,TEB (upstream),1200,0.1083,16,300,0.0833,16,0
 rrt,RRT,1200,0.0525,17,300,0.02,17,0
-teb,TEB,1200,0.0367,18,300,0.0133,18,0
+teb,TEB (ours),1200,0.0367,18,300,0.0133,18,0

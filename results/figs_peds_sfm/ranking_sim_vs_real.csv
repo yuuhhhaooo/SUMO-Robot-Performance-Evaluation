@@ -1,19 +1,19 @@
 algorithm,algorithm_name,sim_n,sim_success,sim_rank,real_n,real_success,real_rank,rank_shift
-mpc,MPC,1200,0.8242,1,300,0.63,7,-6
+mpc,MPC (ours),1200,0.8242,1,300,0.63,7,-6
 mpc_dompc,MPC (do-mpc),1200,0.8133,2,299,0.6488,6,-4
-cadrl,CADRL,1200,0.765,3,298,0.6208,9,-6
-dwa,DWA,1200,0.7408,4,298,0.6007,10,-6
+cadrl,CADRL (ours),1200,0.765,3,298,0.6208,9,-6
+dwa,DWA (ours),1200,0.7408,4,298,0.6007,10,-6
 sarl_upstream,SARL (upstream),1200,0.7192,5,299,0.7458,2,3
 teb_upstream,TEB (upstream),1200,0.6933,6,300,0.6967,3,3
-lstm_rl,LSTM-RL,1200,0.6783,7,298,0.6745,4,3
-orca_heuristic,ORCA (heuristic),1200,0.6742,8,298,0.7617,1,7
+lstm_rl,LSTM-RL (ours),1200,0.6783,7,298,0.6745,4,3
+orca_heuristic,"ORCA (heuristic, ours)",1200,0.6742,8,298,0.7617,1,7
 crowdnav_dsrnn,CrowdNav DS-RNN,1200,0.6658,9,300,0.6,11,-2
 orca,ORCA (RVO2),1200,0.6467,10,299,0.6522,5,5
-sarl,SARL,1200,0.6408,11,300,0.4367,15,-4
+sarl,SARL (ours),1200,0.6408,11,300,0.4367,15,-4
 lstm_rl_upstream,LSTM-RL (upstream),1200,0.6375,12,300,0.6233,8,4
 dijkstra,Dijkstra,1200,0.6367,13,300,0.5367,13,0
 astar,A*,1200,0.6092,14,300,0.53,14,0
-teb,TEB,1200,0.5142,15,300,0.4,17,-2
+teb,TEB (ours),1200,0.5142,15,300,0.4,17,-2
 rrt,RRT,1200,0.4433,16,300,0.42,16,0
 cadrl_upstream,CADRL (upstream),1200,0.4242,17,300,0.2467,18,-1
 crowdnav_attngraph,CrowdNav AttnGraph,1200,0.3758,18,299,0.5518,12,6

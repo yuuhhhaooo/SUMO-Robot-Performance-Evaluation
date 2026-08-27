@@ -7,12 +7,12 @@ astar+dijkstra,A* + Dijkstra,500,1.448,1.244,1.652
 dijkstra+dijkstra,Dijkstra + Dijkstra,500,1.495,1.29,1.7
 astar+astar,A* + A*,500,1.523,1.316,1.73
 dijkstra+astar,Dijkstra + A*,500,1.531,1.326,1.735
-rrt+dwa,RRT + DWA,484,1.533,1.316,1.749
+rrt+dwa,RRT + DWA (ours),484,1.533,1.316,1.749
 rrt+lstm_rl_upstream,RRT + LSTM-RL (upstream),477,1.561,1.307,1.815
 rrt+crowdnav_dsrnn,RRT + CrowdNav DS-RNN,457,1.562,1.386,1.738
-astar+mpc,A* + MPC,500,1.642,1.461,1.823
-dijkstra+mpc,Dijkstra + MPC,500,1.672,1.49,1.854
-rrt+mpc,RRT + MPC,472,1.682,1.483,1.88
+astar+mpc,A* + MPC (ours),500,1.642,1.461,1.823
+dijkstra+mpc,Dijkstra + MPC (ours),500,1.672,1.49,1.854
+rrt+mpc,RRT + MPC (ours),472,1.682,1.483,1.88
 rrt+orca,RRT + ORCA (RVO2),464,1.727,1.476,1.979
 astar+orca,A* + ORCA (RVO2),500,1.819,1.548,2.09
 dijkstra+orca,Dijkstra + ORCA (RVO2),500,1.837,1.566,2.108
@@ -21,17 +21,17 @@ astar+lstm_rl_upstream,A* + LSTM-RL (upstream),500,1.875,1.668,2.081
 dijkstra+lstm_rl_upstream,Dijkstra + LSTM-RL (upstream),500,1.924,1.717,2.131
 astar+mpc_dompc,A* + MPC (do-mpc),500,1.948,1.672,2.224
 rrt+mpc_dompc,RRT + MPC (do-mpc),480,1.977,1.567,2.387
-rrt+teb,RRT + TEB,458,1.982,-0.051,4.016
+rrt+teb,RRT + TEB (ours),458,1.982,-0.051,4.016
 dijkstra+mpc_dompc,Dijkstra + MPC (do-mpc),500,1.998,1.722,2.274
-rrt+orca_heuristic,RRT + ORCA (heuristic),482,2.133,1.534,2.733
-rrt+lstm_rl,RRT + LSTM-RL,462,2.2,1.727,2.673
+rrt+orca_heuristic,"RRT + ORCA (heuristic, ours)",482,2.133,1.534,2.733
+rrt+lstm_rl,RRT + LSTM-RL (ours),462,2.2,1.727,2.673
 astar+teb_upstream,A* + TEB (upstream),500,2.359,1.751,2.967
 rrt+cadrl_upstream,RRT + CADRL (upstream),484,2.362,1.992,2.731
 dijkstra+teb_upstream,Dijkstra + TEB (upstream),500,2.423,1.815,3.032
-astar+lstm_rl,A* + LSTM-RL,500,2.432,2.069,2.795
-dijkstra+lstm_rl,Dijkstra + LSTM-RL,500,2.465,2.099,2.83
-dijkstra+dwa,Dijkstra + DWA,500,2.503,2.106,2.899
-astar+dwa,A* + DWA,500,2.539,2.141,2.937
+astar+lstm_rl,A* + LSTM-RL (ours),500,2.432,2.069,2.795
+dijkstra+lstm_rl,Dijkstra + LSTM-RL (ours),500,2.465,2.099,2.83
+dijkstra+dwa,Dijkstra + DWA (ours),500,2.503,2.106,2.899
+astar+dwa,A* + DWA (ours),500,2.539,2.141,2.937
 astar+crowdnav_dsrnn,A* + CrowdNav DS-RNN,500,2.58,2.264,2.895
 dijkstra+crowdnav_dsrnn,Dijkstra + CrowdNav DS-RNN,500,2.61,2.294,2.926
 astar+sarl_upstream,A* + SARL (upstream),500,2.713,2.285,3.141
@@ -39,17 +39,17 @@ dijkstra+sarl_upstream,Dijkstra + SARL (upstream),500,2.749,2.32,3.177
 rrt+teb_upstream,RRT + TEB (upstream),472,2.919,1.258,4.58
 astar+cadrl_upstream,A* + CADRL (upstream),500,2.981,2.639,3.322
 dijkstra+cadrl_upstream,Dijkstra + CADRL (upstream),500,2.997,2.653,3.34
-astar+orca_heuristic,A* + ORCA (heuristic),500,3.214,2.008,4.42
+astar+orca_heuristic,"A* + ORCA (heuristic, ours)",500,3.214,2.008,4.42
 rrt+sarl_upstream,RRT + SARL (upstream),462,3.268,0.822,5.714
-dijkstra+orca_heuristic,Dijkstra + ORCA (heuristic),500,3.277,2.071,4.482
-astar+teb,A* + TEB,500,4.473,0.942,8.004
-dijkstra+teb,Dijkstra + TEB,500,4.574,1.044,8.105
-rrt+cadrl,RRT + CADRL,465,5.354,0.157,10.552
-astar+cadrl,A* + CADRL,500,10.737,4.386,17.088
-dijkstra+cadrl,Dijkstra + CADRL,500,10.741,4.39,17.092
+dijkstra+orca_heuristic,"Dijkstra + ORCA (heuristic, ours)",500,3.277,2.071,4.482
+astar+teb,A* + TEB (ours),500,4.473,0.942,8.004
+dijkstra+teb,Dijkstra + TEB (ours),500,4.574,1.044,8.105
+rrt+cadrl,RRT + CADRL (ours),465,5.354,0.157,10.552
+astar+cadrl,A* + CADRL (ours),500,10.737,4.386,17.088
+dijkstra+cadrl,Dijkstra + CADRL (ours),500,10.741,4.39,17.092
 rrt+crowdnav_attngraph,RRT + CrowdNav AttnGraph,480,18.899,10.585,27.214
-rrt+sarl,RRT + SARL,474,19.906,11.148,28.664
-astar+sarl,A* + SARL,500,35.647,23.721,47.573
-dijkstra+sarl,Dijkstra + SARL,500,35.937,24.003,47.87
+rrt+sarl,RRT + SARL (ours),474,19.906,11.148,28.664
+astar+sarl,A* + SARL (ours),500,35.647,23.721,47.573
+dijkstra+sarl,Dijkstra + SARL (ours),500,35.937,24.003,47.87
 dijkstra+crowdnav_attngraph,Dijkstra + CrowdNav AttnGraph,500,42.535,31.125,53.945
 astar+crowdnav_attngraph,A* + CrowdNav AttnGraph,500,42.638,31.23,54.047

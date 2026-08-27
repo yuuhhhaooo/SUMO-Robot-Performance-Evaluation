@@ -8,7 +8,7 @@ astar+astar,A* + A*,1000,339.86,319.437,360.284
 astar+dijkstra,A* + Dijkstra,1000,347.982,326.712,369.253
 dijkstra+dijkstra,Dijkstra + Dijkstra,1000,353.752,332.007,375.497
 rrt+dijkstra,RRT + Dijkstra,952,432.831,395.676,469.986
-rrt+mpc,RRT + MPC,951,496.916,431.481,562.351
+rrt+mpc,RRT + MPC (ours),951,496.916,431.481,562.351
 rrt+orca,RRT + ORCA (RVO2),938,497.5,457.908,537.092
 rrt+mpc_dompc,RRT + MPC (do-mpc),960,542.361,478.745,605.976
 rrt+lstm_rl_upstream,RRT + LSTM-RL (upstream),948,582.093,522.804,641.382
@@ -23,33 +23,33 @@ dijkstra+crowdnav_dsrnn,Dijkstra + CrowdNav DS-RNN,999,909.508,703.656,1115.359
 astar+crowdnav_dsrnn,A* + CrowdNav DS-RNN,999,913.55,709.001,1118.1
 astar+mpc_dompc,A* + MPC (do-mpc),1000,1005.613,515.691,1495.535
 dijkstra+mpc_dompc,Dijkstra + MPC (do-mpc),1000,1006.803,516.867,1496.739
-dijkstra+lstm_rl,Dijkstra + LSTM-RL,1000,1121.696,1031.502,1211.89
-astar+lstm_rl,A* + LSTM-RL,1000,1130.012,1039.487,1220.537
+dijkstra+lstm_rl,Dijkstra + LSTM-RL (ours),1000,1121.696,1031.502,1211.89
+astar+lstm_rl,A* + LSTM-RL (ours),1000,1130.012,1039.487,1220.537
 rrt+rrt,RRT + RRT,921,1157.89,-497.875,2813.656
 dijkstra+sarl_upstream,Dijkstra + SARL (upstream),1000,1180.995,1095.194,1266.796
 astar+sarl_upstream,A* + SARL (upstream),1000,1186.724,1100.944,1272.504
-dijkstra+dwa,Dijkstra + DWA,1000,1257.859,943.202,1572.515
-astar+dwa,A* + DWA,1000,1271.196,956.412,1585.979
-rrt+dwa,RRT + DWA,964,1278.893,711.737,1846.049
-rrt+lstm_rl,RRT + LSTM-RL,940,1587.884,1143.293,2032.476
-rrt+teb,RRT + TEB,933,2039.77,-515.946,4595.486
-rrt+cadrl,RRT + CADRL,941,3179.608,928.883,5430.332
-astar+teb,A* + TEB,1000,3357.112,1353.606,5360.619
-dijkstra+teb,Dijkstra + TEB,1000,3360.424,1356.936,5363.912
+dijkstra+dwa,Dijkstra + DWA (ours),1000,1257.859,943.202,1572.515
+astar+dwa,A* + DWA (ours),1000,1271.196,956.412,1585.979
+rrt+dwa,RRT + DWA (ours),964,1278.893,711.737,1846.049
+rrt+lstm_rl,RRT + LSTM-RL (ours),940,1587.884,1143.293,2032.476
+rrt+teb,RRT + TEB (ours),933,2039.77,-515.946,4595.486
+rrt+cadrl,RRT + CADRL (ours),941,3179.608,928.883,5430.332
+astar+teb,A* + TEB (ours),1000,3357.112,1353.606,5360.619
+dijkstra+teb,Dijkstra + TEB (ours),1000,3360.424,1356.936,5363.912
 astar+cadrl_upstream,A* + CADRL (upstream),1000,3502.738,2308.266,4697.21
 rrt+cadrl_upstream,RRT + CADRL (upstream),961,4580.035,2624.179,6535.89
 dijkstra+cadrl_upstream,Dijkstra + CADRL (upstream),1000,4737.358,2179.608,7295.108
-dijkstra+cadrl,Dijkstra + CADRL,998,4744.63,1951.574,7537.685
-astar+cadrl,A* + CADRL,998,4747.995,1954.957,7541.033
-rrt+orca_heuristic,RRT + ORCA (heuristic),955,5146.371,-476.361,10769.103
+dijkstra+cadrl,Dijkstra + CADRL (ours),998,4744.63,1951.574,7537.685
+astar+cadrl,A* + CADRL (ours),998,4747.995,1954.957,7541.033
+rrt+orca_heuristic,"RRT + ORCA (heuristic, ours)",955,5146.371,-476.361,10769.103
 rrt+sarl_upstream,RRT + SARL (upstream),940,5425.718,-2891.97,13743.405
-dijkstra+mpc,Dijkstra + MPC,1000,5427.574,1960.645,8894.504
-astar+mpc,A* + MPC,1000,5430.222,1963.302,8897.141
-astar+orca_heuristic,A* + ORCA (heuristic),999,10483.79,-989.082,21956.662
-dijkstra+orca_heuristic,Dijkstra + ORCA (heuristic),999,12641.83,440.993,24842.667
-astar+sarl,A* + SARL,997,39688.081,20825.418,58550.745
-dijkstra+sarl,Dijkstra + SARL,997,42605.493,23359.061,61851.925
-rrt+sarl,RRT + SARL,953,48407.15,15342.887,81471.413
+dijkstra+mpc,Dijkstra + MPC (ours),1000,5427.574,1960.645,8894.504
+astar+mpc,A* + MPC (ours),1000,5430.222,1963.302,8897.141
+astar+orca_heuristic,"A* + ORCA (heuristic, ours)",999,10483.79,-989.082,21956.662
+dijkstra+orca_heuristic,"Dijkstra + ORCA (heuristic, ours)",999,12641.83,440.993,24842.667
+astar+sarl,A* + SARL (ours),997,39688.081,20825.418,58550.745
+dijkstra+sarl,Dijkstra + SARL (ours),997,42605.493,23359.061,61851.925
+rrt+sarl,RRT + SARL (ours),953,48407.15,15342.887,81471.413
 rrt+crowdnav_attngraph,RRT + CrowdNav AttnGraph,962,174432.256,116906.085,231958.427
 dijkstra+crowdnav_attngraph,Dijkstra + CrowdNav AttnGraph,999,355277.581,279654.485,430900.678
 astar+crowdnav_attngraph,A* + CrowdNav AttnGraph,999,355802.961,280151.931,431453.991

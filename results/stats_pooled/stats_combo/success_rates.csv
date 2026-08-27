@@ -1,32 +1,32 @@
 unit,unit_name,n,success_rate,wilson_lo,wilson_hi
 astar+sarl_upstream,A* + SARL (upstream),1500,0.7593,0.7371,0.7803
 dijkstra+sarl_upstream,Dijkstra + SARL (upstream),1500,0.7433,0.7206,0.7648
-astar+orca_heuristic,A* + ORCA (heuristic),1500,0.7347,0.7117,0.7564
-dijkstra+orca_heuristic,Dijkstra + ORCA (heuristic),1500,0.7173,0.694,0.7395
-rrt+orca_heuristic,RRT + ORCA (heuristic),1498,0.7056,0.682,0.7281
-astar+cadrl,A* + CADRL,1500,0.6607,0.6363,0.6842
-astar+lstm_rl,A* + LSTM-RL,1500,0.6513,0.6269,0.675
-dijkstra+cadrl,Dijkstra + CADRL,1500,0.6513,0.6269,0.675
-astar+sarl,A* + SARL,1499,0.6511,0.6266,0.6748
-dijkstra+sarl,Dijkstra + SARL,1499,0.6484,0.6239,0.6722
+astar+orca_heuristic,"A* + ORCA (heuristic, ours)",1500,0.7347,0.7117,0.7564
+dijkstra+orca_heuristic,"Dijkstra + ORCA (heuristic, ours)",1500,0.7173,0.694,0.7395
+rrt+orca_heuristic,"RRT + ORCA (heuristic, ours)",1498,0.7056,0.682,0.7281
+astar+cadrl,A* + CADRL (ours),1500,0.6607,0.6363,0.6842
+astar+lstm_rl,A* + LSTM-RL (ours),1500,0.6513,0.6269,0.675
+dijkstra+cadrl,Dijkstra + CADRL (ours),1500,0.6513,0.6269,0.675
+astar+sarl,A* + SARL (ours),1499,0.6511,0.6266,0.6748
+dijkstra+sarl,Dijkstra + SARL (ours),1499,0.6484,0.6239,0.6722
 rrt+sarl_upstream,RRT + SARL (upstream),1499,0.6451,0.6205,0.6689
-astar+dwa,A* + DWA,1500,0.6447,0.6201,0.6685
-dijkstra+lstm_rl,Dijkstra + LSTM-RL,1500,0.6367,0.612,0.6606
-dijkstra+dwa,Dijkstra + DWA,1500,0.632,0.6073,0.656
-astar+mpc,A* + MPC,1500,0.6247,0.5999,0.6488
-dijkstra+mpc,Dijkstra + MPC,1500,0.6133,0.5884,0.6377
-rrt+mpc,RRT + MPC,1498,0.6055,0.5805,0.6299
+astar+dwa,A* + DWA (ours),1500,0.6447,0.6201,0.6685
+dijkstra+lstm_rl,Dijkstra + LSTM-RL (ours),1500,0.6367,0.612,0.6606
+dijkstra+dwa,Dijkstra + DWA (ours),1500,0.632,0.6073,0.656
+astar+mpc,A* + MPC (ours),1500,0.6247,0.5999,0.6488
+dijkstra+mpc,Dijkstra + MPC (ours),1500,0.6133,0.5884,0.6377
+rrt+mpc,RRT + MPC (ours),1498,0.6055,0.5805,0.6299
 rrt+mpc_dompc,RRT + MPC (do-mpc),1499,0.6044,0.5794,0.6289
 astar+lstm_rl_upstream,A* + LSTM-RL (upstream),1500,0.5967,0.5716,0.6212
-rrt+cadrl,RRT + CADRL,1498,0.5955,0.5704,0.62
+rrt+cadrl,RRT + CADRL (ours),1498,0.5955,0.5704,0.62
 dijkstra+lstm_rl_upstream,Dijkstra + LSTM-RL (upstream),1500,0.5887,0.5636,0.6133
-rrt+dwa,RRT + DWA,1498,0.5861,0.561,0.6108
+rrt+dwa,RRT + DWA (ours),1498,0.5861,0.561,0.6108
 astar+crowdnav_dsrnn,A* + CrowdNav DS-RNN,1500,0.586,0.5609,0.6107
 astar+mpc_dompc,A* + MPC (do-mpc),1500,0.5833,0.5582,0.608
 dijkstra+mpc_dompc,Dijkstra + MPC (do-mpc),1500,0.5813,0.5562,0.6061
-rrt+sarl,RRT + SARL,1499,0.5777,0.5525,0.6025
+rrt+sarl,RRT + SARL (ours),1499,0.5777,0.5525,0.6025
 dijkstra+crowdnav_dsrnn,Dijkstra + CrowdNav DS-RNN,1500,0.5747,0.5495,0.5995
-rrt+lstm_rl,RRT + LSTM-RL,1497,0.5698,0.5446,0.5947
+rrt+lstm_rl,RRT + LSTM-RL (ours),1497,0.5698,0.5446,0.5947
 rrt+crowdnav_dsrnn,RRT + CrowdNav DS-RNN,1500,0.5547,0.5294,0.5796
 astar+teb_upstream,A* + TEB (upstream),1500,0.5293,0.504,0.5545
 dijkstra+teb_upstream,Dijkstra + TEB (upstream),1500,0.5167,0.4914,0.5419
@@ -46,10 +46,10 @@ dijkstra+cadrl_upstream,Dijkstra + CADRL (upstream),1500,0.3953,0.3709,0.4203
 rrt+dijkstra,RRT + Dijkstra,1500,0.392,0.3676,0.417
 rrt+astar,RRT + A*,1500,0.372,0.3479,0.3968
 rrt+teb_upstream,RRT + TEB (upstream),1500,0.35,0.3263,0.3745
-dijkstra+teb,Dijkstra + TEB,1500,0.3467,0.323,0.3711
-astar+teb,A* + TEB,1500,0.346,0.3223,0.3704
+dijkstra+teb,Dijkstra + TEB (ours),1500,0.3467,0.323,0.3711
+astar+teb,A* + TEB (ours),1500,0.346,0.3223,0.3704
 astar+rrt,A* + RRT,1500,0.3327,0.3093,0.3569
 dijkstra+rrt,Dijkstra + RRT,1500,0.3213,0.2982,0.3454
 rrt+cadrl_upstream,RRT + CADRL (upstream),1500,0.2513,0.23,0.2739
-rrt+teb,RRT + TEB,1500,0.2487,0.2275,0.2712
+rrt+teb,RRT + TEB (ours),1500,0.2487,0.2275,0.2712
 rrt+rrt,RRT + RRT,1500,0.1913,0.1722,0.212
