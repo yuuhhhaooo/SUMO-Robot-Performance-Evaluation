@@ -1,21 +1,21 @@
 algorithm,algorithm_name,n,mean,ci_lo,ci_hi
 rrt+teb,RRT + TEB (ours),458,0.547,0.507,0.588
-rrt+astar,RRT + A*,479,0.612,0.575,0.649
-rrt+rrt,RRT + RRT,462,0.635,0.6,0.669
-astar+rrt,A* + RRT,500,0.653,0.617,0.69
-dijkstra+rrt,Dijkstra + RRT,500,0.654,0.618,0.691
+rrt+astar,RRT + A* (ours),479,0.612,0.575,0.649
+rrt+rrt,RRT + RRT (ours),462,0.635,0.6,0.669
+astar+rrt,A* + RRT (ours),500,0.653,0.617,0.69
+dijkstra+rrt,Dijkstra + RRT (ours),500,0.654,0.618,0.691
 astar+teb,A* + TEB (ours),500,0.684,0.637,0.731
 dijkstra+teb,Dijkstra + TEB (ours),500,0.686,0.638,0.733
-rrt+dijkstra,RRT + Dijkstra,486,0.693,0.657,0.73
+rrt+dijkstra,RRT + Dijkstra (ours),486,0.693,0.657,0.73
 astar+orca,A* + ORCA (RVO2),500,0.721,0.688,0.754
 dijkstra+orca,Dijkstra + ORCA (RVO2),500,0.723,0.69,0.756
 rrt+teb_upstream,RRT + TEB (upstream),472,0.727,0.69,0.763
-astar+astar,A* + A*,500,0.732,0.701,0.763
+astar+astar,A* + A* (ours),500,0.732,0.701,0.763
 astar+teb_upstream,A* + TEB (upstream),500,0.732,0.693,0.77
 dijkstra+teb_upstream,Dijkstra + TEB (upstream),500,0.734,0.695,0.772
-dijkstra+astar,Dijkstra + A*,500,0.735,0.703,0.766
-astar+dijkstra,A* + Dijkstra,500,0.742,0.707,0.777
-dijkstra+dijkstra,Dijkstra + Dijkstra,500,0.742,0.707,0.778
+dijkstra+astar,Dijkstra + A* (ours),500,0.735,0.703,0.766
+astar+dijkstra,A* + Dijkstra (ours),500,0.742,0.707,0.777
+dijkstra+dijkstra,Dijkstra + Dijkstra (ours),500,0.742,0.707,0.778
 dijkstra+mpc_dompc,Dijkstra + MPC (do-mpc),500,0.779,0.738,0.821
 rrt+lstm_rl_upstream,RRT + LSTM-RL (upstream),477,0.779,0.739,0.82
 astar+mpc_dompc,A* + MPC (do-mpc),500,0.779,0.738,0.821

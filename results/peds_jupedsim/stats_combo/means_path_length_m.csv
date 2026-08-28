@@ -1,19 +1,19 @@
 algorithm,algorithm_name,n,mean,ci_lo,ci_hi
 dijkstra+teb,Dijkstra + TEB (ours),218,235.395,215.182,255.608
 astar+teb,A* + TEB (ours),222,235.613,215.79,255.436
-astar+rrt,A* + RRT,224,236.941,218.906,254.975
-dijkstra+rrt,Dijkstra + RRT,215,238.6,219.891,257.309
-dijkstra+dijkstra,Dijkstra + Dijkstra,216,238.836,222.858,254.815
-astar+dijkstra,A* + Dijkstra,217,239.022,223.187,254.857
-astar+astar,A* + A*,267,252.026,233.779,270.272
-dijkstra+astar,Dijkstra + A*,263,252.472,233.961,270.982
+astar+rrt,A* + RRT (ours),224,236.941,218.906,254.975
+dijkstra+rrt,Dijkstra + RRT (ours),215,238.6,219.891,257.309
+dijkstra+dijkstra,Dijkstra + Dijkstra (ours),216,238.836,222.858,254.815
+astar+dijkstra,A* + Dijkstra (ours),217,239.022,223.187,254.857
+astar+astar,A* + A* (ours),267,252.026,233.779,270.272
+dijkstra+astar,Dijkstra + A* (ours),263,252.472,233.961,270.982
 rrt+cadrl_upstream,RRT + CADRL (upstream),121,263.227,232.339,294.115
-rrt+astar,RRT + A*,214,266.755,241.524,291.986
+rrt+astar,RRT + A* (ours),214,266.755,241.524,291.986
 astar+cadrl_upstream,A* + CADRL (upstream),186,266.836,243.481,290.191
 dijkstra+cadrl_upstream,Dijkstra + CADRL (upstream),189,267.311,244.349,290.273
 astar+crowdnav_dsrnn,A* + CrowdNav DS-RNN,313,269.484,250.889,288.079
 dijkstra+crowdnav_dsrnn,Dijkstra + CrowdNav DS-RNN,307,270.048,251.131,288.966
-rrt+rrt,RRT + RRT,102,271.377,228.561,314.193
+rrt+rrt,RRT + RRT (ours),102,271.377,228.561,314.193
 dijkstra+dwa,Dijkstra + DWA (ours),346,274.566,255.706,293.426
 astar+dwa,A* + DWA (ours),353,275.234,256.713,293.755
 astar+teb_upstream,A* + TEB (upstream),355,276.999,257.773,296.225
@@ -38,7 +38,7 @@ astar+sarl_upstream,A* + SARL (upstream),375,300.331,280.09,320.573
 dijkstra+sarl_upstream,Dijkstra + SARL (upstream),365,302.27,281.527,323.013
 rrt+lstm_rl_upstream,RRT + LSTM-RL (upstream),255,303.676,276.027,331.324
 rrt+sarl,RRT + SARL (ours),308,306.477,285.059,327.895
-rrt+dijkstra,RRT + Dijkstra,179,306.619,274.612,338.626
+rrt+dijkstra,RRT + Dijkstra (ours),179,306.619,274.612,338.626
 rrt+cadrl,RRT + CADRL (ours),342,309.018,285.069,332.966
 astar+lstm_rl,A* + LSTM-RL (ours),351,313.147,294.026,332.268
 rrt+teb_upstream,RRT + TEB (upstream),198,314.276,276.168,352.383

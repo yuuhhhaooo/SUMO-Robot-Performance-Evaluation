@@ -34,22 +34,22 @@ rrt+crowdnav_attngraph,RRT + CrowdNav AttnGraph,1496,0.5074,0.482,0.5326
 rrt+orca,RRT + ORCA (RVO2),1499,0.5057,0.4804,0.5309
 astar+orca,A* + ORCA (RVO2),1500,0.492,0.4668,0.5173
 dijkstra+orca,Dijkstra + ORCA (RVO2),1500,0.476,0.4508,0.5013
-astar+astar,A* + A*,1500,0.474,0.4488,0.4993
+astar+astar,A* + A* (ours),1500,0.474,0.4488,0.4993
 rrt+lstm_rl_upstream,RRT + LSTM-RL (upstream),1500,0.47,0.4449,0.4953
-dijkstra+astar,Dijkstra + A*,1500,0.4613,0.4362,0.4866
-astar+dijkstra,A* + Dijkstra,1500,0.44,0.4151,0.4652
-dijkstra+dijkstra,Dijkstra + Dijkstra,1500,0.4387,0.4137,0.4639
+dijkstra+astar,Dijkstra + A* (ours),1500,0.4613,0.4362,0.4866
+astar+dijkstra,A* + Dijkstra (ours),1500,0.44,0.4151,0.4652
+dijkstra+dijkstra,Dijkstra + Dijkstra (ours),1500,0.4387,0.4137,0.4639
 dijkstra+crowdnav_attngraph,Dijkstra + CrowdNav AttnGraph,1500,0.4027,0.3781,0.4277
 astar+crowdnav_attngraph,A* + CrowdNav AttnGraph,1500,0.3993,0.3748,0.4243
 astar+cadrl_upstream,A* + CADRL (upstream),1500,0.3967,0.3722,0.4217
 dijkstra+cadrl_upstream,Dijkstra + CADRL (upstream),1500,0.3953,0.3709,0.4203
-rrt+dijkstra,RRT + Dijkstra,1500,0.392,0.3676,0.417
-rrt+astar,RRT + A*,1500,0.372,0.3479,0.3968
+rrt+dijkstra,RRT + Dijkstra (ours),1500,0.392,0.3676,0.417
+rrt+astar,RRT + A* (ours),1500,0.372,0.3479,0.3968
 rrt+teb_upstream,RRT + TEB (upstream),1500,0.35,0.3263,0.3745
 dijkstra+teb,Dijkstra + TEB (ours),1500,0.3467,0.323,0.3711
 astar+teb,A* + TEB (ours),1500,0.346,0.3223,0.3704
-astar+rrt,A* + RRT,1500,0.3327,0.3093,0.3569
-dijkstra+rrt,Dijkstra + RRT,1500,0.3213,0.2982,0.3454
+astar+rrt,A* + RRT (ours),1500,0.3327,0.3093,0.3569
+dijkstra+rrt,Dijkstra + RRT (ours),1500,0.3213,0.2982,0.3454
 rrt+cadrl_upstream,RRT + CADRL (upstream),1500,0.2513,0.23,0.2739
 rrt+teb,RRT + TEB (ours),1500,0.2487,0.2275,0.2712
-rrt+rrt,RRT + RRT,1500,0.1913,0.1722,0.212
+rrt+rrt,RRT + RRT (ours),1500,0.1913,0.1722,0.212

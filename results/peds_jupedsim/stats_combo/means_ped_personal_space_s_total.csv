@@ -1,16 +1,16 @@
 algorithm,algorithm_name,n,mean,ci_lo,ci_hi
 rrt+lstm_rl_upstream,RRT + LSTM-RL (upstream),472,7.308,6.381,8.235
-rrt+rrt,RRT + RRT,481,7.429,2.432,12.427
-astar+dijkstra,A* + Dijkstra,500,7.994,7.201,8.787
-dijkstra+dijkstra,Dijkstra + Dijkstra,500,8.126,7.311,8.941
-rrt+astar,RRT + A*,454,8.433,7.339,9.526
-dijkstra+rrt,Dijkstra + RRT,500,9.07,8.191,9.949
-astar+rrt,A* + RRT,500,9.146,8.274,10.018
-rrt+dijkstra,RRT + Dijkstra,471,9.184,8.074,10.293
+rrt+rrt,RRT + RRT (ours),481,7.429,2.432,12.427
+astar+dijkstra,A* + Dijkstra (ours),500,7.994,7.201,8.787
+dijkstra+dijkstra,Dijkstra + Dijkstra (ours),500,8.126,7.311,8.941
+rrt+astar,RRT + A* (ours),454,8.433,7.339,9.526
+dijkstra+rrt,Dijkstra + RRT (ours),500,9.07,8.191,9.949
+astar+rrt,A* + RRT (ours),500,9.146,8.274,10.018
+rrt+dijkstra,RRT + Dijkstra (ours),471,9.184,8.074,10.293
 rrt+crowdnav_dsrnn,RRT + CrowdNav DS-RNN,478,9.75,7.193,12.307
-astar+astar,A* + A*,500,10.016,9.04,10.992
+astar+astar,A* + A* (ours),500,10.016,9.04,10.992
 rrt+teb_upstream,RRT + TEB (upstream),479,10.068,8.561,11.575
-dijkstra+astar,Dijkstra + A*,500,10.185,9.19,11.18
+dijkstra+astar,Dijkstra + A* (ours),500,10.185,9.19,11.18
 rrt+teb,RRT + TEB (ours),464,10.958,5.601,16.315
 astar+lstm_rl,A* + LSTM-RL (ours),500,11.174,9.42,12.928
 dijkstra+lstm_rl,Dijkstra + LSTM-RL (ours),500,11.209,9.448,12.97

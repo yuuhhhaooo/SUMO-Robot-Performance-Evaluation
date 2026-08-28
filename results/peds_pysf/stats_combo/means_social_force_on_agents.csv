@@ -1,9 +1,9 @@
 algorithm,algorithm_name,n,mean,ci_lo,ci_hi
-astar+dijkstra,A* + Dijkstra,500,78.546,60.655,96.438
-dijkstra+dijkstra,Dijkstra + Dijkstra,500,88.104,67.838,108.37
-rrt+dijkstra,RRT + Dijkstra,486,101.535,78.123,124.946
-astar+astar,A* + A*,500,103.292,83.011,123.572
-dijkstra+astar,Dijkstra + A*,500,105.336,85.387,125.286
+astar+dijkstra,A* + Dijkstra (ours),500,78.546,60.655,96.438
+dijkstra+dijkstra,Dijkstra + Dijkstra (ours),500,88.104,67.838,108.37
+rrt+dijkstra,RRT + Dijkstra (ours),486,101.535,78.123,124.946
+astar+astar,A* + A* (ours),500,103.292,83.011,123.572
+dijkstra+astar,Dijkstra + A* (ours),500,105.336,85.387,125.286
 dijkstra+orca,Dijkstra + ORCA (RVO2),500,106.26,83.299,129.22
 astar+orca,A* + ORCA (RVO2),500,115.821,88.97,142.671
 dijkstra+teb_upstream,Dijkstra + TEB (upstream),500,131.999,50.433,213.564
@@ -23,15 +23,15 @@ dijkstra+sarl_upstream,Dijkstra + SARL (upstream),500,356.77,300.899,412.64
 astar+sarl_upstream,A* + SARL (upstream),500,361.457,305.661,417.253
 dijkstra+lstm_rl,Dijkstra + LSTM-RL (ours),500,400.144,302.521,497.768
 astar+lstm_rl,A* + LSTM-RL (ours),500,407.489,309.105,505.874
-dijkstra+rrt,Dijkstra + RRT,500,745.326,-646.9,2137.552
-astar+rrt,A* + RRT,500,751.952,-640.298,2144.202
+dijkstra+rrt,Dijkstra + RRT (ours),500,745.326,-646.9,2137.552
+astar+rrt,A* + RRT (ours),500,751.952,-640.298,2144.202
 rrt+teb_upstream,RRT + TEB (upstream),472,825.427,-551.964,2202.818
-rrt+astar,RRT + A*,479,863.586,-641.127,2368.3
+rrt+astar,RRT + A* (ours),479,863.586,-641.127,2368.3
 rrt+dwa,RRT + DWA (ours),484,900.51,98.135,1702.885
 astar+mpc_dompc,A* + MPC (do-mpc),500,926.023,192.298,1659.749
 dijkstra+mpc_dompc,Dijkstra + MPC (do-mpc),500,927.572,193.85,1661.294
 rrt+lstm_rl,RRT + LSTM-RL (ours),462,1194.075,388.175,1999.974
-rrt+rrt,RRT + RRT,462,1598.195,-1420.382,4616.772
+rrt+rrt,RRT + RRT (ours),462,1598.195,-1420.382,4616.772
 astar+cadrl_upstream,A* + CADRL (upstream),500,3291.813,1014.556,5569.07
 rrt+teb,RRT + TEB (ours),458,3395.079,-1522.433,8312.591
 rrt+cadrl,RRT + CADRL (ours),465,4651.906,521.021,8782.79

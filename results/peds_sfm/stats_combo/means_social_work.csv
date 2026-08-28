@@ -4,23 +4,23 @@ astar+teb_upstream,A* + TEB (upstream),500,315.628,300.954,330.302
 rrt+teb,RRT + TEB (ours),475,347.579,192.842,502.317
 dijkstra+orca,Dijkstra + ORCA (RVO2),500,361.063,343.054,379.071
 astar+orca,A* + ORCA (RVO2),500,363.101,345.353,380.848
-rrt+rrt,RRT + RRT,459,372.49,258.054,486.927
+rrt+rrt,RRT + RRT (ours),459,372.49,258.054,486.927
 rrt+teb_upstream,RRT + TEB (upstream),478,387.399,356.884,417.915
-dijkstra+astar,Dijkstra + A*,500,432.28,407.483,457.076
-dijkstra+dijkstra,Dijkstra + Dijkstra,500,435.746,412.652,458.84
-astar+astar,A* + A*,500,439.108,414.048,464.168
-astar+dijkstra,A* + Dijkstra,500,441.071,417.822,464.32
+dijkstra+astar,Dijkstra + A* (ours),500,432.28,407.483,457.076
+dijkstra+dijkstra,Dijkstra + Dijkstra (ours),500,435.746,412.652,458.84
+astar+astar,A* + A* (ours),500,439.108,414.048,464.168
+astar+dijkstra,A* + Dijkstra (ours),500,441.071,417.822,464.32
 rrt+orca,RRT + ORCA (RVO2),474,490.2,448.342,532.059
-rrt+astar,RRT + A*,466,502.519,467.992,537.046
-rrt+dijkstra,RRT + Dijkstra,466,506.233,471.921,540.545
+rrt+astar,RRT + A* (ours),466,502.519,467.992,537.046
+rrt+dijkstra,RRT + Dijkstra (ours),466,506.233,471.921,540.545
 rrt+mpc_dompc,RRT + MPC (do-mpc),480,508.452,477.534,539.37
 rrt+lstm_rl_upstream,RRT + LSTM-RL (upstream),471,525.621,485.25,565.992
 dijkstra+lstm_rl_upstream,Dijkstra + LSTM-RL (upstream),500,543.675,509.381,577.969
 astar+lstm_rl_upstream,A* + LSTM-RL (upstream),500,546.891,512.856,580.926
 rrt+mpc,RRT + MPC (ours),479,561.854,444.652,679.055
 rrt+dwa,RRT + DWA (ours),480,594.619,553.866,635.371
-dijkstra+rrt,Dijkstra + RRT,500,782.2,415.807,1148.593
-astar+rrt,A* + RRT,500,784.508,418.136,1150.88
+dijkstra+rrt,Dijkstra + RRT (ours),500,782.2,415.807,1148.593
+astar+rrt,A* + RRT (ours),500,784.508,418.136,1150.88
 rrt+crowdnav_dsrnn,RRT + CrowdNav DS-RNN,478,786.952,561.201,1012.703
 astar+mpc_dompc,A* + MPC (do-mpc),500,787.073,457.082,1117.064
 dijkstra+mpc_dompc,Dijkstra + MPC (do-mpc),500,787.252,457.264,1117.24

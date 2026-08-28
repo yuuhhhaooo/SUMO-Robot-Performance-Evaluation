@@ -1,19 +1,19 @@
 algorithm,algorithm_name,n,mean,ci_lo,ci_hi
-rrt+rrt,RRT + RRT,481,0.237,0.173,0.301
+rrt+rrt,RRT + RRT (ours),481,0.237,0.173,0.301
 astar+mpc,A* + MPC (ours),500,0.256,0.207,0.305
 dijkstra+mpc,Dijkstra + MPC (ours),500,0.259,0.21,0.309
 astar+cadrl,A* + CADRL (ours),500,0.277,0.196,0.357
 dijkstra+cadrl,Dijkstra + CADRL (ours),500,0.279,0.198,0.36
-astar+rrt,A* + RRT,500,0.28,0.243,0.317
-astar+dijkstra,A* + Dijkstra,500,0.281,0.226,0.337
-dijkstra+rrt,Dijkstra + RRT,500,0.282,0.244,0.32
-dijkstra+dijkstra,Dijkstra + Dijkstra,500,0.286,0.231,0.342
+astar+rrt,A* + RRT (ours),500,0.28,0.243,0.317
+astar+dijkstra,A* + Dijkstra (ours),500,0.281,0.226,0.337
+dijkstra+rrt,Dijkstra + RRT (ours),500,0.282,0.244,0.32
+dijkstra+dijkstra,Dijkstra + Dijkstra (ours),500,0.286,0.231,0.342
 dijkstra+teb,Dijkstra + TEB (ours),500,0.289,0.253,0.325
 astar+teb,A* + TEB (ours),500,0.29,0.253,0.326
 dijkstra+orca_heuristic,"Dijkstra + ORCA (heuristic, ours)",500,0.298,0.242,0.353
-astar+astar,A* + A*,500,0.302,0.248,0.355
+astar+astar,A* + A* (ours),500,0.302,0.248,0.355
 astar+orca_heuristic,"A* + ORCA (heuristic, ours)",500,0.302,0.246,0.358
-dijkstra+astar,Dijkstra + A*,500,0.303,0.249,0.356
+dijkstra+astar,Dijkstra + A* (ours),500,0.303,0.249,0.356
 rrt+crowdnav_dsrnn,RRT + CrowdNav DS-RNN,478,0.308,0.225,0.392
 dijkstra+dwa,Dijkstra + DWA (ours),500,0.31,0.249,0.37
 astar+lstm_rl_upstream,A* + LSTM-RL (upstream),500,0.312,0.25,0.375
@@ -24,8 +24,8 @@ dijkstra+crowdnav_dsrnn,Dijkstra + CrowdNav DS-RNN,500,0.322,0.256,0.389
 rrt+lstm_rl,RRT + LSTM-RL (ours),468,0.342,0.27,0.415
 astar+orca,A* + ORCA (RVO2),500,0.345,0.295,0.395
 dijkstra+orca,Dijkstra + ORCA (RVO2),500,0.345,0.295,0.395
-rrt+astar,RRT + A*,454,0.346,0.241,0.451
-rrt+dijkstra,RRT + Dijkstra,471,0.366,0.265,0.468
+rrt+astar,RRT + A* (ours),454,0.346,0.241,0.451
+rrt+dijkstra,RRT + Dijkstra (ours),471,0.366,0.265,0.468
 astar+teb_upstream,A* + TEB (upstream),500,0.372,0.3,0.444
 dijkstra+teb_upstream,Dijkstra + TEB (upstream),500,0.373,0.3,0.445
 astar+lstm_rl,A* + LSTM-RL (ours),500,0.374,0.297,0.452

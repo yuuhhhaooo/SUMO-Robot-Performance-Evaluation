@@ -100,12 +100,19 @@ def _algo_display(u):
     return _algo_full(u) if _NAME_MODE == "full" else _algo_short(u)
 
 
+try:
+    from algo_names import global_display as _global_disp    # noqa: E402
+except ImportError:
+    def _global_disp(u):
+        return _algo_short(u)
+
+
 def disp_unit_short(u):
     """Short names regardless of --names: for x-axis-dense charts."""
     u = str(u)
     if "+" in u:
         g, a = u.split("+", 1)
-        return f"{_algo_short(g)} + {_algo_short(a)}"
+        return f"{_global_disp(g)} + {_algo_short(a)}"
     return _algo_short(u)
 
 
@@ -115,7 +122,7 @@ def disp_unit(u):
     u = str(u)
     if "+" in u:
         g, a = u.split("+", 1)
-        return f"{_algo_display(g)} + {_algo_display(a)}"
+        return f"{_global_disp(g)} + {_algo_display(a)}"
     return _algo_display(u)
 
 

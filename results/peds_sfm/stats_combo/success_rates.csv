@@ -28,23 +28,23 @@ rrt+dwa,RRT + DWA (ours),498,0.6627,0.62,0.7028
 rrt+lstm_rl,RRT + LSTM-RL (ours),498,0.6566,0.6139,0.697
 dijkstra+crowdnav_dsrnn,Dijkstra + CrowdNav DS-RNN,500,0.652,0.6092,0.6925
 dijkstra+orca,Dijkstra + ORCA (RVO2),500,0.65,0.6072,0.6905
-astar+dijkstra,A* + Dijkstra,500,0.65,0.6072,0.6905
+astar+dijkstra,A* + Dijkstra (ours),500,0.65,0.6072,0.6905
 rrt+crowdnav_dsrnn,RRT + CrowdNav DS-RNN,500,0.64,0.597,0.6809
-dijkstra+dijkstra,Dijkstra + Dijkstra,500,0.624,0.5807,0.6654
-astar+astar,A* + A*,500,0.618,0.5747,0.6595
+dijkstra+dijkstra,Dijkstra + Dijkstra (ours),500,0.624,0.5807,0.6654
+astar+astar,A* + A* (ours),500,0.618,0.5747,0.6595
 rrt+orca,RRT + ORCA (RVO2),499,0.6172,0.5738,0.6588
 dijkstra+sarl,Dijkstra + SARL (ours),500,0.602,0.5585,0.644
 astar+sarl,A* + SARL (ours),500,0.6,0.5565,0.642
-dijkstra+astar,Dijkstra + A*,500,0.598,0.5544,0.6401
+dijkstra+astar,Dijkstra + A* (ours),500,0.598,0.5544,0.6401
 rrt+sarl,RRT + SARL (ours),500,0.598,0.5544,0.6401
 dijkstra+teb,Dijkstra + TEB (ours),500,0.582,0.5383,0.6244
-rrt+dijkstra,RRT + Dijkstra,500,0.576,0.5323,0.6186
+rrt+dijkstra,RRT + Dijkstra (ours),500,0.576,0.5323,0.6186
 astar+teb,A* + TEB (ours),500,0.572,0.5282,0.6147
-rrt+astar,RRT + A*,500,0.564,0.5202,0.6068
+rrt+astar,RRT + A* (ours),500,0.564,0.5202,0.6068
 rrt+lstm_rl_upstream,RRT + LSTM-RL (upstream),500,0.546,0.5022,0.5891
 rrt+crowdnav_attngraph,RRT + CrowdNav AttnGraph,499,0.5451,0.5012,0.5883
-astar+rrt,A* + RRT,500,0.516,0.4722,0.5595
-dijkstra+rrt,Dijkstra + RRT,500,0.502,0.4583,0.5456
+astar+rrt,A* + RRT (ours),500,0.516,0.4722,0.5595
+dijkstra+rrt,Dijkstra + RRT (ours),500,0.502,0.4583,0.5456
 rrt+teb_upstream,RRT + TEB (upstream),500,0.472,0.4286,0.5158
 dijkstra+cadrl_upstream,Dijkstra + CADRL (upstream),500,0.436,0.3932,0.4798
 astar+cadrl_upstream,A* + CADRL (upstream),500,0.432,0.3893,0.4758
@@ -52,4 +52,4 @@ dijkstra+crowdnav_attngraph,Dijkstra + CrowdNav AttnGraph,500,0.346,0.3056,0.388
 astar+crowdnav_attngraph,A* + CrowdNav AttnGraph,500,0.342,0.3018,0.3846
 rrt+teb,RRT + TEB (ours),500,0.32,0.2806,0.3621
 rrt+cadrl_upstream,RRT + CADRL (upstream),500,0.298,0.2596,0.3395
-rrt+rrt,RRT + RRT,500,0.298,0.2596,0.3395
+rrt+rrt,RRT + RRT (ours),500,0.298,0.2596,0.3395

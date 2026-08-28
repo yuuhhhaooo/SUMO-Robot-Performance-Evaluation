@@ -11,10 +11,10 @@ astar,lstm_rl,LSTM-RL (ours),400,0.7175,9,100,0.64,5,4
 astar,crowdnav_dsrnn,CrowdNav DS-RNN,400,0.665,10,100,0.47,12,-2
 astar,lstm_rl_upstream,LSTM-RL (upstream),400,0.6575,11,100,0.6,9,2
 astar,orca,ORCA (RVO2),400,0.615,12,100,0.66,4,8
-astar,astar,A*,400,0.57,13,100,0.39,13,0
+astar,astar,A* (ours),400,0.57,13,100,0.39,13,0
 astar,teb,TEB (ours),400,0.49,14,100,0.26,17,-3
-astar,rrt,RRT,400,0.4825,15,100,0.31,15,0
-astar,dijkstra,Dijkstra,400,0.4675,16,100,0.3,16,0
+astar,rrt,RRT (ours),400,0.4825,15,100,0.31,15,0
+astar,dijkstra,Dijkstra (ours),400,0.4675,16,100,0.3,16,0
 astar,cadrl_upstream,CADRL (upstream),400,0.43,17,100,0.14,18,-1
 astar,crowdnav_attngraph,CrowdNav AttnGraph,400,0.345,18,100,0.51,11,7
 dijkstra,mpc_dompc,MPC (do-mpc),400,0.7775,1,100,0.64,6,-5
@@ -29,10 +29,10 @@ dijkstra,lstm_rl,LSTM-RL (ours),400,0.7025,9,100,0.64,5,4
 dijkstra,crowdnav_dsrnn,CrowdNav DS-RNN,400,0.65,10,100,0.47,12,-2
 dijkstra,lstm_rl_upstream,LSTM-RL (upstream),400,0.6375,11,100,0.6,9,2
 dijkstra,orca,ORCA (RVO2),400,0.585,12,100,0.66,4,8
-dijkstra,astar,A*,400,0.56,13,100,0.39,13,0
+dijkstra,astar,A* (ours),400,0.56,13,100,0.39,13,0
 dijkstra,teb,TEB (ours),400,0.48,14,100,0.26,17,-3
-dijkstra,dijkstra,Dijkstra,400,0.465,15,100,0.3,16,-1
-dijkstra,rrt,RRT,400,0.46,16,100,0.31,15,1
+dijkstra,dijkstra,Dijkstra (ours),400,0.465,15,100,0.3,16,-1
+dijkstra,rrt,RRT (ours),400,0.46,16,100,0.31,15,1
 dijkstra,cadrl_upstream,CADRL (upstream),400,0.4375,17,100,0.14,18,-1
 dijkstra,crowdnav_attngraph,CrowdNav AttnGraph,400,0.3475,18,100,0.51,11,7
 rrt,mpc_dompc,MPC (do-mpc),400,0.8025,1,100,0.58,4,-3
@@ -46,10 +46,10 @@ rrt,dwa,DWA (ours),400,0.65,8,100,0.45,10,-2
 rrt,orca,ORCA (RVO2),400,0.605,9,100,0.6,3,6
 rrt,crowdnav_dsrnn,CrowdNav DS-RNN,400,0.6,10,100,0.53,7,3
 rrt,lstm_rl_upstream,LSTM-RL (upstream),400,0.52,11,100,0.47,8,3
-rrt,astar,A*,400,0.47,12,100,0.26,16,-4
+rrt,astar,A* (ours),400,0.47,12,100,0.26,16,-4
 rrt,crowdnav_attngraph,CrowdNav AttnGraph,398,0.4422,13,100,0.43,11,2
 rrt,teb_upstream,TEB (upstream),400,0.4,14,100,0.38,12,2
 rrt,teb,TEB (ours),400,0.39,15,100,0.31,14,1
-rrt,dijkstra,Dijkstra,400,0.3625,16,100,0.34,13,3
+rrt,dijkstra,Dijkstra (ours),400,0.3625,16,100,0.34,13,3
 rrt,cadrl_upstream,CADRL (upstream),400,0.2825,17,100,0.08,18,-1
-rrt,rrt,RRT,400,0.2125,18,100,0.17,17,1
+rrt,rrt,RRT (ours),400,0.2125,18,100,0.17,17,1

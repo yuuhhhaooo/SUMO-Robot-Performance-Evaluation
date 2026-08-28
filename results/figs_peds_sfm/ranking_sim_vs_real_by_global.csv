@@ -9,12 +9,12 @@ astar,lstm_rl,LSTM-RL (ours),400,0.69,7,100,0.7,4,3
 astar,lstm_rl_upstream,LSTM-RL (upstream),400,0.685,8,100,0.67,6,2
 astar,crowdnav_dsrnn,CrowdNav DS-RNN,400,0.6825,9,100,0.6,12,-3
 astar,orca,ORCA (RVO2),400,0.675,10,100,0.68,5,5
-astar,dijkstra,Dijkstra,400,0.6625,11,100,0.6,13,-2
+astar,dijkstra,Dijkstra (ours),400,0.6625,11,100,0.6,13,-2
 astar,orca_heuristic,"ORCA (heuristic, ours)",400,0.6475,12,100,0.79,2,10
-astar,astar,A*,400,0.6225,13,100,0.6,11,2
+astar,astar,A* (ours),400,0.6225,13,100,0.6,11,2
 astar,sarl,SARL (ours),400,0.62,14,100,0.52,14,0
 astar,teb,TEB (ours),400,0.615,15,100,0.4,17,-2
-astar,rrt,RRT,400,0.53,16,100,0.46,16,0
+astar,rrt,RRT (ours),400,0.53,16,100,0.46,16,0
 astar,cadrl_upstream,CADRL (upstream),400,0.4675,17,100,0.29,18,-1
 astar,crowdnav_attngraph,CrowdNav AttnGraph,400,0.3,18,100,0.51,15,3
 dijkstra,mpc,MPC (ours),400,0.84,1,100,0.63,8,-7
@@ -28,11 +28,11 @@ dijkstra,lstm_rl_upstream,LSTM-RL (upstream),400,0.6775,8,100,0.67,6,2
 dijkstra,crowdnav_dsrnn,CrowdNav DS-RNN,400,0.665,9,100,0.6,12,-3
 dijkstra,orca,ORCA (RVO2),400,0.6425,10,100,0.68,5,5
 dijkstra,orca_heuristic,"ORCA (heuristic, ours)",400,0.635,11,100,0.79,2,9
-dijkstra,dijkstra,Dijkstra,400,0.63,12,100,0.6,13,-1
+dijkstra,dijkstra,Dijkstra (ours),400,0.63,12,100,0.6,13,-1
 dijkstra,teb,TEB (ours),400,0.6275,13,100,0.4,17,-4
 dijkstra,sarl,SARL (ours),400,0.6225,14,100,0.52,14,0
-dijkstra,astar,A*,400,0.5975,15,100,0.6,11,4
-dijkstra,rrt,RRT,400,0.5125,16,100,0.46,16,0
+dijkstra,astar,A* (ours),400,0.5975,15,100,0.6,11,4
+dijkstra,rrt,RRT (ours),400,0.5125,16,100,0.46,16,0
 dijkstra,cadrl_upstream,CADRL (upstream),400,0.4725,17,100,0.29,18,-1
 dijkstra,crowdnav_attngraph,CrowdNav AttnGraph,400,0.305,18,100,0.51,15,3
 rrt,mpc,MPC (ours),400,0.7825,1,100,0.63,5,-4
@@ -45,11 +45,11 @@ rrt,sarl,SARL (ours),400,0.68,7,100,0.27,17,-10
 rrt,lstm_rl,LSTM-RL (ours),400,0.665,8,98,0.6224,7,1
 rrt,crowdnav_dsrnn,CrowdNav DS-RNN,400,0.65,9,100,0.6,8,1
 rrt,orca,ORCA (RVO2),400,0.6225,10,99,0.596,9,1
-rrt,dijkstra,Dijkstra,400,0.6175,11,100,0.41,13,-2
-rrt,astar,A*,400,0.6075,12,100,0.39,15,-3
+rrt,dijkstra,Dijkstra (ours),400,0.6175,11,100,0.41,13,-2
+rrt,astar,A* (ours),400,0.6075,12,100,0.39,15,-3
 rrt,lstm_rl_upstream,LSTM-RL (upstream),400,0.55,13,100,0.53,12,1
 rrt,crowdnav_attngraph,CrowdNav AttnGraph,400,0.5225,14,99,0.6364,3,11
 rrt,teb_upstream,TEB (upstream),400,0.4525,15,100,0.55,11,4
 rrt,cadrl_upstream,CADRL (upstream),400,0.3325,16,100,0.16,18,-2
 rrt,teb,TEB (ours),400,0.3,17,100,0.4,14,3
-rrt,rrt,RRT,400,0.2875,18,100,0.34,16,2
+rrt,rrt,RRT (ours),400,0.2875,18,100,0.34,16,2

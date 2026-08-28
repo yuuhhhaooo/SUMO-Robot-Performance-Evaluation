@@ -33,23 +33,23 @@ rrt+mpc_dompc,RRT + MPC (do-mpc),500,0.308,0.2691,0.3498
 rrt+orca,RRT + ORCA (RVO2),500,0.296,0.2577,0.3374
 astar+mpc,A* + MPC (ours),500,0.294,0.2558,0.3354
 dijkstra+mpc,Dijkstra + MPC (ours),500,0.29,0.2519,0.3313
-astar+astar,A* + A*,500,0.27,0.2329,0.3106
-dijkstra+dijkstra,Dijkstra + Dijkstra,500,0.26,0.2235,0.3002
-dijkstra+astar,Dijkstra + A*,500,0.26,0.2235,0.3002
-rrt+dijkstra,RRT + Dijkstra,500,0.242,0.2065,0.2814
-astar+dijkstra,A* + Dijkstra,500,0.236,0.2009,0.2751
+astar+astar,A* + A* (ours),500,0.27,0.2329,0.3106
+dijkstra+dijkstra,Dijkstra + Dijkstra (ours),500,0.26,0.2235,0.3002
+dijkstra+astar,Dijkstra + A* (ours),500,0.26,0.2235,0.3002
+rrt+dijkstra,RRT + Dijkstra (ours),500,0.242,0.2065,0.2814
+astar+dijkstra,A* + Dijkstra (ours),500,0.236,0.2009,0.2751
 rrt+cadrl_upstream,RRT + CADRL (upstream),500,0.214,0.1803,0.2521
 astar+mpc_dompc,A* + MPC (do-mpc),500,0.2,0.1673,0.2373
 dijkstra+mpc_dompc,Dijkstra + MPC (do-mpc),500,0.198,0.1654,0.2352
 rrt+teb_upstream,RRT + TEB (upstream),500,0.182,0.1506,0.2182
 dijkstra+orca,Dijkstra + ORCA (RVO2),500,0.178,0.147,0.2139
 astar+orca,A* + ORCA (RVO2),500,0.176,0.1451,0.2118
-rrt+astar,RRT + A*,500,0.124,0.0979,0.1558
-rrt+rrt,RRT + RRT,500,0.072,0.0525,0.0981
+rrt+astar,RRT + A* (ours),500,0.124,0.0979,0.1558
+rrt+rrt,RRT + RRT (ours),500,0.072,0.0525,0.0981
 astar+teb_upstream,A* + TEB (upstream),500,0.066,0.0474,0.0912
 dijkstra+teb_upstream,Dijkstra + TEB (upstream),500,0.062,0.044,0.0867
 rrt+teb,RRT + TEB (ours),500,0.052,0.0357,0.0751
-astar+rrt,A* + RRT,500,0.034,0.0213,0.0538
-dijkstra+rrt,Dijkstra + RRT,500,0.032,0.0198,0.0513
+astar+rrt,A* + RRT (ours),500,0.034,0.0213,0.0538
+dijkstra+rrt,Dijkstra + RRT (ours),500,0.032,0.0198,0.0513
 astar+teb,A* + TEB (ours),500,0.022,0.0123,0.039
 dijkstra+teb,Dijkstra + TEB (ours),500,0.022,0.0123,0.039

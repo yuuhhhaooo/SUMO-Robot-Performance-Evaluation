@@ -219,12 +219,19 @@ def fig_heatmap(df, rows, seps, globals_, maps, real_map, out, label, dpi):
     print(f"  wrote {p}")
 
 
+try:
+    from algo_names import global_display as _global_disp    # noqa: E402
+except ImportError:
+    def _global_disp(u):
+        return algo_disp(u)
+
+
 def disp_combo(u):
     """Display name for 'global+local' combo strings (and plain ids)."""
     u = str(u)
     if "+" in u:
         g, a = u.split("+", 1)
-        return f"{algo_disp(g)} + {algo_disp(a)}"
+        return f"{_global_disp(g)} + {algo_disp(a)}"
     return algo_disp(u)
 
 

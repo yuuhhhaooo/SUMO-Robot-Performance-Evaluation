@@ -11,9 +11,9 @@ crowdnav_dsrnn,CrowdNav DS-RNN,1200,0.6383,9,300,0.49,11,-2
 teb_upstream,TEB (upstream),1200,0.6167,10,300,0.5267,10,0
 lstm_rl_upstream,LSTM-RL (upstream),1200,0.605,11,300,0.5567,9,2
 orca,ORCA (RVO2),1200,0.6017,12,300,0.64,4,8
-astar,A*,1200,0.5333,13,300,0.3467,13,0
+astar,A* (ours),1200,0.5333,13,300,0.3467,13,0
 teb,TEB (ours),1200,0.4533,14,300,0.2767,16,-2
-dijkstra,Dijkstra,1200,0.4317,15,300,0.3133,15,0
-rrt,RRT,1200,0.385,16,300,0.2633,17,-1
+dijkstra,Dijkstra (ours),1200,0.4317,15,300,0.3133,15,0
+rrt,RRT (ours),1200,0.385,16,300,0.2633,17,-1
 cadrl_upstream,CADRL (upstream),1200,0.3833,17,300,0.12,18,-1
 crowdnav_attngraph,CrowdNav AttnGraph,1198,0.3781,18,300,0.4833,12,6

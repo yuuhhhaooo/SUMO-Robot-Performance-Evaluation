@@ -1,19 +1,19 @@
 algorithm,algorithm_name,n,mean,ci_lo,ci_hi
 rrt+teb,RRT + TEB (ours),475,15.336,13.303,17.368
-rrt+rrt,RRT + RRT,459,18.374,16.2,20.548
+rrt+rrt,RRT + RRT (ours),459,18.374,16.2,20.548
 rrt+lstm_rl_upstream,RRT + LSTM-RL (upstream),471,21.635,18.451,24.82
-rrt+astar,RRT + A*,466,24.172,21.89,26.454
-rrt+dijkstra,RRT + Dijkstra,466,24.75,22.422,27.078
-dijkstra+astar,Dijkstra + A*,500,25.392,22.539,28.246
-astar+astar,A* + A*,500,25.716,22.85,28.582
-dijkstra+rrt,Dijkstra + RRT,500,25.809,23.022,28.596
-astar+rrt,A* + RRT,500,26.142,23.358,28.927
+rrt+astar,RRT + A* (ours),466,24.172,21.89,26.454
+rrt+dijkstra,RRT + Dijkstra (ours),466,24.75,22.422,27.078
+dijkstra+astar,Dijkstra + A* (ours),500,25.392,22.539,28.246
+astar+astar,A* + A* (ours),500,25.716,22.85,28.582
+dijkstra+rrt,Dijkstra + RRT (ours),500,25.809,23.022,28.596
+astar+rrt,A* + RRT (ours),500,26.142,23.358,28.927
 rrt+mpc,RRT + MPC (ours),479,26.883,24.608,29.159
 dijkstra+lstm_rl_upstream,Dijkstra + LSTM-RL (upstream),500,27.403,23.698,31.108
 astar+lstm_rl_upstream,A* + LSTM-RL (upstream),500,27.502,23.74,31.264
 rrt+cadrl,RRT + CADRL (ours),476,28.953,25.525,32.381
-dijkstra+dijkstra,Dijkstra + Dijkstra,500,29.128,26.053,32.204
-astar+dijkstra,A* + Dijkstra,500,29.305,26.211,32.398
+dijkstra+dijkstra,Dijkstra + Dijkstra (ours),500,29.128,26.053,32.204
+astar+dijkstra,A* + Dijkstra (ours),500,29.305,26.211,32.398
 dijkstra+mpc,Dijkstra + MPC (ours),500,29.359,26.836,31.882
 rrt+teb_upstream,RRT + TEB (upstream),478,29.398,22.798,35.998
 astar+mpc,A* + MPC (ours),500,29.489,26.954,32.024

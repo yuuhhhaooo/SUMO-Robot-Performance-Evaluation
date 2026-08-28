@@ -3,11 +3,11 @@ dijkstra+teb_upstream,Dijkstra + TEB (upstream),1000,241.744,197.472,286.016
 astar+teb_upstream,A* + TEB (upstream),1000,243.009,198.603,287.416
 dijkstra+orca,Dijkstra + ORCA (RVO2),1000,305.309,283.318,327.301
 astar+orca,A* + ORCA (RVO2),1000,312.545,289.028,336.063
-dijkstra+astar,Dijkstra + A*,1000,336.843,316.722,356.965
-astar+astar,A* + A*,1000,339.86,319.437,360.284
-astar+dijkstra,A* + Dijkstra,1000,347.982,326.712,369.253
-dijkstra+dijkstra,Dijkstra + Dijkstra,1000,353.752,332.007,375.497
-rrt+dijkstra,RRT + Dijkstra,952,432.831,395.676,469.986
+dijkstra+astar,Dijkstra + A* (ours),1000,336.843,316.722,356.965
+astar+astar,A* + A* (ours),1000,339.86,319.437,360.284
+astar+dijkstra,A* + Dijkstra (ours),1000,347.982,326.712,369.253
+dijkstra+dijkstra,Dijkstra + Dijkstra (ours),1000,353.752,332.007,375.497
+rrt+dijkstra,RRT + Dijkstra (ours),952,432.831,395.676,469.986
 rrt+mpc,RRT + MPC (ours),951,496.916,431.481,562.351
 rrt+orca,RRT + ORCA (RVO2),938,497.5,457.908,537.092
 rrt+mpc_dompc,RRT + MPC (do-mpc),960,542.361,478.745,605.976
@@ -15,17 +15,17 @@ rrt+lstm_rl_upstream,RRT + LSTM-RL (upstream),948,582.093,522.804,641.382
 dijkstra+lstm_rl_upstream,Dijkstra + LSTM-RL (upstream),999,594.542,558.95,630.135
 astar+lstm_rl_upstream,A* + LSTM-RL (upstream),999,597.032,560.841,633.223
 rrt+teb_upstream,RRT + TEB (upstream),950,705.688,12.391,1398.984
-rrt+astar,RRT + A*,945,772.732,8.28,1537.183
+rrt+astar,RRT + A* (ours),945,772.732,8.28,1537.183
 rrt+crowdnav_dsrnn,RRT + CrowdNav DS-RNN,935,793.58,661.829,925.332
-dijkstra+rrt,Dijkstra + RRT,1000,830.364,9.511,1651.218
-astar+rrt,A* + RRT,1000,834.573,13.712,1655.433
+dijkstra+rrt,Dijkstra + RRT (ours),1000,830.364,9.511,1651.218
+astar+rrt,A* + RRT (ours),1000,834.573,13.712,1655.433
 dijkstra+crowdnav_dsrnn,Dijkstra + CrowdNav DS-RNN,999,909.508,703.656,1115.359
 astar+crowdnav_dsrnn,A* + CrowdNav DS-RNN,999,913.55,709.001,1118.1
 astar+mpc_dompc,A* + MPC (do-mpc),1000,1005.613,515.691,1495.535
 dijkstra+mpc_dompc,Dijkstra + MPC (do-mpc),1000,1006.803,516.867,1496.739
 dijkstra+lstm_rl,Dijkstra + LSTM-RL (ours),1000,1121.696,1031.502,1211.89
 astar+lstm_rl,A* + LSTM-RL (ours),1000,1130.012,1039.487,1220.537
-rrt+rrt,RRT + RRT,921,1157.89,-497.875,2813.656
+rrt+rrt,RRT + RRT (ours),921,1157.89,-497.875,2813.656
 dijkstra+sarl_upstream,Dijkstra + SARL (upstream),1000,1180.995,1095.194,1266.796
 astar+sarl_upstream,A* + SARL (upstream),1000,1186.724,1100.944,1272.504
 dijkstra+dwa,Dijkstra + DWA (ours),1000,1257.859,943.202,1572.515

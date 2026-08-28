@@ -1,16 +1,16 @@
 algorithm,algorithm_name,n,mean,ci_lo,ci_hi
-dijkstra+rrt,Dijkstra + RRT,500,2.567,2.037,3.097
-astar+rrt,A* + RRT,500,2.576,2.045,3.107
+dijkstra+rrt,Dijkstra + RRT (ours),500,2.567,2.037,3.097
+astar+rrt,A* + RRT (ours),500,2.576,2.045,3.107
 astar+teb,A* + TEB (ours),500,2.876,1.933,3.819
 rrt+teb,RRT + TEB (ours),458,2.883,2.196,3.571
 dijkstra+teb,Dijkstra + TEB (ours),500,2.904,1.961,3.847
-rrt+rrt,RRT + RRT,462,4.538,3.395,5.681
-rrt+astar,RRT + A*,479,5.18,4.153,6.206
-rrt+dijkstra,RRT + Dijkstra,486,6.936,5.683,8.19
-astar+dijkstra,A* + Dijkstra,500,7.833,6.309,9.357
-dijkstra+dijkstra,Dijkstra + Dijkstra,500,7.965,6.446,9.484
-dijkstra+astar,Dijkstra + A*,500,8.901,7.554,10.248
-astar+astar,A* + A*,500,8.945,7.594,10.296
+rrt+rrt,RRT + RRT (ours),462,4.538,3.395,5.681
+rrt+astar,RRT + A* (ours),479,5.18,4.153,6.206
+rrt+dijkstra,RRT + Dijkstra (ours),486,6.936,5.683,8.19
+astar+dijkstra,A* + Dijkstra (ours),500,7.833,6.309,9.357
+dijkstra+dijkstra,Dijkstra + Dijkstra (ours),500,7.965,6.446,9.484
+dijkstra+astar,Dijkstra + A* (ours),500,8.901,7.554,10.248
+astar+astar,A* + A* (ours),500,8.945,7.594,10.296
 astar+mpc,A* + MPC (ours),500,10.167,8.682,11.652
 dijkstra+mpc,Dijkstra + MPC (ours),500,10.19,8.709,11.671
 rrt+dwa,RRT + DWA (ours),484,10.854,8.004,13.705

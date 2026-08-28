@@ -1,9 +1,9 @@
 algorithm,algorithm_name,n,mean,ci_lo,ci_hi
-astar+dijkstra,A* + Dijkstra,1000,54.382,45.166,63.597
-dijkstra+dijkstra,Dijkstra + Dijkstra,1000,59.041,48.624,69.458
-rrt+dijkstra,RRT + Dijkstra,952,64.564,52.286,76.841
-astar+astar,A* + A*,1000,65.16,54.614,75.707
-dijkstra+astar,Dijkstra + A*,1000,65.985,55.581,76.389
+astar+dijkstra,A* + Dijkstra (ours),1000,54.382,45.166,63.597
+dijkstra+dijkstra,Dijkstra + Dijkstra (ours),1000,59.041,48.624,69.458
+rrt+dijkstra,RRT + Dijkstra (ours),952,64.564,52.286,76.841
+astar+astar,A* + A* (ours),1000,65.16,54.614,75.707
+dijkstra+astar,Dijkstra + A* (ours),1000,65.985,55.581,76.389
 dijkstra+orca,Dijkstra + ORCA (RVO2),1000,70.18,58.339,82.022
 astar+orca,A* + ORCA (RVO2),1000,74.905,61.122,88.687
 dijkstra+teb_upstream,Dijkstra + TEB (upstream),1000,83.122,42.21,124.034
@@ -23,15 +23,15 @@ dijkstra+dwa,Dijkstra + DWA (ours),1000,237.359,123.015,351.702
 astar+dwa,A* + DWA (ours),1000,247.062,132.223,361.902
 dijkstra+crowdnav_dsrnn,Dijkstra + CrowdNav DS-RNN,999,311.62,221.958,401.281
 astar+crowdnav_dsrnn,A* + CrowdNav DS-RNN,999,315.749,225.406,406.093
-dijkstra+rrt,Dijkstra + RRT,1000,385.653,-310.471,1081.777
-astar+rrt,A* + RRT,1000,389.128,-307.014,1085.27
+dijkstra+rrt,Dijkstra + RRT (ours),1000,385.653,-310.471,1081.777
+astar+rrt,A* + RRT (ours),1000,389.128,-307.014,1085.27
 rrt+teb_upstream,RRT + TEB (upstream),950,425.333,-259.126,1109.791
-rrt+astar,RRT + A*,945,450.293,-312.49,1213.077
+rrt+astar,RRT + A* (ours),945,450.293,-312.49,1213.077
 rrt+dwa,RRT + DWA (ours),964,469.456,65.863,873.049
 astar+mpc_dompc,A* + MPC (do-mpc),1000,480.442,112.719,848.164
 dijkstra+mpc_dompc,Dijkstra + MPC (do-mpc),1000,481.039,113.313,848.764
 rrt+lstm_rl,RRT + LSTM-RL (ours),940,607.257,209.614,1004.9
-rrt+rrt,RRT + RRT,921,811.18,-703.067,2325.428
+rrt+rrt,RRT + RRT (ours),921,811.18,-703.067,2325.428
 rrt+teb,RRT + TEB (ours),933,1673.972,-741.079,4089.023
 astar+cadrl_upstream,A* + CADRL (upstream),1000,1683.484,541.058,2825.91
 rrt+cadrl,RRT + CADRL (ours),941,2315.068,269.545,4360.591

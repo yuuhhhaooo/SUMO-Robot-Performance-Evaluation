@@ -17,10 +17,12 @@ DISPLAY = {
     "cadrl": "CADRL (ours)",
     "lstm_rl": "LSTM-RL (ours)",
     "orca_heuristic": "ORCA (heuristic, ours)",
-    # classical searches (same construction globally and locally)
-    "astar": "A*",
-    "dijkstra": "Dijkstra",
-    "rrt": "RRT",
+    # classical searches: the LOCAL receding-horizon variants are also
+    # self-implemented, so display() marks them (ours); the global side
+    # uses global_display() below and stays bare
+    "astar": "A* (ours)",
+    "dijkstra": "Dijkstra (ours)",
+    "rrt": "RRT (ours)",
     # upstream / library variants
     "orca": "ORCA (RVO2)",
     "mpc_dompc": "MPC (do-mpc)",
@@ -55,8 +57,16 @@ FULL = {
 }
 
 
+GLOBAL_DISPLAY = {"astar": "A*", "dijkstra": "Dijkstra", "rrt": "RRT"}
+
+
 def display(u):
     return DISPLAY.get(str(u), str(u))
+
+
+def global_display(u):
+    """Name for the GLOBAL half of a combination (textbook searches)."""
+    return GLOBAL_DISPLAY.get(str(u), display(u))
 
 
 def full(u):

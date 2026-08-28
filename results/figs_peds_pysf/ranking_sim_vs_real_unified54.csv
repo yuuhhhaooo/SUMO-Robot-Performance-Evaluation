@@ -32,24 +32,24 @@ rrt+mpc,rrt,mpc,RRT + MPC (ours),400,0.32,30,100,0.29,28,2
 astar+mpc,astar,mpc,A* + MPC (ours),400,0.31,31,100,0.23,31,0
 rrt+mpc_dompc,rrt,mpc_dompc,RRT + MPC (do-mpc),400,0.3075,32,100,0.31,27,5
 rrt+orca,rrt,orca,RRT + ORCA (RVO2),400,0.3075,33,100,0.25,30,3
-astar+astar,astar,astar,A* + A*,400,0.305,34,100,0.13,41,-7
+astar+astar,astar,astar,A* + A* (ours),400,0.305,34,100,0.13,41,-7
 dijkstra+mpc,dijkstra,mpc,Dijkstra + MPC (ours),400,0.305,35,100,0.23,32,3
-dijkstra+astar,dijkstra,astar,Dijkstra + A*,400,0.2925,36,100,0.13,43,-7
-dijkstra+dijkstra,dijkstra,dijkstra,Dijkstra + Dijkstra,400,0.2925,37,100,0.13,44,-7
-astar+dijkstra,astar,dijkstra,A* + Dijkstra,400,0.2625,38,100,0.13,42,-4
-rrt+dijkstra,rrt,dijkstra,RRT + Dijkstra,400,0.235,39,100,0.27,29,10
+dijkstra+astar,dijkstra,astar,Dijkstra + A* (ours),400,0.2925,36,100,0.13,43,-7
+dijkstra+dijkstra,dijkstra,dijkstra,Dijkstra + Dijkstra (ours),400,0.2925,37,100,0.13,44,-7
+astar+dijkstra,astar,dijkstra,A* + Dijkstra (ours),400,0.2625,38,100,0.13,42,-4
+rrt+dijkstra,rrt,dijkstra,RRT + Dijkstra (ours),400,0.235,39,100,0.27,29,10
 rrt+cadrl_upstream,rrt,cadrl_upstream,RRT + CADRL (upstream),400,0.2325,40,100,0.14,40,0
 astar+mpc_dompc,astar,mpc_dompc,A* + MPC (do-mpc),400,0.2225,41,100,0.11,45,-4
 dijkstra+mpc_dompc,dijkstra,mpc_dompc,Dijkstra + MPC (do-mpc),400,0.22,42,100,0.11,46,-4
 rrt+teb_upstream,rrt,teb_upstream,RRT + TEB (upstream),400,0.19,43,100,0.15,37,6
 dijkstra+orca,dijkstra,orca,Dijkstra + ORCA (RVO2),400,0.1875,44,100,0.14,39,5
 astar+orca,astar,orca,A* + ORCA (RVO2),400,0.185,45,100,0.14,38,7
-rrt+astar,rrt,astar,RRT + A*,400,0.1175,46,100,0.15,36,10
-rrt+rrt,rrt,rrt,RRT + RRT,400,0.075,47,100,0.06,47,0
+rrt+astar,rrt,astar,RRT + A* (ours),400,0.1175,46,100,0.15,36,10
+rrt+rrt,rrt,rrt,RRT + RRT (ours),400,0.075,47,100,0.06,47,0
 astar+teb_upstream,astar,teb_upstream,A* + TEB (upstream),400,0.07,48,100,0.05,48,0
 dijkstra+teb_upstream,dijkstra,teb_upstream,Dijkstra + TEB (upstream),400,0.065,49,100,0.05,49,0
 rrt+teb,rrt,teb,RRT + TEB (ours),400,0.055,50,100,0.04,50,0
-astar+rrt,astar,rrt,A* + RRT,400,0.0425,51,100,0.0,51,0
-dijkstra+rrt,dijkstra,rrt,Dijkstra + RRT,400,0.04,52,100,0.0,53,-1
+astar+rrt,astar,rrt,A* + RRT (ours),400,0.0425,51,100,0.0,51,0
+dijkstra+rrt,dijkstra,rrt,Dijkstra + RRT (ours),400,0.04,52,100,0.0,53,-1
 astar+teb,astar,teb,A* + TEB (ours),400,0.0275,53,100,0.0,52,1
 dijkstra+teb,dijkstra,teb,Dijkstra + TEB (ours),400,0.0275,54,100,0.0,54,0
