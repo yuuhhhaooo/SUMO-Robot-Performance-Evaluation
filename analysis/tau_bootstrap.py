@@ -104,6 +104,7 @@ def main():
     for name, df in layers.items():
         tabs = seed_tables(df)
         sim0, real0 = rates_from_tables(tabs)
+        sim0, real0 = sim0.align(real0, join="inner")
         stats0 = {"tau": kendalltau(sim0, real0).statistic,
                   "top10": top_k_overlap(sim0, real0),
                   "rbo": rbo(sim0, real0)}
