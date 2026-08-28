@@ -1,0 +1,16 @@
+layer,component,variance,sd,share
+sfm,algorithm,0.482,0.694,0.119
+sfm,task,0.19,0.436,0.047
+sfm,seed,0.089,0.299,0.022
+sfm,map,0.003,0.051,0.001
+sfm,residual,3.29,1.814,0.811
+pysf,algorithm,1.901,1.379,0.34
+pysf,task,0.286,0.535,0.051
+pysf,seed,0.116,0.34,0.021
+pysf,map,0.003,0.056,0.001
+pysf,residual,3.29,1.814,0.588
+jupedsim,algorithm,0.628,0.792,0.149
+jupedsim,task,0.214,0.463,0.051
+jupedsim,seed,0.088,0.297,0.021
+jupedsim,map,0.003,0.056,0.001
+jupedsim,residual,3.29,1.814,0.779
