@@ -1,4 +1,7 @@
 component,sd_posterior_mean,sd_ci_lo,sd_ci_hi
-seed,0.293,0.186,0.462
-map,0.035,0.014,0.09
-task,0.417,0.342,0.507
+seed,0.294,0.187,0.463
+map,0.034,0.013,0.089
+task,0.396,0.325,0.482
+layer_seed,0.06,0.046,0.078
+layer_map,0.158,0.109,0.23
+layer_task,0.148,0.132,0.165

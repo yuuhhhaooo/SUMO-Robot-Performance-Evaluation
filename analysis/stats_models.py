@@ -539,6 +539,19 @@ def fit_success_glmm(df, reference, out, dpi=200):
         vc["map"] = "0 + C(cell_map)"
     if df["map_task"].nunique() > 1:
         vc["task"] = "0 + C(map_task)"
+    # pooled runs only (supervisor ruling 2026-08-28): the layer may
+    # change what a seed, a map, or a route does, so the pooled model
+    # carries the full symmetric set of layer interactions. The
+    # coarse layer:map term is kept for hierarchical completeness and
+    # is expected to collapse towards zero, like the map main effect.
+    if df["reactive_peds"].nunique() > 1:
+        lay = df["reactive_peds"].astype(str)
+        df["layer_seed"] = lay + ":" + df["seed"].astype(str)
+        df["layer_map"] = lay + ":" + df["cell_map"].astype(str)
+        df["layer_map_task"] = lay + ":" + df["map_task"].astype(str)
+        vc["layer_seed"] = "0 + C(layer_seed)"
+        vc["layer_map"] = "0 + C(layer_map)"
+        vc["layer_task"] = "0 + C(layer_map_task)"
     model = BinomialBayesMixedGLM.from_formula(
         f"success ~ {fixed}", vc, df)
     fit = model.fit_vb()
@@ -760,6 +773,14 @@ def fit_lmm(df, endog, reference, out, subset_success=False, dpi=200):
         vc["map"] = "0 + C(cell_map)"
     if d["map_task"].nunique() > 1:
         vc["task"] = "0 + C(map_task)"
+    if d["reactive_peds"].nunique() > 1:   # pooled runs: layer interactions
+        lay = d["reactive_peds"].astype(str)
+        d["layer_seed"] = lay + ":" + d["seed"].astype(str)
+        d["layer_map"] = lay + ":" + d["cell_map"].astype(str)
+        d["layer_map_task"] = lay + ":" + d["map_task"].astype(str)
+        vc["layer_seed"] = "0 + C(layer_seed)"
+        vc["layer_map"] = "0 + C(layer_map)"
+        vc["layer_task"] = "0 + C(layer_map_task)"
     groups = pd.Series(["all"] * len(d), index=d.index)
 
     can_log = bool((d[endog] >= 0).all())   # log1p only for nonneg endogs
