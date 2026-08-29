@@ -1,0 +1,15 @@
+VB (paper) vs glmmTMB refit (nested spec), success model, 53 combination fixed effects
+corr(log-odds) = 1.0000
+mean |log-odds diff| = 0.087
+median SD ratio VB/glmmTMB = 0.687 (< 1 means VB understates uncertainty)
+
+variance-component SDs, VB (paper):
+component  sd_posterior_mean  sd_ci_lo  sd_ci_hi
+     seed              0.297     0.189     0.468
+      map              0.056     0.024     0.132
+     task              0.463     0.381     0.564
+variance-component SDs, glmmTMB:
+component       sd
+     seed 0.267338
+ cell_map 0.114457
+ map_task 0.447835

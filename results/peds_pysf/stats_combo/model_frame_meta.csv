@@ -1,0 +1,5 @@
+,0
+reference,astar+dwa
+covariates,"task_path_length_m,task_n_turns,task_min_sidewalk_width_m,task_n_signalised_junctions,demand_total_ph"
+extras,
+n,26999

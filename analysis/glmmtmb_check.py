@@ -5,7 +5,7 @@ via mean-field variational Bayes (fit_vb), which is known to underestimate
 posterior variance. This script rebuilds the EXACT model frame used by
 stats_models.py for the sfm layer (combo unit) and
 
-  step export : writes model_frame_sfm_combo.csv for glmmTMB
+  step export : writes model_frame_combo.csv for glmmTMB
   step compare: merges glmmTMB estimates (from glmmtmb_check.R) with the
                 published VB estimates and reports agreement
 
@@ -26,8 +26,13 @@ sys.path.insert(0, str(Path(__file__).parent))
 import stats_models as sm_mod
 
 
-def build_frame(results: Path, reference: str = "dwa"):
-    df = sm_mod.load_rows(results)
+def build_frame(results, reference: str = "dwa"):
+    """results: a Path, or a list of Paths to pool (layer as fixed effect)."""
+    if isinstance(results, (list, tuple)):
+        df = pd.concat([sm_mod.load_rows(p) for p in results],
+                       ignore_index=True)
+    else:
+        df = sm_mod.load_rows(results)
     if "termination_reason" in df.columns:
         infra_mask = (df["termination_reason"].astype(str)
                       .str.split(":").str[0].isin(sm_mod.INFRA_REASONS))
@@ -57,11 +62,12 @@ def build_frame(results: Path, reference: str = "dwa"):
     return frame, reference, covs, extras
 
 
-def do_export(results: Path):
+def do_export(results, out_dir=None):
     frame, reference, covs, extras = build_frame(results)
-    out = results / "stats_combo"
+    base = out_dir if out_dir is not None else results
+    out = base / "stats_combo"
     out.mkdir(parents=True, exist_ok=True)
-    frame.to_csv(out / "model_frame_sfm_combo.csv", index=False)
+    frame.to_csv(out / "model_frame_combo.csv", index=False)
     meta = {"reference": reference, "covariates": ",".join(covs),
             "extras": ",".join(extras), "n": len(frame)}
     pd.Series(meta).to_csv(out / "model_frame_meta.csv")
@@ -108,14 +114,14 @@ def do_compare(results: Path, spec: str = "crossed"):
     se_ratio = float(np.median(algo["vb_sd"] / algo["se"]))
     cols = ["k", "log_odds", "vb_sd", "estimate", "se"]
     csv_suffix = "" if spec == "crossed" else "_nested"
-    merged[cols].to_csv(out / f"glmmtmb_vs_vb_sfm{csv_suffix}.csv",
+    merged[cols].to_csv(out / f"glmmtmb_vs_vb{csv_suffix}.csv",
                         index=False)
     vcp = pd.read_csv(out / "success_glmm_variance_components.csv")
     tvc_file = ("glmmtmb_variance_components.csv" if spec == "crossed"
                 else "glmmtmb_variance_components_nestedtask.csv")
     tvc = pd.read_csv(out / tvc_file)
     lines = [
-        f"VB (paper) vs glmmTMB refit ({spec} spec), sfm success model, "
+        f"VB (paper) vs glmmTMB refit ({spec} spec), success model, "
         f"{len(algo)} combination fixed effects",
         f"corr(log-odds) = {r:.4f}",
         f"mean |log-odds diff| = {mad:.3f}",
@@ -137,14 +143,19 @@ def do_compare(results: Path, spec: str = "crossed"):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("step", choices=["export", "compare"])
-    ap.add_argument("--results", default="results_sfm/peds_sfm")
+    ap.add_argument("--results", default="results_sfm/peds_sfm",
+                    help="results dir, or comma-separated dirs to pool")
+    ap.add_argument("--out", default=None,
+                    help="output root for pooled exports")
     ap.add_argument("--spec", choices=["crossed", "nested"],
                     default="crossed")
     args = ap.parse_args()
+    paths = [Path(x) for x in args.results.split(",") if x.strip()]
     if args.step == "export":
-        do_export(Path(args.results))
+        do_export(paths if len(paths) > 1 else paths[0],
+                  Path(args.out) if args.out else None)
     else:
-        do_compare(Path(args.results), args.spec)
+        do_compare(paths[0], args.spec)
 
 
 if __name__ == "__main__":
