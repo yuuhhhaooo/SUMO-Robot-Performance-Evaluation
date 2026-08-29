@@ -571,8 +571,11 @@ def fit_success_glmm(df, reference, out, dpi=200):
         })
     res = pd.DataFrame(rows)
     res.to_csv(out / "success_glmm_odds_ratios.csv", index=False)
+    # label from the model's own vcp_names (insertion order for the VB
+    # class, source-verified) rather than assuming dict order
+    _vcp_names = list(getattr(model, "vcp_names", vc.keys()))
     vcp = pd.DataFrame({
-        "component": list(vc.keys()),
+        "component": _vcp_names,
         # vcp_mean is the posterior mean of LOG-sd -> report sd = exp(.)
         "sd_posterior_mean": [round(float(np.exp(x)), 3)
                               for x in fit.vcp_mean],
@@ -1454,7 +1457,11 @@ def main():
                          f"{' (successful runs)' if subset else ''} ==")
             lines.append(f"[{note}]")
             if fit is not None:
-                lines.append(str(fit.summary().tables[1]))
+                _t1 = fit.summary().tables[1]
+                # a DataFrame str() silently truncates to head+tail rows
+                # (the 54-unit tables have 60+ rows); render in full
+                lines.append(_t1.to_string()
+                             if hasattr(_t1, 'to_string') else str(_t1))
             lines.append("")
         except Exception as exc:
             lines.append(f"LMM {endog} skipped: {exc}\n")
