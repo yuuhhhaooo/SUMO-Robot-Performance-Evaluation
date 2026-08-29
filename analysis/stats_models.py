@@ -542,8 +542,9 @@ def fit_success_glmm(df, reference, out, dpi=200):
     # pooled runs only (supervisor ruling 2026-08-28): the layer may
     # change what a seed, a map, or a route does, so the pooled model
     # carries the full symmetric set of layer interactions. The
-    # coarse layer:map term is kept for hierarchical completeness and
-    # is expected to collapse towards zero, like the map main effect.
+    # coarse layer:map term is kept for hierarchical completeness
+    # (empirically it does NOT collapse: SD ~0.16, alongside ~0.15 for
+    # layer:map_task and ~0.06 for layer:seed).
     if df["reactive_peds"].nunique() > 1:
         lay = df["reactive_peds"].astype(str)
         df["layer_seed"] = lay + ":" + df["seed"].astype(str)
