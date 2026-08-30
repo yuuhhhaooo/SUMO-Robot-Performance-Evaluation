@@ -94,6 +94,12 @@ def do_compare(results: Path, spec: str = "crossed"):
         m = re.match(r"algorithm(.+)$", t)
         if m:
             return "algo:" + m.group(1)
+        m = re.match(r"C\(reactive_peds\)\[T\.(.+)\]$", t)
+        if m:
+            return "layer:" + m.group(1)
+        m = re.match(r"reactive_peds(.+)$", t)
+        if m:
+            return "layer:" + m.group(1)
         m = re.match(r"standardize\((.+)\)$", t)
         if m:
             return "cov:" + m.group(1)
@@ -120,6 +126,13 @@ def do_compare(results: Path, spec: str = "crossed"):
     tvc_file = ("glmmtmb_variance_components.csv" if spec == "crossed"
                 else "glmmtmb_variance_components_nestedtask.csv")
     tvc = pd.read_csv(out / tvc_file)
+    lay = merged[merged["k"].str.startswith("layer:")]
+    lay_lines = []
+    for _, r0 in lay.iterrows():
+        lay_lines.append(
+            f"layer effect {r0['k']}: VB {r0['log_odds']:+.3f} "
+            f"(SD {r0['vb_sd']:.3f}) vs glmmTMB {r0['estimate']:+.3f} "
+            f"(SE {r0['se']:.3f})")
     lines = [
         f"VB (paper) vs glmmTMB refit ({spec} spec), success model, "
         f"{len(algo)} combination fixed effects",
@@ -128,6 +141,7 @@ def do_compare(results: Path, spec: str = "crossed"):
         f"median SD ratio VB/glmmTMB = {se_ratio:.3f} "
         f"(< 1 means VB understates uncertainty)",
         "",
+        *lay_lines,
         "variance-component SDs, VB (paper):",
         vcp.to_string(index=False),
         "variance-component SDs, glmmTMB:",

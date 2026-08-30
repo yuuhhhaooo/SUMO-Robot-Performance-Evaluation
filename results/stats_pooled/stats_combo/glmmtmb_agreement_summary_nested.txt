@@ -3,6 +3,8 @@ corr(log-odds) = 1.0000
 mean |log-odds diff| = 0.029
 median SD ratio VB/glmmTMB = 0.698 (< 1 means VB understates uncertainty)
 
+layer effect layer:pysf: VB -1.108 (SD 0.014) vs glmmTMB -1.110 (SE 0.120)
+layer effect layer:sfm: VB +0.218 (SD 0.014) vs glmmTMB +0.215 (SE 0.120)
 variance-component SDs, VB (paper):
  component  sd_posterior_mean  sd_ci_lo  sd_ci_hi
       seed              0.294     0.187     0.463
