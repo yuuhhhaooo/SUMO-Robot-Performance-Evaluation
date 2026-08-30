@@ -1,0 +1,5 @@
+layer,n_episodes,mean_success
+sfm,26988,0.627
+pysf,26999,0.367
+jupedsim,26992,0.583
+pooled,80979,0.526
