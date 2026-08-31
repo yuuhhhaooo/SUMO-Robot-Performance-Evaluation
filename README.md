@@ -334,12 +334,37 @@ the size and cost of whichever preset you choose.
 
 ## Equal-budget parameter tuning (supervisor protocol)
 
+`sim/tune_new.py` is the official tuning entry point (`sim/tune.py` is the
+earlier iteration, kept for provenance). Steps used for the published
+evaluation:
+
 ```bash
-python sim/tune.py --algorithm dwa --check      # space <-> attribute audit
-python sim/tune.py --algorithm dwa --n-trials 50
+# 1. Audit the search space of every tunable planner
+python sim/tune_new.py --algorithm dwa --check
+# 2. Per-combination studies (50 trials each), repeated separately under
+#    each reactive pedestrian layer via --reactive-peds sfm|pysf|jupedsim
+for a in dwa orca mpc teb; do for g in astar dijkstra; do \
+  python sim/tune_new.py --algorithm $a --tune-globals $g \
+    --episodes-mode tasks --n-trials 50 --max-time 600 \
+    --reactive-peds sfm; done; done
+# RRT column: add --joint-global-rrt (tunes the four global-RRT sampling
+# parameters jointly with the local stack)
+# 3. Archive. Trial histories land under configs/tuning_all/; the sfm-layer
+#    archive is the one kept in this repository.
 ```
 
-Two tuning designs are implemented (supervisor ruling pending; both feed
+Planners whose search space is empty (the learning-based and several
+published planners: parameters live in trained weights or upstream
+defaults) receive the same budget formally; their studies are recorded as
+empty, as disclosed in the thesis.
+
+```bash
+python sim/tune_new.py --algorithm dwa --check      # space <-> attribute audit
+python sim/tune_new.py --algorithm dwa --n-trials 50
+```
+
+Two tuning designs are implemented (the published evaluation used the
+per-combination design; both feed
 the SAME Option-B evaluation, only `--params-file` differs):
 
 *Version F (default, global fixed during tuning).* One tuned set per
@@ -370,11 +395,11 @@ cost 0.05; jerk not logged, disclosed). Commands:
 ```bash
 # A*/Dijkstra columns (local-only tuning, 8 studies)
 for a in dwa orca mpc teb; do for g in dijkstra astar; do \
-  python sim/tune.py --algorithm $a --tune-globals $g \
+  python sim/tune_new.py --algorithm $a --tune-globals $g \
     --episodes-mode tasks --n-trials 50 --max-time 600; done; done
 # RRT column (joint stack tuning, 4 studies)
 for a in dwa orca mpc teb; do \
-  python sim/tune.py --algorithm $a --tune-globals rrt \
+  python sim/tune_new.py --algorithm $a --tune-globals rrt \
     --joint-global-rrt --episodes-mode tasks --n-trials 50 \
     --max-time 600; done
 # evaluation: --params-file "configs/{algo}__g-{gp}.json" (rrt cells
@@ -396,7 +421,7 @@ shipped defaults. Best parameters are frozen to `configs/<algo>.json`
 (consumed via `benchmark_runner --params-file`, recorded in metrics) and
 the full trial history is archived under `configs/tuning_history/`.
 Three tuning-condition rulings are supported by the same machinery
-(awaiting supervisor decision; default = first): (1) one set per local
+(the published evaluation used the third, per combination): (1) one set per local
 planner tuned under the fixed route (`--tune-globals fixed`, output
 `configs/<algo>.json`); (2) one route-style-robust set from mixed
 episodes (`--tune-globals dijkstra rrt`, same output name); (3) per-
