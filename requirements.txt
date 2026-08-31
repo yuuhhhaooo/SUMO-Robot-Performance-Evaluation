@@ -22,5 +22,15 @@ torch==2.13.0
 # keep the environment small (shapely and numpy above already satisfy it).
 jupedsim==1.4.2
 
+# Upstream planner variants
+do-mpc==5.1.1          # MPC (do-mpc) upstream local planner
+casadi==3.7.2          # optimiser backend used by do-mpc
+gymnasium              # observation spaces of the DS-RNN / AttnGraph planners
+# Reactive pedestrians: --reactive-peds pysf
+pysocialforce==1.1.2   # primary pysf backend (elliptical Moussaid)
+socialforce==0.2.3     # selectable alternative pysf backend
+toml==0.10.2           # reads the pysf configuration file
+# Basemaps under the map/trajectory figures
+contextily==1.7.1
 # Optional, for the glmmTMB cross-check of the mixed models (not on PyPI):
 # R >= 4.6 with install.packages("glmmTMB")  -- checked against glmmTMB 1.1.14.
