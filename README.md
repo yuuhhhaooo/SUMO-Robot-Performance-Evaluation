@@ -424,8 +424,9 @@ as the unit); `analysis/benchmark_plots.py` likewise writes `plots/` and
 `plots_combo/`. Contents: a **variational-Bayes** binomial mixed GLM for
 success (`BinomialBayesMixedGLM.fit_vb`, so the reported intervals are
 posterior mean ± 1.96·posterior SD — credible intervals, not frequentist CIs —
-and variance components are `exp(posterior mean of log-sd)`), with crossed
-variance components for seed / map / task; linear mixed models on successful
+and variance components are `exp(posterior mean of log-sd)`), with crossed variance components for seed and map and task intercepts
+nested in map (`map:task`, 50 levels -- task t04 on map1 and map3 are
+different routes and share no label); linear mixed models on successful
 runs for time and path length, and additionally for
 `min_pedestrian_distance_m`, `ped_delay_s_mean`, `ped_deflection_m_mean`,
 `ped_personal_space_s_total`, `social_work`, `social_force_on_agents` and
@@ -435,6 +436,43 @@ global_plan_failed), and a seed-bootstrap ranking-stability table + figure
 (rank 95% intervals and P(top-1) -- the quantitative basis of the
 ranking-instability claim). Pipeline validated by recovering injected
 effects from synthetic data.
+
+With `--pooled`, the three pedestrian layers are stacked into one model with
+`reactive_peds` as a fixed effect and three layer-interaction variance
+components (`layer:seed`, `layer:map`, `layer:map:task`), so a seed, a map,
+or a route may be harder under one pedestrian model than under another.
+
+### Feedback-round analyses (2026-08)
+
+Each script reads the per-layer `summary_all.csv` files and writes one CSV
+next to `results/`:
+
+```bash
+python analysis/upstream_paired.py        # paired self vs upstream success diff, cluster bootstrap
+python analysis/tau_bootstrap.py          # tau_b medians + 95% CIs over seed resamples, top-10 overlap
+python analysis/timeout_split.py          # red-light waiting share inside timed-out episodes
+python analysis/variance_decomposition.py # logit-scale variance shares (algorithm / seed / map / task / pi^2/3)
+python analysis/layer_means.py            # five-map mean success per layer and pooled
+python analysis/global_seed_sd.py         # seed-to-seed success SD per global planner (negative check)
+python analysis/cross_layer_tau.py        # tau_b between the layer rankings
+```
+
+### glmmTMB cross-check (R)
+
+The variational fits are refitted with maximum likelihood in R as a check:
+
+```bash
+python analysis/glmmtmb_check.py --spec nested   # exports the model frame, runs R, compares
+Rscript analysis/glmmtmb_check_any.R <layer|pooled>
+Rscript analysis/glmmtmb_profile.R               # uniroot likelihood intervals for the VC SDs
+```
+
+Requires R >= 4.6 with `glmmTMB` (checked against 1.1.14); this is optional
+and touches nothing else. Known result: the fixed effects agree with
+correlation 1.00, while the variational SDs are narrower (median ratios
+0.68--0.73). For the pooled layer fixed effects the variational SDs are far
+too small (0.014 vs 0.120), so the thesis reports the likelihood-based
+intervals for those two effects.
 
 ## Maps
 
