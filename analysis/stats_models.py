@@ -656,10 +656,10 @@ def fit_success_glmm(df, reference, out, dpi=200):
                        ar["or_ci_hi"], vals, null=1.0, logx=True,
                        pos_col="#2e7d32", neg_col="#c62828",
                        xlabel=f"Odds Ratio vs {disp(ref_shown)} "
-                              f"(95% CI, Log Scale)",
+                              f"(95% CrI, Log Scale)",
                        title="Success: Algorithm Effect Sizes",
                        caption="green = credibly higher success than the "
-                               "reference, red = credibly lower, grey = CI "
+                               "reference, red = credibly lower, grey = CrI "
                                "crosses 1; shaded bands = +/-1 SD of the "
                                "seed / task variance components (estimates "
                                "inside a band are within that noise "
@@ -667,7 +667,7 @@ def fit_success_glmm(df, reference, out, dpi=200):
                                "improvement; axis clipped to a readable "
                                "window, </> marks off-scale estimates -- "
                                "exact numbers in the right-hand column",
-                       value_header="    OR    [95% CI]",
+                       value_header="    OR    [95% CrI]",
                        out_path=out / "success_glmm_forest.png", dpi=dpi,
                        ref_label=f"{disp(ref_shown)}   (reference)",
                        ref_val="  1.00   (reference)",

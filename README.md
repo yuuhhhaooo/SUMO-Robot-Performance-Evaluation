@@ -489,7 +489,8 @@ The variational fits are refitted with maximum likelihood in R as a check:
 ```bash
 python analysis/glmmtmb_check.py --spec nested   # exports the model frame, runs R, compares
 Rscript analysis/glmmtmb_check_any.R <layer|pooled>
-Rscript analysis/glmmtmb_profile.R               # uniroot likelihood intervals for the VC SDs
+Rscript analysis/glmmtmb_profile.R               # uniroot likelihood intervals for the VC SDs (sfm)
+Rscript analysis/glmmtmb_profile_any.R <stats_combo dir> <out csv>  # same, any layer
 ```
 
 Requires R >= 4.6 with `glmmTMB` (checked against 1.1.14); this is optional
@@ -497,7 +498,7 @@ and touches nothing else. Known result: the fixed effects agree with
 correlation 1.00, while the variational SDs are narrower (median ratios
 0.68--0.73). For the pooled layer fixed effects the variational SDs are far
 too small (0.014 vs 0.120), so the thesis reports the likelihood-based
-intervals for those two effects.
+intervals for those two effects. The per-layer VC profiles (`results/glmmtmb_vc_profile_{pysf,jupedsim}.csv`) agree with the variational intervals; the map SD lower limit sits at the zero boundary in every layer.
 
 ## Maps
 
